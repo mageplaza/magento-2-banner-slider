@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza_BetterSlider extension
+ *                     NOTICE OF LICENSE
+ * 
+ *                     This source file is subject to the Mageplaza License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ * 
+ *                     @category  Mageplaza
+ *                     @package   Mageplaza_BetterSlider
+ *                     @copyright Copyright (c) 2016
+ *                     @license   https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <virtualType name="MageplazaBetterSliderGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="MageplazaBetterSliderBannerGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Mageplaza\BetterSlider\Model\ResourceModel\Banner\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">MageplazaBetterSliderGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="MageplazaBetterSliderSliderGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Mageplaza\BetterSlider\Model\ResourceModel\Slider\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">MageplazaBetterSliderGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Mageplaza\BetterSlider\Model\ResourceModel\Banner\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">mageplaza_betterslider_banner</argument>
+            <argument name="eventPrefix" xsi:type="string">mageplaza_betterslider_banner_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">banner_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Mageplaza\BetterSlider\Model\ResourceModel\Banner</argument>
+        </arguments>
+    </type>
+    <type name="Mageplaza\BetterSlider\Model\ResourceModel\Slider\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">mageplaza_betterslider_slider</argument>
+            <argument name="eventPrefix" xsi:type="string">mageplaza_betterslider_slider_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">slider_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Mageplaza\BetterSlider\Model\ResourceModel\Slider</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="mageplaza_betterslider_banner_listing_data_source" xsi:type="string">Mageplaza\BetterSlider\Model\ResourceModel\Banner\Grid\Collection</item>
+                <item name="mageplaza_betterslider_slider_listing_data_source" xsi:type="string">Mageplaza\BetterSlider\Model\ResourceModel\Slider\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

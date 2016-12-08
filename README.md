@@ -3,6 +3,15 @@
 <p>Fully written in jQuery, touch enabled extension based on OWL Carousel that lets you create beautiful responsive carousel slider.</p>
 
 
+Quick guide: https://mageplaza.freshdesk.com/support/solutions/articles/6000132393-user-guide-magento-2-banner-slider
+
+User Guide: https://docs.mageplaza.com/banner-slider-m2/index.html
+
+Discussions: http://magento.stackexchange.com/
+
+Product Page: https://www.mageplaza.com/magento-2-banner-slider-extension/
+
+
 
 <h3>Fully Customisable</h3>
 <p>Over 60 options. Easy for novice users and even more powerful for advanced developers.</p>

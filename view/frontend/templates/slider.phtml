@@ -1,0 +1,33 @@
+<!--<link rel="stylesheet" type="text/css" href="--><?php //echo $block->getViewFileUrl('Mageplaza_BetterSlider::css/owl.carousel.min.css')?><!--">-->
+<!--<link rel="stylesheet" type="text/css" href="--><?php //echo $block->getViewFileUrl('Mageplaza_BetterSlider::css/owl.theme.default.min.css')?><!--">-->
+<?php
+$items      = ($block->getItems() AND $block->getItems() > 1) ? $block->getItems() : 1;
+$nav        = $block->getShowNav() ? 'true' : 'false';
+$loop       = $block->getLoop() ? 'true' : 'false';
+$autoHeight = $block->getAutoHeight() ? 'true' : 'false';
+?>
+
+
+
+
+<div>
+	<div class="mp-owl-carousel owl-carousel">
+		<?php foreach ($block->getSliders() as $slider): ?>
+			<div class="item"><img src="<?php echo $slider->getBannerUrl(); ?>" alt="img"></div>
+		<?php endforeach; ?>
+	</div>
+</div>
+<script>// <![CDATA[
+	require([
+		'jquery',
+	], function ($) {
+		$(document).ready(function () {
+			$(".mp-owl-carousel").owlCarousel({
+				navigation: <?php echo $nav;?>,
+				items: <?php echo $items;?>,
+				loop: <?php echo $loop;?>,
+				autoHeight: <?php echo $autoHeight;?>,
+			});
+		});
+	});
+	// ]]></script>

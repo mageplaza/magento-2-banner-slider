@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza_BetterSlider extension
+ *                     NOTICE OF LICENSE
+ * 
+ *                     This source file is subject to the Mageplaza License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ * 
+ *                     @category  Mageplaza
+ *                     @package   Mageplaza_BetterSlider
+ *                     @copyright Copyright (c) 2016
+ *                     @license   https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Mageplaza_BetterSlider::betterslider" title="Banner Slider" module="Mageplaza_BetterSlider" sortOrder="55" resource="Mageplaza_BetterSlider::betterslider"/>
+        <add id="Mageplaza_BetterSlider::banner" title="Banners" module="Mageplaza_BetterSlider" sortOrder="10" action="mageplaza_betterslider/banner" resource="Mageplaza_BetterSlider::banner" parent="Mageplaza_BetterSlider::betterslider"/>
+        <add id="Mageplaza_BetterSlider::slider" title="Sliders" module="Mageplaza_BetterSlider" sortOrder="20" action="mageplaza_betterslider/slider" resource="Mageplaza_BetterSlider::slider" parent="Mageplaza_BetterSlider::betterslider"/>
+    </menu>
+</config>

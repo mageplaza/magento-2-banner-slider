@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- <referenceContainer name="sidebar.additional">
+            <block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.sidebar.right.top" before="-">
+                <action method="setPosition">
+                    <argument name="position" xsi:type="string">catalog-sidebar-right-top</argument>
+                </action>
+                <action method="setCategoryPosition">
+                    <argument name="position" xsi:type="string">category-sidebar-right-top</argument>
+                </action>
+                <action method="setBannerId">
+                    <argument name="banner_id" xsi:type="string">1</argument>
+                </action>
+            </block>
+            <block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.sidebar.right.bottom">
+                <action method="setPosition">
+                    <argument name="position" xsi:type="string">catalog-sidebar-right-bottom</argument>
+                </action>
+                <action method="setCategoryPosition">
+                    <argument name="position" xsi:type="string">category-sidebar-right-bottom</argument>
+                </action>
+                <action method="setBannerId">
+                    <argument name="banner_id" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="sidebar.main">
+            <block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.sidebar.left.top" before="-">
+                <action method="setPosition">
+                    <argument name="position" xsi:type="string">catalog-sidebar-left-top</argument>
+                </action>
+                <action method="setCategoryPosition">
+                    <argument name="position" xsi:type="string">category-sidebar-left-top</argument>
+                </action>
+                <action method="setBannerId">
+                    <argument name="banner_id" xsi:type="string">1</argument>
+                </action>
+            </block>
+            <block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.sidebar.left.bottom">
+                <action method="setPosition">
+                    <argument name="position" xsi:type="string">catalog-sidebar-left-bottom</argument>
+                </action>
+                <action method="setCategoryPosition">
+                    <argument name="position" xsi:type="string">category-sidebar-left-bottom</argument>
+                </action>
+                <action method="setBannerId">
+                    <argument name="banner_id" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="before.body.end">
+            <block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.page.bottom">
+                <action method="setPosition">
+                    <argument name="position" xsi:type="string">catalog-page-bottom</argument>
+                </action>
+                <action method="setCategoryPosition">
+                    <argument name="position" xsi:type="string">category-page-bottom</argument>
+                </action>
+                <action method="setBannerId">
+                    <argument name="banner_id" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.content.top" before="-">
+                <action method="setPosition">
+                    <argument name="position" xsi:type="string">catalog-content-top</argument>
+                </action>
+                <action method="setCategoryPosition">
+                    <argument name="position" xsi:type="string">category-content-top</argument>
+                </action>
+                <action method="setBannerId">
+                    <argument name="banner_id" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.content.bottom" after="-">
+                <action method="setPosition">
+                    <argument name="position" xsi:type="string">catalog-content-bottom</argument>
+                </action>
+                <action method="setCategoryPosition">
+                    <argument name="position" xsi:type="string">category-content-bottom</argument>
+                </action>
+                <action method="setBannerId">
+                    <argument name="banner_id" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </referenceContainer> -->
+        <!--<referenceBlock name="header.container">-->
+            <!--<block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.menu.top" before="-">-->
+                <!--<action method="setPosition">-->
+                    <!--<argument name="position" xsi:type="string">catalog-menu-top</argument>-->
+                <!--</action>-->
+                <!--<action method="setCategoryPosition">-->
+                    <!--<argument name="position" xsi:type="string">category-menu-top</argument>-->
+                <!--</action>-->
+                <!--<action method="setBannerId">-->
+                    <!--<argument name="banner_id" xsi:type="string">1</argument>-->
+                <!--</action>-->
+            <!--</block>-->
+        <!--</referenceBlock>-->
+        <!--<referenceBlock name="page.top">-->
+            <!--<block class="Mageplaza\BetterSlider\Block\Slider" name="bannerslider.catalog.menu.bottom">-->
+                <!--<action method="setPosition">-->
+                    <!--<argument name="position" xsi:type="string">catalog-menu-bottom</argument>-->
+                <!--</action>-->
+                <!--<action method="setCategoryPosition">-->
+                    <!--<argument name="position" xsi:type="string">category-menu-bottom</argument>-->
+                <!--</action>-->
+                <!--<action method="setBannerId">-->
+                    <!--<argument name="banner_id" xsi:type="string">1</argument>-->
+                <!--</action>-->
+            <!--</block>-->
+        <!--</referenceBlock>-->
+
+    </body>
+</page>

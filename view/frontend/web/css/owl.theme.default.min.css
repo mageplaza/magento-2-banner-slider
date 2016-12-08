@@ -1,0 +1,15 @@
+/**
+ * Owl Carousel v2.1.0
+ * Copyright 2013-2016 David Deutsch
+ * Licensed under MIT (https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE)
+ */
+#demos .owl-carousel .item {
+    height: 10rem;
+    background: #4DC7A0;
+    padding: 1rem;
+}
+
+
+.columns .column.main {
+    width: 100%;
+}

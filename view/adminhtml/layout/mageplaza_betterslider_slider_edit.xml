@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza_BetterSlider extension
+ *                     NOTICE OF LICENSE
+ * 
+ *                     This source file is subject to the Mageplaza License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ * 
+ *                     @category  Mageplaza
+ *                     @package   Mageplaza_BetterSlider
+ *                     @copyright Copyright (c) 2016
+ *                     @license   https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Mageplaza\BetterSlider\Block\Adminhtml\Slider\Edit" name="mageplaza_betterslider_slider_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Mageplaza\BetterSlider\Block\Adminhtml\Slider\Edit\Tabs" name="mageplaza_betterslider_slider_tabs">
+                <block class="Mageplaza\BetterSlider\Block\Adminhtml\Slider\Edit\Tab\Slider" name="mageplaza_betterslider_slider_edit_tab_slider"/>
+                <block class="Mageplaza\BetterSlider\Block\Adminhtml\Slider\Edit\Tab\Banner" name="mageplaza_betterslider_slider_edit_tab_banner"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">slider</argument>
+                    <argument name="block" xsi:type="string">mageplaza_betterslider_slider_edit_tab_slider</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">banner</argument>
+                    <argument name="block" xsi:type="string">mageplaza_betterslider_slider_edit_tab_banner</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
