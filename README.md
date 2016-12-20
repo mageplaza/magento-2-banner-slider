@@ -10,6 +10,7 @@ Fully written in jQuery, touch enabled extension based on OWL Carousel that lets
 - Discussions: http://magento.stackexchange.com/
 - Contribute on Github: https://github.com/mageplaza/Magento-2-Banner-Slider-extension/
 - Product Page: https://www.mageplaza.com/magento-2-banner-slider-extension/
+- Get premium support from Mageplaza: Purchase Support package https://www.mageplaza.com/magento-2-extension-support-package/
 
 
 
