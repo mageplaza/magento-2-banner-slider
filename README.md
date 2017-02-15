@@ -4,6 +4,7 @@ Magento 2 Banner slider extension is an banner slider extension for Magneto that
 
 Fully written in jQuery, touch enabled extension based on OWL Carousel that lets you create beautiful responsive carousel slider.
 
+## Guides
 
 - Quick guide: https://mageplaza.freshdesk.com/support/solutions/articles/6000132393-user-guide-magento-2-banner-slider
 - User Guide: https://docs.mageplaza.com/banner-slider-m2/
@@ -12,7 +13,14 @@ Fully written in jQuery, touch enabled extension based on OWL Carousel that lets
 - Product Page: https://www.mageplaza.com/magento-2-banner-slider-extension/
 - Get premium support from Mageplaza: Purchase Support package https://www.mageplaza.com/magento-2-extension-support-package/
 
+## Installation
+### Via Composer
 
+```
+composer require mageplaza/core-m2
+composer require mageplaza/magento-2-banner-slider-extension
+bin/magento setup:upgrade
+```
 
 ## Fully Customisable
 Over 60 options. Easy for novice users and even more powerful for advanced developers.
