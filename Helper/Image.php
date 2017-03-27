@@ -33,13 +33,12 @@ class Image extends AbstractHelper
 	public function __construct(
 		Context $context,
 		BannerFactory $bannerFactory,
-		UrlInterface $urlBuilder,
 		Filesystem $fileSystem,
 		StoreManagerInterface $storeManager
 
 	)
 	{
-		$this->urlBuilder    = $urlBuilder;
+		$this->urlBuilder    = $context->getUrlBuilder();
 		$this->fileSystem    = $fileSystem;
 		$this->bannerFactory = $bannerFactory;
 		$this->storeManager  = $storeManager;

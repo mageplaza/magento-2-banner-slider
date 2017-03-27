@@ -13,7 +13,8 @@ $autoHeight = $block->getAutoHeight() ? 'true' : 'false';
 <div>
 	<div class="mp-owl-carousel owl-carousel">
 		<?php foreach ($block->getSliders() as $slider): ?>
-			<div class="item"><img src="<?php echo $slider->getBannerUrl(); ?>" alt="img"></div>
+			<?php $url=$slider->getUrl();if($url=='')$url='#'?>
+			<div class="item"><a href="<?php echo $slider->getUrl(); ?>"><img src="<?php echo $slider->getBannerUrl(); ?>" alt="img"></a></div>
 		<?php endforeach; ?>
 	</div>
 </div>

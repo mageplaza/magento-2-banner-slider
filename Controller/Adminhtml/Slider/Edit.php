@@ -50,19 +50,18 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        \Magento\Backend\Model\Session $backendSession,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory,
         \Magento\Framework\Registry $registry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
-        $this->backendSession    = $backendSession;
+        $this->backendSession    = $context->getSession();
+        $this->resultRedirectFactory=$context->getResultRedirectFactory();
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
-        parent::__construct($sliderFactory, $registry, $resultRedirectFactory, $context);
+        parent::__construct($sliderFactory, $registry, $context);
     }
 
     /**
