@@ -60,19 +60,18 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
     public function __construct(
         \Mageplaza\BetterSlider\Model\Upload $uploadModel,
         \Mageplaza\BetterSlider\Model\Banner\Image $imageModel,
-        \Magento\Backend\Model\Session $backendSession,
         \Magento\Backend\Helper\Js $jsHelper,
         \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory,
         \Magento\Framework\Registry $registry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
         $this->uploadModel    = $uploadModel;
         $this->imageModel     = $imageModel;
-        $this->backendSession = $backendSession;
+        $this->backendSession = $context->getSession();
+        $this->resultRedirectFactory=$context->getResultRedirectFactory();
         $this->jsHelper       = $jsHelper;
-        parent::__construct($bannerFactory, $registry, $resultRedirectFactory, $context);
+        parent::__construct($bannerFactory, $registry, $context);
     }
 
     /**

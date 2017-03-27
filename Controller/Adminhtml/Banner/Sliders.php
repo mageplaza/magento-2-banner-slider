@@ -37,12 +37,12 @@ class Sliders extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
         \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
         \Mageplaza\BetterSlider\Model\BannerFactory $sliderFactory,
         \Magento\Framework\Registry $registry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
+    	$this->resultRedirectFactory=$context->getResultRedirectFactory();
         $this->resultLayoutFactory = $resultLayoutFactory;
-        parent::__construct($sliderFactory, $registry, $resultRedirectFactory, $context);
+        parent::__construct($sliderFactory, $registry, $context);
     }
 
     /**

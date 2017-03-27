@@ -42,17 +42,16 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        \Magento\Backend\Model\Session $backendSession,
         \Magento\Backend\Helper\Js $jsHelper,
         \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory,
         \Magento\Framework\Registry $registry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
-        $this->backendSession = $backendSession;
+    	$this->resultRedirectFactory=$context->getResultRedirectFactory();
+        $this->backendSession = $context->getSession();
         $this->jsHelper       = $jsHelper;
-        parent::__construct($sliderFactory, $registry, $resultRedirectFactory, $context);
+        parent::__construct($sliderFactory, $registry, $context);
     }
 
     /**

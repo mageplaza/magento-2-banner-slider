@@ -36,7 +36,6 @@ abstract class Slider extends \Magento\Backend\App\Action
      * 
      * @var \Magento\Backend\Model\View\Result\RedirectFactory
      */
-    protected $resultRedirectFactory;
 
     /**
      * constructor
@@ -49,13 +48,11 @@ abstract class Slider extends \Magento\Backend\App\Action
     public function __construct(
         \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory,
         \Magento\Framework\Registry $coreRegistry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
         $this->sliderFactory         = $sliderFactory;
         $this->coreRegistry          = $coreRegistry;
-        $this->resultRedirectFactory = $resultRedirectFactory;
         parent::__construct($context);
     }
 
