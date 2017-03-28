@@ -17,12 +17,6 @@ namespace Mageplaza\BetterSlider\Controller\Adminhtml\Slider;
 
 class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
 {
-    /**
-     * Backend session
-     * 
-     * @var \Magento\Backend\Model\Session
-     */
-    protected $backendSession;
 
     /**
      * Page factory
@@ -41,12 +35,10 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
     /**
      * constructor
      * 
-     * @param \Magento\Backend\Model\Session $backendSession
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory
      * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
@@ -57,8 +49,6 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
         \Magento\Backend\App\Action\Context $context
     )
     {
-        $this->backendSession    = $context->getSession();
-        $this->resultRedirectFactory=$context->getResultRedirectFactory();
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
         parent::__construct($sliderFactory, $registry, $context);
@@ -103,7 +93,7 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
         }
         $title = $slider->getId() ? $slider->getName() : __('New Slider');
         $resultPage->getConfig()->getTitle()->prepend($title);
-        $data = $this->backendSession->getData('mageplaza_betterslider_slider_data', true);
+        $data = $this->_session->getData('mageplaza_betterslider_slider_data', true);
         if (!empty($data)) {
             $slider->setData($data);
         }

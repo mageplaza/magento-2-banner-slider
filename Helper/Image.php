@@ -24,7 +24,6 @@ class Image extends AbstractHelper
 	protected $storeManager;
 
 	protected $subDir = 'mageplaza/betterslider/banner/image';
-	protected $urlBuilder;
 	/**
 	 * @var \Magento\Framework\Filesystem
 	 */
@@ -38,7 +37,6 @@ class Image extends AbstractHelper
 
 	)
 	{
-		$this->urlBuilder    = $context->getUrlBuilder();
 		$this->fileSystem    = $fileSystem;
 		$this->bannerFactory = $bannerFactory;
 		$this->storeManager  = $storeManager;
@@ -47,7 +45,7 @@ class Image extends AbstractHelper
 
 	public function getBaseUrl()
 	{
-		return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . $this->subDir . '/image/';
+		return $this->_urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . $this->subDir . '/image/';
 	}
 
 

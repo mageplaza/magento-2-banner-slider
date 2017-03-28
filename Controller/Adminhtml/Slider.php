@@ -42,7 +42,6 @@ abstract class Slider extends \Magento\Backend\App\Action
      * 
      * @param \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory
      * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
