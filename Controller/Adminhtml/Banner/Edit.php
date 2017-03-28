@@ -17,12 +17,6 @@ namespace Mageplaza\BetterSlider\Controller\Adminhtml\Banner;
 
 class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
 {
-    /**
-     * Backend session
-     * 
-     * @var \Magento\Backend\Model\Session
-     */
-    protected $backendSession;
 
     /**
      * Page factory
@@ -50,19 +44,16 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        \Magento\Backend\Model\Session $backendSession,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory,
         \Magento\Framework\Registry $registry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
-        $this->backendSession    = $backendSession;
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
-        parent::__construct($bannerFactory, $registry, $resultRedirectFactory, $context);
+        parent::__construct($bannerFactory, $registry, $context);
     }
 
     /**
@@ -80,6 +71,7 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
      */
     public function execute()
     {
+
         $id = $this->getRequest()->getParam('banner_id');
         /** @var \Mageplaza\BetterSlider\Model\Banner $banner */
         $banner = $this->initBanner();
@@ -104,7 +96,7 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
         }
         $title = $banner->getId() ? $banner->getName() : __('New Banner');
         $resultPage->getConfig()->getTitle()->prepend($title);
-        $data = $this->backendSession->getData('mageplaza_betterslider_banner_data', true);
+        $data = $this->_session->getData('mageplaza_betterslider_banner_data', true);
         if (!empty($data)) {
             $banner->setData($data);
         }

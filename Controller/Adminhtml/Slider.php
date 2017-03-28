@@ -36,26 +36,22 @@ abstract class Slider extends \Magento\Backend\App\Action
      * 
      * @var \Magento\Backend\Model\View\Result\RedirectFactory
      */
-    protected $resultRedirectFactory;
 
     /**
      * constructor
      * 
      * @param \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory
      * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
         \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory,
         \Magento\Framework\Registry $coreRegistry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
         $this->sliderFactory         = $sliderFactory;
         $this->coreRegistry          = $coreRegistry;
-        $this->resultRedirectFactory = $resultRedirectFactory;
         parent::__construct($context);
     }
 

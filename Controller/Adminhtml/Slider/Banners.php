@@ -30,19 +30,17 @@ class Banners extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
      * @param \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory
      * @param \Mageplaza\BetterSlider\Model\SliderFactory $bannerFactory
      * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
         \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
         \Mageplaza\BetterSlider\Model\SliderFactory $bannerFactory,
         \Magento\Framework\Registry $registry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
         $this->resultLayoutFactory = $resultLayoutFactory;
-        parent::__construct($bannerFactory, $registry, $resultRedirectFactory, $context);
+        parent::__construct($bannerFactory, $registry, $context);
     }
 
     /**

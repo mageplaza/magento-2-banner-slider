@@ -17,12 +17,6 @@ namespace Mageplaza\BetterSlider\Controller\Adminhtml\Slider;
 
 class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
 {
-    /**
-     * Backend session
-     * 
-     * @var \Magento\Backend\Model\Session
-     */
-    protected $backendSession;
 
     /**
      * JS helper
@@ -34,25 +28,20 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
     /**
      * constructor
      * 
-     * @param \Magento\Backend\Model\Session $backendSession
      * @param \Magento\Backend\Helper\Js $jsHelper
      * @param \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory
      * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        \Magento\Backend\Model\Session $backendSession,
         \Magento\Backend\Helper\Js $jsHelper,
         \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory,
         \Magento\Framework\Registry $registry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
-        $this->backendSession = $backendSession;
         $this->jsHelper       = $jsHelper;
-        parent::__construct($sliderFactory, $registry, $resultRedirectFactory, $context);
+        parent::__construct($sliderFactory, $registry, $context);
     }
 
     /**
@@ -81,7 +70,7 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
             try {
                 $slider->save();
                 $this->messageManager->addSuccess(__('The Slider has been saved.'));
-                $this->backendSession->setMageplazaBetterSliderSliderData(false);
+                $this->_session->setMageplazaBetterSliderSliderData(false);
                 if ($this->getRequest()->getParam('back')) {
                     $resultRedirect->setPath(
                         'mageplaza_betterslider/*/edit',

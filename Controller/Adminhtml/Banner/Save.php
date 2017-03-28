@@ -32,13 +32,6 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
     protected $imageModel;
 
     /**
-     * Backend session
-     * 
-     * @var \Magento\Backend\Model\Session
-     */
-    protected $backendSession;
-
-    /**
      * JS helper
      * 
      * @var \Magento\Backend\Helper\Js
@@ -50,29 +43,24 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
      * 
      * @param \Mageplaza\BetterSlider\Model\Upload $uploadModel
      * @param \Mageplaza\BetterSlider\Model\Banner\Image $imageModel
-     * @param \Magento\Backend\Model\Session $backendSession
      * @param \Magento\Backend\Helper\Js $jsHelper
      * @param \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory
      * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
         \Mageplaza\BetterSlider\Model\Upload $uploadModel,
         \Mageplaza\BetterSlider\Model\Banner\Image $imageModel,
-        \Magento\Backend\Model\Session $backendSession,
         \Magento\Backend\Helper\Js $jsHelper,
         \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory,
         \Magento\Framework\Registry $registry,
-        \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
         $this->uploadModel    = $uploadModel;
         $this->imageModel     = $imageModel;
-        $this->backendSession = $backendSession;
         $this->jsHelper       = $jsHelper;
-        parent::__construct($bannerFactory, $registry, $resultRedirectFactory, $context);
+        parent::__construct($bannerFactory, $registry, $context);
     }
 
     /**
@@ -106,7 +94,7 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
             try {
                 $banner->save();
                 $this->messageManager->addSuccess(__('The Banner has been saved.'));
-                $this->backendSession->setMageplazaBetterSliderBannerData(false);
+                $this->_session->setMageplazaBetterSliderBannerData(false);
                 if ($this->getRequest()->getParam('back')) {
                     $resultRedirect->setPath(
                         'mageplaza_betterslider/*/edit',
