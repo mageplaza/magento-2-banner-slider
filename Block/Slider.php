@@ -51,7 +51,7 @@ class Slider extends \Magento\Framework\View\Element\Template
 		$sliderId = $this->getBannerId();
 		$model = $this->sliderFactory->create()->load($sliderId);
 		if($model){
-			$banners = $model->getSelectedBannersCollection()->->addOrder('position','asc');
+			$banners = $model->getSelectedBannersCollection()->addOrder('position','asc');
 			return $banners;
 		} else{
 			return null;
