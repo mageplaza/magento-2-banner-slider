@@ -9,7 +9,7 @@ $autoHeight = $block->getAutoHeight() ? 'true' : 'false';
 
 
 
-
+<?php if ($block->getSliders()) :?>
 <div>
 	<div class="mp-owl-carousel owl-carousel">
 		<?php foreach ($block->getSliders() as $slider): ?>
@@ -32,3 +32,4 @@ $autoHeight = $block->getAutoHeight() ? 'true' : 'false';
 		});
 	});
 	// ]]></script>
+<?php endif;?>
