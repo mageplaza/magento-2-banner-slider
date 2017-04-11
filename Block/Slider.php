@@ -50,7 +50,7 @@ class Slider extends \Magento\Framework\View\Element\Template
 	{
 		$sliderId = $this->getBannerId();
 		$model = $this->sliderFactory->create()->load($sliderId);
-		if($model){
+		if($model && $model->getStatus()==1){
 			$banners = $model->getSelectedBannersCollection()->addOrder('position','asc')->addFieldToFilter('status','1');
 			return $banners;
 		} else{
