@@ -153,12 +153,12 @@ In Xml file, you can insert the following block of code::
 
  
 ```
-	<?xml version="1.0"?>
-	<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/	Layout/etc/page_configuration.xsd">
-	    <referenceContainer name="content">
-	        <block template="slider.phtml" class="Mageplaza\BetterSlider\Block\Slider" name="mageplaza_betterslider"/>
-	    </referenceContainer>
-	</page>
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/	Layout/etc/page_configuration.xsd">
+    <referenceContainer name="content">
+        <block template="slider.phtml" class="Mageplaza\BetterSlider\Block\Slider" name="mageplaza_betterslider"/>
+    </referenceContainer>
+</page>
 ```
 
 
