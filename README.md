@@ -16,6 +16,8 @@ Fully written in jQuery, touch enabled extension based on OWL Carousel that lets
 ## Fully Customisable
 Over 60 options. Easy for novice users and even more powerful for advanced developers.
 
+![banner slider](https://www.mageplaza.com/assets/img/extensions-images/magento-2-banner-slider/demo_2.png)
+
 ## Touch and Drag Support
 Designed specially to boost mobile browsing experience. Mouse drag works great on desktop too!
 
