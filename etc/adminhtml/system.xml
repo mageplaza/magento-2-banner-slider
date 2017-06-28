@@ -20,15 +20,22 @@
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>General</label>
-
-                <field id="enable" translate="label comment" type="select" sortOrder="2" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Enable</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[Read <a href="https://mageplaza.freshdesk.com/support/solutions/articles/6000132393-user-guide-magento-2-banner-slider" target="_blank">User Guide</a> <br>
-                     <a href="https://mageplaza.freshdesk.com/support/discussions/6000061601" target="_blank">Discussions</a> <br>
-                     ]]></comment>
+                
+                <field id="head" translate="label" type="button" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Mageplaza\Core\Block\Adminhtml\System\Config\Head</frontend_model>
+                     <comment><![CDATA[
+                        <ul class="mageplaza-head">
+                            <li><a href="https://mageplaza.freshdesk.com/" target="_blank">Helpdesk</a> </li>
+                            <li><a href="https://docs.mageplaza.com/banner-slider-m2/index.html" target="_blank">User Guide</a> </li>
+                            <li>Increase 25% conversion rate with <a href="https://goo.gl/6chU3c" target="_blank">Layered Navigation</a></li>
+                            <li><a href="https://www.mageplaza.com/magento-2-seo-extension/?utm_source=magento2&utm_medium=documents&utm_campaign=m2-product-slider" target="_blank">SEO Ultimate</a> </li>
+                            <li>The most popular <a href="https://www.mageplaza.com/magento-2-one-step-checkout-extension/?utm_source=configuration&utm_medium=link&utm_campaign=m2-product-slider" target="_blank">One Step Checkout</a></li>
+                        </ul>
+                        ]]></comment>
                 </field>
+
+               
+
             </group>
 
 
