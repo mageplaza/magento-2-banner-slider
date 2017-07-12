@@ -1,6 +1,6 @@
 ## Documentation
 
-- Installation guide: https://docs.mageplaza.com/kb/installation.html
+- Installation guide: https://www.mageplaza.com/install-magento-2-extension/
 - User Guide: https://docs.mageplaza.com/banner-slider-m2/
 - Get Support: https://github.com/mageplaza/magento-2-banner-slider/issues
 - Download from our Live site:https://www.mageplaza.com/magento-2-banner-slider-extension/
