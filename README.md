@@ -62,6 +62,9 @@ php bin/magento setup:static-content:deploy
 #### Q: I got error: `Mageplaza_Core has been already defined`
 A: Read solution: https://github.com/mageplaza/module-core/issues/3
 
+#### Q: My site is down
+A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.html
+
 
 ## Fully Customisable
 Over 60 options. Easy for novice users and even more powerful for advanced developers.
