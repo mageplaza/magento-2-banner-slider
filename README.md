@@ -4,6 +4,9 @@
 
 Fully written in jQuery, touch enabled extension based on OWL Carousel that lets you create beautiful responsive carousel slider.
 
+[![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-product-slider/v/stable)](https://packagist.org/packages/mageplaza/magento-2-product-slider)
+[![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-product-slider/downloads)](https://packagist.org/packages/mageplaza/magento-2-product-slider)
+
 ## Documentation
 
 - Installation guide: https://www.mageplaza.com/install-magento-2-extension/
@@ -12,8 +15,6 @@ Fully written in jQuery, touch enabled extension based on OWL Carousel that lets
 - Download from our Live site:https://www.mageplaza.com/magento-2-banner-slider-extension/
 - Contribute on Github: https://github.com/mageplaza/magento-2-banner-slider
 
-[![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-banner-slider/v/stable)](https://packagist.org/packages/mageplaza/magento-2-banner-slider)
-[![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-banner-slider/downloads)](https://packagist.org/packages/mageplaza/magento-2-banner-slider)
 
 
 ## How to install
