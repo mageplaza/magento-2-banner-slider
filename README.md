@@ -4,8 +4,7 @@
 
 Fully written in jQuery, touch enabled extension based on OWL Carousel that lets you create beautiful responsive carousel slider.
 
-[![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-product-slider/v/stable)](https://packagist.org/packages/mageplaza/magento-2-product-slider)
-[![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-product-slider/downloads)](https://packagist.org/packages/mageplaza/magento-2-product-slider)
+
 
 ## Documentation
 
