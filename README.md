@@ -12,6 +12,10 @@ Fully written in jQuery, touch enabled extension based on OWL Carousel that lets
 - Download from our Live site:https://www.mageplaza.com/magento-2-banner-slider-extension/
 - Contribute on Github: https://github.com/mageplaza/magento-2-banner-slider
 
+[![Latest Stable Version](https://poser.pugx.org/mageplaza/magento-2-banner-slider/v/stable)](https://packagist.org/packages/mageplaza/magento-2-banner-slider)
+[![Total Downloads](https://poser.pugx.org/mageplaza/magento-2-banner-slider/downloads)](https://packagist.org/packages/mageplaza/magento-2-banner-slider)
+
+
 ## How to install
 
 ### Method 1: Install ready-to-paste package
