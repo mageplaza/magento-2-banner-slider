@@ -5,6 +5,11 @@
 Fully written in jQuery, touch enabled extension based on OWL Carousel that lets you create beautiful responsive carousel slider.
 
 
+## IMPORTANT
+
+**THIS EXTENSION DEVELOPED FOR DEVELOPERS, IT REQUIRES INSERT A SNIPPET INTO CODE. IF YOU ARE ADMIN, YOU NEED HELPS FROM YOUR OWN DEVELOPERS.**
+
+WE WILL DEVELOP BANNER SLIDER FOR MERCHANT VERSION LATER.
 
 ## 1. Documentation
 
