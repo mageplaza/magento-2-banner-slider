@@ -252,7 +252,7 @@ You can add as many banners as you want. After finish adding banners, you can go
 * Go to `Admin > Content > Pages > Homepage > Content`
 
 ```
-{{ block class="Mageplaza\BetterSlider\Block\Slider" template="Mageplaza_BetterSlider::slider.phtml" banner_id="1" }}
+{{block class="Mageplaza\BetterSlider\Block\Slider" template="Mageplaza_BetterSlider::slider.phtml" banner_id="1"}}
 ```
 
 You can change your own banner_id value depend on your store.
