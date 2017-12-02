@@ -1,4 +1,4 @@
-# Magento 2 Banner Slider Extension by Mageplaza [DISCONTINUE]
+# Magento 2 Banner Slider Extension by Mageplaza [DISCONTINUED]
 
 **Mageplaza Banner slider for Magento 2** is an banner slider extension for Magento that enables you to create image carousel slider, image scroller and video LightBox. The extension supports images, YouTube, Vimeo, mp4 and webm videos. It's fully responsive, works on iPhone, iPad, Android, Firefox, Chrome, Safari, Opera and Internet Explorer.
 
