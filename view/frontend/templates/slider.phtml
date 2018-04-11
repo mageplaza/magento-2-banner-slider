@@ -1,13 +1,9 @@
-<!--<link rel="stylesheet" type="text/css" href="--><?php //echo $block->getViewFileUrl('Mageplaza_BetterSlider::css/owl.carousel.min.css')?><!--">-->
-<!--<link rel="stylesheet" type="text/css" href="--><?php //echo $block->getViewFileUrl('Mageplaza_BetterSlider::css/owl.theme.default.min.css')?><!--">-->
 <?php
 $items      = ($block->getItems() AND $block->getItems() > 1) ? $block->getItems() : 1;
 $nav        = $block->getShowNav() ? 'true' : 'false';
 $loop       = $block->getLoop() ? 'true' : 'false';
 $autoHeight = $block->getAutoHeight() ? 'true' : 'false';
 ?>
-
-
 
 <?php if ($block->getSliders()) :?>
 <div>
@@ -21,13 +17,15 @@ $autoHeight = $block->getAutoHeight() ? 'true' : 'false';
 <script>// <![CDATA[
 	require([
 		'jquery',
+        'Mageplaza_Productslider/js/owl.carousel.min'
 	], function ($) {
 		$(document).ready(function () {
 			$(".mp-owl-carousel").owlCarousel({
-				navigation: <?php echo $nav;?>,
+				nav: <?php echo $nav;?>,
 				items: <?php echo $items;?>,
-				loop: <?php echo $loop;?>,
+				loop: 1,
 				autoHeight: <?php echo $autoHeight;?>,
+                autoplay: 1
 			});
 		});
 	});

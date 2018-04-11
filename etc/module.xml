@@ -20,6 +20,7 @@
         <sequence>
             <module name="Magento_Backend"/>
             <module name="Mageplaza_Core"/>
+            <module name="Mageplaza_Productslider"/>
         </sequence>
     </module>
 </config>
