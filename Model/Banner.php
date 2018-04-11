@@ -74,14 +74,19 @@ class Banner extends \Magento\Framework\Model\AbstractModel
      */
 
     protected $imageModel;
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
+    private $urlBuilder;
 
 
     /**
      * constructor
-     * 
+     *
      * @param \Mageplaza\BetterSlider\Model\ResourceModel\Slider\CollectionFactory $sliderCollectionFactory
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\UrlInterface $urlBuilder
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
@@ -90,15 +95,15 @@ class Banner extends \Magento\Framework\Model\AbstractModel
         \Mageplaza\BetterSlider\Model\ResourceModel\Slider\CollectionFactory $sliderCollectionFactory,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
+        \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-
-
         array $data = []
     )
     {
         $this->sliderCollectionFactory = $sliderCollectionFactory;
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+        $this->urlBuilder = $urlBuilder;
     }
 
 
@@ -174,10 +179,6 @@ class Banner extends \Magento\Framework\Model\AbstractModel
      */
     public function getBannerUrl()
     {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
-        $baseUrl = $storeManager->getStore()->getBaseUrl();
-        return $baseUrl . 'pub/media/mageplaza/betterslider/banner/image' . $this->getUploadFile();
-
+        return $this->urlBuilder->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]).'mageplaza/betterslider/banner/image' . $this->getUploadFile();
     }
 }

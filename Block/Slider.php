@@ -19,8 +19,6 @@
 
 namespace Mageplaza\BetterSlider\Block;
 
-use Magento\Framework\View\Element\Template;
-use Magento\Framework\ObjectManagerInterface;
 use \Magento\Framework\View\Element\Template\Context;
 use Mageplaza\BetterSlider\Model\SliderFactory as SliderModelFactory;
 use Mageplaza\BetterSlider\Model\BannerFactory as BannerModelFactory;

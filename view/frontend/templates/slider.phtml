@@ -1,4 +1,5 @@
 <?php
+/** @var \Mageplaza\BetterSlider\Block\Slider $block */
 $items      = ($block->getItems() AND $block->getItems() > 1) ? $block->getItems() : 1;
 $nav        = $block->getShowNav() ? 'true' : 'false';
 $loop       = $block->getLoop() ? 'true' : 'false';
