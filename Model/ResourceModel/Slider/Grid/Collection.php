@@ -15,6 +15,7 @@
  */
 namespace Mageplaza\BetterSlider\Model\ResourceModel\Slider\Grid;
 
+
 class Collection extends \Mageplaza\BetterSlider\Model\ResourceModel\Slider\Collection implements \Magento\Framework\Api\Search\SearchResultInterface
 {
     /**
@@ -26,7 +27,7 @@ class Collection extends \Mageplaza\BetterSlider\Model\ResourceModel\Slider\Coll
 
     /**
      * constructor
-     * 
+     *
      * @param \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy
@@ -35,9 +36,9 @@ class Collection extends \Mageplaza\BetterSlider\Model\ResourceModel\Slider\Coll
      * @param $eventPrefix
      * @param $eventObject
      * @param $resourceModel
-     * @param $model
-     * @param $connection
-     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource
+     * @param string $model
+     * @param \Magento\Framework\DB\Adapter\AdapterInterface|null $connection
+     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null $resource
      */
     public function __construct(
         \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
@@ -49,7 +50,7 @@ class Collection extends \Mageplaza\BetterSlider\Model\ResourceModel\Slider\Coll
         $eventObject,
         $resourceModel,
         $model = 'Magento\Framework\View\Element\UiComponent\DataProvider\Document',
-        $connection = null,
+        \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
     )
     {
@@ -76,6 +77,7 @@ class Collection extends \Mageplaza\BetterSlider\Model\ResourceModel\Slider\Coll
     public function setAggregations($aggregations)
     {
         $this->aggregations = $aggregations;
+        return $this;
     }
 
 
