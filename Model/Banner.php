@@ -15,6 +15,8 @@
  */
 namespace Mageplaza\BetterSlider\Model;
 
+use Magento\Framework\UrlInterface;
+
 /**
  * @method Banner setName($name)
  * @method Banner setUploadFile($uploadFile)
@@ -175,9 +177,12 @@ class Banner extends \Magento\Framework\Model\AbstractModel
     public function getBannerUrl()
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
-        $baseUrl = $storeManager->getStore()->getBaseUrl();
-        return $baseUrl . 'pub/media/mageplaza/betterslider/banner/image' . $this->getUploadFile();
+        /** @var Store $store */
+        $store   = $objectManager->get('\Magento\Store\Model\StoreManagerInterface')->getStore();
+        $baseUrl = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
 
+        $url = $baseUrl . 'mageplaza/betterslider/banner/image' . $this->getUploadFile();
+
+        return $url;
     }
 }
