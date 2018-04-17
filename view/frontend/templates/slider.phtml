@@ -9,27 +9,27 @@ $autoHeight = $block->getAutoHeight() ? 'true' : 'false';
 
 
 
-<?php if ($block->getSliders()) :?>
+<?php if ($block->getSliders()) : ?>
 <div>
-	<div class="mp-owl-carousel owl-carousel">
-		<?php foreach ($block->getSliders() as $slider): ?>
-			<?php $url = $slider->getUrl() ? $slider->getUrl() : '#'?>
-			<div class="item"><a href="<?php echo $url ; ?>"><img src="<?php echo $slider->getBannerUrl(); ?>" alt="img"></a></div>
-		<?php endforeach; ?>
-	</div>
+    <div class="mp-owl-carousel owl-carousel">
+        <?php foreach ($block->getSliders() as $slider): ?>
+            <?php $url = $slider->getUrl() ? $slider->getUrl() : '#'?>
+            <div class="item"><a href="<?php echo $url ; ?>"><img src="<?php echo $slider->getBannerUrl(); ?>" alt="img"></a></div>
+        <?php endforeach; ?>
+    </div>
 </div>
 <script>// <![CDATA[
-	require([
-		'jquery',
-	], function ($) {
-		$(document).ready(function () {
-			$(".mp-owl-carousel").owlCarousel({
-				navigation: <?php echo $nav;?>,
-				items: <?php echo $items;?>,
-				loop: <?php echo $loop;?>,
-				autoHeight: <?php echo $autoHeight;?>,
-			});
-		});
-	});
-	// ]]></script>
-<?php endif;?>
+    require([
+        'jquery', 'owlcarousel'
+    ], function ($) {
+        $(document).ready(function () {
+            $(".mp-owl-carousel").owlCarousel({
+                navigation: <?php echo $nav;?>,
+                items: <?php echo $items;?>,
+                loop: <?php echo $loop;?>,
+                autoHeight: <?php echo $autoHeight;?>
+            });
+        });
+    });
+    // ]]></script>
+<?php endif; ?>
