@@ -8,7 +8,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="mageplaza" translate="label" sortOrder="1">
+        <tab id="mageplaza" translate="label">
             <label>mageplaza</label>
         </tab>
         <section id="betterslider" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1"
