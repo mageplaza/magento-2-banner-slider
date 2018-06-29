@@ -5,6 +5,7 @@ $items      = ($block->getItems() AND $block->getItems() > 1) ? $block->getItems
 $nav        = $block->getShowNav() ? 'true' : 'false';
 $loop       = $block->getLoop() ? 'true' : 'false';
 $autoHeight = $block->getAutoHeight() ? 'true' : 'false';
+$autoPlay   = $block->getAutoPlay() ? 'true' : 'false';
 ?>
 
 
@@ -27,7 +28,8 @@ $autoHeight = $block->getAutoHeight() ? 'true' : 'false';
                 navigation: <?php echo $nav;?>,
                 items: <?php echo $items;?>,
                 loop: <?php echo $loop;?>,
-                autoHeight: <?php echo $autoHeight;?>
+                autoHeight: <?php echo $autoHeight;?>,
+                autoPlay: <?php echo $autoPlay;?>
             });
         });
     });
