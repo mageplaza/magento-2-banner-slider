@@ -16,6 +16,6 @@
 
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Mageplaza_BetterSlider',
+    'Mageplaza_BannerSlider',
     __DIR__
 );

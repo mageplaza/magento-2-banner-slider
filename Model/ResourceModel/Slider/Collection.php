@@ -1,6 +1,6 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
+ * Mageplaza_BannerSlider extension
  *                     NOTICE OF LICENSE
  * 
  *                     This source file is subject to the Mageplaza License
@@ -9,11 +9,11 @@
  * https://www.mageplaza.com/LICENSE.txt
  * 
  *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
+ *                     @package   Mageplaza_BannerSlider
  *                     @copyright Copyright (c) 2016
  *                     @license   https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Model\ResourceModel\Slider;
+namespace Mageplaza\BannerSlider\Model\ResourceModel\Slider;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
@@ -29,7 +29,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * 
      * @var string
      */
-    protected $_eventPrefix = 'mageplaza_betterslider_slider_collection';
+    protected $_eventPrefix = 'mageplaza_bannerslider_slider_collection';
 
     /**
      * Event object
@@ -45,7 +45,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init('Mageplaza\BetterSlider\Model\Slider', 'Mageplaza\BetterSlider\Model\ResourceModel\Slider');
+        $this->_init('Mageplaza\BannerSlider\Model\Slider', 'Mageplaza\BannerSlider\Model\ResourceModel\Slider');
     }
 
     /**
@@ -69,5 +69,37 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     protected function _toOptionArray($valueField = 'slider_id', $labelField = 'name', $additional = [])
     {
         return parent::_toOptionArray($valueField, $labelField, $additional);
+    }
+
+    /**
+     * add if filter
+     *
+     * @param $sliderIds
+     * @return $this
+     */
+    public function addIdFilter($sliderIds)
+    {
+        $condition = '';
+
+        if (is_array($sliderIds)) {
+            if (!empty($sliderIds)) {
+                $condition = ['in' => $sliderIds];
+            }
+        } elseif (is_numeric($sliderIds)) {
+            $condition = $sliderIds;
+        } elseif (is_string($sliderIds)) {
+            $ids = explode(',', $sliderIds);
+            if (empty($ids)) {
+                $condition = $sliderIds;
+            } else {
+                $condition = ['in' => $ids];
+            }
+        }
+
+        if ($condition != '') {
+            $this->addFieldToFilter('slider_id', $condition);
+        }
+
+        return $this;
     }
 }

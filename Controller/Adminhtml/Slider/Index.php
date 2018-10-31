@@ -1,21 +1,30 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Controller\Adminhtml\Slider;
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
-class Index extends \Magento\Backend\App\Action
+use Magento\Backend\App\Action;
+use Magento\Framework\View\Result\PageFactory;
+use Magento\Backend\App\Action\Context;
+
+class Index extends Action
 {
     /**
      * Page result factory
@@ -38,8 +47,8 @@ class Index extends \Magento\Backend\App\Action
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Magento\Backend\App\Action\Context $context
+        PageFactory $resultPageFactory,
+        Context $context
     )
     {
         $this->resultPageFactory = $resultPageFactory;
@@ -53,31 +62,9 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $this->setPageData();
-        return $this->getResultPage();
-    }
-    /**
-     * instantiate result page object
-     *
-     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\View\Result\Page
-     */
-    public function getResultPage()
-    {
-        if (is_null($this->resultPage)) {
-            $this->resultPage = $this->resultPageFactory->create();
-        }
-        return $this->resultPage;
-    }
-    /**
-     * set page data
-     *
-     * @return $this
-     */
-    protected function setPageData()
-    {
-        $resultPage = $this->getResultPage();
-        //$resultPage->setActiveMenu('Mageplaza_BetterSlider::slider');
-        $resultPage->getConfig()->getTitle()->prepend((__('Sliders')));
-        return $this;
+        $resultPage = $this->resultPage = $this->resultPageFactory->create();
+        $resultPage->getConfig()->getTitle()->prepend((__('Manage Sliders')));
+
+        return $resultPage;
     }
 }

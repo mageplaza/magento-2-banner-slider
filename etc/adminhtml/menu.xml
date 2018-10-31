@@ -1,24 +1,30 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
     <menu>
-        <add id="Mageplaza_BetterSlider::betterslider" title="Banner Slider" module="Mageplaza_BetterSlider" sortOrder="55" resource="Mageplaza_BetterSlider::betterslider"/>
-        <add id="Mageplaza_BetterSlider::banner" title="Banners" module="Mageplaza_BetterSlider" sortOrder="10" action="mageplaza_betterslider/banner" resource="Mageplaza_BetterSlider::banner" parent="Mageplaza_BetterSlider::betterslider"/>
-        <add id="Mageplaza_BetterSlider::slider" title="Sliders" module="Mageplaza_BetterSlider" sortOrder="20" action="mageplaza_betterslider/slider" resource="Mageplaza_BetterSlider::slider" parent="Mageplaza_BetterSlider::betterslider"/>
+        <add id="Mageplaza_BannerSlider::bannerslider" title="Banner Sliders" module="Mageplaza_BannerSlider" sortOrder="100" resource="Mageplaza_BannerSlider::bannerslider" parent="Magento_Backend::content"/>
+        <add id="Mageplaza_BannerSlider::banner" title="Manage Banner" module="Mageplaza_BannerSlider" sortOrder="20" parent="Mageplaza_BannerSlider::bannerslider" action="mpbannerslider/banner/index" resource="Mageplaza_BannerSlider::banner"/>
+        <add id="Mageplaza_BannerSlider::slider" title="Manage Slider" module="Mageplaza_BannerSlider" sortOrder="30" parent="Mageplaza_BannerSlider::bannerslider" action="mpbannerslider/slider/index" resource="Mageplaza_BannerSlider::slider"/>
+        <add id="Mageplaza_BannerSlider::configuration" title="Configuration" module="Mageplaza_BannerSlider" sortOrder="70" parent="Mageplaza_BannerSlider::bannerslider" action="adminhtml/system_config/edit/section/bannerslider" resource="Mageplaza_BannerSlider::configuration"/>
     </menu>
 </config>

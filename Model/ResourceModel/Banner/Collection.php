@@ -1,21 +1,33 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Model\ResourceModel\Banner;
 
-class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+namespace Mageplaza\BannerSlider\Model\ResourceModel\Banner;
+
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+
+/**
+ * Class Collection
+ * @package Mageplaza\BannerSlider\Model\ResourceModel\Banner
+ */
+class Collection extends AbstractCollection
 {
     /**
      * ID Field Name
@@ -29,7 +41,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * 
      * @var string
      */
-    protected $_eventPrefix = 'mageplaza_betterslider_banner_collection';
+    protected $_eventPrefix = 'mageplaza_bannerslider_banner_collection';
 
     /**
      * Event object
@@ -45,7 +57,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init('Mageplaza\BetterSlider\Model\Banner', 'Mageplaza\BetterSlider\Model\ResourceModel\Banner');
+        $this->_init('Mageplaza\BannerSlider\Model\Banner', 'Mageplaza\BannerSlider\Model\ResourceModel\Banner');
     }
 
     /**

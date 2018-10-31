@@ -1,6 +1,6 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
+ * Mageplaza_BannerSlider extension
  *                     NOTICE OF LICENSE
  * 
  *                     This source file is subject to the Mageplaza License
@@ -9,11 +9,11 @@
  * https://www.mageplaza.com/LICENSE.txt
  * 
  *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
+ *                     @package   Mageplaza_BannerSlider
  *                     @copyright Copyright (c) 2016
  *                     @license   https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Controller\Adminhtml\Banner;
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
 class MassDelete extends \Magento\Backend\App\Action
 {
@@ -27,7 +27,7 @@ class MassDelete extends \Magento\Backend\App\Action
     /**
      * Collection Factory
      * 
-     * @var \Mageplaza\BetterSlider\Model\ResourceModel\Banner\CollectionFactory
+     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
      */
     protected $collectionFactory;
 
@@ -35,12 +35,12 @@ class MassDelete extends \Magento\Backend\App\Action
      * constructor
      * 
      * @param \Magento\Ui\Component\MassAction\Filter $filter
-     * @param \Mageplaza\BetterSlider\Model\ResourceModel\Banner\CollectionFactory $collectionFactory
+     * @param \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory $collectionFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
         \Magento\Ui\Component\MassAction\Filter $filter,
-        \Mageplaza\BetterSlider\Model\ResourceModel\Banner\CollectionFactory $collectionFactory,
+        \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory $collectionFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
@@ -61,7 +61,7 @@ class MassDelete extends \Magento\Backend\App\Action
 
         $delete = 0;
         foreach ($collection as $item) {
-            /** @var \Mageplaza\BetterSlider\Model\Banner $item */
+            /** @var \Mageplaza\BannerSlider\Model\Banner $item */
             $item->delete();
             $delete++;
         }

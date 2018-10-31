@@ -1,0 +1,42 @@
+<?php
+/**
+ * Mageplaza
+ * NOTICE OF LICENSE
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ * DISCLAIMER
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+
+$mode = 'grid';
+if ($items = $block->getBannerCollection()): ?>
+    <div class="carousel-container">
+        <div id="banner-slider-carousel">
+            <?php $iterator = 1; ?>
+            <div id="bannerslider-list-items-<?php echo $block->getSliderId(); ?>" class="owl-carousel owl-theme">
+                <?php foreach ($items as $item): ?>
+                    <?php echo ($iterator++ == 1) ? '<li class="banner-item banner-slider"">' : '</li><li class="banner-item banner-slider"">' ?>
+                    <div class="bannerslider-item-info">
+                        <a class="banner-image" href="https://<?php echo $item->getUrlBanner() ?>">
+                            <img class="img-responsive" src="<?php echo $item->getImageUrl() ?>">
+                        </a>
+                    </div>
+                    <?php echo ($iterator == count($items) + 1) ? '</li>' : '' ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php echo $block->getPagerHtml() ?>
+    </div>
+
+    <script>
+        require(['jquery', 'Mageplaza_BannerSlider/js/owl.carousel.min'], function ($) {
+            $('#bannerslider-list-items-<?php echo $block->getSliderId(); ?>').owlCarousel(<?php echo($block->getAllOptions())?>);
+        });
+    </script>
+<?php endif; ?>

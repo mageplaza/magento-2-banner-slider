@@ -1,19 +1,29 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Model\ResourceModel;
+namespace Mageplaza\BannerSlider\Model\ResourceModel;
+
+use Magento\Framework\Stdlib\DateTime\DateTime;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Model\ResourceModel\Db\Context;
+use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
 
 class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
@@ -39,6 +49,11 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     protected $eventManager;
 
     /**
+     * @var bannerHelper
+     */
+    protected $bannerHelper;
+
+    /**
      * constructor
      * 
      * @param \Magento\Framework\Stdlib\DateTime\DateTime $date
@@ -46,15 +61,18 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      */
     public function __construct(
-        \Magento\Framework\Stdlib\DateTime\DateTime $date,
-        \Magento\Framework\Event\ManagerInterface $eventManager,
-        \Magento\Framework\Model\ResourceModel\Db\Context $context
+        DateTime $date,
+        ManagerInterface $eventManager,
+        Context $context,
+        bannerHelper $helperData
     )
     {
         $this->date         = $date;
         $this->eventManager = $eventManager;
+        $this->bannerHelper = $helperData;
+
         parent::__construct($context);
-        $this->sliderBannerTable = $this->getTable('mageplaza_betterslider_banner_slider');
+        $this->sliderBannerTable = $this->getTable('mageplaza_bannerslider_banner_slider');
     }
 
 
@@ -65,14 +83,15 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('mageplaza_betterslider_slider', 'slider_id');
+        $this->_init('mageplaza_bannerslider_slider', 'slider_id');
     }
 
     /**
      * Retrieves Slider Name from DB by passed id.
+     * @param $id
      *
-     * @param string $id
-     * @return string|bool
+     * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getSliderNameById($id)
     {
@@ -83,37 +102,58 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $binds = ['slider_id' => (int)$id];
         return $adapter->fetchOne($select, $binds);
     }
+
     /**
      * before save callback
+     * @param \Magento\Framework\Model\AbstractModel $object
      *
-     * @param \Magento\Framework\Model\AbstractModel|\Mageplaza\BetterSlider\Model\Slider $object
-     * @return $this
+     * @return \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+     * @throws \Zend_Serializer_Exception
      */
     protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
+        //set default Update At and Create At time post
         $object->setUpdatedAt($this->date->date());
         if ($object->isObjectNew()) {
             $object->setCreatedAt($this->date->date());
         }
+        $storeIds = $object->getStoreIds();
+        if (is_array($storeIds)) {
+            $object->setStoreIds(implode(',', $storeIds));
+        }
+
+        $groupIds = $object->getCustomerGroupIds();
+        if (is_array($groupIds)) {
+            $object->setCustomerGroupIds(implode(',', $groupIds));
+        }
+
+        $responsiveItems = $object->getResponsiveItems();
+        if ($responsiveItems && is_array($responsiveItems)) {
+            $object->setResponsiveItems($this->bannerHelper->serialize($responsiveItems));
+        } else {
+            $object->setResponsiveItems($this->bannerHelper->serialize([]));
+        }
+
         return parent::_beforeSave($object);
     }
     /**
      * after save callback
      *
-     * @param \Magento\Framework\Model\AbstractModel|\Mageplaza\BetterSlider\Model\Slider $object
+     * @param \Magento\Framework\Model\AbstractModel|\Mageplaza\BannerSlider\Model\Slider $object
      * @return $this
      */
     protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
     {
         $this->saveBannerRelation($object);
+
         return parent::_afterSave($object);
     }
 
     /**
-     * @param \Mageplaza\BetterSlider\Model\Slider $slider
+     * @param \Mageplaza\BannerSlider\Model\Slider $slider
      * @return array
      */
-    public function getBannersPosition(\Mageplaza\BetterSlider\Model\Slider $slider)
+    public function getBannersPosition(\Mageplaza\BannerSlider\Model\Slider $slider)
     {
         $select = $this->getConnection()->select()->from(
             $this->sliderBannerTable,
@@ -127,10 +167,10 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * @param \Mageplaza\BetterSlider\Model\Slider $slider
+     * @param \Mageplaza\BannerSlider\Model\Slider $slider
      * @return $this
      */
-    protected function saveBannerRelation(\Mageplaza\BetterSlider\Model\Slider $slider)
+    protected function saveBannerRelation(\Mageplaza\BannerSlider\Model\Slider $slider)
     {
         $slider->setIsChangedBannerList(false);
         $id = $slider->getId();
@@ -175,7 +215,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         if (!empty($insert) || !empty($delete)) {
             $bannerIds = array_unique(array_merge(array_keys($insert), array_keys($delete)));
             $this->eventManager->dispatch(
-                'mageplaza_betterslider_slider_change_banners',
+                'mageplaza_bannerslider_slider_change_banners',
                 ['slider' => $slider, 'banner_ids' => $bannerIds]
             );
         }

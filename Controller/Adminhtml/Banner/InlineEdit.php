@@ -1,6 +1,6 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
+ * Mageplaza_BannerSlider extension
  *                     NOTICE OF LICENSE
  * 
  *                     This source file is subject to the Mageplaza License
@@ -9,13 +9,13 @@
  * https://www.mageplaza.com/LICENSE.txt
  * 
  *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
+ *                     @package   Mageplaza_BannerSlider
  *                     @copyright Copyright (c) 2016
  *                     @license   https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Controller\Adminhtml\Banner;
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
-abstract class InlineEdit extends \Magento\Backend\App\Action
+class InlineEdit extends \Magento\Backend\App\Action
 {
     /**
      * JSON Factory
@@ -27,7 +27,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
     /**
      * Banner Factory
      * 
-     * @var \Mageplaza\BetterSlider\Model\BannerFactory
+     * @var \Mageplaza\BannerSlider\Model\BannerFactory
      */
     protected $bannerFactory;
 
@@ -35,12 +35,12 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
      * constructor
      * 
      * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
-     * @param \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory
+     * @param \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
         \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
-        \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory,
+        \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory,
         \Magento\Backend\App\Action\Context $context
     )
     {
@@ -66,7 +66,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
             ]);
         }
         foreach (array_keys($postItems) as $bannerId) {
-            /** @var \Mageplaza\BetterSlider\Model\Banner $banner */
+            /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
             $banner = $this->bannerFactory->create()->load($bannerId);
             try {
                 $bannerData = $postItems[$bannerId];//todo: handle dates
@@ -95,11 +95,11 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
     /**
      * Add Banner id to error message
      *
-     * @param \Mageplaza\BetterSlider\Model\Banner $banner
+     * @param \Mageplaza\BannerSlider\Model\Banner $banner
      * @param string $errorText
      * @return string
      */
-    protected function getErrorWithBannerId(\Mageplaza\BetterSlider\Model\Banner $banner, $errorText)
+    protected function getErrorWithBannerId(\Mageplaza\BannerSlider\Model\Banner $banner, $errorText)
     {
         return '[Banner ID: ' . $banner->getId() . '] ' . $errorText;
     }

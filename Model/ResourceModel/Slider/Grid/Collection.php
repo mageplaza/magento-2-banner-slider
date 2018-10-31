@@ -1,6 +1,6 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
+ * Mageplaza_BannerSlider extension
  *                     NOTICE OF LICENSE
  * 
  *                     This source file is subject to the Mageplaza License
@@ -9,13 +9,13 @@
  * https://www.mageplaza.com/LICENSE.txt
  * 
  *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
+ *                     @package   Mageplaza_BannerSlider
  *                     @copyright Copyright (c) 2016
  *                     @license   https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Model\ResourceModel\Slider\Grid;
+namespace Mageplaza\BannerSlider\Model\ResourceModel\Slider\Grid;
 
-class Collection extends \Mageplaza\BetterSlider\Model\ResourceModel\Slider\Collection implements \Magento\Framework\Api\Search\SearchResultInterface
+class Collection extends \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection implements \Magento\Framework\Api\Search\SearchResultInterface
 {
     /**
      * Aggregations

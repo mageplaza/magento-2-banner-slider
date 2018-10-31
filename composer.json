@@ -2,20 +2,17 @@
   "name": "mageplaza/magento-2-banner-slider-extension",
   "description": "Magento 2 Banner Slider extension",
   "require": {
-    "mageplaza/module-core": "*"
+    "mageplaza/module-core": "^1.3.13"
   },
   "type": "magento2-module",
-  "version": "1.2.1",
-  "license": [
-    "OSL-3.0",
-    "AFL-3.0"
-  ],
+  "version": "2.0.0",
+  "license": "proprietary",
   "authors": [
     {
-      "name": "Sam",
-      "email": "sam@mageplaza.com",
+      "name": "Mageplaza",
+      "email": "support@mageplaza.com",
       "homepage": "https://www.mageplaza.com",
-      "role": "Leader"
+      "role": "Technical Support"
     }
   ],
   "autoload": {
@@ -23,7 +20,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Mageplaza\\BetterSlider\\": ""
+      "Mageplaza\\BannerSlider\\": ""
     }
   }
 }
