@@ -25,5 +25,6 @@
         <css src="Mageplaza_BannerSlider::css/owl.carousel.min.css"/>
         <css src="Mageplaza_BannerSlider::css/owl.theme.default.min.css"/>
         <css src="Mageplaza_BannerSlider::css/animate.min.css"/>
+        <css src="Mageplaza_BannerSlider::css/bannerslider.css"/>
     </head>
 </page>

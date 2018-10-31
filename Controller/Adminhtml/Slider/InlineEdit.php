@@ -15,10 +15,14 @@
  *
  * @category    Mageplaza
  * @package     Mageplaza_BannerSlider
- * @copyright   Copyright (c) 2018 Mageplaza (https://www.mageplaza.com/)
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+
+use Magento\Framework\Controller\Result\JsonFactory;
+use Mageplaza\BannerSlider\Model\SliderFactory;
+use Magento\Backend\App\Action\Context;
 
 class InlineEdit extends \Magento\Backend\App\Action
 {
@@ -32,25 +36,25 @@ class InlineEdit extends \Magento\Backend\App\Action
     /**
      * Banner Factory
      * 
-     * @var \Mageplaza\BannerSlider\Model\BannerFactory
+     * @var \Mageplaza\BannerSlider\Model\SliderFactory
      */
-    protected $bannerFactory;
+    protected $sliderFactory;
 
     /**
-     * constructor
-     * 
-     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
-     * @param \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory
-     * @param \Magento\Backend\App\Action\Context $context
+     * InlineEdit constructor.
+     *
+     * @param JsonFactory $jsonFactory
+     * @param SliderFactory $bannerFactory
+     * @param Context $context
      */
     public function __construct(
-        \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
-        \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory,
-        \Magento\Backend\App\Action\Context $context
+        JsonFactory $jsonFactory,
+        SliderFactory $sliderFactory,
+        Context $context
     )
     {
         $this->jsonFactory   = $jsonFactory;
-        $this->bannerFactory = $bannerFactory;
+        $this->sliderFactory = $sliderFactory;
         parent::__construct($context);
     }
 
@@ -70,22 +74,22 @@ class InlineEdit extends \Magento\Backend\App\Action
                 'error' => true,
             ]);
         }
-        foreach (array_keys($postItems) as $bannerId) {
-            /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
-            $banner = $this->bannerFactory->create()->load($bannerId);
+        foreach (array_keys($postItems) as $sliderId) {
+            /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
+            $slider = $this->sliderFactory->create()->load($sliderId);
             try {
-                $bannerData = $postItems[$bannerId];//todo: handle dates
-                $banner->addData($bannerData);
-                $banner->save();
+                $sliderData = $postItems[$sliderId];
+                $slider->addData($sliderData);
+                $slider->save();
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
+                $messages[] = $this->getErrorWithSliderId($slider, $e->getMessage());
                 $error = true;
             } catch (\RuntimeException $e) {
-                $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
+                $messages[] = $this->getErrorWithSliderId($slider, $e->getMessage());
                 $error = true;
             } catch (\Exception $e) {
-                $messages[] = $this->getErrorWithBannerId(
-                    $banner,
+                $messages[] = $this->getErrorWithSliderId(
+                    $slider,
                     __('Something went wrong while saving the Banner.')
                 );
                 $error = true;
@@ -98,14 +102,15 @@ class InlineEdit extends \Magento\Backend\App\Action
     }
 
     /**
-     * Add Banner id to error message
+     * Add slider id to error message
      *
-     * @param \Mageplaza\BannerSlider\Model\Banner $banner
-     * @param string $errorText
+     * @param \Mageplaza\BannerSlider\Model\Slider $slider
+     * @param $errorText
+     *
      * @return string
      */
-    protected function getErrorWithBannerId(\Mageplaza\BannerSlider\Model\Banner $banner, $errorText)
+    protected function getErrorWithSliderId(\Mageplaza\BannerSlider\Model\Slider $slider, $errorText)
     {
-        return '[Banner ID: ' . $banner->getId() . '] ' . $errorText;
+        return '[Slider ID: ' . $slider->getId() . '] ' . $errorText;
     }
 }

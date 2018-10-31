@@ -34,6 +34,16 @@ class Design extends Generic implements TabInterface
 
     protected $_yesno;
 
+    /**
+     * Design constructor.
+     *
+     * @param Context $context
+     * @param Registry $registry
+     * @param FormFactory $formFactory
+     * @param Effect $effect
+     * @param Yesno $yesno
+     * @param array $data
+     */
     public function __construct(
         Context $context,
         Registry $registry,

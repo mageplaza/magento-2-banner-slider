@@ -73,7 +73,7 @@ class Data extends AbstractData
     }
 
     /**
-     * Retrieve all configuration options for product slider
+     * Retrieve all configuration options for banner slider
      *
      * @return string
      * @throws \Zend_Serializer_Exception
@@ -110,7 +110,7 @@ class Data extends AbstractData
     }
 
     /**
-     * Retrieve responsive values for product slider
+     * Retrieve responsive values for banner slider
      *
      * @return string
      * @throws \Zend_Serializer_Exception

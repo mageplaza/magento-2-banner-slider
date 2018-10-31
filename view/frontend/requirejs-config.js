@@ -19,7 +19,12 @@
  */
 
 var config = {
+    paths: {
+        'mageplaza/bannerslider/owlcarousel': "Mageplaza_BannerSlider/js/owl.carousel.min"
+    },
     shim: {
-        'Mageplaza_BannerSlider/js/owl.carousel.min': ['jquery', 'jquery/ui']
+        'mageplaza/bannerslider/owlcarousel': {
+            deps: ['jquery']
+        }
     }
 };

@@ -21,12 +21,18 @@ if ($items = $block->getBannerCollection()): ?>
             <?php $iterator = 1; ?>
             <div id="bannerslider-list-items-<?php echo $block->getSliderId(); ?>" class="owl-carousel owl-theme">
                 <?php foreach ($items as $item): ?>
-                    <?php echo ($iterator++ == 1) ? '<li class="banner-item banner-slider"">' : '</li><li class="banner-item banner-slider"">' ?>
+                    <?php echo ($iterator++ == 1) ? '<li class="banner-item banner-slider">' : '</li><li class="banner-item banner-slider">' ?>
+                    <?php if ($item->getType() == 1): ?>
+                    <div class="item-video">
+                        <a class="owl-video" href="<?php echo $item->getUrlVideo() ?>"></a>
+                    </div>
+                    <?php else: ?>
                     <div class="bannerslider-item-info">
-                        <a class="banner-image" href="https://<?php echo $item->getUrlBanner() ?>">
+                        <a class="banner-image" href="https://<?php echo $item->getUrlBanner() ?>" <?php echo ($item->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
                             <img class="img-responsive" src="<?php echo $item->getImageUrl() ?>">
                         </a>
                     </div>
+                    <?php endif; ?>
                     <?php echo ($iterator == count($items) + 1) ? '</li>' : '' ?>
                 <?php endforeach; ?>
             </div>
@@ -35,7 +41,7 @@ if ($items = $block->getBannerCollection()): ?>
     </div>
 
     <script>
-        require(['jquery', 'Mageplaza_BannerSlider/js/owl.carousel.min'], function ($) {
+        require(['jquery', 'mageplaza/bannerslider/owlcarousel'], function ($) {
             $('#bannerslider-list-items-<?php echo $block->getSliderId(); ?>').owlCarousel(<?php echo($block->getAllOptions())?>);
         });
     </script>

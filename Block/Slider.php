@@ -82,6 +82,9 @@ class Slider extends Template
         return time();
     }
 
+    /**
+     * @return \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection|null
+     */
     public function getBannerCollection()
     {
         if ($sliderId = $this->getSliderId()) {
@@ -122,7 +125,7 @@ class Slider extends Template
         $allOptionsConfig = $this->helperData->getAllOptions();
         $effect = $this->getEffect();
 
-        return '{' . $allOptionsConfig . ',' . $effect . '}';
+        return '{' . $allOptionsConfig . ',video:true,center:true,autoHeight:true,' . $effect . '}';
     }
 
     /**

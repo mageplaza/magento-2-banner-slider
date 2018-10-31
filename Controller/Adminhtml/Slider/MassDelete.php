@@ -18,7 +18,11 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+
+use Magento\Ui\Component\MassAction\Filter;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
+use Magento\Backend\App\Action\Context;
 
 class MassDelete extends \Magento\Backend\App\Action
 {
@@ -32,21 +36,21 @@ class MassDelete extends \Magento\Backend\App\Action
     /**
      * Collection Factory
      * 
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
+     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory
      */
     protected $collectionFactory;
 
     /**
-     * constructor
-     * 
-     * @param \Magento\Ui\Component\MassAction\Filter $filter
-     * @param \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory $collectionFactory
-     * @param \Magento\Backend\App\Action\Context $context
+     * MassDelete constructor.
+     *
+     * @param Filter $filter
+     * @param CollectionFactory $collectionFactory
+     * @param Context $context
      */
     public function __construct(
-        \Magento\Ui\Component\MassAction\Filter $filter,
-        \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory $collectionFactory,
-        \Magento\Backend\App\Action\Context $context
+        Filter $filter,
+        CollectionFactory $collectionFactory,
+        Context $context
     )
     {
         $this->filter            = $filter;
@@ -56,9 +60,8 @@ class MassDelete extends \Magento\Backend\App\Action
 
 
     /**
-     * execute action
-     *
-     * @return \Magento\Backend\Model\View\Result\Redirect
+     * @return \Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute()
     {
@@ -66,7 +69,7 @@ class MassDelete extends \Magento\Backend\App\Action
 
         $delete = 0;
         foreach ($collection as $item) {
-            /** @var \Mageplaza\BannerSlider\Model\Banner $item */
+            /** @var \Mageplaza\BannerSlider\Model\Slider $item */
             $item->delete();
             $delete++;
         }

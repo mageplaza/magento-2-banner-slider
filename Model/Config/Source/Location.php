@@ -14,7 +14,7 @@
  * version in the future.
  *
  * @category    Mageplaza
- * @package     Mageplaza_Productslider
+ * @package     Mageplaza_BannerSlider
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
@@ -25,7 +25,7 @@ use Magento\Framework\Option\ArrayInterface;
 
 /**
  * Class Location
- * @package Mageplaza\Productslider\Model\Config\SourceF
+ * @package Mageplaza\BannerSlider\Model\Config\Source
  */
 class Location implements ArrayInterface
 {

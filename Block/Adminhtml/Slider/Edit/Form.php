@@ -20,7 +20,8 @@
  */
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit;
 
-class Form extends \Magento\Backend\Block\Widget\Form\Generic
+use Magento\Backend\Block\Widget\Form\Generic;
+class Form extends Generic
 {
     /**
      * @return Generic

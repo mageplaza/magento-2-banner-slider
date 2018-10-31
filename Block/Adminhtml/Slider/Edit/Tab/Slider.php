@@ -33,6 +33,10 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Convert\DataObject;
 use Magento\Framework\Stdlib\DateTime;
 
+/**
+ * Class Slider
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab
+ */
 class Slider extends Generic implements TabInterface
 {
     /**
@@ -51,11 +55,6 @@ class Slider extends Generic implements TabInterface
      * @var \Magento\Store\Model\System\Store
      */
     protected $_systemStore;
-
-    /**
-     * @var \Mageplaza\Productslider\Model\ResourceModel\SliderFactory
-     */
-    protected $_resourceModelSliderFactory;
 
     /**
      * @var \Magento\Customer\Api\GroupRepositoryInterface

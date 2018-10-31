@@ -23,9 +23,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="mageplaza" translate="label" sortOrder="1">
-            <label>mageplaza</label>
-        </tab>
         <section id="bannerslider" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1"
                  showInStore="1">
             <class>separator-top</class>
@@ -35,18 +32,6 @@
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>General</label>
-                <field id="head" translate="label" type="button" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>Mageplaza\Core\Block\Adminhtml\System\Config\Head</frontend_model>
-                     <comment><![CDATA[
-                        <ul class="mageplaza-head">
-                            <li><a href="https://mageplaza.freshdesk.com/" target="_blank">Helpdesk</a> </li>
-                            <li><a href="https://docs.mageplaza.com/banner-slider-m2/index.html" target="_blank">User Guide</a> </li>
-                            <li>Increase 25% conversion rate with <a href="https://goo.gl/6chU3c" target="_blank">Layered Navigation</a></li>
-                            <li><a href="https://www.mageplaza.com/magento-2-seo-extension/?utm_source=magento2&utm_medium=documents&utm_campaign=m2-product-slider" target="_blank">SEO Ultimate</a> </li>
-                            <li>The most popular <a href="https://www.mageplaza.com/magento-2-one-step-checkout-extension/?utm_source=configuration&utm_medium=link&utm_campaign=m2-product-slider" target="_blank">One Step Checkout</a></li>
-                        </ul>
-                        ]]></comment>
-                </field>
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

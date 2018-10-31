@@ -15,22 +15,22 @@
  *
  * @category    Mageplaza
  * @package     Mageplaza_BannerSlider
- * @copyright   Copyright (c) 2018 Mageplaza (https://www.mageplaza.com/)
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
-namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
-use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
 
 /**
  * Class MassStatus
- * @package Mageplaza\BannerSlider\Controller\Adminhtml\Banner
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Slider
  */
 class MassStatus extends Action
 {
@@ -44,7 +44,7 @@ class MassStatus extends Action
     /**
      * Collection Factory
      *
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
+     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory
      */
     public $collectionFactory;
 
@@ -74,22 +74,22 @@ class MassStatus extends Action
     {
         $collection    = $this->filter->getCollection($this->collectionFactory->create());
         $status        = (int)$this->getRequest()->getParam('status');
-        $bannerUpdated = 0;
-        foreach ($collection as $banner) {
+        $sliderUpdated = 0;
+        foreach ($collection as $slider) {
             try {
-                $banner->setStatus($status)
+                $slider->setStatus($status)
                     ->save();
 
-                $bannerUpdated++;
+                $sliderUpdated++;
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage(__('Something went wrong while updating status for %1.', $banner->getName()));
+                $this->messageManager->addErrorMessage(__('Something went wrong while updating status for %1.', $slider->getName()));
             }
         }
 
-        if ($bannerUpdated) {
-            $this->messageManager->addSuccessMessage(__('A total of %1 record(s) have been updated.', $bannerUpdated));
+        if ($sliderUpdated) {
+            $this->messageManager->addSuccessMessage(__('A total of %1 record(s) have been updated.', $sliderUpdated));
         }
 
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */

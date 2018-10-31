@@ -14,7 +14,7 @@
  * version in the future.
  *
  * @category    Mageplaza
- * @package     Mageplaza_Productslider
+ * @package     Mageplaza_BannerSlider
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
@@ -29,7 +29,7 @@ use Magento\Framework\View\LayoutInterface;
 
 /**
  * Class Responsive
- * @package Mageplaza\Productslider\Block\Adminhtml\Slider\Edit\Tab\Renderer
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer
  */
 class Responsive extends AbstractElement
 {

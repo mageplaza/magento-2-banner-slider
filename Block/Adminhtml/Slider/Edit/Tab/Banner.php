@@ -29,6 +29,10 @@ use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Helper\Data as backendHelper;
 use Magento\Config\Model\Config\Source\Enabledisable;
 
+/**
+ * Class Banner
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab
+ */
 class Banner extends Extended implements TabInterface
 {
     /**
