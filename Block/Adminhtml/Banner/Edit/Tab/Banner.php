@@ -181,8 +181,8 @@ class Banner extends Generic implements TabInterface
             'text',
             [
                 'name'  => 'url_banner',
-                'label' => __('Banner Url'),
-                'title' => __('Banner Url'),
+                'label' => __('Url'),
+                'title' => __('Url'),
             ]
         );
 

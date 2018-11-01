@@ -20,7 +20,13 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
-class Banners extends \Mageplaza\BannerSlider\Controller\Adminhtml\Slider
+use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Magento\Framework\View\Result\LayoutFactory;
+use Mageplaza\BannerSlider\Model\SliderFactory;
+use Magento\Framework\Registry;
+use Magento\Backend\App\Action\Context;
+
+class Banners extends Slider
 {
     /**
      * Result layout factory
@@ -30,18 +36,18 @@ class Banners extends \Mageplaza\BannerSlider\Controller\Adminhtml\Slider
     protected $resultLayoutFactory;
 
     /**
-     * constructor
-     * 
-     * @param \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory
-     * @param \Mageplaza\BannerSlider\Model\SliderFactory $bannerFactory
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\App\Action\Context $context
+     * Banners constructor.
+     *
+     * @param LayoutFactory $resultLayoutFactory
+     * @param SliderFactory $bannerFactory
+     * @param Registry $registry
+     * @param Context $context
      */
     public function __construct(
-        \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
-        \Mageplaza\BannerSlider\Model\SliderFactory $bannerFactory,
-        \Magento\Framework\Registry $registry,
-        \Magento\Backend\App\Action\Context $context
+        LayoutFactory $resultLayoutFactory,
+        SliderFactory $bannerFactory,
+        Registry $registry,
+        Context $context
     )
     {
         $this->resultLayoutFactory = $resultLayoutFactory;

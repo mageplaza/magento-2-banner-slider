@@ -43,6 +43,15 @@ class Slider extends Template
      */
     protected $_date;
 
+    /**
+     * Slider constructor.
+     *
+     * @param Template\Context $context
+     * @param bannerHelper $helperData
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param DateTime $dateTime
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
         bannerHelper $helperData,
@@ -89,54 +98,56 @@ class Slider extends Template
     {
         if ($sliderId = $this->getSliderId()) {
             $collection = $this->helperData->getBannerCollection($sliderId);
+            $collection->addFieldToFilter('status',1);
             return $collection;
         }
         return null;
     }
 
     /**
-     * @return string
-     */
-//    public function getAllOptions()
-//    {
-//        $sliderOptions = '';
-//        $allConfig     = $this->helperData->getModuleConfig('slider_design');
-//
-//        foreach ($allConfig as $key => $value) {
-//            if ($key == 'item_slider') {
-//                $sliderOptions = $sliderOptions . $this->getResponsiveConfig();
-//            } else if ($key != 'responsive') {
-//                if(in_array($key, ['loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayHoverPause'])){
-//                    $value = $value ? 'true' : 'false';
-//                }
-//                $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
-//            }
-//        }
-//
-//        return '{' . $sliderOptions . '}';
-//    }
-
-    /**
+     * Retrieve all options for banner slider
+     *
      * @return string
      * @throws \Zend_Serializer_Exception
      */
     public function getAllOptions()
     {
+        $sliderOptions = '';
         $allOptionsConfig = $this->helperData->getAllOptions();
+
+        $slider = $this->getSlider();
+        if ($slider && $slider->getDesign() == 1) {
+            $allOptions = $slider->getData();
+            foreach ($allOptions as $key => $value) {
+                if ($key == 'responsive_items') {
+                    $sliderOptions = $sliderOptions . $this->getResponseValue();
+                } else if ($key != 'responsive') {
+                    if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayHoverPause'])){
+                        $value = $value ? 'true' : 'false';
+                        $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
+                    }
+                    if ($key == 'autoplayTimeout') {
+                        $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
+                    }
+                }
+            }
+            $allOptionsConfig = $sliderOptions;
+        }
+
         $effect = $this->getEffect();
 
-        return '{' . $allOptionsConfig . ',video:true,center:true,autoHeight:true,' . $effect . '}';
+        return '{' . $allOptionsConfig . ',video:true,center:true,' . $effect . '}';
     }
 
     /**
      * @return string
      */
-    public function getResponsiveConfig()
+    public function getResponseValue()
     {
         $slider = $this->getSlider();
-        if ($slider && $slider->getIsResponsive()) {
+        if ($slider && $slider->getDesign() == 1 && $slider->getIsResponsive()) {
             try {
-                if ($slider->getIsResponsive() == 2) {
+                if ($slider->getIsResponsive() == 0 || $slider->getIsResponsive() == null) {
                     return $responsiveConfig = $this->helperData->getResponseValue();
                 } else {
                     $responsiveConfig = $slider->getResponsiveItems() ? $this->helperData->unserialize($slider->getResponsiveItems()) : [];
@@ -156,7 +167,7 @@ class Slider extends Template
             return 'responsive:{' . $responsiveOptions . '}';
         }
 
-        return '';
+        return 'items: 1';
     }
 
     public function getEffect()

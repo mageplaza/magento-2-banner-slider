@@ -28,6 +28,8 @@
             </general>
             <slider_design>
                 <responsive>0</responsive>
+                <autoWidth>0</autoWidth>
+                <autoHeight>0</autoHeight>
                 <loop>1</loop>
                 <nav>0</nav>
                 <dots>0</dots>

@@ -109,6 +109,24 @@ class Design extends Generic implements TabInterface
             'label' => __('Max Items slider'),
             'title' => __('Max Items slider'),
         ]);
+        $autoWidth = $fieldset->addField(
+            'autoWidth',
+            'select',
+            [
+                'name'   => 'autoWidth',
+                'label'  => __('Auto Width'),
+                'title'  => __('Auto Width'),
+                'values' => $this->_yesno->toOptionArray()
+            ]);
+        $autoHeight = $fieldset->addField(
+            'autoHeight',
+            'select',
+            [
+                'name'   => 'autoHeight',
+                'label'  => __('Auto Height'),
+                'title'  => __('Auto Height'),
+                'values' => $this->_yesno->toOptionArray()
+            ]);
         $loop = $fieldset->addField(
             'loop',
             'select',
@@ -137,10 +155,10 @@ class Design extends Generic implements TabInterface
                 'values' => $this->_yesno->toOptionArray()
             ]);
         $lazyload = $fieldset->addField(
-            'lazyload',
+            'lazyLoad',
             'select',
             [
-                'name'   => 'lazyload',
+                'name'   => 'lazyLoad',
                 'label'  => __('Lazy load images'),
                 'title'  => __('Lazy load images'),
                 'values' => $this->_yesno->toOptionArray()
@@ -167,6 +185,8 @@ class Design extends Generic implements TabInterface
                              ->addFieldMap($design->getHtmlId(), $design->getName())
                              ->addFieldMap($responsive->getHtmlId(), $responsive->getName())
                              ->addFieldMap($responsiveItem->getHtmlId(), $responsiveItem->getName())
+                             ->addFieldMap($autoWidth->getHtmlId(), $autoWidth->getName())
+                             ->addFieldMap($autoHeight->getHtmlId(), $autoHeight->getName())
                              ->addFieldMap($loop->getHtmlId(), $loop->getName())
                              ->addFieldMap($nav->getHtmlId(), $nav->getName())
                              ->addFieldMap($dots->getHtmlId(), $dots->getName())
@@ -175,6 +195,8 @@ class Design extends Generic implements TabInterface
                              ->addFieldMap($timeout->getHtmlId(), $timeout->getName())
                              ->addFieldDependence($responsive->getName(),$design->getName(),'1')
                              ->addFieldDependence($responsiveItem->getName(),$design->getName(),'1')
+                             ->addFieldDependence($autoWidth->getName(),$design->getName(),'1')
+                             ->addFieldDependence($autoHeight->getName(),$design->getName(),'1')
                              ->addFieldDependence($loop->getName(),$design->getName(),'1')
                              ->addFieldDependence($nav->getName(),$design->getName(),'1')
                              ->addFieldDependence($dots->getName(),$design->getName(),'1')

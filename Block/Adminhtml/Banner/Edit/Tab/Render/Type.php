@@ -16,7 +16,10 @@
 
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render;
 
-
+/**
+ * Class Type
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render
+ */
 class Type extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer
 {
     /**

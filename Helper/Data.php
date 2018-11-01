@@ -86,14 +86,13 @@ class Data extends AbstractData
             if ($key == 'item_slider') {
                 $sliderOptions = $sliderOptions . $this->getResponseValue();
             } else if ($key != 'responsive') {
-                if(in_array($key, ['loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayHoverPause'])){
+                if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayHoverPause'])){
                     $value = $value ? 'true' : 'false';
                 }
                 $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
             }
         }
 
-//        return '{' . $sliderOptions . '}';
         return $sliderOptions;
     }
 
@@ -150,6 +149,8 @@ class Data extends AbstractData
             ['position']
         );
 
+        $collection->addOrder('position','ASC');
+
         return $collection;
     }
 
@@ -163,7 +164,8 @@ class Data extends AbstractData
         $collection = $this->sliderFactory->create()
                                           ->getCollection()
                                           ->addFieldToFilter('customer_group_ids', ['finset' => $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_GROUP)])
-                                          ->addFieldToFilter('status', 1);
+                                          ->addFieldToFilter('status', 1)
+                                          ->addOrder('priority');
 
         $collection->getSelect()
                    ->where('FIND_IN_SET(0, store_ids) OR FIND_IN_SET(?, store_ids)', $this->storeManager->getStore()->getId())

@@ -159,7 +159,7 @@ class Slider extends Generic implements TabInterface
 
         $fieldset->addField(
             'location',
-            'select',
+            'multiselect',
             [
             'name'   => 'location',
             'label'  => __('Position'),

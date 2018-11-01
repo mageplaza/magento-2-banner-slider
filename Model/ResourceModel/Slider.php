@@ -117,6 +117,12 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         if ($object->isObjectNew()) {
             $object->setCreatedAt($this->date->date());
         }
+
+        $location = $object->getLocation();
+        if (is_array($location)) {
+            $object->setLocation(implode(',', $location));
+        }
+
         $storeIds = $object->getStoreIds();
         if (is_array($storeIds)) {
             $object->setStoreIds(implode(',', $storeIds));

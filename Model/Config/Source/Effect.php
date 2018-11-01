@@ -27,8 +27,12 @@ class Effect implements ArrayInterface
     const SLIDER = 'slider';
     const FADEOUT = 'fadeOut';
     const ROTATEOUT = 'rotateOut';
-    const FLIPOUT = 'flipOut';
+    const FLIPOUT = 'flipOutX';
     const ROLLOUT = 'rollOut';
+    const ZOOMOUT = 'zoomOut';
+    const SLIDEROUTLEFT = 'slideOutLeft';
+    const SLIDEROUTRIGHT = 'slideOutRight';
+    const LIGHTSPEEDOUT = 'lightSpeedOut';
 
     /**
      * to option array
@@ -58,7 +62,22 @@ class Effect implements ArrayInterface
                 'value' => self::ROLLOUT,
                 'label' => __('rollOut')
             ],
-
+            [
+                'value' => self::ZOOMOUT,
+                'label' => __('zoomOut')
+            ],
+            [
+                'value' => self::SLIDEROUTLEFT,
+                'label' => __('slideOutLeft')
+            ],
+            [
+                'value' => self::SLIDEROUTRIGHT,
+                'label' => __('slideOutRight')
+            ],
+            [
+                'value' => self::LIGHTSPEEDOUT,
+                'label' => __('lightSpeedOut')
+            ],
         ];
         return $options;
 

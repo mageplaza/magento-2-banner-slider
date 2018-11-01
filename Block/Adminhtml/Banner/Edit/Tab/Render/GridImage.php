@@ -26,6 +26,13 @@ class GridImage extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\Abstr
      */
     protected $imageModel;
 
+    /**
+     * GridImage constructor.
+     *
+     * @param Context $context
+     * @param ImageModel $imageModel
+     * @param array $data
+     */
     public function __construct(
         Context $context,
         ImageModel $imageModel,

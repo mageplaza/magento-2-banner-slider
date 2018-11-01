@@ -80,19 +80,22 @@ class AddBlock implements ObserverInterface
             $output         = $observer->getTransport()->getOutput();
 
             foreach ($this->helperData->getActiveSliders() as $slider) {
-                if ($slider->getLocation() != 'custom') {
-                    list($pageType, $location) = explode('.', $slider->getLocation());
-                    if ($fullActionName == $pageType || $pageType == 'allpage') {
-                        $content = $layout->createBlock(\Mageplaza\BannerSlider\Block\Slider::class)
-                                          ->setSlider($slider)
-                                          ->toHtml();
+                $locations = explode(",",$slider->getLocation());
+                foreach ($locations as $value) {
+                    if ($value != 'custom') {
+                        list($pageType, $location) = explode('.', $value);
+                        if ($fullActionName == $pageType || $pageType == 'allpage') {
+                            $content = $layout->createBlock(\Mageplaza\BannerSlider\Block\Slider::class)
+                                              ->setSlider($slider)
+                                              ->toHtml();
 
-                        if (strpos($location, $type) !== false) {
-                            if (strpos($location, 'top') !== false) {
-                                $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">$content</div>" . $output;
-                            }
-                            else {
-                                $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">$content</div>";
+                            if (strpos($location, $type) !== false) {
+                                if (strpos($location, 'top') !== false) {
+                                    $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">$content</div>" . $output;
+                                }
+                                else {
+                                    $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">$content</div>";
+                                }
                             }
                         }
                     }

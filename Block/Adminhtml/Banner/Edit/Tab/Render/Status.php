@@ -16,7 +16,10 @@
 
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render;
 
-
+/**
+ * Class Status
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render
+ */
 class Status extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer
 {
     /**
