@@ -1,13 +1,18 @@
 <?php
 /**
  * Mageplaza
+ *
  * NOTICE OF LICENSE
+ *
  * This source file is subject to the Mageplaza.com license that is
  * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
+ *
  * DISCLAIMER
+ *
  * Do not edit or add to this file if you wish to upgrade this extension to newer
  * version in the future.
+ *
  * @category    Mageplaza
  * @package     Mageplaza_BannerSlider
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
@@ -92,16 +97,18 @@ class Slider extends Template
     }
 
     /**
-     * @return \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection|null
+     * @return bool|\Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
      */
     public function getBannerCollection()
     {
         if ($sliderId = $this->getSliderId()) {
             $collection = $this->helperData->getBannerCollection($sliderId);
             $collection->addFieldToFilter('status',1);
+
             return $collection;
         }
-        return null;
+
+        return false;
     }
 
     /**
@@ -180,23 +187,4 @@ class Slider extends Template
         return $effect;
     }
 
-    /**
-     * Get End of Day Date
-     *
-     * @return string
-     */
-    public function getEndOfDayDate()
-    {
-        return $this->_date->date(null, '23:59:59');
-    }
-
-    /**
-     * Get Start of Day Date
-     *
-     * @return string
-     */
-    public function getStartOfDayDate()
-    {
-        return $this->_date->date(null, '0:0:0');
-    }
 }

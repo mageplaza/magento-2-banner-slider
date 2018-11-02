@@ -57,7 +57,10 @@ class AddBlock implements ObserverInterface
     }
 
     /**
-     * @inheritdoc
+     * @param Observer $observer
+     *
+     * @return $this|void
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function execute(Observer $observer)
     {

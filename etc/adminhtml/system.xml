@@ -72,7 +72,7 @@
                     <comment>Select Yes to re-display the slider after it shows the last item</comment>
                 </field>
                 <field id="nav" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Next/Prev buttons</label>
+                    <label>Show Next/Prev buttons</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <validate>validate-digits</validate>
                     <comment>Select Yes to display the Next/Pre button in the slider</comment>

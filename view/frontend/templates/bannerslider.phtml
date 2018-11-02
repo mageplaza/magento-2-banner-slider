@@ -1,13 +1,18 @@
 <?php
 /**
  * Mageplaza
+ *
  * NOTICE OF LICENSE
+ *
  * This source file is subject to the Mageplaza.com license that is
  * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
+ *
  * DISCLAIMER
+ *
  * Do not edit or add to this file if you wish to upgrade this extension to newer
  * version in the future.
+ *
  * @category    Mageplaza
  * @package     Mageplaza_BannerSlider
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
@@ -24,6 +29,10 @@ if ($items = $block->getBannerCollection()): ?>
                     <?php if ($item->getType() == 1): ?>
                     <div class="item-video">
                         <a class="owl-video" href="<?php echo $item->getUrlVideo() ?>"></a>
+                    </div>
+                    <?php elseif ($item->getType() == 2): ?>
+                    <div class="item-content">
+                        <?php echo $item->getContent()?>
                     </div>
                     <?php else: ?>
                     <div class="item-image">

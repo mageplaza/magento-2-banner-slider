@@ -24,6 +24,7 @@ class Type implements \Magento\Framework\Option\ArrayInterface
 {
     const IMAGE = '0';
     const VIDEO = '1';
+    const CONTENT = '2';
 
 
     /**
@@ -38,12 +39,14 @@ class Type implements \Magento\Framework\Option\ArrayInterface
                 'value' => self::IMAGE,
                 'label' => __('Image')
             ],
-
             [
                 'value' => self::VIDEO,
                 'label' => __('Video')
             ],
-
+            [
+                'value' => self::CONTENT,
+                'label' => __('Advanced')
+            ]
         ];
         return $options;
 

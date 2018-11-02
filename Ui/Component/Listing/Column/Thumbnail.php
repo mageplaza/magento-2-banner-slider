@@ -74,11 +74,21 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
             $path = $this->imageModel->getBaseUrl();
             foreach ($dataSource['data']['items'] as & $item) {
                 $banner = new \Magento\Framework\DataObject($item);
-                if ($item['image']) {
+                if ($item['type'] == 0 && $item['image']) {
                     $item[$fieldName . '_src'] = $path.$item['image'];
                     $item[$fieldName . '_alt'] = $item['name'];
                     $item[$fieldName . '_orig_src'] = $path.$item['image'];
                 }
+                //  Get Video Image
+                if ($item['type'] == 1 && $item['url_video'] != null) {
+                    $url = $item['url_video'];
+                    $videoId = substr($url,strpos($url,'=')+1);
+                    $url = 'https://img.youtube.com/vi/'.$videoId.'/0.jpg';
+                    $item[$fieldName . '_src'] = $url;
+                    $item[$fieldName . '_alt'] = $item['name'];
+                    $item[$fieldName . '_orig_src'] = $url;
+                }
+
                 $item[$fieldName . '_link'] = $this->urlBuilder->getUrl(
                     'mpbannerslider/banner/edit',
                     ['banner_id' => $banner->getBannerId(), 'store' => $this->context->getRequestParam('store')]

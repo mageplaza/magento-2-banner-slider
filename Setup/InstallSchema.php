@@ -59,9 +59,10 @@ class InstallSchema implements InstallSchemaInterface
             ->addColumn('name', Table::TYPE_TEXT, 255, ['nullable => false'], 'Banner Name')
             ->addColumn('status', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Banner Status')
             ->addColumn('type', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '0'], 'Banner Type')
+            ->addColumn('content',Table::TYPE_TEXT, 255, [], 'Custom html, css')
             ->addColumn('image', Table::TYPE_TEXT, 255, [], 'Banner Image')
-            ->addColumn('url_banner', Table::TYPE_TEXT, 255, [], 'Banner Url'
-            )->addColumn('url_video', Table::TYPE_TEXT, 255, [], 'Video Url')
+            ->addColumn('url_banner', Table::TYPE_TEXT, 255, [], 'Banner Url')
+            ->addColumn('url_video', Table::TYPE_TEXT, 255, [], 'Video Url')
             ->addColumn('title', Table::TYPE_TEXT, 255, [], 'Title')
             ->addColumn('newtab', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Open new tab')
             ->addColumn('created_at', Table::TYPE_TIMESTAMP, null, [], 'Banner Created At')

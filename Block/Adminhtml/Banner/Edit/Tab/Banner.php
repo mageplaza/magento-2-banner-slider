@@ -23,14 +23,15 @@ namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
+use Magento\Config\Model\Config\Source\Enabledisable;
 use Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory;
+use Magento\Framework\Convert\DataObject;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Image as BannerImage;
 use Mageplaza\BannerSlider\Helper\Image as HelperImage;
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
-use Magento\Config\Model\Config\Source\Enabledisable;
-use Magento\Framework\Convert\DataObject;
+use Magento\Cms\Model\Wysiwyg\Config as WysiwygConfig;
 
 class Banner extends Generic implements TabInterface
 {
@@ -53,13 +54,20 @@ class Banner extends Generic implements TabInterface
      */
     protected $imageHelper;
 
-    /** @var \Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory */
+    /**
+     * @var \Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory
+     */
     protected $_fieldFactory;
 
     /**
      * @var \Magento\Framework\Convert\DataObject
      */
     protected $_objectConverter;
+
+    /**
+     * @var \Magento\Cms\Model\Wysiwyg\Config
+     */
+    protected $_wysiwygConfig;
 
     /**
      * Banner constructor.
@@ -72,6 +80,7 @@ class Banner extends Generic implements TabInterface
      * @param HelperImage $imageHelper
      * @param FieldFactory $fieldFactory
      * @param DataObject $objectConverter
+     * @param WysiwygConfig $wysiwygConfig
      * @param array $data
      */
     public function __construct(
@@ -83,14 +92,16 @@ class Banner extends Generic implements TabInterface
         HelperImage $imageHelper,
         FieldFactory $fieldFactory,
         DataObject $objectConverter,
+        WysiwygConfig $wysiwygConfig,
         array $data = []
     )
     {
-        $this->typeOptions = $typeOptions;
-        $this->statusOptions = $statusOptions;
-        $this->imageHelper = $imageHelper;
-        $this->_fieldFactory = $fieldFactory;
-        $this->_objectConverter            = $objectConverter;
+        $this->typeOptions      = $typeOptions;
+        $this->statusOptions    = $statusOptions;
+        $this->imageHelper      = $imageHelper;
+        $this->_fieldFactory    = $fieldFactory;
+        $this->_objectConverter = $objectConverter;
+        $this->_wysiwygConfig   = $wysiwygConfig;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
@@ -186,6 +197,19 @@ class Banner extends Generic implements TabInterface
             ]
         );
 
+        $newtab = $fieldset->addField(
+            'newtab',
+            'select',
+            [
+                'name'  => 'newtab',
+                'label' => __('Open new tab after click'),
+                'title' => __('Open new tab after click'),
+                'values' => $this->statusOptions->toOptionArray(),
+                'note'   => __('Automatically open new tab after click on banner')
+
+            ]
+        );
+
         $urlVideo = $fieldset->addField(
             'url_video',
             'text',
@@ -197,16 +221,13 @@ class Banner extends Generic implements TabInterface
             ]
         );
 
-        $newtab = $fieldset->addField(
-            'newtab',
-            'select',
+        $content = $fieldset->addField(
+            'content',
+            'editor',
             [
-                'name'  => 'newtab',
-                'label' => __('Open new tab after click'),
-                'title' => __('Open new tab after click'),
-                'values' => $this->statusOptions->toOptionArray(),
-                'note'   => __('Automatically open new tab after click on banner')
-
+                'name' => 'content',
+                'required'  => false,
+                'config' => $this->_wysiwygConfig->getConfig(['add_variables' => false, 'add_widgets' => false, 'add_directives' => true])
             ]
         );
 
@@ -236,10 +257,12 @@ class Banner extends Generic implements TabInterface
             ->addFieldMap($urlVideo->getHtmlId(), $urlVideo->getName())
             ->addFieldMap($titleBanner->getHtmlId(), $titleBanner->getName())
             ->addFieldMap($newtab->getHtmlId(), $newtab->getName())
+            ->addFieldMap($content->getHtmlId(), $content->getName())
             ->addFieldDependence($urlBanner->getName(),$typeBanner->getName(),'0')
             ->addFieldDependence($uploadBanner->getName(),$typeBanner->getName(),'0')
             ->addFieldDependence($titleBanner->getName(),$typeBanner->getName(),'0')
             ->addFieldDependence($newtab->getName(),$typeBanner->getName(),'0')
+            ->addFieldDependence($content->getName(),$typeBanner->getName(),'2')
             ->addFieldDependence($urlVideo->getName(),$typeBanner->getName(),'1');
 
         // define field dependencies
