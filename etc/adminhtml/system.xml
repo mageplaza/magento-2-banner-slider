@@ -66,7 +66,7 @@
                     <comment>Select Yes to use autoHeight</comment>
                 </field>
                 <field id="loop" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Loop Slider</label>
+                    <label>Infinity loop</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <validate>validate-digits</validate>
                     <comment>Select Yes to re-display the slider after it shows the last item</comment>

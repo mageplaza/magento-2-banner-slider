@@ -143,7 +143,7 @@ class Slider extends Template
 
         $effect = $this->getEffect();
 
-        return '{' . $allOptionsConfig . ',video:true,center:true,' . $effect . '}';
+        return '{' . $allOptionsConfig . ',video:true,' . $effect . '}';
     }
 
     /**

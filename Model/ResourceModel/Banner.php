@@ -113,6 +113,10 @@ class Banner extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
             $object->setCreatedAt($this->date->date());
         }
 
+        if ($object->getUrlBanner() && strpos($object->getUrlBanner(),'http') === false) {
+            $object->setUrlBanner('https://'.$object->getUrlBanner());
+        }
+
         return $this;
     }
 

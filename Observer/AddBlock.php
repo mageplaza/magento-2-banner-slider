@@ -72,7 +72,7 @@ class AddBlock implements ObserverInterface
             'header' => 'header',
             'content' => 'content',
             'page-top' => 'page.top',
-            'page-bottom' => 'page.bottom',
+            'footer-container' => 'footer-container',
             'sidebar' => 'catalog.leftnav'
         ]);
 

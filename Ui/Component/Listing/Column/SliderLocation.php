@@ -41,10 +41,8 @@ class SliderLocation extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item[$this->getData('name')])) {
                     $data     = $this->getLocation($item[$this->getData('name')]);
-                    $type     = $data['type'];
-                    $location = $data['location'];
-
-                    $item[$this->getData('name')] = '<b>' . $type . '</b></br>' . '<span>' . $location . '</span>';
+                    $type     = array_unique($data['type']);
+                    $item[$this->getData('name')] = '<b>' . implode(', ',$type) . '</b></br>';
                 }
             }
         }
@@ -63,80 +61,61 @@ class SliderLocation extends Column
         foreach ($data as $item) {
             switch ($item) {
                 case Location::ALLPAGE_CONTENT_TOP :
-                    $location['type']     = 'All Page';
-                    $location['location'] = 'Top of Content';
+                    $location['type'][]     = 'All Page';
                     break;
                 case Location::ALLPAGE_CONTENT_BOTTOM :
-                    $location['type']     = 'All Page';
-                    $location['location'] = 'Bottom of Content';
+                    $location['type'][]     = 'All Page';
                     break;
                 case Location::ALLPAGE_PAGE_TOP :
-                    $location['type']     = 'All Page';
-                    $location['location'] = 'Top of Page';
+                    $location['type'][]     = 'All Page';
                     break;
                 case Location::ALLPAGE_PAGE_BOTTOM :
-                    $location['type']     = 'All Page';
-                    $location['location'] = 'Bottom of Page';
+                    $location['type'][]     = 'All Page';
                     break;
                 case Location::HOMEPAGE_CONTENT_TOP :
-                    $location['type']     = 'Home Page';
-                    $location['location'] = 'Top of Content';
+                    $location['type'][]     = 'Home Page';
                     break;
                 case Location::HOMEPAGE_CONTENT_BOTTOM :
-                    $location['type']     = 'Home Page';
-                    $location['location'] = 'Bottom of Content';
+                    $location['type'][]     = 'Home Page';
                     break;
                 case Location::HOMEPAGE_PAGE_TOP :
-                    $location['type']     = 'Home Page';
-                    $location['location'] = 'Top of Page';
+                    $location['type'][]     = 'Home Page';
                     break;
                 case Location::HOMEPAGE_PAGE_BOTTOM :
-                    $location['type']     = 'Home Page';
-                    $location['location'] = 'Bottom of Page';
+                    $location['type'][]     = 'Home Page';
                     break;
                 case Location::CATEGORY_CONTENT_TOP :
-                    $location['type']     = 'Category Page';
-                    $location['location'] = 'Top of Content';
+                    $location['type'][]     = 'Category Page';
                     break;
                 case Location::CATEGORY_CONTENT_BOTTOM :
-                    $location['type']     = 'Category Page';
-                    $location['location'] = 'Bottom of Content';
+                    $location['type'][]     = 'Category Page';
                     break;
                 case Location::CATEGORY_PAGE_TOP :
-                    $location['type']     = 'Category Page';
-                    $location['location'] = 'Top of Page';
+                    $location['type'][]     = 'Category Page';
                     break;
                 case Location::CATEGORY_PAGE_BOTTOM :
-                    $location['type']     = 'Category Page';
-                    $location['location'] = 'Top of Page';
+                    $location['type'][]     = 'Category Page';
                     break;
                 case Location::CATEGORY_SIDEBAR_TOP :
-                    $location['type']     = 'Category Page';
-                    $location['location'] = 'Sidebar Top';
+                    $location['type'][]     = 'Category Page';
                     break;
                 case Location::CATEGORY_SIDEBAR_BOTTOM :
-                    $location['type']     = 'Category Page';
-                    $location['location'] = 'Sidebar Bottom';
+                    $location['type'][]     = 'Category Page';
                     break;
                 case Location::PRODUCT_CONTENT_TOP :
-                    $location['type']     = 'Product Page';
-                    $location['location'] = 'Top of Content';
+                    $location['type'][]     = 'Product Page';
                     break;
                 case Location::PRODUCT_CONTENT_BOTTOM :
-                    $location['type']     = 'Product Page';
-                    $location['location'] = 'Bottom of Content';
+                    $location['type'][]     = 'Product Page';
                     break;
                 case Location::PRODUCT_PAGE_TOP :
-                    $location['type']     = 'Product Page';
-                    $location['location'] = 'Top of Page';
+                    $location['type'][]     = 'Product Page';
                     break;
                 case Location::PRODUCT_PAGE_BOTTOM :
-                    $location['type']     = 'Product Page';
-                    $location['location'] = 'Bottom of Page';
+                    $location['type'][]     = 'Product Page';
                     break;
                 case Location::MANUALLY :
-                    $location['type'] = 'Manually';
-                    $location['location'] = 'Use widget or snippet code';
+                    $location['type'][] = 'Manually';
             }
         }
         return $location;

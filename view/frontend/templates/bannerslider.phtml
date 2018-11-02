@@ -36,7 +36,7 @@ if ($items = $block->getBannerCollection()): ?>
                     </div>
                     <?php else: ?>
                     <div class="item-image">
-                        <a class="owl-image" href="https://<?php echo $item->getUrlBanner() ?>" <?php echo ($item->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
+                        <a class="owl-image" href="<?php echo $item->getUrlBanner() ?>" <?php echo ($item->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
                             <div class="banner-title"><?php echo $item->getTitle() ?></div>
                             <img class="img-responsive" src="<?php echo $item->getImageUrl() ?>">
                         </a>
