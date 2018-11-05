@@ -27,7 +27,6 @@ use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Helper\Data as backendHelper;
-use Magento\Config\Model\Config\Source\Enabledisable;
 
 /**
  * Class Banner
@@ -56,12 +55,6 @@ class Banner extends Extended implements TabInterface
      */
     protected $bannerFactory;
 
-    /**
-     * Status options
-     *
-     * @var \Magento\Config\Model\Config\Source\Enabledisable
-     */
-    protected $statusOptions;
 
     /**
      * Banner constructor.
@@ -79,14 +72,12 @@ class Banner extends Extended implements TabInterface
         BannerFactory $bannerFactory,
         Context $context,
         backendHelper $backendHelper,
-        Enabledisable $enabledisable,
         array $data = []
     )
     {
         $this->bannerCollectionFactory = $bannerCollectionFactory;
         $this->coreRegistry            = $coreRegistry;
         $this->bannerFactory           = $bannerFactory;
-        $this->statusOptions = $enabledisable;
 
         parent::__construct($context, $backendHelper, $data);
     }
@@ -190,17 +181,6 @@ class Banner extends Extended implements TabInterface
         );
 
         $this->addColumn(
-            'status',
-            [
-                'header' => __('Status'),
-                'index' => 'status',
-                'header_css_class' => 'col-status',
-                'column_css_class' => 'col-status',
-                'renderer' => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status'
-            ]
-        );
-
-        $this->addColumn(
             'type',
             [
                 'header' => __('Type'),
@@ -208,6 +188,17 @@ class Banner extends Extended implements TabInterface
                 'header_css_class' => 'col-type',
                 'column_css_class' => 'col-type',
                 'renderer' => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Type'
+            ]
+        );
+
+        $this->addColumn(
+            'status',
+            [
+                'header' => __('Status'),
+                'index' => 'status',
+                'header_css_class' => 'col-status',
+                'column_css_class' => 'col-status',
+                'renderer' => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status'
             ]
         );
 

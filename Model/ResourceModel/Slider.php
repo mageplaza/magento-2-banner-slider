@@ -142,6 +142,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
         return parent::_beforeSave($object);
     }
+
     /**
      * after save callback
      *
@@ -153,6 +154,25 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->saveBannerRelation($object);
 
         return parent::_afterSave($object);
+    }
+
+    /**
+     * @param \Magento\Framework\Model\AbstractModel $object
+     *
+     * @return $this|\Magento\Framework\Model\ResourceModel\Db\AbstractDb
+     * @throws \Zend_Serializer_Exception
+     */
+    protected function _afterLoad(\Magento\Framework\Model\AbstractModel $object)
+    {
+        parent::_afterLoad($object);
+
+        if (!is_null($object->getResponsiveItems())) {
+            $object->setResponsiveItems($this->bannerHelper->unserialize($object->getResponsiveItems()));
+        } else {
+            $object->setResponsiveItems(null);
+        }
+
+        return $this;
     }
 
     /**

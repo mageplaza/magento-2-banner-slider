@@ -35,8 +35,14 @@ use Magento\Config\Model\Config\Source\Yesno;
  */
 class Design extends Generic implements TabInterface
 {
+    /**
+     * @var Effect
+     */
     protected $_effect;
 
+    /**
+     * @var Yesno
+     */
     protected $_yesno;
 
     /**

@@ -86,7 +86,7 @@ class Data extends AbstractData
             if ($key == 'item_slider') {
                 $sliderOptions = $sliderOptions . $this->getResponseValue();
             } else if ($key != 'responsive') {
-                if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayHoverPause'])){
+                if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])){
                     $value = $value ? 'true' : 'false';
                 }
                 $sliderOptions = $sliderOptions . $key . ':' . $value . ',';

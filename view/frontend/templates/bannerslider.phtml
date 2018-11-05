@@ -32,7 +32,7 @@ if ($items = $block->getBannerCollection()): ?>
                     </div>
                     <?php elseif ($item->getType() == 2): ?>
                     <div class="item-content">
-                        <?php echo $item->getContent()?>
+                        <?php echo $block->getPageFilter($item->getContent()); ?>
                     </div>
                     <?php else: ?>
                     <div class="item-image">

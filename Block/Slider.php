@@ -25,6 +25,7 @@ use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\View\Element\Template;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
+use Magento\Cms\Model\Template\FilterProvider;
 
 class Slider extends Template
 {
@@ -49,12 +50,18 @@ class Slider extends Template
     protected $_date;
 
     /**
+     * @var FilterProvider
+     */
+    public $filterProvider;
+
+    /**
      * Slider constructor.
      *
      * @param Template\Context $context
      * @param bannerHelper $helperData
      * @param CustomerRepositoryInterface $customerRepository
      * @param DateTime $dateTime
+     * @param FilterProvider $filterProvider
      * @param array $data
      */
     public function __construct(
@@ -62,6 +69,7 @@ class Slider extends Template
         bannerHelper $helperData,
         CustomerRepositoryInterface $customerRepository,
         DateTime $dateTime,
+        FilterProvider $filterProvider,
         array $data = []
     )
     {
@@ -69,6 +77,7 @@ class Slider extends Template
         $this->customerRepository = $customerRepository;
         $this->store              = $context->getStoreManager();
         $this->_date              = $dateTime;
+        $this->filterProvider = $filterProvider;
 
         parent::__construct($context, $data);
     }
@@ -94,6 +103,16 @@ class Slider extends Template
         }
 
         return time();
+    }
+
+    /**
+     * @param $content
+     * @return string
+     * @throws \Exception
+     */
+    public function getPageFilter($content)
+    {
+        return $this->filterProvider->getPageFilter()->filter($content);
     }
 
     /**
@@ -129,7 +148,7 @@ class Slider extends Template
                 if ($key == 'responsive_items') {
                     $sliderOptions = $sliderOptions . $this->getResponseValue();
                 } else if ($key != 'responsive') {
-                    if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayHoverPause'])){
+                    if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])){
                         $value = $value ? 'true' : 'false';
                         $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
                     }
@@ -143,7 +162,7 @@ class Slider extends Template
 
         $effect = $this->getEffect();
 
-        return '{' . $allOptionsConfig . ',video:true,' . $effect . '}';
+        return '{' . $allOptionsConfig . ',video:true,autoplayHoverPause:true,' . $effect . '}';
     }
 
     /**

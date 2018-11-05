@@ -21,6 +21,7 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
     <body>
         <referenceContainer name="content">
             <block class="Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit" name="mageplaza_bannerslider_banner_edit"/>

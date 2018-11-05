@@ -36,7 +36,6 @@
                 <lazyLoad>1</lazyLoad>
                 <autoplay>0</autoplay>
                 <autoplayTimeout>5000</autoplayTimeout>
-                <autoplayHoverPause>0</autoplayHoverPause>
             </slider_design>
         </bannerslider>
     </default>

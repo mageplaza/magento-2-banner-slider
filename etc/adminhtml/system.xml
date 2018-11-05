@@ -104,15 +104,6 @@
                         <field id="autoplay">1</field>
                     </depends>
                 </field>
-                <field id="autoplayHoverPause" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Autoplay HoverPause</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <validate>validate-digits</validate>
-                    <comment>Select Yes to stop the slider when hovering the mouse over the slider area</comment>
-                    <depends>
-                        <field id="autoplay">1</field>
-                    </depends>
-                </field>
             </group>
         </section>
     </system>
