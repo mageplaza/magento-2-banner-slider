@@ -21,18 +21,39 @@
 namespace Mageplaza\BannerSlider\Helper;
 
 use Magento\Framework\App\Helper\Context;
-use Mageplaza\Core\Helper\AbstractData;
-use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Http\Context as HttpContext;
+use Magento\Framework\Filesystem;
 use Magento\Framework\ObjectManagerInterface;
-use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\Stdlib\DateTime\DateTime;
+use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 use Mageplaza\BannerSlider\Model\SliderFactory;
-use Magento\Framework\Stdlib\DateTime\DateTime;
-use Magento\Framework\App\Http\Context as HttpContext;
+use Mageplaza\Core\Helper\AbstractData;
+use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Data extends AbstractData
 {
     const CONFIG_MODULE_PATH = 'bannerslider';
+
+    /**
+     * @var DateTime
+     */
+    protected $date;
+
+    /**
+     * @var Filesystem
+     */
+    protected $fileSystem;
+
+    /**
+     * @var HttpContext
+     */
+    protected $httpContext;
+
+    /**
+     * @var DirectoryList
+     */
+    protected $directoryList;
 
     /**
      * @var BannerFactory
@@ -45,29 +66,36 @@ class Data extends AbstractData
     public $sliderFactory;
 
     /**
-     * @var DateTime
+     * Data constructor.
+     *
+     * @param DateTime $date
+     * @param Context $context
+     * @param Filesystem $filesystem
+     * @param HttpContext $httpContext
+     * @param DirectoryList $directoryList
+     * @param BannerFactory $bannerFactory
+     * @param SliderFactory $sliderFactory
+     * @param StoreManagerInterface $storeManager
+     * @param ObjectManagerInterface $objectManager
      */
-    protected $date;
-
-    /**
-     * @var HttpContext
-     */
-    protected $httpContext;
-
     public function __construct(
+        DateTime $date,
         Context $context,
-        ObjectManagerInterface $objectManager,
-        StoreManagerInterface $storeManager,
+        Filesystem $filesystem,
+        HttpContext $httpContext,
+        DirectoryList $directoryList,
         BannerFactory $bannerFactory,
         SliderFactory $sliderFactory,
-        DateTime $date,
-        HttpContext $httpContext
+        StoreManagerInterface $storeManager,
+        ObjectManagerInterface $objectManager
     )
     {
+        $this->date          = $date;
+        $this->fileSystem    = $filesystem;
+        $this->httpContext   = $httpContext;
+        $this->directoryList = $directoryList;
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
-        $this->date          = $date;
-        $this->httpContext   = $httpContext;
 
         parent::__construct($context, $objectManager, $storeManager);
     }
@@ -184,5 +212,47 @@ class Data extends AbstractData
         $collection = $this->getActiveSliders()->addFieldToFilter('location','custom');
 
         return $collection;
+    }
+
+    /**
+     * @param $relativePath
+     * @return string
+     * @throws \Magento\Framework\Exception\FileSystemException
+     */
+    public function readFile($relativePath)
+    {
+        $rootDirectory = $this->fileSystem->getDirectoryRead(DirectoryList::ROOT);
+
+        return $rootDirectory->readFile($relativePath);
+    }
+
+    /**
+     * Get base template path
+     * @return string
+     */
+    public function getBaseTemplatePath()
+    {
+        // Get directory of Data.php
+        $currentDir = __DIR__;
+
+        // Get root directory(path of magento's project folder)
+        $rootPath = $this->directoryList->getRoot();
+
+        $currentDirArr = explode('\\', $currentDir);
+        if (count($currentDirArr) == 1) {
+            $currentDirArr = explode('/', $currentDir);
+        }
+
+        $rootPathArr = explode('/', $rootPath);
+        if (count($rootPathArr) == 1) {
+            $rootPathArr = explode('\\', $rootPath);
+        }
+
+        $basePath = '';
+        for ($i = count($rootPathArr); $i < count($currentDirArr) - 1; $i++) {
+            $basePath .= $currentDirArr[$i] . '/';
+        }
+
+        return $basePath . 'view/base/templates/demo/';
     }
 }

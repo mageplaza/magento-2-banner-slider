@@ -20,13 +20,13 @@
  */
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab;
 
+use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Grid\Extended;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
-use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory as bannerCollectionFactory;
+use Magento\Backend\Helper\Data as backendHelper;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\BannerFactory;
-use Magento\Backend\Block\Template\Context;
-use Magento\Backend\Helper\Data as backendHelper;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory as bannerCollectionFactory;
 
 /**
  * Class Banner
@@ -92,6 +92,7 @@ class Banner extends Extended implements TabInterface
         $this->setId('banner_grid');
         $this->setDefaultSort('position');
         $this->setDefaultDir('ASC');
+        $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
         if ($this->getSlider()->getId()) {
             $this->setDefaultFilter(['in_banners'=>1]);
@@ -118,8 +119,8 @@ class Banner extends Extended implements TabInterface
             array('position')
         );
         $this->setCollection($collection);
+
         parent::_prepareCollection();
-        return $this;
     }
 
     /**
@@ -138,21 +139,21 @@ class Banner extends Extended implements TabInterface
         $this->addColumn(
             'in_banners',
             [
-                'header_css_class'  => 'a-center',
-                'type'   => 'checkbox',
-                'name'   => 'in_banner',
-                'values' => $this->_getSelectedBanners(),
-                'align'  => 'center',
-                'index'  => 'banner_id'
+                'header_css_class' => 'a-center',
+                'type'             => 'checkbox',
+                'name'             => 'in_banner',
+                'values'           => $this->_getSelectedBanners(),
+                'align'            => 'center',
+                'index'            => 'banner_id'
             ]
         );
         $this->addColumn(
             'banner_id',
             [
-                'header' => __('ID'),
-                'sortable' => true,
-                'index' => 'banner_id',
-                'type' => 'number',
+                'header'           => __('ID'),
+                'sortable'         => true,
+                'index'            => 'banner_id',
+                'type'             => 'number',
                 'header_css_class' => 'col-id',
                 'column_css_class' => 'col-id'
             ]
@@ -161,20 +162,20 @@ class Banner extends Extended implements TabInterface
         $this->addColumn(
             'image',
             [
-                'header' => __('Image'),
-                'index' => 'image',
+                'header'           => __('Image'),
+                'index'            => 'image',
                 'header_css_class' => 'col-image',
                 'column_css_class' => 'col-image',
-                'sortable' => false,
-                'renderer' => "Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\GridImage"
+                'sortable'         => false,
+                'renderer'         => "Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\GridImage"
             ]
         );
 
         $this->addColumn(
             'name',
             [
-                'header' => __('Name'),
-                'index' => 'name',
+                'header'           => __('Name'),
+                'index'            => 'name',
                 'header_css_class' => 'col-name',
                 'column_css_class' => 'col-name'
             ]
@@ -183,34 +184,34 @@ class Banner extends Extended implements TabInterface
         $this->addColumn(
             'type',
             [
-                'header' => __('Type'),
-                'index' => 'type',
+                'header'           => __('Type'),
+                'index'            => 'type',
                 'header_css_class' => 'col-type',
                 'column_css_class' => 'col-type',
-                'renderer' => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Type'
+                'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Type'
             ]
         );
 
         $this->addColumn(
             'status',
             [
-                'header' => __('Status'),
-                'index' => 'status',
+                'header'           => __('Status'),
+                'index'            => 'status',
                 'header_css_class' => 'col-status',
                 'column_css_class' => 'col-status',
-                'renderer' => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status'
+                'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status'
             ]
         );
 
         $this->addColumn(
             'position',
             [
-                'header' => __('Position'),
-                'name'   => 'position',
-                'type'   => 'number',
+                'header'         => __('Position'),
+                'name'           => 'position',
+                'type'           => 'number',
                 'validate_class' => 'validate-number',
-                'index' => 'position',
-                'editable'  => true,
+                'index'          => 'position',
+                'editable'       => true,
             ]
         );
         return $this;
@@ -255,7 +256,7 @@ class Banner extends Extended implements TabInterface
      */
     public function getRowUrl($item)
     {
-        return '#';
+        return '';
     }
 
     /**

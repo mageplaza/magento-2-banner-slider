@@ -24,6 +24,8 @@ use Magento\Backend\Block\Widget\Form\Generic;
 
 class Form extends Generic
 {
+    protected $_template = 'Mageplaza_BannerSlider::widget/form.phtml';
+
     /**
      * @return Generic
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -45,5 +47,14 @@ class Form extends Generic
         $this->setForm($form);
 
         return parent::_prepareForm();
+    }
+
+    /**
+     * Get load template url
+     * @return string
+     */
+    public function getLoadTemplateUrl()
+    {
+        return $this->getUrl('mpbannerslider/banner/load');
     }
 }

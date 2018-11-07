@@ -25,9 +25,46 @@ use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Filesystem;
+use Mageplaza\BannerSlider\Model\Config\Source\Template;
+use Psr\Log\LoggerInterface;
 
 class InstallSchema implements InstallSchemaInterface
 {
+    /**
+     * @var Filesystem
+     */
+    protected $fileSystem;
+
+    /**
+     * @var Template
+     */
+    protected $template;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * InstallSchema constructor.
+     *
+     * @param Template $template
+     * @param Filesystem $filesystem
+     * @param LoggerInterface $logger
+     */
+    public function __construct(
+        Template $template,
+        Filesystem $filesystem,
+        LoggerInterface $logger
+    )
+    {
+        $this->logger = $logger;
+        $this->template = $template;
+        $this->fileSystem = $filesystem;
+    }
+
     /**
      * install tables
      *
@@ -184,6 +221,30 @@ class InstallSchema implements InstallSchemaInterface
             ->setComment('Slider To Banner Link Table');
             $installer->getConnection()->createTable($table);
         }
+
+        if (version_compare($context->getVersion(), '2.0.0','<')) {
+            $this->copyDemoImage();
+        }
+
         $installer->endSetup();
+    }
+
+
+    private function copyDemoImage()
+    {
+        try {
+            $mediaDirectory = $this->fileSystem->getDirectoryWrite(DirectoryList::MEDIA);
+            $url = 'mageplaza/bannerslider/banner/demo/';
+            $mediaDirectory->create($url);
+            $demos = $this->template->toOptionArray();
+            foreach ($demos as $demo) {
+                $targetPath = $mediaDirectory->getAbsolutePath($url . $demo['value'].'.jpg');
+                $DS      = DIRECTORY_SEPARATOR;
+                $oriPath = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'].'.jpg';
+                $mediaDirectory->getDriver()->copy($oriPath, $targetPath);
+            }
+        } catch (\Exception $e) {
+            $this->logger->critical($e->getMessage());
+        }
     }
 }

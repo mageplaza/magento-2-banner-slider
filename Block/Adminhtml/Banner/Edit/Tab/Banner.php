@@ -23,15 +23,17 @@ namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
+use Magento\Cms\Model\Wysiwyg\Config as WysiwygConfig;
 use Magento\Config\Model\Config\Source\Enabledisable;
 use Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory;
 use Magento\Framework\Convert\DataObject;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Image as BannerImage;
+use Mageplaza\BannerSlider\Helper\Data as HelperData;
 use Mageplaza\BannerSlider\Helper\Image as HelperImage;
+use Mageplaza\BannerSlider\Model\Config\Source\Template;
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
-use Magento\Cms\Model\Wysiwyg\Config as WysiwygConfig;
 
 class Banner extends Generic implements TabInterface
 {
@@ -41,6 +43,13 @@ class Banner extends Generic implements TabInterface
      * @var \Mageplaza\BannerSlider\Model\Config\Source\Type
      */
     protected $typeOptions;
+
+    /**
+     * Template options
+     *
+     * @var Template
+     */
+    protected $template;
 
     /**
      * Status options
@@ -73,6 +82,7 @@ class Banner extends Generic implements TabInterface
      * Banner constructor.
      *
      * @param Type $typeOptions
+     * @param Template $template
      * @param Enabledisable $statusOptions
      * @param Context $context
      * @param Registry $registry
@@ -85,6 +95,7 @@ class Banner extends Generic implements TabInterface
      */
     public function __construct(
         Type $typeOptions,
+        Template $template,
         Enabledisable $statusOptions,
         Context $context,
         Registry $registry,
@@ -97,6 +108,7 @@ class Banner extends Generic implements TabInterface
     )
     {
         $this->typeOptions      = $typeOptions;
+        $this->template         = $template;
         $this->statusOptions    = $statusOptions;
         $this->imageHelper      = $imageHelper;
         $this->_fieldFactory    = $fieldFactory;
@@ -221,6 +233,39 @@ class Banner extends Generic implements TabInterface
             ]
         );
 
+        if (!$banner->getId()) {
+            $defaultImage = array_values($this->getImageUrls())[0];
+            $demotemplate = $fieldset->addField('default_template', 'select', [
+                    'name'     => 'default_template',
+                    'label'    => __('Demo template'),
+                    'title'    => __('Demo template'),
+                    'values'   => $this->template->toOptionArray(),
+                    'note'     => '<img src="' . $defaultImage . '" alt="demo"  class="article_image" id="mp-demo-image">'
+                ]
+            );
+
+            $fieldset->addField('images-urls', 'hidden', [
+                    'name'  => 'image-urls',
+                    'value' => HelperData::jsonEncode($this->getImageUrls())
+                ]
+            );
+
+            $insertVariableButton = $this->getLayout()->createBlock(
+                'Magento\Backend\Block\Widget\Button',
+                '',
+                [
+                    'data' => [
+                        'type'  => 'button',
+                        'label' => __('Load Template'),
+                    ]
+                ]
+            );
+            $insertbutton = $fieldset->addField('load_template', 'note', [
+                'text'  => $insertVariableButton->toHtml(),
+                'label' => ''
+            ]);
+        }
+
         $content = $fieldset->addField(
             'content',
             'editor',
@@ -265,6 +310,13 @@ class Banner extends Generic implements TabInterface
             ->addFieldDependence($content->getName(),$typeBanner->getName(),'2')
             ->addFieldDependence($urlVideo->getName(),$typeBanner->getName(),'1');
 
+        if (!$banner->getId()) {
+            $dependencies->addFieldMap($demotemplate->getHtmlId(), $demotemplate->getName())
+            ->addFieldMap($insertbutton->getHtmlId(), $insertbutton->getName())
+            ->addFieldDependence($demotemplate->getName(),$typeBanner->getName(),'2')
+            ->addFieldDependence($insertbutton->getName(),$typeBanner->getName(),'2');
+        }
+
         // define field dependencies
         $this->setChild('form_after', $dependencies);
 
@@ -272,6 +324,20 @@ class Banner extends Generic implements TabInterface
         $this->setForm($form);
 
         return parent::_prepareForm();
+    }
+
+    /**
+     * Get image url
+     * @return array
+     */
+    public function getImageUrls()
+    {
+        $urls = [];
+        foreach ($this->template->toOptionArray() as $template) {
+            $urls[$template['value']] = $this->_assetRepo->getUrl('Mageplaza_BannerSlider::images/' . $template['value'] . '.jpg');
+        }
+
+        return $urls;
     }
 
     /**
