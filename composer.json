@@ -1,5 +1,5 @@
 {
-  "name": "mageplaza/magento-2-banner-slider-extension",
+  "name": "mageplaza/module-banner-slider",
   "description": "Magento 2 Banner Slider extension",
   "require": {
     "mageplaza/module-core": "^1.3.13"
