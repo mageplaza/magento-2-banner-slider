@@ -1,21 +1,33 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Controller\Adminhtml\Slider;
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
-class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
+use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Magento\Framework\Stdlib\DateTime\Filter\Date;
+use Magento\Backend\Helper\Js;
+use Mageplaza\BannerSlider\Model\SliderFactory;
+use Magento\Framework\Registry;
+use Magento\Backend\App\Action\Context;
+
+class Save extends Slider
 {
 
     /**
@@ -26,21 +38,32 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
     protected $jsHelper;
 
     /**
-     * constructor
-     * 
-     * @param \Magento\Backend\Helper\Js $jsHelper
-     * @param \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\App\Action\Context $context
+     * Date filter
+     *
+     * @var \Magento\Framework\Stdlib\DateTime\Filter\Date
+     */
+    protected $_dateFilter;
+
+    /**
+     * Save constructor.
+     *
+     * @param Js $jsHelper
+     * @param SliderFactory $sliderFactory
+     * @param Registry $registry
+     * @param Context $context
+     * @param Date $dateFilter
      */
     public function __construct(
-        \Magento\Backend\Helper\Js $jsHelper,
-        \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory,
-        \Magento\Framework\Registry $registry,
-        \Magento\Backend\App\Action\Context $context
+        Js $jsHelper,
+        SliderFactory $sliderFactory,
+        Registry $registry,
+        Context $context,
+        Date $dateFilter
     )
     {
         $this->jsHelper       = $jsHelper;
+        $this->_dateFilter = $dateFilter;
+
         parent::__construct($sliderFactory, $registry, $context);
     }
 
@@ -51,29 +74,33 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
      */
     public function execute()
     {
-        $data = $this->getRequest()->getPost('slider');
         $resultRedirect = $this->resultRedirectFactory->create();
-        if ($data) {
+
+        if ($data = $this->getRequest()->getPost('slider')) {
+            $data   = $this->_filterData($data);
             $slider = $this->initSlider();
-            $slider->setData($data);
+
             $banners = $this->getRequest()->getPost('banners', -1);
             if ($banners != -1) {
                 $slider->setBannersData($this->jsHelper->decodeGridSerializedInput($banners));
             }
+            $slider->addData($data);
+
             $this->_eventManager->dispatch(
-                'mageplaza_betterslider_slider_prepare_save',
+                'mpbannerslider_slider_prepare_save',
                 [
                     'slider' => $slider,
                     'request' => $this->getRequest()
                 ]
             );
+
             try {
                 $slider->save();
                 $this->messageManager->addSuccess(__('The Slider has been saved.'));
-                $this->_session->setMageplazaBetterSliderSliderData(false);
+                $this->_session->setMageplazaBannerSliderSliderData(false);
                 if ($this->getRequest()->getParam('back')) {
                     $resultRedirect->setPath(
-                        'mageplaza_betterslider/*/edit',
+                        'mpbannerslider/*/edit',
                         [
                             'slider_id' => $slider->getId(),
                             '_current' => true
@@ -81,7 +108,7 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
                     );
                     return $resultRedirect;
                 }
-                $resultRedirect->setPath('mageplaza_betterslider/*/');
+                $resultRedirect->setPath('mpbannerslider/*/');
                 return $resultRedirect;
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $this->messageManager->addError($e->getMessage());
@@ -90,17 +117,43 @@ class Save extends \Mageplaza\BetterSlider\Controller\Adminhtml\Slider
             } catch (\Exception $e) {
                 $this->messageManager->addException($e, __('Something went wrong while saving the Slider.'));
             }
-            $this->_getSession()->setMageplazaBetterSliderSliderData($data);
+
+            $this->_getSession()->setMageplazaBannerSliderSliderData($data);
             $resultRedirect->setPath(
-                'mageplaza_betterslider/*/edit',
+                'mpbannerslider/*/edit',
                 [
                     'slider_id' => $slider->getId(),
                     '_current' => true
                 ]
             );
+
             return $resultRedirect;
         }
-        $resultRedirect->setPath('mageplaza_betterslider/*/');
+
+        $resultRedirect->setPath('mpbannerslider/*/');
+
         return $resultRedirect;
+    }
+
+    /**
+     * filter values
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function _filterData($data)
+    {
+        $inputFilter = new \Zend_Filter_Input(['from_date' => $this->_dateFilter,], [], $data);
+        $data        = $inputFilter->getUnescaped();
+
+        if (isset($data['responsive_items'])) {
+            unset($data['responsive_items']['__empty']);
+        }
+
+        if ($banners = $this->getRequest()->getParam('banners')) {
+            $data['banner_ids'] = $banners;
+        }
+
+        return $data;
     }
 }

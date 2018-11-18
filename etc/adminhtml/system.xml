@@ -1,45 +1,110 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="mageplaza" translate="label" sortOrder="1">
-            <label>mageplaza</label>
-        </tab>
-        <section id="betterslider" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1"
+        <section id="bannerslider" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1"
                  showInStore="1">
             <class>separator-top</class>
-            <label>Better Slider</label>
+            <label>Banner Slider</label>
             <tab>mageplaza</tab>
-            <resource>Mageplaza_BetterSlider::betterslider</resource>
+            <resource>Mageplaza_BannerSlider::bannerslider</resource>
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>General</label>
-                
-                <field id="head" translate="label" type="button" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>Mageplaza\Core\Block\Adminhtml\System\Config\Head</frontend_model>
-                     <comment><![CDATA[
-                        <ul class="mageplaza-head">
-                            <li><a href="https://mageplaza.freshdesk.com/" target="_blank">Helpdesk</a> </li>
-                            <li><a href="https://docs.mageplaza.com/banner-slider-m2/index.html" target="_blank">User Guide</a> </li>
-                            <li>Increase 25% conversion rate with <a href="https://goo.gl/6chU3c" target="_blank">Layered Navigation</a></li>
-                            <li><a href="https://www.mageplaza.com/magento-2-seo-extension/?utm_source=magento2&utm_medium=documents&utm_campaign=m2-product-slider" target="_blank">SEO Ultimate</a> </li>
-                            <li>The most popular <a href="https://www.mageplaza.com/magento-2-one-step-checkout-extension/?utm_source=configuration&utm_medium=link&utm_campaign=m2-product-slider" target="_blank">One Step Checkout</a></li>
-                        </ul>
-                        ]]></comment>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Select Yes to enable this module</comment>
                 </field>
-
-               
-
             </group>
-
-
-
+            <group id="slider_design" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Slider Design Configuration</label>
+                <field id="responsive" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Responsive</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                </field>
+                <field id="item_slider" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Max Items slider</label>
+                    <frontend_model>Mageplaza\BannerSlider\Block\Adminhtml\Config\Field\Responsive</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <depends>
+                        <field id="responsive">1</field>
+                    </depends>
+                </field>
+                <field id="autoWidth" translate="label" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto Width</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                    <comment>Select Yes to use autoWidth</comment>
+                </field>
+                <field id="autoHeight" translate="label" type="select" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto Height</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                    <comment>Select Yes to use autoHeight</comment>
+                </field>
+                <field id="loop" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Infinity loop</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                    <comment>Select Yes to re-display the slider after it shows the last item</comment>
+                </field>
+                <field id="nav" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Next/Prev buttons</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                    <comment>Select Yes to display the Next/Pre button in the slider</comment>
+                </field>
+                <field id="dots" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Dots Navigation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                    <comment>Select Yes to display dot navigation of the slider</comment>
+                </field>
+                <field id="lazyLoad" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Lazy load images</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                    <comment>Select Yes to lazy load images</comment>
+                </field>
+                <field id="autoplay" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Autoplay</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                    <comment>Select Yes to allow auto-displaying the next products</comment>
+                </field>
+                <field id="autoplayTimeout" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Autoplay TimeOut</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-digits</validate>
+                    <comment>ms. This is the time which an item is auto-moved to the left</comment>
+                    <depends>
+                        <field id="autoplay">1</field>
+                    </depends>
+                </field>
+            </group>
         </section>
     </system>
 </config>

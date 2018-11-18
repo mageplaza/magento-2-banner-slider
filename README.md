@@ -1,17 +1,9 @@
-# Magento 2 Banner Slider Extension by Mageplaza [DISCONTINUED]
+# Magento 2 Banner Slider Extension by Mageplaza
 
 **Mageplaza Banner slider for Magento 2** is an banner slider extension for Magento that enables you to create image carousel slider, image scroller and video LightBox. The extension supports images, YouTube, Vimeo, mp4 and webm videos. It's fully responsive, works on iPhone, iPad, Android, Firefox, Chrome, Safari, Opera and Internet Explorer.
 
 Fully written in jQuery, touch enabled extension based on OWL Carousel that lets you create beautiful responsive carousel slider.
 
-
-## IMPORTANT: Temporary STOP developing this module 
-
-**We will come back with a better version, easy to use soon.**
-
-**THIS EXTENSION DEVELOPED FOR DEVELOPERS, IT REQUIRES INSERT A SNIPPET INTO LAYOUTS, TEMPLATE FILES. IF YOU ARE ADMIN, YOU NEED HELPS FROM YOUR DEVELOPERS.**
-
-WE WILL DEVELOP BANNER SLIDER FOR MERCHANT VERSION LATER.
 
 ## 1. Documentation
 
@@ -38,11 +30,9 @@ php bin/magento setup:static-content:deploy
 
 ### ✓ Install Package from Mageplaza
 
-**MAGEPLAZA STOP SUPPORT THIS MODULE.**
 
 - Download the latest version at [Mageplaza Banner Slider for Magento 2](https://www.mageplaza.com/magento-2-banner-slider-extension/)
 -  [Installation guide](https://www.mageplaza.com/install-magento-2-extension/)
-
 
 
 
@@ -53,88 +43,6 @@ A: Read solution: https://github.com/mageplaza/module-core/issues/3
 
 #### Q: My site is down
 A: Please follow this guide: https://www.mageplaza.com/blog/magento-site-down.html
-
-
-
-
-## 4. SWEET MAGEPLAZA EXTENSIONS TO BRING YOU MORE MONEY
-
-### [✓ One Step Checkout](https://www.mageplaza.com/magento-2-one-step-checkout-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ ↑30% INCREASE CONVERSION RATE 
-
-☞ ↓66% DECREASE ABANDONMENT CART
-
-☞ ↓80% REDUCE CHECKOUT TIME
-
-### [✓ Layered Navigation](https://www.mageplaza.com/magento-2-layered-navigation-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ ↑84% USER'S FILTERING EXPERIENCE
-
-☞ ↑25% CONVERSION RATE
-
-☞ ↓67% SHOPPING TIME
-
-### [✓ Frequently Bought Together](https://www.mageplaza.com/magento-2-frequently-bought-together/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Amazon Product Recommendation Solution
- 
-☞ AJAX loading for better performance
-
-☞ Support Custom Options and all product types
-
-
-
-### [✓ Gift Card](https://www.mageplaza.com/magento-2-gift-card-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Physical, virtual or combined gift cards
- 
-☞ Different gift card values from prices
-
-☞ Send cards via email, SMS, post office or messenger
-
-
-### [✓ Who Bought This Also Bought](https://www.mageplaza.com/magento-2-who-bought-this-also-bought/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Display on Product Page, Category Page, Shopping Cart page
-
-☞ AJAX loading for better performance.
-
-☞ Flexible layout and design.
-
-
-### [✓ Social Login](https://www.mageplaza.com/magento-2-social-login-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Increase signup rate up-to 30%
-
-☞ Supports 11 Types: Facebook, Google Plus, Twitter, Linkedin, Instagram, Yahoo, Github, Foursquare, VK, Live, Amazon
-
-☞ Easy custom design fit with your store design
-
-☞ [Social Login on Github](https://github.com/mageplaza/magento-2-social-login)
-
-
-
-### [✓ Shop By Brand](https://www.mageplaza.com/magento-2-shop-by-brand/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Fully Compatible with Layered Navigation
-
-☞ Instant Search brands
-
-☞ Import brands
-
-
-
-
-### [✓ Affiliate](https://www.mageplaza.com/magento-2-affiliate-extension/?utm_source=github.com&utm_medium=link&utm_campaign=related-extension)
-
-☞ Multiple Affiliate Campaigns
-
-☞ Smart Referral Links
-
-☞ Affiliate Report
-
-
 
 
 ## 5. Introduce Banner Slider
@@ -302,32 +210,5 @@ In Xml file, you can insert the following block of code::
 - Implement with ease.
 - No need, no added.
 - Free, Open-source. 
-
-
-
-## Mageplaza extensions on Magento Marketplace, Github
-
-
-☞ [Magento 2 One Step Checkout extension](https://marketplace.magento.com/mageplaza-magento-2-one-step-checkout-extension.html)
-
-☞ [Magento 2 SEO Module](https://marketplace.magento.com/mageplaza-magento-2-seo-extension.html)
-
-☞ [Magento 2 Blog extension](https://marketplace.magento.com/mageplaza-magento-2-blog-extension.html)
-
-☞ [Magento 2 Layered Navigation extension](https://marketplace.magento.com/mageplaza-layered-navigation-m2.html)
-
-☞ [Magento One Step Checkout](https://github.com/magento-2/one-step-checkout)
-
-☞ [Magento 2 Blog on Github](https://github.com/mageplaza/magento-2-blog)
-
-☞ [Magento 2 Social Login on Github](https://github.com/mageplaza/magento-2-social-login)
-
-☞ [Magento 2 SEO on Github](https://github.com/mageplaza/magento-2-seo)
-
-☞ [Magento 2 SMTP on Github](https://github.com/mageplaza/magento-2-smtp)
-
-☞ [Magento 2 Product Slider on Github](https://github.com/mageplaza/magento-2-product-slider)
-
-☞ [Magento 2 Banner on Github](https://github.com/mageplaza/magento-2-banner-slider)
 
 

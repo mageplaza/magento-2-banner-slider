@@ -1,69 +1,131 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Block\Adminhtml\Banner\Edit\Tab;
+namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab;
 
-class Banner extends \Magento\Backend\Block\Widget\Form\Generic implements \Magento\Backend\Block\Widget\Tab\TabInterface
+use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Form\Generic;
+use Magento\Backend\Block\Widget\Tab\TabInterface;
+use Magento\Cms\Model\Wysiwyg\Config as WysiwygConfig;
+use Magento\Config\Model\Config\Source\Enabledisable;
+use Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory;
+use Magento\Framework\Convert\DataObject;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Image as BannerImage;
+use Mageplaza\BannerSlider\Helper\Data as HelperData;
+use Mageplaza\BannerSlider\Helper\Image as HelperImage;
+use Mageplaza\BannerSlider\Model\Config\Source\Template;
+use Mageplaza\BannerSlider\Model\Config\Source\Type;
+
+class Banner extends Generic implements TabInterface
 {
     /**
      * Type options
-     * 
-     * @var \Mageplaza\BetterSlider\Model\Banner\Source\Type
+     *
+     * @var \Mageplaza\BannerSlider\Model\Config\Source\Type
      */
     protected $typeOptions;
 
     /**
+     * Template options
+     *
+     * @var Template
+     */
+    protected $template;
+
+    /**
      * Status options
-     * 
-     * @var \Mageplaza\BetterSlider\Model\Banner\Source\Status
+     *
+     * @var \Magento\Config\Model\Config\Source\Enabledisable
      */
     protected $statusOptions;
 
     /**
-     * constructor
-     * 
-     * @param \Mageplaza\BetterSlider\Model\Banner\Source\Type $typeOptions
-     * @param \Mageplaza\BetterSlider\Model\Banner\Source\Status $statusOptions
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @var \Mageplaza\BannerSlider\Helper\Image
+     */
+    protected $imageHelper;
+
+    /**
+     * @var \Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory
+     */
+    protected $_fieldFactory;
+
+    /**
+     * @var \Magento\Framework\Convert\DataObject
+     */
+    protected $_objectConverter;
+
+    /**
+     * @var \Magento\Cms\Model\Wysiwyg\Config
+     */
+    protected $_wysiwygConfig;
+
+    /**
+     * Banner constructor.
+     *
+     * @param Type $typeOptions
+     * @param Template $template
+     * @param Enabledisable $statusOptions
+     * @param Context $context
+     * @param Registry $registry
+     * @param FormFactory $formFactory
+     * @param HelperImage $imageHelper
+     * @param FieldFactory $fieldFactory
+     * @param DataObject $objectConverter
+     * @param WysiwygConfig $wysiwygConfig
      * @param array $data
      */
     public function __construct(
-        \Mageplaza\BetterSlider\Model\Banner\Source\Type $typeOptions,
-        \Mageplaza\BetterSlider\Model\Banner\Source\Status $statusOptions,
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Data\FormFactory $formFactory,
+        Type $typeOptions,
+        Template $template,
+        Enabledisable $statusOptions,
+        Context $context,
+        Registry $registry,
+        FormFactory $formFactory,
+        HelperImage $imageHelper,
+        FieldFactory $fieldFactory,
+        DataObject $objectConverter,
+        WysiwygConfig $wysiwygConfig,
         array $data = []
     )
     {
-        $this->typeOptions   = $typeOptions;
-        $this->statusOptions = $statusOptions;
+        $this->typeOptions      = $typeOptions;
+        $this->template         = $template;
+        $this->statusOptions    = $statusOptions;
+        $this->imageHelper      = $imageHelper;
+        $this->_fieldFactory    = $fieldFactory;
+        $this->_objectConverter = $objectConverter;
+        $this->_wysiwygConfig   = $wysiwygConfig;
+
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
     /**
-     * Prepare form
-     *
-     * @return $this
+     * @return Generic
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function _prepareForm()
     {
-        /** @var \Mageplaza\BetterSlider\Model\Banner $banner */
-        $banner = $this->_coreRegistry->registry('mageplaza_betterslider_banner');
+        /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
+        $banner = $this->_coreRegistry->registry('mpbannerslider_banner');
         $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('banner_');
         $form->setFieldNameSuffix('banner');
@@ -74,7 +136,7 @@ class Banner extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
                 'class'  => 'fieldset-wide'
             ]
         );
-        $fieldset->addType('image', 'Mageplaza\BetterSlider\Block\Adminhtml\Banner\Helper\Image');
+
         if ($banner->getId()) {
             $fieldset->addField(
                 'banner_id',
@@ -82,6 +144,7 @@ class Banner extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
                 ['name' => 'banner_id']
             );
         }
+
         $fieldset->addField(
             'name',
             'text',
@@ -92,35 +155,7 @@ class Banner extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
                 'required' => true,
             ]
         );
-        $fieldset->addField(
-            'upload_file',
-            'image',
-            [
-                'name'  => 'upload_file',
-                'label' => __('Upload File'),
-                'title' => __('Upload File'),
-            ]
-        );
-        $fieldset->addField(
-            'url',
-            'text',
-            [
-                'name'  => 'url',
-                'label' => __('Banner Url'),
-                'title' => __('Banner Url'),
-            ]
-        );
-//        $fieldset->addField(
-//            'type',
-//            'select',
-//            [
-//                'name'  => 'type',
-//                'label' => __('Type'),
-//                'title' => __('Type'),
-//                'values' => array_merge(['' => ''], $this->typeOptions->toOptionArray()),
-//            ]
-//        );
-//
+
         $fieldset->addField(
             'status',
             'select',
@@ -132,7 +167,126 @@ class Banner extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
             ]
         );
 
-        $bannerData = $this->_session->getData('mageplaza_betterslider_banner_data', true);
+        $typeBanner = $fieldset->addField(
+            'type',
+            'select',
+            [
+                'name'  => 'type',
+                'label' => __('Type'),
+                'title' => __('Type'),
+                'values' => $this->typeOptions->toOptionArray(),
+            ]
+        );
+
+        $uploadBanner = $fieldset->addField(
+            'image',
+            BannerImage::class,
+            [
+                'name' => 'image',
+                'label' => __('Upload Image'),
+                'title' => __('Upload Image'),
+                'path' => $this->imageHelper->getBaseMediaPath(HelperImage::TEMPLATE_MEDIA_TYPE_BANNER)
+            ]
+        );
+
+        $titleBanner = $fieldset->addField(
+            'title',
+            'text',
+            [
+                'name'  => 'title',
+                'label' => __('Banner title'),
+                'title' => __('Banner title'),
+            ]
+        );
+
+        $urlBanner = $fieldset->addField(
+            'url_banner',
+            'text',
+            [
+                'name'  => 'url_banner',
+                'label' => __('Url'),
+                'title' => __('Url'),
+            ]
+        );
+
+        $newtab = $fieldset->addField(
+            'newtab',
+            'select',
+            [
+                'name'  => 'newtab',
+                'label' => __('Open new tab after click'),
+                'title' => __('Open new tab after click'),
+                'values' => $this->statusOptions->toOptionArray(),
+                'note'   => __('Automatically open new tab after click on banner')
+
+            ]
+        );
+
+        $urlVideo = $fieldset->addField(
+            'url_video',
+            'text',
+            [
+                'name'  => 'url_video',
+                'label' => __('Video Url'),
+                'title' => __('Video Url'),
+                'note'   => __('It supports Youtube video only. Just paste a Youtube video URL.')
+            ]
+        );
+
+        if (!$banner->getId()) {
+            $defaultImage = array_values($this->getImageUrls())[0];
+            $demotemplate = $fieldset->addField('default_template', 'select', [
+                    'name'     => 'default_template',
+                    'label'    => __('Demo template'),
+                    'title'    => __('Demo template'),
+                    'values'   => $this->template->toOptionArray(),
+                    'note'     => '<img src="' . $defaultImage . '" alt="demo"  class="article_image" id="mp-demo-image">'
+                ]
+            );
+
+            $fieldset->addField('images-urls', 'hidden', [
+                    'name'  => 'image-urls',
+                    'value' => HelperData::jsonEncode($this->getImageUrls())
+                ]
+            );
+
+            $insertVariableButton = $this->getLayout()->createBlock(
+                'Magento\Backend\Block\Widget\Button',
+                '',
+                [
+                    'data' => [
+                        'type'  => 'button',
+                        'label' => __('Load Template'),
+                    ]
+                ]
+            );
+            $insertbutton = $fieldset->addField('load_template', 'note', [
+                'text'  => $insertVariableButton->toHtml(),
+                'label' => ''
+            ]);
+        }
+
+        $content = $fieldset->addField(
+            'content',
+            'editor',
+            [
+                'name' => 'content',
+                'required'  => false,
+                'config' => $this->_wysiwygConfig->getConfig(['hidden' => true,'add_variables' => false, 'add_widgets' => false, 'add_directives' => true])
+            ]
+        );
+
+        $fieldset->addField('sliders_ids', '\Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Slider', [
+                'name' => 'sliders_ids',
+                'label' => __('Sliders'),
+                'title' => __('Sliders'),
+            ]
+        );
+        if (!$banner->getSlidersIds()) {
+            $banner->setSlidersIds($banner->getSliderIds());
+        }
+
+        $bannerData = $this->_session->getData('mpbannerslider_banner_data', true);
         if ($bannerData) {
             $banner->addData($bannerData);
         } else {
@@ -140,9 +294,50 @@ class Banner extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
                 $banner->addData($banner->getDefaultValues());
             }
         }
+
+        $dependencies = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Form\Element\Dependence')
+            ->addFieldMap($typeBanner->getHtmlId(), $typeBanner->getName())
+            ->addFieldMap($urlBanner->getHtmlId(), $urlBanner->getName())
+            ->addFieldMap($uploadBanner->getHtmlId(), $uploadBanner->getName())
+            ->addFieldMap($urlVideo->getHtmlId(), $urlVideo->getName())
+            ->addFieldMap($titleBanner->getHtmlId(), $titleBanner->getName())
+            ->addFieldMap($newtab->getHtmlId(), $newtab->getName())
+            ->addFieldMap($content->getHtmlId(), $content->getName())
+            ->addFieldDependence($urlBanner->getName(),$typeBanner->getName(),'0')
+            ->addFieldDependence($uploadBanner->getName(),$typeBanner->getName(),'0')
+            ->addFieldDependence($titleBanner->getName(),$typeBanner->getName(),'0')
+            ->addFieldDependence($newtab->getName(),$typeBanner->getName(),'0')
+            ->addFieldDependence($content->getName(),$typeBanner->getName(),'2')
+            ->addFieldDependence($urlVideo->getName(),$typeBanner->getName(),'1');
+
+        if (!$banner->getId()) {
+            $dependencies->addFieldMap($demotemplate->getHtmlId(), $demotemplate->getName())
+            ->addFieldMap($insertbutton->getHtmlId(), $insertbutton->getName())
+            ->addFieldDependence($demotemplate->getName(),$typeBanner->getName(),'2')
+            ->addFieldDependence($insertbutton->getName(),$typeBanner->getName(),'2');
+        }
+
+        // define field dependencies
+        $this->setChild('form_after', $dependencies);
+
         $form->addValues($banner->getData());
         $this->setForm($form);
+
         return parent::_prepareForm();
+    }
+
+    /**
+     * Get image url
+     * @return array
+     */
+    public function getImageUrls()
+    {
+        $urls = [];
+        foreach ($this->template->toOptionArray() as $template) {
+            $urls[$template['value']] = $this->_assetRepo->getUrl('Mageplaza_BannerSlider::images/' . $template['value'] . '.jpg');
+        }
+
+        return $urls;
     }
 
     /**
@@ -152,7 +347,7 @@ class Banner extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
      */
     public function getTabLabel()
     {
-        return __('Banner');
+        return __('General');
     }
 
     /**

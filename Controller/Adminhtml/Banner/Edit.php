@@ -1,21 +1,37 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Controller\Adminhtml\Banner;
 
-class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
+
+use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
+use Magento\Framework\View\Result\PageFactory;
+use Mageplaza\BannerSlider\Model\BannerFactory;
+use Magento\Framework\Registry;
+use Magento\Backend\App\Action\Context;
+
+/**
+ * Class Edit
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Banner
+ */
+class Edit extends Banner
 {
 
     /**
@@ -26,33 +42,21 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
     protected $resultPageFactory;
 
     /**
-     * Result JSON factory
-     * 
-     * @var \Magento\Framework\Controller\Result\JsonFactory
-     */
-    protected $resultJsonFactory;
-
-    /**
-     * constructor
-     * 
-     * @param \Magento\Backend\Model\Session $backendSession
+     * Edit constructor.
+     *
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory
+     * @param \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory
      * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory,
-        \Magento\Framework\Registry $registry,
-        \Magento\Backend\App\Action\Context $context
+        PageFactory $resultPageFactory,
+        BannerFactory $bannerFactory,
+        Registry $registry,
+        Context $context
     )
     {
         $this->resultPageFactory = $resultPageFactory;
-        $this->resultJsonFactory = $resultJsonFactory;
         parent::__construct($bannerFactory, $registry, $context);
     }
 
@@ -63,7 +67,7 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Mageplaza_BetterSlider::banner');
+        return $this->_authorization->isAllowed('Mageplaza_BannerSlider::banner');
     }
 
     /**
@@ -73,19 +77,17 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
     {
 
         $id = $this->getRequest()->getParam('banner_id');
-        /** @var \Mageplaza\BetterSlider\Model\Banner $banner */
+        /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
         $banner = $this->initBanner();
         /** @var \Magento\Backend\Model\View\Result\Page|\Magento\Framework\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('Mageplaza_BetterSlider::banner');
-        $resultPage->getConfig()->getTitle()->set(__('Banners'));
+
         if ($id) {
             $banner->load($id);
             if (!$banner->getId()) {
                 $this->messageManager->addError(__('This Banner no longer exists.'));
                 $resultRedirect = $this->resultRedirectFactory->create();
                 $resultRedirect->setPath(
-                    'mageplaza_betterslider/*/edit',
+                    'mpbannerslider/*/edit',
                     [
                         'banner_id' => $banner->getId(),
                         '_current' => true
@@ -94,12 +96,18 @@ class Edit extends \Mageplaza\BetterSlider\Controller\Adminhtml\Banner
                 return $resultRedirect;
             }
         }
-        $title = $banner->getId() ? $banner->getName() : __('New Banner');
-        $resultPage->getConfig()->getTitle()->prepend($title);
-        $data = $this->_session->getData('mageplaza_betterslider_banner_data', true);
+
+        $data = $this->_session->getData('mpbannerslider_banner_data', true);
         if (!empty($data)) {
             $banner->setData($data);
         }
+
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu('Mageplaza_BannerSlider::banner');
+        $resultPage->getConfig()->getTitle()
+                                ->set(__('Banners'))
+                                ->prepend($banner->getId() ? $banner->getName() : __('New Banner'));
+
         return $resultPage;
     }
 }

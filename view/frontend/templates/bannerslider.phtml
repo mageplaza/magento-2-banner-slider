@@ -1,0 +1,57 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+
+if ($items = $block->getBannerCollection()): ?>
+    <div class="carousel-container">
+        <div id="banner-slider-carousel">
+            <?php $iterator = 1; ?>
+            <div id="bannerslider-list-items-<?php echo $id =$block->getSliderId().'-'.uniqid(); ?>" class="owl-carousel owl-theme">
+                <?php foreach ($items as $item): ?>
+                    <?php echo ($iterator++ == 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
+                    <?php if ($item->getType() == 1): ?>
+                    <div class="item-video">
+                        <a class="owl-video" href="<?php echo $item->getUrlVideo() ?>"></a>
+                    </div>
+                    <?php elseif ($item->getType() == 2): ?>
+                    <div class="item-content">
+                        <?php echo $block->getPageFilter($item->getContent()); ?>
+                    </div>
+                    <?php else: ?>
+                    <div class="item-image">
+                        <a class="owl-image" href="<?php echo $item->getUrlBanner() ?>" <?php echo ($item->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
+                            <div class="banner-title"><?php echo $item->getTitle() ?></div>
+                            <img class="img-responsive" src="<?php echo $item->getImageUrl() ?>">
+                        </a>
+                    </div>
+                    <?php endif; ?>
+                    <?php echo ($iterator == count($items) + 1) ? '</div>' : '' ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php echo $block->getPagerHtml() ?>
+    </div>
+
+    <script>
+        require(['jquery', 'mageplaza/bannerslider/owlcarousel'], function ($) {
+            $('#bannerslider-list-items-<?php echo $id; ?>').owlCarousel(<?php echo($block->getAllOptions())?>);
+        });
+    </script>
+<?php endif; ?>

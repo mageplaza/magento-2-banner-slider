@@ -1,26 +1,43 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Block\Adminhtml\Slider\Edit\Tab;
+namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab;
 
-class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magento\Backend\Block\Widget\Tab\TabInterface
+use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Grid\Extended;
+use Magento\Backend\Block\Widget\Tab\TabInterface;
+use Magento\Backend\Helper\Data as backendHelper;
+use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\BannerFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory as bannerCollectionFactory;
+
+/**
+ * Class Banner
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab
+ */
+class Banner extends Extended implements TabInterface
 {
     /**
      * Banner collection factory
      * 
-     * @var \Mageplaza\BetterSlider\Model\ResourceModel\Banner\CollectionFactory
+     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
      */
     protected $bannerCollectionFactory;
 
@@ -34,32 +51,34 @@ class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Mag
     /**
      * Banner factory
      * 
-     * @var \Mageplaza\BetterSlider\Model\BannerFactory
+     * @var \Mageplaza\BannerSlider\Model\BannerFactory
      */
     protected $bannerFactory;
 
+
     /**
-     * constructor
-     * 
-     * @param \Mageplaza\BetterSlider\Model\ResourceModel\Banner\CollectionFactory $bannerCollectionFactory
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Backend\Helper\Data $backendHelper
+     * Banner constructor.
+     *
+     * @param bannerCollectionFactory $bannerCollectionFactory
+     * @param Registry $coreRegistry
+     * @param BannerFactory $bannerFactory
+     * @param Context $context
+     * @param backendHelper $backendHelper
      * @param array $data
      */
     public function __construct(
-        \Mageplaza\BetterSlider\Model\ResourceModel\Banner\CollectionFactory $bannerCollectionFactory,
-        \Magento\Framework\Registry $coreRegistry,
-        \Mageplaza\BetterSlider\Model\BannerFactory $bannerFactory,
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Backend\Helper\Data $backendHelper,
+        bannerCollectionFactory $bannerCollectionFactory,
+        Registry $coreRegistry,
+        BannerFactory $bannerFactory,
+        Context $context,
+        backendHelper $backendHelper,
         array $data = []
     )
     {
         $this->bannerCollectionFactory = $bannerCollectionFactory;
         $this->coreRegistry            = $coreRegistry;
         $this->bannerFactory           = $bannerFactory;
+
         parent::__construct($context, $backendHelper, $data);
     }
 
@@ -73,6 +92,7 @@ class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Mag
         $this->setId('banner_grid');
         $this->setDefaultSort('position');
         $this->setDefaultDir('ASC');
+        $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
         if ($this->getSlider()->getId()) {
             $this->setDefaultFilter(['in_banners'=>1]);
@@ -86,7 +106,7 @@ class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Mag
      */
     protected function _prepareCollection()
     {
-        /** @var \Mageplaza\BetterSlider\Model\ResourceModel\Banner\Collection $collection */
+        /** @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection $collection */
         $collection = $this->bannerCollectionFactory->create();
         if ($this->getSlider()->getId()) {
             $constraint = 'related.slider_id='.$this->getSlider()->getId();
@@ -94,13 +114,13 @@ class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Mag
             $constraint = 'related.slider_id=0';
         }
         $collection->getSelect()->joinLeft(
-            array('related' => $collection->getTable('mageplaza_betterslider_banner_slider')),
+            array('related' => $collection->getTable('mageplaza_bannerslider_banner_slider')),
             'related.banner_id=main_table.banner_id AND '.$constraint,
             array('position')
         );
         $this->setCollection($collection);
+
         parent::_prepareCollection();
-        return $this;
     }
 
     /**
@@ -119,46 +139,79 @@ class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Mag
         $this->addColumn(
             'in_banners',
             [
-                'header_css_class'  => 'a-center',
-                'type'   => 'checkbox',
-                'name'   => 'in_banner',
-                'values' => $this->_getSelectedBanners(),
-                'align'  => 'center',
-                'index'  => 'banner_id'
+                'header_css_class' => 'a-center',
+                'type'             => 'checkbox',
+                'name'             => 'in_banner',
+                'values'           => $this->_getSelectedBanners(),
+                'align'            => 'center',
+                'index'            => 'banner_id'
             ]
         );
         $this->addColumn(
             'banner_id',
             [
-                'header' => __('ID'),
-                'sortable' => true,
-                'index' => 'banner_id',
-                'type' => 'number',
+                'header'           => __('ID'),
+                'sortable'         => true,
+                'index'            => 'banner_id',
+                'type'             => 'number',
                 'header_css_class' => 'col-id',
                 'column_css_class' => 'col-id'
             ]
         );
 
         $this->addColumn(
-            'title',
+            'image',
             [
-                'header' => __('Name'),
-                'index' => 'name',
+                'header'           => __('Image'),
+                'index'            => 'image',
+                'header_css_class' => 'col-image',
+                'column_css_class' => 'col-image',
+                'sortable'         => false,
+                'renderer'         => "Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\GridImage"
+            ]
+        );
+
+        $this->addColumn(
+            'name',
+            [
+                'header'           => __('Name'),
+                'index'            => 'name',
                 'header_css_class' => 'col-name',
                 'column_css_class' => 'col-name'
             ]
         );
 
         $this->addColumn(
+            'type',
+            [
+                'header'           => __('Type'),
+                'index'            => 'type',
+                'header_css_class' => 'col-type',
+                'column_css_class' => 'col-type',
+                'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Type'
+            ]
+        );
+
+        $this->addColumn(
+            'status',
+            [
+                'header'           => __('Status'),
+                'index'            => 'status',
+                'header_css_class' => 'col-status',
+                'column_css_class' => 'col-status',
+                'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status'
+            ]
+        );
+
+        $this->addColumn(
             'position',
             [
-                'header' => __('Position'),
-                'name'   => 'position',
-                'width'  => 60,
-                'type'   => 'number',
+                'header'         => __('Position'),
+                'name'           => 'position',
+                'type'           => 'number',
                 'validate_class' => 'validate-number',
-                'index' => 'position',
-                'editable'  => true,
+                'index'          => 'position',
+                'editable'       => true,
             ]
         );
         return $this;
@@ -198,12 +251,12 @@ class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Mag
     }
 
     /**
-     * @param \Mageplaza\BetterSlider\Model\Banner|\Magento\Framework\Object $item
+     * @param \Mageplaza\BannerSlider\Model\Banner|\Magento\Framework\Object $item
      * @return string
      */
     public function getRowUrl($item)
     {
-        return '#';
+        return '';
     }
 
     /**
@@ -222,11 +275,11 @@ class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Mag
     }
 
     /**
-     * @return \Mageplaza\BetterSlider\Model\Slider
+     * @return \Mageplaza\BannerSlider\Model\Slider
      */
     public function getSlider()
     {
-        return $this->coreRegistry->registry('mageplaza_betterslider_slider');
+        return $this->coreRegistry->registry('mpbannerslider_slider');
     }
 
     /**
@@ -290,7 +343,7 @@ class Banner extends \Magento\Backend\Block\Widget\Grid\Extended implements \Mag
      */
     public function getTabUrl()
     {
-        return $this->getUrl('mageplaza_betterslider/slider/banners', ['_current' => true]);
+        return $this->getUrl('mpbannerslider/slider/banners', ['_current' => true]);
     }
 
     /**

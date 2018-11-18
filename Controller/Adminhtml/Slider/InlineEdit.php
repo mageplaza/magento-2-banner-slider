@@ -1,21 +1,30 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Controller\Adminhtml\Slider;
+namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
-abstract class InlineEdit extends \Magento\Backend\App\Action
+use Magento\Framework\Controller\Result\JsonFactory;
+use Mageplaza\BannerSlider\Model\SliderFactory;
+use Magento\Backend\App\Action\Context;
+
+class InlineEdit extends \Magento\Backend\App\Action
 {
     /**
      * JSON Factory
@@ -25,23 +34,23 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
     protected $jsonFactory;
 
     /**
-     * Slider Factory
+     * Banner Factory
      * 
-     * @var \Mageplaza\BetterSlider\Model\SliderFactory
+     * @var \Mageplaza\BannerSlider\Model\SliderFactory
      */
     protected $sliderFactory;
 
     /**
-     * constructor
-     * 
-     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
-     * @param \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory
-     * @param \Magento\Backend\App\Action\Context $context
+     * InlineEdit constructor.
+     *
+     * @param JsonFactory $jsonFactory
+     * @param SliderFactory $bannerFactory
+     * @param Context $context
      */
     public function __construct(
-        \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
-        \Mageplaza\BetterSlider\Model\SliderFactory $sliderFactory,
-        \Magento\Backend\App\Action\Context $context
+        JsonFactory $jsonFactory,
+        SliderFactory $sliderFactory,
+        Context $context
     )
     {
         $this->jsonFactory   = $jsonFactory;
@@ -66,10 +75,10 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
             ]);
         }
         foreach (array_keys($postItems) as $sliderId) {
-            /** @var \Mageplaza\BetterSlider\Model\Slider $slider */
+            /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
             $slider = $this->sliderFactory->create()->load($sliderId);
             try {
-                $sliderData = $postItems[$sliderId];//todo: handle dates
+                $sliderData = $postItems[$sliderId];
                 $slider->addData($sliderData);
                 $slider->save();
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
@@ -81,7 +90,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
             } catch (\Exception $e) {
                 $messages[] = $this->getErrorWithSliderId(
                     $slider,
-                    __('Something went wrong while saving the Slider.')
+                    __('Something went wrong while saving the Banner.')
                 );
                 $error = true;
             }
@@ -93,13 +102,14 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
     }
 
     /**
-     * Add Slider id to error message
+     * Add slider id to error message
      *
-     * @param \Mageplaza\BetterSlider\Model\Slider $slider
-     * @param string $errorText
+     * @param \Mageplaza\BannerSlider\Model\Slider $slider
+     * @param $errorText
+     *
      * @return string
      */
-    protected function getErrorWithSliderId(\Mageplaza\BetterSlider\Model\Slider $slider, $errorText)
+    protected function getErrorWithSliderId(\Mageplaza\BannerSlider\Model\Slider $slider, $errorText)
     {
         return '[Slider ID: ' . $slider->getId() . '] ' . $errorText;
     }

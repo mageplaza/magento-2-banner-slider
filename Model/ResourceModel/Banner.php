@@ -1,20 +1,35 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Model\ResourceModel;
 
+namespace Mageplaza\BannerSlider\Model\ResourceModel;
+
+use Magento\Framework\Stdlib\DateTime\DateTime;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Model\ResourceModel\Db\Context;
+use Magento\Framework\Model\AbstractModel;
+
+/**
+ * Class Banner
+ * @package Mageplaza\BannerSlider\Model\ResourceModel
+ */
 class Banner extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     /**
@@ -46,15 +61,15 @@ class Banner extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      */
     public function __construct(
-        \Magento\Framework\Stdlib\DateTime\DateTime $date,
-        \Magento\Framework\Event\ManagerInterface $eventManager,
-        \Magento\Framework\Model\ResourceModel\Db\Context $context
+        DateTime $date,
+        ManagerInterface $eventManager,
+        Context $context
     )
     {
         $this->date         = $date;
         $this->eventManager = $eventManager;
         parent::__construct($context);
-        $this->bannerSliderTable = $this->getTable('mageplaza_betterslider_banner_slider');
+        $this->bannerSliderTable = $this->getTable('mageplaza_bannerslider_banner_slider');
     }
 
 
@@ -65,7 +80,7 @@ class Banner extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('mageplaza_betterslider_banner', 'banner_id');
+        $this->_init('mageplaza_bannerslider_banner', 'banner_id');
     }
 
     /**
@@ -83,37 +98,45 @@ class Banner extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $binds = ['banner_id' => (int)$id];
         return $adapter->fetchOne($select, $binds);
     }
+
     /**
      * before save callback
-     *
-     * @param \Magento\Framework\Model\AbstractModel|\Mageplaza\BetterSlider\Model\Banner $object
+     * @param \Magento\Framework\Model\AbstractModel $object
      * @return $this
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
+    protected function _beforeSave(AbstractModel $object)
     {
+        //set default Update At and Create At time post
         $object->setUpdatedAt($this->date->date());
         if ($object->isObjectNew()) {
             $object->setCreatedAt($this->date->date());
         }
-        return parent::_beforeSave($object);
+
+        if ($object->getUrlBanner() && strpos($object->getUrlBanner(),'http') === false) {
+            $object->setUrlBanner('https://'.$object->getUrlBanner());
+        }
+
+        return $this;
     }
+
     /**
      * after save callback
      *
-     * @param \Magento\Framework\Model\AbstractModel|\Mageplaza\BetterSlider\Model\Banner $object
+     * @param \Magento\Framework\Model\AbstractModel|\Mageplaza\BannerSlider\Model\Banner $object
      * @return $this
      */
-    protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
+    protected function _afterSave(AbstractModel $object)
     {
         $this->saveSliderRelation($object);
         return parent::_afterSave($object);
     }
 
     /**
-     * @param \Mageplaza\BetterSlider\Model\Banner $banner
+     * @param \Mageplaza\BannerSlider\Model\Banner $banner
      * @return array
      */
-    public function getSlidersPosition(\Mageplaza\BetterSlider\Model\Banner $banner)
+    public function getSlidersPosition(\Mageplaza\BannerSlider\Model\Banner $banner)
     {
         $select = $this->getConnection()->select()->from(
             $this->bannerSliderTable,
@@ -127,63 +150,71 @@ class Banner extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * @param \Mageplaza\BetterSlider\Model\Banner $banner
+     * @param \Mageplaza\BannerSlider\Model\Banner $banner
+     *
      * @return $this
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function saveSliderRelation(\Mageplaza\BetterSlider\Model\Banner $banner)
+    protected function saveSliderRelation(\Mageplaza\BannerSlider\Model\Banner $banner)
     {
         $banner->setIsChangedSliderList(false);
         $id = $banner->getId();
-        $sliders = $banner->getSlidersData();
+        $sliders = $banner->getSlidersIds();
         if ($sliders === null) {
             return $this;
         }
-        $oldSliders = $banner->getSlidersPosition();
-        $insert = array_diff_key($sliders, $oldSliders);
-        $delete = array_diff_key($oldSliders, $sliders);
-        $update = array_intersect_key($sliders, $oldSliders);
-        $_update = array();
-        foreach ($update as $key=>$settings) {
-            if (isset($oldSliders[$key]) && $oldSliders[$key] != $settings['position']) {
-                $_update[$key] = $settings;
-            }
-        }
-        $update = $_update;
+        $oldSliders = $banner->getSliderIds();
+
+        $insert = array_diff($sliders, $oldSliders);
+        $delete = array_diff($oldSliders, $sliders);
         $adapter = $this->getConnection();
+
         if (!empty($delete)) {
-            $condition = ['slider_id IN(?)' => array_keys($delete), 'banner_id=?' => $id];
+            $condition = ['slider_id IN(?)' => $delete, 'banner_id=?' => $id];
             $adapter->delete($this->bannerSliderTable, $condition);
         }
         if (!empty($insert)) {
             $data = [];
-            foreach ($insert as $sliderId => $position) {
+            foreach ($insert as $tagId) {
                 $data[] = [
-                    'banner_id' => (int)$id,
-                    'slider_id' => (int)$sliderId,
-                    'position' => (int)$position['position']
+                    'banner_id'  => (int)$id,
+                    'slider_id'   => (int)$tagId,
+                    'position' => 1
                 ];
             }
             $adapter->insertMultiple($this->bannerSliderTable, $data);
         }
-        if (!empty($update)) {
-            foreach ($update as $sliderId => $position) {
-                $where = ['banner_id = ?' => (int)$id, 'slider_id = ?' => (int)$sliderId];
-                $bind = ['position' => (int)$position['position']];
-                $adapter->update($this->bannerSliderTable, $bind, $where);
-            }
-        }
         if (!empty($insert) || !empty($delete)) {
             $sliderIds = array_unique(array_merge(array_keys($insert), array_keys($delete)));
             $this->eventManager->dispatch(
-                'mageplaza_betterslider_banner_change_sliders',
-                ['banner' => $banner, 'slider_ids' => $sliderIds]
-            );
+                'mageplaza_bannerslider_banner_change_sliders',
+                ['banner' => $banner, 'slider_ids' => $sliderIds]);
         }
-        if (!empty($insert) || !empty($update) || !empty($delete)) {
+        if (!empty($insert) || !empty($delete)) {
             $banner->setIsChangedSliderList(true);
-            $sliderIds = array_keys($insert + $delete + $update);
+            $sliderIds = array_keys($insert + $delete);
             $banner->setAffectedSliderIds($sliderIds);
         }
+
         return $this;
+    }
+
+    /**
+     * @param \Mageplaza\BannerSlider\Model\Banner $banner
+     * @return array
+     */
+    public function getSliderIds(\Mageplaza\BannerSlider\Model\Banner $banner)
+    {
+        $adapter = $this->getConnection();
+        $select  = $adapter->select()->from(
+            $this->bannerSliderTable,
+            'slider_id'
+        )
+                           ->where(
+                               'banner_id = ?',
+                               (int)$banner->getId()
+                           );
+
+        return $adapter->fetchCol($select);
     }
 }

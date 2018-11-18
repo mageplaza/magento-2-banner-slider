@@ -1,47 +1,110 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
- *                     NOTICE OF LICENSE
- * 
- *                     This source file is subject to the Mageplaza License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
- *                     @category  Mageplaza
- *                     @package   Mageplaza_BetterSlider
- *                     @copyright Copyright (c) 2016
- *                     @license   https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BetterSlider\Block\Adminhtml\Slider\Edit\Tab;
+namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab;
 
-class Slider extends \Magento\Backend\Block\Widget\Form\Generic implements \Magento\Backend\Block\Widget\Tab\TabInterface
+use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Form\Generic;
+use Magento\Backend\Block\Widget\Tab\TabInterface;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Registry;
+use Magento\Config\Model\Config\Source\Enabledisable;
+use Mageplaza\BannerSlider\Model\Config\Source\Location;
+use Magento\Store\Model\System\Store;
+use Magento\Customer\Api\GroupRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Convert\DataObject;
+use Magento\Framework\Stdlib\DateTime;
+
+/**
+ * Class Slider
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab
+ */
+class Slider extends Generic implements TabInterface
 {
     /**
      * Status options
      * 
-     * @var \Mageplaza\BetterSlider\Model\Slider\Source\Status
+     * @var \Magento\Config\Model\Config\Source\Enabledisable
      */
     protected $statusOptions;
 
     /**
-     * constructor
-     * 
-     * @param \Mageplaza\BetterSlider\Model\Slider\Source\Status $statusOptions
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @var \Mageplaza\BannerSlider\Model\Config\Source\Location
+     */
+    protected $_location;
+
+    /**
+     * @var \Magento\Store\Model\System\Store
+     */
+    protected $_systemStore;
+
+    /**
+     * @var \Magento\Customer\Api\GroupRepositoryInterface
+     */
+    protected $_groupRepository;
+
+    /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    protected $_searchCriteriaBuilder;
+
+    /**
+     * @var \Magento\Framework\Convert\DataObject
+     */
+    protected $_objectConverter;
+
+    /**
+     * Slider constructor.
+     *
+     * @param Context $context
+     * @param Registry $registry
+     * @param FormFactory $formFactory
+     * @param Enabledisable $statusOptions
+     * @param Location $location
+     * @param GroupRepositoryInterface $groupRepository
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param DataObject $objectConverter
+     * @param Store $systemStore
      * @param array $data
      */
     public function __construct(
-        \Mageplaza\BetterSlider\Model\Slider\Source\Status $statusOptions,
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Data\FormFactory $formFactory,
+        Context $context,
+        Registry $registry,
+        FormFactory $formFactory,
+        Enabledisable $statusOptions,
+        Location $location,
+        GroupRepositoryInterface $groupRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        DataObject $objectConverter,
+        Store $systemStore,
         array $data = []
     )
     {
         $this->statusOptions = $statusOptions;
+        $this->_location = $location;
+        $this->_groupRepository = $groupRepository;
+        $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->_objectConverter = $objectConverter;
+        $this->_systemStore = $systemStore;
+
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
@@ -52,8 +115,8 @@ class Slider extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
      */
     protected function _prepareForm()
     {
-        /** @var \Mageplaza\BetterSlider\Model\Slider $slider */
-        $slider = $this->_coreRegistry->registry('mageplaza_betterslider_slider');
+        /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
+        $slider = $this->_coreRegistry->registry('mpbannerslider_slider');
         $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('slider_');
         $form->setFieldNameSuffix('slider');
@@ -71,6 +134,7 @@ class Slider extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
                 ['name' => 'slider_id']
             );
         }
+
         $fieldset->addField(
             'name',
             'text',
@@ -81,15 +145,7 @@ class Slider extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
                 'required' => true,
             ]
         );
-        $fieldset->addField(
-            'description',
-            'textarea',
-            [
-                'name'  => 'description',
-                'label' => __('Description'),
-                'title' => __('Description'),
-            ]
-        );
+
         $fieldset->addField(
             'status',
             'select',
@@ -100,24 +156,74 @@ class Slider extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
                 'values' => array_merge(['' => ''], $this->statusOptions->toOptionArray()),
             ]
         );
+
         $fieldset->addField(
-            'config_serialized',
-            'textarea',
+            'location',
+            'multiselect',
             [
-                'name'  => 'config_serialized',
-                'label' => __('Config'),
-                'title' => __('Config'),
+            'name'   => 'location',
+            'label'  => __('Position'),
+            'title'  => __('Position'),
+            'values' => $this->_location->toOptionArray(),
+            'note'   => __('Select the position to display block.')
+        ]);
+
+        if (!$this->_storeManager->isSingleStoreMode()) {
+            /** @var \Magento\Framework\Data\Form\Element\Renderer\RendererInterface $rendererBlock */
+            $rendererBlock = $this->getLayout()->createBlock('Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element');
+            $fieldset->addField('store_ids', 'multiselect', [
+                'name'     => 'store_ids',
+                'label'    => __('Store Views'),
+                'title'    => __('Store Views'),
+                'required' => true,
+                'values'   => $this->_systemStore->getStoreValuesForForm(false, true)
+            ])->setRenderer($rendererBlock);
+            if (!$slider->hasData('store_ids')) {
+                $slider->setStoreIds(0);
+            }
+        } else {
+            $fieldset->addField('store_ids', 'hidden', [
+                'name'  => 'store_ids',
+                'value' => $this->_storeManager->getStore()->getId()
+            ]);
+        }
+
+        $customerGroups = $this->_groupRepository->getList($this->_searchCriteriaBuilder->create())->getItems();
+        $fieldset->addField('customer_group_ids', 'multiselect', [
+                'name'     => 'customer_group_ids[]',
+                'label'    => __('Customer Groups'),
+                'title'    => __('Customer Groups'),
+                'required' => true,
+                'values'   => $this->_objectConverter->toOptionArray($customerGroups, 'id', 'code'),
+                'note'     => __('Select customer group(s) to display the slider to')
             ]
         );
 
-        $sliderData = $this->_session->getData('mageplaza_betterslider_slider_data', true);
-        if ($sliderData) {
-            $slider->addData($sliderData);
-        } else {
-            if (!$slider->getId()) {
-                $slider->addData($slider->getDefaultValues());
-            }
-        }
+        $fieldset->addField('from_date', 'date', [
+            'name'        => 'from_date',
+            'label'       => __('Display from'),
+            'title'       => __('Display from'),
+            'date_format' => 'M/d/yyyy',
+            'input_format' => DateTime::DATE_INTERNAL_FORMAT,
+            'timezone'    => false
+        ]);
+
+        $fieldset->addField('to_date', 'date', [
+            'name'        => 'to_date',
+            'label'       => __('Display to'),
+            'title'       => __('Display to'),
+            'date_format' => 'M/d/yyyy',
+            'input_format' => DateTime::DATE_INTERNAL_FORMAT,
+            'timezone'    => false
+        ]);
+
+        $fieldset->addField('priority', 'text', [
+                'name'  => 'priority',
+                'label' => __('Priority'),
+                'note'  => __('Enter a number to set priority for the slider. A lower number represents a higher priority.')
+            ]
+        );
+
         $form->addValues($slider->getData());
         $this->setForm($form);
         return parent::_prepareForm();
@@ -130,7 +236,7 @@ class Slider extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
      */
     public function getTabLabel()
     {
-        return __('Slider');
+        return __('General');
     }
 
     /**

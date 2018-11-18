@@ -1,62 +1,209 @@
 <?php
 /**
- * Mageplaza_BetterSlider extension
+ * Mageplaza
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/mit-license.php
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
  *
- * @category       Mageplaza
- * @package        Mageplaza_BetterSlider
- * @copyright      Copyright (c) 2016
- * @author         Sam
- * @license        Mageplaza License
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
+namespace Mageplaza\BannerSlider\Block;
 
-namespace Mageplaza\BetterSlider\Block;
-
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\View\Element\Template;
-use Magento\Framework\ObjectManagerInterface;
-use \Magento\Framework\View\Element\Template\Context;
-use Mageplaza\BetterSlider\Model\SliderFactory as SliderModelFactory;
-use Mageplaza\BetterSlider\Model\BannerFactory as BannerModelFactory;
+use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
+use Magento\Cms\Model\Template\FilterProvider;
 
-
-class Slider extends \Magento\Framework\View\Element\Template
+class Slider extends Template
 {
-	protected $sliderFactory;
-	protected $bannerFactory;
+    /**
+     * @type \Mageplaza\BannerSlider\Helper\Data
+     */
+    public $helperData;
 
-	public function __construct(
-		Context $context,
-		SliderModelFactory $sliderFactory,
-		BannerModelFactory $bannerFactory
-	)
-	{
-		$this->sliderFactory = $sliderFactory;
-		$this->bannerFactory = $bannerFactory;
-		parent::__construct($context);
-	}
+    /**
+     * @type \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $store;
 
-	protected function _prepareLayout()
-	{
-	}
+    /**
+     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     */
+    protected $customerRepository;
 
-	public function getSliders()
-	{
-		$sliderId = $this->getBannerId();
-		$model = $this->sliderFactory->create()->load($sliderId);
-		if($model && $model->getStatus()==1){
-			$banners = $model->getSelectedBannersCollection()->addOrder('position','asc')->addFieldToFilter('status','1');
-			return $banners;
-		} else{
-			return null;
-		}
+    /**
+     * @var \Magento\Framework\Stdlib\DateTime\DateTime
+     */
+    protected $_date;
 
-	}
+    /**
+     * @var FilterProvider
+     */
+    public $filterProvider;
+
+    /**
+     * Slider constructor.
+     *
+     * @param Template\Context $context
+     * @param bannerHelper $helperData
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param DateTime $dateTime
+     * @param FilterProvider $filterProvider
+     * @param array $data
+     */
+    public function __construct(
+        Template\Context $context,
+        bannerHelper $helperData,
+        CustomerRepositoryInterface $customerRepository,
+        DateTime $dateTime,
+        FilterProvider $filterProvider,
+        array $data = []
+    )
+    {
+        $this->helperData         = $helperData;
+        $this->customerRepository = $customerRepository;
+        $this->store              = $context->getStoreManager();
+        $this->_date              = $dateTime;
+        $this->filterProvider = $filterProvider;
+
+        parent::__construct($context, $data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _construct()
+    {
+        parent::_construct();
+
+        $this->setTemplate('Mageplaza_BannerSlider::bannerslider.phtml');
+    }
+
+    /**
+     * Get Slider Id
+     * @return string
+     */
+    public function getSliderId()
+    {
+        if ($this->getSlider()) {
+            return $this->getSlider()->getSliderId();
+        }
+
+        return time();
+    }
+
+    /**
+     * @param $content
+     * @return string
+     * @throws \Exception
+     */
+    public function getPageFilter($content)
+    {
+        return $this->filterProvider->getPageFilter()->filter($content);
+    }
+
+    /**
+     * @return bool|\Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
+     */
+    public function getBannerCollection()
+    {
+        if ($sliderId = $this->getSliderId()) {
+            $collection = $this->helperData->getBannerCollection($sliderId);
+            $collection->addFieldToFilter('status',1);
+
+            return $collection;
+        }
+
+        return false;
+    }
+
+    /**
+     * Retrieve all options for banner slider
+     *
+     * @return string
+     * @throws \Zend_Serializer_Exception
+     */
+    public function getAllOptions()
+    {
+        $sliderOptions = '';
+        $allOptionsConfig = $this->helperData->getAllOptions();
+
+        $slider = $this->getSlider();
+        if ($slider && $slider->getDesign() == 1) {
+            $allOptions = $slider->getData();
+            foreach ($allOptions as $key => $value) {
+                if ($key == 'responsive_items') {
+                    $sliderOptions = $sliderOptions . $this->getResponseValue();
+                } else if ($key != 'responsive') {
+                    if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])){
+                        $value = $value ? 'true' : 'false';
+                        $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
+                    }
+                    if ($key == 'autoplayTimeout') {
+                        $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
+                    }
+                }
+            }
+            $allOptionsConfig = $sliderOptions;
+        }
+
+        $effect = $this->getEffect();
+
+        return '{' . $allOptionsConfig . ',video:true,autoplayHoverPause:true,' . $effect . '}';
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponseValue()
+    {
+        $slider = $this->getSlider();
+        if ($slider && $slider->getDesign() == 1 && $slider->getIsResponsive()) {
+            try {
+                if ($slider->getIsResponsive() == 0 || $slider->getIsResponsive() == null) {
+                    return $responsiveConfig = $this->helperData->getResponseValue();
+                } else {
+                    $responsiveConfig = $slider->getResponsiveItems() ? $this->helperData->unserialize($slider->getResponsiveItems()) : [];
+                }
+            } catch (\Exception $e) {
+                $responsiveConfig = [];
+            }
+
+            $responsiveOptions = '';
+            foreach ($responsiveConfig as $config) {
+                if ($config['size'] && $config['items']) {
+                    $responsiveOptions = $responsiveOptions . $config['size'] . ':{items:' . $config['items'] . '},';
+                }
+            }
+            $responsiveOptions = rtrim($responsiveOptions, ',');
+
+            return 'responsive:{' . $responsiveOptions . '}';
+        }
+
+        return 'items: 1';
+    }
+
+    public function getEffect()
+    {
+        $effect = '';
+        if ($this->getSlider()) {
+            $effect = $this->getSlider()->getEffect() != 'slider' ? 'animateOut: "' . $this->getSlider()->getEffect() . '"' : '';
+        }
+
+        return $effect;
+    }
 
 }
