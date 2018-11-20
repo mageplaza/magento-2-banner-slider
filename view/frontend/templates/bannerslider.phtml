@@ -50,7 +50,7 @@ if ($items = $block->getBannerCollection()): ?>
     </div>
 
     <script>
-        require(['jquery', 'mageplaza/bannerslider/owlcarousel'], function ($) {
+        require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
             $('#bannerslider-list-items-<?php echo $id; ?>').owlCarousel(<?php echo($block->getAllOptions())?>);
         });
     </script>

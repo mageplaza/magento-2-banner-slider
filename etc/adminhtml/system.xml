@@ -38,7 +38,7 @@
                     <comment>Select Yes to enable this module</comment>
                 </field>
             </group>
-            <group id="slider_design" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="bannerslider_design" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Slider Design Configuration</label>
                 <field id="responsive" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Responsive</label>
