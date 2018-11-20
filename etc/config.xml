@@ -22,11 +22,11 @@
  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <bannerslider>
+        <mpbannerslider>
             <general>
                 <enabled>1</enabled>
             </general>
-            <bannerslider_design>
+            <mpbannerslider_design>
                 <responsive>0</responsive>
                 <autoWidth>0</autoWidth>
                 <autoHeight>1</autoHeight>
@@ -36,7 +36,7 @@
                 <lazyLoad>0</lazyLoad>
                 <autoplay>1</autoplay>
                 <autoplayTimeout>5000</autoplayTimeout>
-            </bannerslider_design>
-        </bannerslider>
+            </mpbannerslider_design>
+        </mpbannerslider>
     </default>
 </config>

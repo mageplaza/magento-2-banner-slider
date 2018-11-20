@@ -33,7 +33,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Data extends AbstractData
 {
-    const CONFIG_MODULE_PATH = 'bannerslider';
+    const CONFIG_MODULE_PATH = 'mpbannerslider';
 
     /**
      * @var DateTime
@@ -109,7 +109,7 @@ class Data extends AbstractData
     public function getAllOptions()
     {
         $sliderOptions = '';
-        $allConfig     = $this->getModuleConfig('bannerslider_design');
+        $allConfig     = $this->getModuleConfig('mpbannerslider_design');
         foreach ($allConfig as $key => $value) {
             if ($key == 'item_slider') {
                 $sliderOptions = $sliderOptions . $this->getResponseValue();
@@ -129,7 +129,7 @@ class Data extends AbstractData
      */
     public function isResponsive()
     {
-        if ($this->getModuleConfig('bannerslider_design/responsive') == 1) {
+        if ($this->getModuleConfig('mpbannerslider_design/responsive') == 1) {
             return true;
         }
 
@@ -147,7 +147,7 @@ class Data extends AbstractData
         $responsiveOptions = '';
 
         if ($this->isResponsive()) {
-            $responsiveConfig = $this->unserialize($this->getModuleConfig('bannerslider_design/item_slider'));
+            $responsiveConfig = $this->unserialize($this->getModuleConfig('mpbannerslider_design/item_slider'));
 
             foreach ($responsiveConfig as $config) {
                 if ($config['size'] && $config['items']) {

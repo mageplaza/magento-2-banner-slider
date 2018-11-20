@@ -23,7 +23,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="bannerslider" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1"
+        <section id="mpbannerslider" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1"
                  showInStore="1">
             <class>separator-top</class>
             <label>Banner Slider</label>
@@ -38,7 +38,7 @@
                     <comment>Select Yes to enable this module</comment>
                 </field>
             </group>
-            <group id="bannerslider_design" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="mpbannerslider_design" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Slider Design Configuration</label>
                 <field id="responsive" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Responsive</label>
