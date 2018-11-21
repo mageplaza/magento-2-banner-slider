@@ -31,21 +31,21 @@ class Collection extends AbstractCollection
 {
     /**
      * ID Field Name
-     * 
+     *
      * @var string
      */
     protected $_idFieldName = 'banner_id';
 
     /**
      * Event prefix
-     * 
+     *
      * @var string
      */
     protected $_eventPrefix = 'mageplaza_bannerslider_banner_collection';
 
     /**
      * Event object
-     * 
+     *
      * @var string
      */
     protected $_eventObject = 'banner_collection';
@@ -70,12 +70,15 @@ class Collection extends AbstractCollection
     {
         $countSelect = parent::getSelectCountSql();
         $countSelect->reset(\Zend_Db_Select::GROUP);
+
         return $countSelect;
     }
+
     /**
      * @param string $valueField
      * @param string $labelField
      * @param array $additional
+     *
      * @return array
      */
     protected function _toOptionArray($valueField = 'banner_id', $labelField = 'name', $additional = [])
@@ -95,27 +98,27 @@ class Collection extends AbstractCollection
             $field = 'main_table.banner_id';
         }
 
-        if ($field == 'type' && $condition['like']){
-            $condition['like'] = str_replace("'%",'',$condition['like']);
-            $condition['like'] = str_replace("%'",'',$condition['like']);
-            if (stristr('Video',$condition['like'])){
+        if ($field == 'type' && $condition['like']) {
+            $condition['like'] = str_replace("'%", '', $condition['like']);
+            $condition['like'] = str_replace("%'", '', $condition['like']);
+            if (stristr('Video', $condition['like'])) {
                 $condition = 1;
             }
-            if (stristr('Image',$condition['like'])){
+            if (stristr('Image', $condition['like'])) {
                 $condition = 0;
             }
-            if (stristr('Advanced',$condition['like'])){
+            if (stristr('Advanced', $condition['like'])) {
                 $condition = 2;
             }
         }
 
-        if ($field == 'status' && $condition['like']){
-            $condition['like'] = str_replace("'%",'',$condition['like']);
-            $condition['like'] = str_replace("%'",'',$condition['like']);
-            if (stristr('Enable',$condition['like'])) {
+        if ($field == 'status' && $condition['like']) {
+            $condition['like'] = str_replace("'%", '', $condition['like']);
+            $condition['like'] = str_replace("%'", '', $condition['like']);
+            if (stristr('Enable', $condition['like'])) {
                 $condition = 1;
             }
-            if (stristr('Disable',$condition['like'])) {
+            if (stristr('Disable', $condition['like'])) {
                 $condition = 0;
             }
         }

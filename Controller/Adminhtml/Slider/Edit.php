@@ -20,11 +20,11 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
-use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
-use Magento\Framework\View\Result\PageFactory;
-use Mageplaza\BannerSlider\Model\SliderFactory;
-use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Result\PageFactory;
+use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Mageplaza\BannerSlider\Model\SliderFactory;
 
 /**
  * Class Edit
@@ -35,7 +35,7 @@ class Edit extends Slider
 
     /**
      * Page factory
-     * 
+     *
      * @var \Magento\Framework\View\Result\PageFactory
      */
     protected $resultPageFactory;
@@ -70,7 +70,7 @@ class Edit extends Slider
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\View\Result\Page
+     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
      */
     public function execute()
     {
@@ -87,9 +87,10 @@ class Edit extends Slider
                     'mpbannerslider/*/edit',
                     [
                         'slider_id' => $slider->getId(),
-                        '_current' => true
+                        '_current'  => true
                     ]
                 );
+
                 return $resultRedirect;
             }
         }
@@ -103,8 +104,8 @@ class Edit extends Slider
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Mageplaza_BannerSlider::slider');
         $resultPage->getConfig()->getTitle()
-                                ->set(__('Sliders'))
-                                ->prepend($slider->getId() ? $slider->getName() : __('New Slider'));
+            ->set(__('Sliders'))
+            ->prepend($slider->getId() ? $slider->getName() : __('New Slider'));
 
         return $resultPage;
     }

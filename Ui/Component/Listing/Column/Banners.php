@@ -47,6 +47,7 @@ class Banners extends Column
      * Prepare Data Source
      *
      * @param array $dataSource
+     *
      * @return array
      */
     public function prepareDataSource(array $dataSource)
@@ -54,9 +55,9 @@ class Banners extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['slider_id'])) {
-                    $id     = $item['slider_id'];
-                    $data = $this->helperData->getBannerCollection($id)->getSize();
-                    $item[$this->getData('name')] = ($data > 0) ? $data .'<span> banners </span>' : '<b>No banner added</b>';
+                    $id                           = $item['slider_id'];
+                    $data                         = $this->helperData->getBannerCollection($id)->getSize();
+                    $item[$this->getData('name')] = ($data > 0) ? $data . '<span> banners </span>' : '<b>No banner added</b>';
                 }
             }
         }

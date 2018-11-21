@@ -44,6 +44,7 @@ class AddBlock implements ObserverInterface
 
     /**
      * AddBlock constructor.
+     *
      * @param RequestInterface $request
      * @param Data $helperData
      */
@@ -52,15 +53,14 @@ class AddBlock implements ObserverInterface
         Data $helperData
     )
     {
-        $this->request     = $request;
-        $this->helperData  = $helperData;
+        $this->request    = $request;
+        $this->helperData = $helperData;
     }
 
     /**
      * @param Observer $observer
      *
-     * @return $this|void
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return $this
      */
     public function execute(Observer $observer)
     {
@@ -69,11 +69,11 @@ class AddBlock implements ObserverInterface
         }
 
         $type = array_search($observer->getEvent()->getElementName(), [
-            'header' => 'header',
-            'content' => 'content',
-            'page-top' => 'page.top',
+            'header'           => 'header',
+            'content'          => 'content',
+            'page-top'         => 'page.top',
             'footer-container' => 'footer-container',
-            'sidebar' => 'catalog.leftnav'
+            'sidebar'          => 'catalog.leftnav'
         ]);
 
         if ($type !== false) {
@@ -83,21 +83,20 @@ class AddBlock implements ObserverInterface
             $output         = $observer->getTransport()->getOutput();
 
             foreach ($this->helperData->getActiveSliders() as $slider) {
-                $locations = explode(",",$slider->getLocation());
+                $locations = explode(",", $slider->getLocation());
                 foreach ($locations as $value) {
                     list($pageType, $location) = explode('.', $value);
-                    if ($fullActionName == $pageType || $pageType == 'allpage') {
+                    if (($fullActionName == $pageType || $pageType == 'allpage') &&
+                        strpos($location, $type) !== false
+                    ) {
                         $content = $layout->createBlock(\Mageplaza\BannerSlider\Block\Slider::class)
-                                          ->setSlider($slider)
-                                          ->toHtml();
+                            ->setSlider($slider)
+                            ->toHtml();
 
-                        if (strpos($location, $type) !== false) {
-                            if (strpos($location, 'top') !== false) {
-                                $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">$content</div>" . $output;
-                            }
-                            else {
-                                $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">$content</div>";
-                            }
+                        if (strpos($location, 'top') !== false) {
+                            $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">$content</div>" . $output;
+                        } else {
+                            $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">$content</div>";
                         }
                     }
                 }

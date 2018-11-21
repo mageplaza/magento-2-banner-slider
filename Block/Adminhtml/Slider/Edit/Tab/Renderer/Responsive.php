@@ -40,6 +40,7 @@ class Responsive extends AbstractElement
 
     /**
      * Responsive constructor.
+     *
      * @param Factory $factoryElement
      * @param CollectionFactory $factoryCollection
      * @param Escaper $escaper

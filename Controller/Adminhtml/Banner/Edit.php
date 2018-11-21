@@ -21,11 +21,11 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
-use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
-use Magento\Framework\View\Result\PageFactory;
-use Mageplaza\BannerSlider\Model\BannerFactory;
-use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Result\PageFactory;
+use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
+use Mageplaza\BannerSlider\Model\BannerFactory;
 
 /**
  * Class Edit
@@ -36,7 +36,7 @@ class Edit extends Banner
 
     /**
      * Page factory
-     * 
+     *
      * @var \Magento\Framework\View\Result\PageFactory
      */
     protected $resultPageFactory;
@@ -71,7 +71,7 @@ class Edit extends Banner
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\View\Result\Page
+     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
      */
     public function execute()
     {
@@ -90,9 +90,10 @@ class Edit extends Banner
                     'mpbannerslider/*/edit',
                     [
                         'banner_id' => $banner->getId(),
-                        '_current' => true
+                        '_current'  => true
                     ]
                 );
+
                 return $resultRedirect;
             }
         }
@@ -105,8 +106,8 @@ class Edit extends Banner
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Mageplaza_BannerSlider::banner');
         $resultPage->getConfig()->getTitle()
-                                ->set(__('Banners'))
-                                ->prepend($banner->getId() ? $banner->getName() : __('New Banner'));
+            ->set(__('Banners'))
+            ->prepend($banner->getId() ? $banner->getName() : __('New Banner'));
 
         return $resultPage;
     }

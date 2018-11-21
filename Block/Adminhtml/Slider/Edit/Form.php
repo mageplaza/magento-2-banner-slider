@@ -21,6 +21,7 @@
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit;
 
 use Magento\Backend\Block\Widget\Form\Generic;
+
 class Form extends Generic
 {
     /**
@@ -33,9 +34,9 @@ class Form extends Generic
         $form = $this->_formFactory->create(
             [
                 'data' => [
-                    'id' => 'edit_form',
-                    'action' => $this->getUrl('*/*/save', ['id' => $this->getRequest()->getParam('id')]),
-                    'method' => 'post',
+                    'id'      => 'edit_form',
+                    'action'  => $this->getUrl('*/*/save', ['id' => $this->getRequest()->getParam('id')]),
+                    'method'  => 'post',
                     'enctype' => 'multipart/form-data'
                 ]
             ]

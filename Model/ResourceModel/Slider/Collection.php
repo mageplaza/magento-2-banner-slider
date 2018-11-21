@@ -20,28 +20,28 @@
  */
 namespace Mageplaza\BannerSlider\Model\ResourceModel\Slider;
 
-use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Framework\DB\Select;
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 class Collection extends AbstractCollection
 {
     /**
      * ID Field Name
-     * 
+     *
      * @var string
      */
     protected $_idFieldName = 'slider_id';
 
     /**
      * Event prefix
-     * 
+     *
      * @var string
      */
     protected $_eventPrefix = 'mageplaza_bannerslider_slider_collection';
 
     /**
      * Event object
-     * 
+     *
      * @var string
      */
     protected $_eventObject = 'slider_collection';
@@ -66,12 +66,15 @@ class Collection extends AbstractCollection
     {
         $countSelect = parent::getSelectCountSql();
         $countSelect->reset(\Zend_Db_Select::GROUP);
+
         return $countSelect;
     }
+
     /**
      * @param string $valueField
      * @param string $labelField
      * @param array $additional
+     *
      * @return array
      */
     protected function _toOptionArray($valueField = 'slider_id', $labelField = 'name', $additional = [])
@@ -83,6 +86,7 @@ class Collection extends AbstractCollection
      * add if filter
      *
      * @param $sliderIds
+     *
      * @return $this
      */
     public function addIdFilter($sliderIds)
@@ -114,12 +118,12 @@ class Collection extends AbstractCollection
     /**
      * @param $customerGroup
      * @param $storeId
+     *
      * @return $this
      */
     public function addActiveFilter($customerGroup = null, $storeId = null)
     {
-        $this->addFieldToFilter('status', true)
-             ->setOrder('priority', Select::SQL_ASC);
+        $this->addFieldToFilter('status', true)->setOrder('priority', Select::SQL_ASC);
 
         if (isset($customerGroup)) {
             $this->getSelect()
@@ -128,7 +132,7 @@ class Collection extends AbstractCollection
 
         if (isset($storeId)) {
             $this->getSelect()
-                 ->where('FIND_IN_SET(0, store_ids) OR FIND_IN_SET(?, store_ids)', $storeId);
+                ->where('FIND_IN_SET(0, store_ids) OR FIND_IN_SET(?, store_ids)', $storeId);
         }
 
         return $this;

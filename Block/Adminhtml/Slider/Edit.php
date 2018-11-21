@@ -21,25 +21,29 @@
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider;
 
 
-class Edit extends \Magento\Backend\Block\Widget\Form\Container
+use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form\Container;
+use Magento\Framework\Registry;
+
+class Edit extends Container
 {
     /**
      * Core registry
-     * 
-     * @var \Magento\Framework\Registry
+     *
+     * @var Registry
      */
     protected $coreRegistry;
 
     /**
      * constructor
-     * 
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Backend\Block\Widget\Context $context
+     *
+     * @param Registry $coreRegistry
+     * @param Context $context
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Registry $coreRegistry,
-        \Magento\Backend\Block\Widget\Context $context,
+        Registry $coreRegistry,
+        Context $context,
         array $data = []
     )
     {
@@ -54,7 +58,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     protected function _construct()
     {
-        $this->_objectId = 'slider_id';
+        $this->_objectId   = 'slider_id';
         $this->_blockGroup = 'Mageplaza_BannerSlider';
         $this->_controller = 'adminhtml_slider';
         parent::_construct();
@@ -62,12 +66,12 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         $this->buttonList->add(
             'save-and-continue',
             [
-                'label' => __('Save and Continue Edit'),
-                'class' => 'save',
+                'label'          => __('Save and Continue Edit'),
+                'class'          => 'save',
                 'data_attribute' => [
                     'mage-init' => [
                         'button' => [
-                            'event' => 'saveAndContinueEdit',
+                            'event'  => 'saveAndContinueEdit',
                             'target' => '#edit_form'
                         ]
                     ]
@@ -90,6 +94,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         if ($slider->getId()) {
             return __("Edit Slider '%1'", $this->escapeHtml($slider->getName()));
         }
+
         return __('New Slider');
     }
 

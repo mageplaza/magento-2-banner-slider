@@ -28,14 +28,14 @@ class Edit extends Container
 {
     /**
      * Core registry
-     * 
+     *
      * @var \Magento\Framework\Registry
      */
     protected $coreRegistry;
 
     /**
      * constructor
-     * 
+     *
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Backend\Block\Widget\Context $context
      * @param array $data
@@ -58,7 +58,7 @@ class Edit extends Container
      */
     protected function _construct()
     {
-        $this->_objectId = 'banner_id';
+        $this->_objectId   = 'banner_id';
         $this->_blockGroup = 'Mageplaza_BannerSlider';
         $this->_controller = 'adminhtml_banner';
         parent::_construct();
@@ -66,12 +66,12 @@ class Edit extends Container
         $this->buttonList->add(
             'save-and-continue',
             [
-                'label' => __('Save and Continue Edit'),
-                'class' => 'save',
+                'label'          => __('Save and Continue Edit'),
+                'class'          => 'save',
                 'data_attribute' => [
                     'mage-init' => [
                         'button' => [
-                            'event' => 'saveAndContinueEdit',
+                            'event'  => 'saveAndContinueEdit',
                             'target' => '#edit_form'
                         ]
                     ]
@@ -94,6 +94,7 @@ class Edit extends Container
         if ($banner->getId()) {
             return __("Edit Banner '%1'", $this->escapeHtml($banner->getName()));
         }
+
         return __('New Banner');
     }
 

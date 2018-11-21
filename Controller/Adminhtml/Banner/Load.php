@@ -71,7 +71,7 @@ class Load extends Action
         $templateId   = $this->getRequest()->getParam('templateId');
 
         try {
-            $templateHtml = $this->helperData->readFile($this->helperData->getBaseTemplatePath().$templateId.'.html');
+            $templateHtml = $this->helperData->readFile($this->helperData->getBaseTemplatePath() . $templateId . '.html');
             $status       = true;
             $message      = __('Load message success!');
         } catch (\Exception $e) {

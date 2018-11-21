@@ -21,6 +21,10 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml;
 
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\BannerFactory;
+
 /**
  * Class Banner
  * @package Mageplaza\BannerSlider\Controller\Adminhtml
@@ -29,39 +33,39 @@ abstract class Banner extends \Magento\Backend\App\Action
 {
     /**
      * Banner Factory
-     * 
-     * @var \Mageplaza\BannerSlider\Model\BannerFactory
+     *
+     * @var BannerFactory
      */
     protected $bannerFactory;
 
     /**
      * Core registry
-     * 
-     * @var \Magento\Framework\Registry
+     *
+     * @var Registry
      */
     protected $coreRegistry;
 
     /**
      * Result redirect factory
-     * 
+     *
      * @var \Magento\Backend\Model\View\Result\RedirectFactory
      */
 
     /**
      * constructor
-     * 
-     * @param \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Backend\App\Action\Context $context
+     *
+     * @param BannerFactory $bannerFactory
+     * @param Registry $coreRegistry
+     * @param Context $context
      */
     public function __construct(
-        \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory,
-        \Magento\Framework\Registry $coreRegistry,
-        \Magento\Backend\App\Action\Context $context
+        BannerFactory $bannerFactory,
+        Registry $coreRegistry,
+        Context $context
     )
     {
-        $this->bannerFactory         = $bannerFactory;
-        $this->coreRegistry          = $coreRegistry;
+        $this->bannerFactory = $bannerFactory;
+        $this->coreRegistry  = $coreRegistry;
         parent::__construct($context);
     }
 
@@ -72,9 +76,9 @@ abstract class Banner extends \Magento\Backend\App\Action
      */
     protected function initBanner()
     {
-        $bannerId  = (int) $this->getRequest()->getParam('banner_id');
+        $bannerId = (int) $this->getRequest()->getParam('banner_id');
         /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
-        $banner    = $this->bannerFactory->create();
+        $banner = $this->bannerFactory->create();
         if ($bannerId) {
             $banner->load($bannerId);
         }

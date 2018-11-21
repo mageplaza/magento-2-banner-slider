@@ -20,30 +20,30 @@
  */
 namespace Mageplaza\BannerSlider\Model\ResourceModel;
 
-use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Model\ResourceModel\Db\Context;
+use Magento\Framework\Stdlib\DateTime\DateTime;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
 
 class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     /**
      * Date model
-     * 
+     *
      * @var \Magento\Framework\Stdlib\DateTime\DateTime
      */
     protected $date;
 
     /**
      * Banner relation model
-     * 
+     *
      * @var string
      */
     protected $sliderBannerTable;
 
     /**
      * Event Manager
-     * 
+     *
      * @var \Magento\Framework\Event\ManagerInterface
      */
     protected $eventManager;
@@ -54,11 +54,12 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     protected $bannerHelper;
 
     /**
-     * constructor
-     * 
-     * @param \Magento\Framework\Stdlib\DateTime\DateTime $date
-     * @param \Magento\Framework\Event\ManagerInterface $eventManager
-     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
+     * Slider constructor.
+     *
+     * @param DateTime $date
+     * @param ManagerInterface $eventManager
+     * @param Context $context
+     * @param bannerHelper $helperData
      */
     public function __construct(
         DateTime $date,
@@ -88,6 +89,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
     /**
      * Retrieves Slider Name from DB by passed id.
+     *
      * @param $id
      *
      * @return string
@@ -96,15 +98,17 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     public function getSliderNameById($id)
     {
         $adapter = $this->getConnection();
-        $select = $adapter->select()
+        $select  = $adapter->select()
             ->from($this->getMainTable(), 'name')
             ->where('slider_id = :slider_id');
-        $binds = ['slider_id' => (int)$id];
+        $binds   = ['slider_id' => (int) $id];
+
         return $adapter->fetchOne($select, $binds);
     }
 
     /**
      * before save callback
+     *
      * @param \Magento\Framework\Model\AbstractModel $object
      *
      * @return \Magento\Framework\Model\ResourceModel\Db\AbstractDb
@@ -147,6 +151,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * after save callback
      *
      * @param \Magento\Framework\Model\AbstractModel|\Mageplaza\BannerSlider\Model\Slider $object
+     *
      * @return $this
      */
     protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
@@ -177,6 +182,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
     /**
      * @param \Mageplaza\BannerSlider\Model\Slider $slider
+     *
      * @return array
      */
     public function getBannersPosition(\Mageplaza\BannerSlider\Model\Slider $slider)
@@ -185,36 +191,38 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
             $this->sliderBannerTable,
             ['banner_id', 'position']
         )
-        ->where(
-            'slider_id = :slider_id'
-        );
-        $bind = ['slider_id' => (int)$slider->getId()];
+            ->where(
+                'slider_id = :slider_id'
+            );
+        $bind   = ['slider_id' => (int) $slider->getId()];
+
         return $this->getConnection()->fetchPairs($select, $bind);
     }
 
     /**
      * @param \Mageplaza\BannerSlider\Model\Slider $slider
+     *
      * @return $this
      */
     protected function saveBannerRelation(\Mageplaza\BannerSlider\Model\Slider $slider)
     {
         $slider->setIsChangedBannerList(false);
-        $id = $slider->getId();
+        $id      = $slider->getId();
         $banners = $slider->getBannersData();
         if ($banners === null) {
             return $this;
         }
         $oldBanners = $slider->getBannersPosition();
-        $insert = array_diff_key($banners, $oldBanners);
-        $delete = array_diff_key($oldBanners, $banners);
-        $update = array_intersect_key($banners, $oldBanners);
-        $_update = array();
-        foreach ($update as $key=>$settings) {
+        $insert     = array_diff_key($banners, $oldBanners);
+        $delete     = array_diff_key($oldBanners, $banners);
+        $update     = array_intersect_key($banners, $oldBanners);
+        $_update    = [];
+        foreach ($update as $key => $settings) {
             if (isset($oldBanners[$key]) && $oldBanners[$key] != $settings['position']) {
                 $_update[$key] = $settings;
             }
         }
-        $update = $_update;
+        $update  = $_update;
         $adapter = $this->getConnection();
         if (!empty($delete)) {
             $condition = ['banner_id IN(?)' => array_keys($delete), 'slider_id=?' => $id];
@@ -224,17 +232,17 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
             $data = [];
             foreach ($insert as $bannerId => $position) {
                 $data[] = [
-                    'slider_id' => (int)$id,
-                    'banner_id' => (int)$bannerId,
-                    'position' => (int)$position['position']
+                    'slider_id' => (int) $id,
+                    'banner_id' => (int) $bannerId,
+                    'position'  => (int) $position['position']
                 ];
             }
             $adapter->insertMultiple($this->sliderBannerTable, $data);
         }
         if (!empty($update)) {
             foreach ($update as $bannerId => $position) {
-                $where = ['slider_id = ?' => (int)$id, 'banner_id = ?' => (int)$bannerId];
-                $bind = ['position' => (int)$position['position']];
+                $where = ['slider_id = ?' => (int) $id, 'banner_id = ?' => (int) $bannerId];
+                $bind  = ['position' => (int) $position['position']];
                 $adapter->update($this->sliderBannerTable, $bind, $where);
             }
         }
@@ -250,6 +258,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
             $bannerIds = array_keys($insert + $delete + $update);
             $slider->setAffectedBannerIds($bannerIds);
         }
+
         return $this;
     }
 }

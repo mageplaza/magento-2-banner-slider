@@ -21,7 +21,7 @@
 define([
     'underscore',
     'Magento_Catalog/js/components/new-category'
-], function (_, Category) {
+], function(_, Category) {
     'use strict';
 
     /**
@@ -38,14 +38,14 @@ define([
             length,
             childCollection;
 
-        array = _.compact(array);
-        length = array.length;
+        array   = _.compact(array);
+        length  = array.length;
         created = created || [];
 
-        for (i; i < length; i++) {
+        for (i; i < length; i++){
             created.push(array[i]);
 
-            if (array[i].hasOwnProperty(separator)) {
+            if (array[i].hasOwnProperty(separator)){
                 childCollection = array[i][separator];
                 delete array[i][separator];
                 flattenCollection.call(this, childCollection, separator, created);
@@ -62,13 +62,13 @@ define([
          * @param {Object} option
          * @param {Array} options
          */
-        setOption: function (option, options) {
+        setOption: function(option, options) {
             var parent = parseInt(option.parent);
-            if(_.contains([0, 1], parent)){
+            if (_.contains([0, 1], parent)){
                 options = options || this.cacheOptions.tree;
                 options.push(option);
 
-                var copyOptionsTree = JSON.parse(JSON.stringify(this.cacheOptions.tree));
+                var copyOptionsTree     = JSON.parse(JSON.stringify(this.cacheOptions.tree));
                 this.cacheOptions.plain = flattenCollection(copyOptionsTree, this.separator);
                 this.options(this.cacheOptions.tree);
             } else {

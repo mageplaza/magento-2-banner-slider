@@ -20,33 +20,37 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
+use Magento\Backend\App\Action\Context;
+use Magento\Ui\Component\MassAction\Filter;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
+
 class MassDelete extends \Magento\Backend\App\Action
 {
     /**
      * Mass Action Filter
-     * 
-     * @var \Magento\Ui\Component\MassAction\Filter
+     *
+     * @var Filter
      */
     protected $filter;
 
     /**
      * Collection Factory
-     * 
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
+     *
+     * @var CollectionFactory
      */
     protected $collectionFactory;
 
     /**
      * constructor
-     * 
-     * @param \Magento\Ui\Component\MassAction\Filter $filter
-     * @param \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory $collectionFactory
-     * @param \Magento\Backend\App\Action\Context $context
+     *
+     * @param Filter $filter
+     * @param CollectionFactory $collectionFactory
+     * @param Context $context
      */
     public function __construct(
-        \Magento\Ui\Component\MassAction\Filter $filter,
-        \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory $collectionFactory,
-        \Magento\Backend\App\Action\Context $context
+        Filter $filter,
+        CollectionFactory $collectionFactory,
+        Context $context
     )
     {
         $this->filter            = $filter;
@@ -56,9 +60,8 @@ class MassDelete extends \Magento\Backend\App\Action
 
 
     /**
-     * execute action
-     *
-     * @return \Magento\Backend\Model\View\Result\Redirect
+     * @return \Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute()
     {
@@ -73,6 +76,7 @@ class MassDelete extends \Magento\Backend\App\Action
         $this->messageManager->addSuccess(__('A total of %1 record(s) have been deleted.', $delete));
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);
+
         return $resultRedirect->setPath('*/*/');
     }
 }

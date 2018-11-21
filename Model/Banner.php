@@ -21,12 +21,13 @@
 
 namespace Mageplaza\BannerSlider\Model;
 
-use Magento\Framework\Model\Context;
-use Magento\Framework\Registry;
-use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Data\Collection\AbstractDb;
-use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as sliderCollectionFactory;
+use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as configImage;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as sliderCollectionFactory;
 
 /**
  * @method Banner setName($name)
@@ -52,25 +53,25 @@ use Mageplaza\BannerSlider\Model\Config\Source\Image as configImage;
  * @method Banner setAffectedSliderIds(array $ids)
  * @method bool getAffectedSliderIds()
  */
-class Banner extends \Magento\Framework\Model\AbstractModel
+class Banner extends AbstractModel
 {
     /**
      * Cache tag
-     * 
+     *
      * @var string
      */
     const CACHE_TAG = 'mageplaza_bannerslider_banner';
 
     /**
      * Cache tag
-     * 
+     *
      * @var string
      */
     protected $_cacheTag = 'mageplaza_bannerslider_banner';
 
     /**
      * Event prefix
-     * 
+     *
      * @var string
      */
     protected $_eventPrefix = 'mageplaza_bannerslider_banner';
@@ -117,7 +118,7 @@ class Banner extends \Magento\Framework\Model\AbstractModel
     )
     {
         $this->sliderCollectionFactory = $sliderCollectionFactory;
-        $this->imageModel = $configImage;
+        $this->imageModel              = $configImage;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -150,9 +151,10 @@ class Banner extends \Magento\Framework\Model\AbstractModel
      */
     public function getDefaultValues()
     {
-        $values = [];
+        $values           = [];
         $values['status'] = '1';
-        $values['type'] = '0';
+        $values['type']   = '0';
+
         return $values;
     }
 
@@ -165,13 +167,14 @@ class Banner extends \Magento\Framework\Model\AbstractModel
             $collection = $this->sliderCollectionFactory->create();
             $collection->getSelect()->join(
                 ['banner_slider' => $this->getResource()->getTable('mageplaza_bannerslider_banner_slider')],
-                'main_table.slider_id=banner_slider.slider_id AND banner_slider.banner_id='.$this->getId(),
+                'main_table.slider_id=banner_slider.slider_id AND banner_slider.banner_id=' . $this->getId(),
                 ['position']
             );
-            $collection->addFieldToFilter('status',1);
+            $collection->addFieldToFilter('status', 1);
 
             $this->sliderCollection = $collection;
         }
+
         return $this->sliderCollection;
     }
 
@@ -181,12 +184,11 @@ class Banner extends \Magento\Framework\Model\AbstractModel
      */
     public function getImageUrl()
     {
-        return $this->imageModel->getBaseUrl().$this->getImage();
+        return $this->imageModel->getBaseUrl() . $this->getImage();
     }
 
     /**
      * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getSliderIds()
     {
@@ -196,6 +198,6 @@ class Banner extends \Magento\Framework\Model\AbstractModel
             $this->setData('slider_ids', $ids);
         }
 
-        return (array)$this->getData('slider_ids');
+        return (array) $this->getData('slider_ids');
     }
 }

@@ -30,18 +30,15 @@ use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 class Delete extends Banner
 {
     /**
-     * execute action
-     *
-     * @return \Magento\Backend\Model\View\Result\Redirect
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         try {
-            /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
-            $banner = $this->bannerFactory->create()
-                                          ->load($this->getRequest()->getParam('banner_id'))
-                                          ->delete();
+            $this->bannerFactory->create()
+                ->load($this->getRequest()->getParam('banner_id'))
+                ->delete();
             $this->messageManager->addSuccess(__('The Banner has been deleted.'));
         } catch (\Exception $e) {
             // display error message

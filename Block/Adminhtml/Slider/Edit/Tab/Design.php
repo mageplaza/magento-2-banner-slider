@@ -24,10 +24,10 @@ namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
+use Magento\Config\Model\Config\Source\Yesno;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\Config\Source\Effect;
-use Magento\Config\Model\Config\Source\Yesno;
 
 /**
  * Class Design
@@ -65,7 +65,7 @@ class Design extends Generic implements TabInterface
     )
     {
         $this->_effect = $effect;
-        $this->_yesno = $yesno;
+        $this->_yesno  = $yesno;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
@@ -77,145 +77,109 @@ class Design extends Generic implements TabInterface
         $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('slider_');
         $form->setFieldNameSuffix('slider');
-        $fieldset = $form->addFieldset(
-            'base_fieldset',
-            [
-                'legend' => __('Design'),
-                'class'  => 'fieldset-wide'
-            ]
-        );
+        $fieldset = $form->addFieldset('base_fieldset', [
+            'legend' => __('Design'),
+            'class'  => 'fieldset-wide'
+        ]);
 
-        $fieldset->addField(
-            'effect',
-            'select',
-            [
-                'name'   => 'effect',
-                'label'  => __('Animation Effect'),
-                'title'  => __('Animation Effect'),
-                'values' => $this->_effect->toOptionArray()
-            ]);
-        $design = $fieldset->addField(
-            'design',
-            'select',
-            [
-                'name'   => 'design',
-                'label'  => __('Manually Design'),
-                'title'  => __('Manually Design'),
-                'options' => [
-                    '0' => __('Use Config'),
-                    '1' => __('Yes')
-                ]
-            ]);
-        $responsive = $fieldset->addField(
-            'is_responsive',
-            'select',
-            [
-                'name'   => 'is_responsive',
-                'label'  => __('Is Responsive'),
-                'title'  => __('Is Responsive'),
-                'values' => $this->_yesno->toOptionArray()
-            ]);
+        $fieldset->addField('effect', 'select', [
+            'name'   => 'effect',
+            'label'  => __('Animation Effect'),
+            'title'  => __('Animation Effect'),
+            'values' => $this->_effect->toOptionArray()
+        ]);
+        $design         = $fieldset->addField('design', 'select', [
+            'name'    => 'design',
+            'label'   => __('Manually Design'),
+            'title'   => __('Manually Design'),
+            'options' => [
+                '0' => __('Use Config'),
+                '1' => __('Yes')
+            ]
+        ]);
+        $responsive     = $fieldset->addField('is_responsive', 'select', [
+            'name'   => 'is_responsive',
+            'label'  => __('Is Responsive'),
+            'title'  => __('Is Responsive'),
+            'values' => $this->_yesno->toOptionArray()
+        ]);
         $responsiveItem = $fieldset->addField('responsive_items', 'Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Responsive', [
             'name'  => 'responsive_items',
             'label' => __('Max Items slider'),
             'title' => __('Max Items slider'),
         ]);
-        $autoWidth = $fieldset->addField(
-            'autoWidth',
-            'select',
-            [
-                'name'   => 'autoWidth',
-                'label'  => __('Auto Width'),
-                'title'  => __('Auto Width'),
-                'values' => $this->_yesno->toOptionArray()
-            ]);
-        $autoHeight = $fieldset->addField(
-            'autoHeight',
-            'select',
-            [
-                'name'   => 'autoHeight',
-                'label'  => __('Auto Height'),
-                'title'  => __('Auto Height'),
-                'values' => $this->_yesno->toOptionArray()
-            ]);
-        $loop = $fieldset->addField(
-            'loop',
-            'select',
-            [
-                'name'   => 'loop',
-                'label'  => __('Infinity loop'),
-                'title'  => __('Infinity loop'),
-                'values' => $this->_yesno->toOptionArray()
-            ]);
-        $nav = $fieldset->addField(
-            'nav',
-            'select',
-            [
-                'name'   => 'nav',
-                'label'  => __('Show Next/Prev buttons'),
-                'title'  => __('Show Next/Prev buttons'),
-                'values' => $this->_yesno->toOptionArray()
-            ]);
-        $dots = $fieldset->addField(
-            'dots',
-            'select',
-            [
-                'name'   => 'dots',
-                'label'  => __('Show Dots Navigation'),
-                'title'  => __('Show Dots Navigation'),
-                'values' => $this->_yesno->toOptionArray()
-            ]);
-        $lazyload = $fieldset->addField(
-            'lazyLoad',
-            'select',
-            [
-                'name'   => 'lazyLoad',
-                'label'  => __('Lazy load images'),
-                'title'  => __('Lazy load images'),
-                'values' => $this->_yesno->toOptionArray()
-            ]);
-        $autoplay = $fieldset->addField(
-            'autoplay',
-            'select',
-            [
-                'name'   => 'autoplay',
-                'label'  => __('Autoplay'),
-                'title'  => __('Autoplay'),
-                'values' => $this->_yesno->toOptionArray()
-            ]);
-        $timeout = $fieldset->addField(
-            'autoplayTimeout',
-            'text',
-            [
-                'name'   => 'autoplayTimeout',
-                'label'  => __('Autoplay Timeout'),
-                'title'  => __('Autoplay Timeout')
-            ]);
+        $autoWidth      = $fieldset->addField('autoWidth', 'select', [
+            'name'   => 'autoWidth',
+            'label'  => __('Auto Width'),
+            'title'  => __('Auto Width'),
+            'values' => $this->_yesno->toOptionArray()
+        ]);
+        $autoHeight     = $fieldset->addField('autoHeight', 'select', [
+            'name'   => 'autoHeight',
+            'label'  => __('Auto Height'),
+            'title'  => __('Auto Height'),
+            'values' => $this->_yesno->toOptionArray()
+        ]);
+        $loop           = $fieldset->addField('loop', 'select', [
+            'name'   => 'loop',
+            'label'  => __('Infinity loop'),
+            'title'  => __('Infinity loop'),
+            'values' => $this->_yesno->toOptionArray()
+        ]);
+        $nav            = $fieldset->addField('nav', 'select', [
+            'name'   => 'nav',
+            'label'  => __('Show Next/Prev buttons'),
+            'title'  => __('Show Next/Prev buttons'),
+            'values' => $this->_yesno->toOptionArray()
+        ]);
+        $dots           = $fieldset->addField('dots', 'select', [
+            'name'   => 'dots',
+            'label'  => __('Show Dots Navigation'),
+            'title'  => __('Show Dots Navigation'),
+            'values' => $this->_yesno->toOptionArray()
+        ]);
+        $lazyload       = $fieldset->addField('lazyLoad', 'select', [
+            'name'   => 'lazyLoad',
+            'label'  => __('Lazy load images'),
+            'title'  => __('Lazy load images'),
+            'values' => $this->_yesno->toOptionArray()
+        ]);
+        $autoplay       = $fieldset->addField('autoplay', 'select', [
+            'name'   => 'autoplay',
+            'label'  => __('Autoplay'),
+            'title'  => __('Autoplay'),
+            'values' => $this->_yesno->toOptionArray()
+        ]);
+        $timeout        = $fieldset->addField('autoplayTimeout', 'text', [
+            'name'  => 'autoplayTimeout',
+            'label' => __('Autoplay Timeout'),
+            'title' => __('Autoplay Timeout')
+        ]);
 
         $dependencies = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Form\Element\Dependence')
-                             ->addFieldMap($design->getHtmlId(), $design->getName())
-                             ->addFieldMap($responsive->getHtmlId(), $responsive->getName())
-                             ->addFieldMap($responsiveItem->getHtmlId(), $responsiveItem->getName())
-                             ->addFieldMap($autoWidth->getHtmlId(), $autoWidth->getName())
-                             ->addFieldMap($autoHeight->getHtmlId(), $autoHeight->getName())
-                             ->addFieldMap($loop->getHtmlId(), $loop->getName())
-                             ->addFieldMap($nav->getHtmlId(), $nav->getName())
-                             ->addFieldMap($dots->getHtmlId(), $dots->getName())
-                             ->addFieldMap($lazyload->getHtmlId(), $lazyload->getName())
-                             ->addFieldMap($autoplay->getHtmlId(), $autoplay->getName())
-                             ->addFieldMap($timeout->getHtmlId(), $timeout->getName())
-                             ->addFieldDependence($responsive->getName(),$design->getName(),'1')
-                             ->addFieldDependence($responsiveItem->getName(),$design->getName(),'1')
-                             ->addFieldDependence($autoWidth->getName(),$design->getName(),'1')
-                             ->addFieldDependence($autoHeight->getName(),$design->getName(),'1')
-                             ->addFieldDependence($loop->getName(),$design->getName(),'1')
-                             ->addFieldDependence($nav->getName(),$design->getName(),'1')
-                             ->addFieldDependence($dots->getName(),$design->getName(),'1')
-                             ->addFieldDependence($lazyload->getName(),$design->getName(),'1')
-                             ->addFieldDependence($autoplay->getName(),$design->getName(),'1')
-                             ->addFieldDependence($timeout->getName(),$design->getName(),'1')
-                             ->addFieldDependence($responsiveItem->getName(),$responsive->getName(),'1')
-                             ->addFieldDependence($timeout->getName(),$autoplay->getName(),'1');
+            ->addFieldMap($design->getHtmlId(), $design->getName())
+            ->addFieldMap($responsive->getHtmlId(), $responsive->getName())
+            ->addFieldMap($responsiveItem->getHtmlId(), $responsiveItem->getName())
+            ->addFieldMap($autoWidth->getHtmlId(), $autoWidth->getName())
+            ->addFieldMap($autoHeight->getHtmlId(), $autoHeight->getName())
+            ->addFieldMap($loop->getHtmlId(), $loop->getName())
+            ->addFieldMap($nav->getHtmlId(), $nav->getName())
+            ->addFieldMap($dots->getHtmlId(), $dots->getName())
+            ->addFieldMap($lazyload->getHtmlId(), $lazyload->getName())
+            ->addFieldMap($autoplay->getHtmlId(), $autoplay->getName())
+            ->addFieldMap($timeout->getHtmlId(), $timeout->getName())
+            ->addFieldDependence($responsive->getName(), $design->getName(), '1')
+            ->addFieldDependence($responsiveItem->getName(), $design->getName(), '1')
+            ->addFieldDependence($autoWidth->getName(), $design->getName(), '1')
+            ->addFieldDependence($autoHeight->getName(), $design->getName(), '1')
+            ->addFieldDependence($loop->getName(), $design->getName(), '1')
+            ->addFieldDependence($nav->getName(), $design->getName(), '1')
+            ->addFieldDependence($dots->getName(), $design->getName(), '1')
+            ->addFieldDependence($lazyload->getName(), $design->getName(), '1')
+            ->addFieldDependence($autoplay->getName(), $design->getName(), '1')
+            ->addFieldDependence($timeout->getName(), $design->getName(), '1')
+            ->addFieldDependence($responsiveItem->getName(), $responsive->getName(), '1')
+            ->addFieldDependence($timeout->getName(), $autoplay->getName(), '1');
 
         // define field dependencies
         $this->setChild('form_after', $dependencies);

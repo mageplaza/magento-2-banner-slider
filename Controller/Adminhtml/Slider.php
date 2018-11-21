@@ -20,9 +20,9 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml;
 
-use Mageplaza\BannerSlider\Model\SliderFactory;
-use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\SliderFactory;
 
 /**
  * Class Slider
@@ -32,14 +32,14 @@ abstract class Slider extends \Magento\Backend\App\Action
 {
     /**
      * Slider Factory
-     * 
+     *
      * @var \Mageplaza\BannerSlider\Model\SliderFactory
      */
     protected $sliderFactory;
 
     /**
      * Core registry
-     * 
+     *
      * @var \Magento\Framework\Registry
      */
     protected $coreRegistry;
@@ -57,8 +57,8 @@ abstract class Slider extends \Magento\Backend\App\Action
         Context $context
     )
     {
-        $this->sliderFactory         = $sliderFactory;
-        $this->coreRegistry          = $coreRegistry;
+        $this->sliderFactory = $sliderFactory;
+        $this->coreRegistry  = $coreRegistry;
         parent::__construct($context);
     }
 
@@ -69,9 +69,9 @@ abstract class Slider extends \Magento\Backend\App\Action
      */
     protected function initSlider()
     {
-        $sliderId  = (int) $this->getRequest()->getParam('slider_id');
+        $sliderId = (int) $this->getRequest()->getParam('slider_id');
         /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
-        $slider    = $this->sliderFactory->create();
+        $slider = $this->sliderFactory->create();
         if ($sliderId) {
             $slider->load($sliderId);
         }

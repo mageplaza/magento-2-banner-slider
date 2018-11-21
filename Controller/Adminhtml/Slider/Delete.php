@@ -30,18 +30,16 @@ use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 class Delete extends Slider
 {
     /**
-     * execute action
-     *
-     * @return \Magento\Backend\Model\View\Result\Redirect
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         try {
             /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
-            $slider = $this->sliderFactory->create()
-                                          ->load($this->getRequest()->getParam('slider_id'))
-                                          ->delete();
+            $this->sliderFactory->create()
+                ->load($this->getRequest()->getParam('slider_id'))
+                ->delete();
             $this->messageManager->addSuccess(__('The slider has been deleted.'));
         } catch (\Exception $e) {
             // display error message

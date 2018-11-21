@@ -21,10 +21,10 @@
 
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
+use Magento\Customer\Model\ResourceModel\Group\Collection as GroupCollection;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
-use Magento\Customer\Model\ResourceModel\Group\Collection as GroupCollection;
 
 class CustomerGroup extends Column
 {
@@ -58,6 +58,7 @@ class CustomerGroup extends Column
      * Prepare Data Source
      *
      * @param array $dataSource
+     *
      * @return array
      */
     public function prepareDataSource(array $dataSource)
@@ -81,7 +82,7 @@ class CustomerGroup extends Column
      */
     public function prepareItem(array $item)
     {
-        $content    = [];
+        $content   = [];
         $origGroup = $item['customer_group_ids'];
 
         if (!is_array($origGroup)) {
@@ -93,6 +94,6 @@ class CustomerGroup extends Column
             $content[] = $customer[$group]['label'];
         }
 
-        return implode(", ",$content);
+        return implode(", ", $content);
     }
 }

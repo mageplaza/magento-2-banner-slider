@@ -20,39 +20,39 @@
  */
 namespace Mageplaza\BannerSlider\Model\Config\Source;
 
+use Magento\Framework\Filesystem;
+use Magento\Framework\UrlInterface;
+
 class Image
 {
     /**
      * Media sub folder
-     * 
+     *
      * @var string
      */
     public $subDir = 'mageplaza/bannerslider/banner';
 
     /**
      * URL builder
-     * 
-     * @var \Magento\Framework\UrlInterface
+     *
+     * @var UrlInterface
      */
     protected $urlBuilder;
 
     /**
      * File system model
-     * 
-     * @var \Magento\Framework\Filesystem
+     *
+     * @var Filesystem
      */
     protected $fileSystem;
 
     /**
      * constructor
-     * 
-     * @param \Magento\Framework\UrlInterface $urlBuilder
-     * @param \Magento\Framework\Filesystem $fileSystem
+     *
+     * @param UrlInterface $urlBuilder
+     * @param Filesystem $fileSystem
      */
-    public function __construct(
-        \Magento\Framework\UrlInterface $urlBuilder,
-        \Magento\Framework\Filesystem $fileSystem
-    )
+    public function __construct(UrlInterface $urlBuilder, Filesystem $fileSystem)
     {
         $this->urlBuilder = $urlBuilder;
         $this->fileSystem = $fileSystem;
@@ -65,7 +65,7 @@ class Image
      */
     public function getBaseUrl()
     {
-        return $this->urlBuilder->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]).$this->subDir.'/image/';
+        return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . $this->subDir . '/image/';
     }
 
     /**
@@ -76,6 +76,6 @@ class Image
      */
     public function getBaseDir()
     {
-        return $this->fileSystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath($this->subDir.'/image/');
+        return $this->fileSystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath($this->subDir . '/image/');
     }
 }

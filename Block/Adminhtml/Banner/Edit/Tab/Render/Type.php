@@ -21,32 +21,35 @@
 
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render;
 
+use Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer;
+use Magento\Framework\DataObject;
+
 /**
  * Class Type
  * @package Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render
  */
-class Type extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer
+class Type extends AbstractRenderer
 {
     /**
      * Render banner type
      *
-     * @param \Magento\Framework\DataObject $row
+     * @param DataObject $row
      *
      * @return string
      */
-    public function render(\Magento\Framework\DataObject $row)
+    public function render(DataObject $row)
     {
         $type = $row->getData($this->getColumn()->getIndex());
         switch ($type) {
             case 0:
                 $type = 'Image';
-        break;
+                break;
             case 1:
                 $type = 'Video';
-        break;
+                break;
             case 2:
                 $type = 'Advanced';
-        break;
+                break;
         }
 
         return $type;

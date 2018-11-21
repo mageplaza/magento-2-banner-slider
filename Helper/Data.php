@@ -20,6 +20,7 @@
  */
 namespace Mageplaza\BannerSlider\Helper;
 
+use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Http\Context as HttpContext;
 use Magento\Framework\Filesystem;
@@ -29,7 +30,6 @@ use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use Mageplaza\Core\Helper\AbstractData;
-use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Data extends AbstractData
 {
@@ -113,8 +113,8 @@ class Data extends AbstractData
         foreach ($allConfig as $key => $value) {
             if ($key == 'item_slider') {
                 $sliderOptions = $sliderOptions . $this->getResponseValue();
-            } else if ($key != 'responsive') {
-                if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])){
+            } elseif ($key != 'responsive') {
+                if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])) {
                     $value = $value ? 'true' : 'false';
                 }
                 $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
@@ -122,18 +122,6 @@ class Data extends AbstractData
         }
 
         return $sliderOptions;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isResponsive()
-    {
-        if ($this->getModuleConfig('mpbannerslider_design/responsive') == 1) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -145,8 +133,8 @@ class Data extends AbstractData
     public function getResponseValue()
     {
         $responsiveOptions = '';
-
-        if ($this->isResponsive()) {
+        $isResponsive      = $this->getModuleConfig('mpbannerslider_design/responsive') == 1;
+        if ($isResponsive) {
             $responsiveConfig = $this->unserialize($this->getModuleConfig('mpbannerslider_design/item_slider'));
 
             foreach ($responsiveConfig as $config) {
@@ -158,12 +146,14 @@ class Data extends AbstractData
             $responsiveOptions = rtrim($responsiveOptions, ',');
 
             return 'responsive:{' . $responsiveOptions . '}';
+        } else {
+            return 'items: 1';
         }
-        else return 'items: 1';
     }
 
     /**
      * @param null $id
+     *
      * @return \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
      */
     public function getBannerCollection($id = null)
@@ -177,34 +167,34 @@ class Data extends AbstractData
             ['position']
         );
 
-        $collection->addOrder('position','ASC');
+        $collection->addOrder('position', 'ASC');
 
         return $collection;
     }
 
     /**
      * @return Collection
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getActiveSliders()
     {
         /** @var Collection $collection */
         $collection = $this->sliderFactory->create()
-                                          ->getCollection()
-                                          ->addFieldToFilter('customer_group_ids', ['finset' => $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_GROUP)])
-                                          ->addFieldToFilter('status', 1)
-                                          ->addOrder('priority');
+            ->getCollection()
+            ->addFieldToFilter('customer_group_ids', ['finset' => $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_GROUP)])
+            ->addFieldToFilter('status', 1)
+            ->addOrder('priority');
 
         $collection->getSelect()
-                   ->where('FIND_IN_SET(0, store_ids) OR FIND_IN_SET(?, store_ids)', $this->storeManager->getStore()->getId())
-                   ->where('from_date is null OR from_date <= ?', $this->date->date())
-                   ->where('to_date is null OR to_date >= ?', $this->date->date());
+            ->where('FIND_IN_SET(0, store_ids) OR FIND_IN_SET(?, store_ids)', $this->storeManager->getStore()->getId())
+            ->where('from_date is null OR from_date <= ?', $this->date->date())
+            ->where('to_date is null OR to_date >= ?', $this->date->date());
 
         return $collection;
     }
 
     /**
      * @param $relativePath
+     *
      * @return string
      * @throws \Magento\Framework\Exception\FileSystemException
      */

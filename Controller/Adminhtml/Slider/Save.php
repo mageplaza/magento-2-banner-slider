@@ -20,19 +20,19 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
-use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
-use Magento\Framework\Stdlib\DateTime\Filter\Date;
-use Magento\Backend\Helper\Js;
-use Mageplaza\BannerSlider\Model\SliderFactory;
-use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Helper\Js;
+use Magento\Framework\Registry;
+use Magento\Framework\Stdlib\DateTime\Filter\Date;
+use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Mageplaza\BannerSlider\Model\SliderFactory;
 
 class Save extends Slider
 {
 
     /**
      * JS helper
-     * 
+     *
      * @var \Magento\Backend\Helper\Js
      */
     protected $jsHelper;
@@ -61,7 +61,7 @@ class Save extends Slider
         Date $dateFilter
     )
     {
-        $this->jsHelper       = $jsHelper;
+        $this->jsHelper    = $jsHelper;
         $this->_dateFilter = $dateFilter;
 
         parent::__construct($sliderFactory, $registry, $context);
@@ -89,7 +89,7 @@ class Save extends Slider
             $this->_eventManager->dispatch(
                 'mpbannerslider_slider_prepare_save',
                 [
-                    'slider' => $slider,
+                    'slider'  => $slider,
                     'request' => $this->getRequest()
                 ]
             );
@@ -103,12 +103,14 @@ class Save extends Slider
                         'mpbannerslider/*/edit',
                         [
                             'slider_id' => $slider->getId(),
-                            '_current' => true
+                            '_current'  => true
                         ]
                     );
+
                     return $resultRedirect;
                 }
                 $resultRedirect->setPath('mpbannerslider/*/');
+
                 return $resultRedirect;
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $this->messageManager->addError($e->getMessage());
@@ -123,7 +125,7 @@ class Save extends Slider
                 'mpbannerslider/*/edit',
                 [
                     'slider_id' => $slider->getId(),
-                    '_current' => true
+                    '_current'  => true
                 ]
             );
 
@@ -139,6 +141,7 @@ class Save extends Slider
      * filter values
      *
      * @param array $data
+     *
      * @return array
      */
     protected function _filterData($data)

@@ -29,15 +29,15 @@ use Magento\Framework\Option\ArrayInterface;
  */
 class Effect implements ArrayInterface
 {
-    const SLIDER = 'slider';
-    const FADEOUT = 'fadeOut';
-    const ROTATEOUT = 'rotateOut';
-    const FLIPOUT = 'flipOutX';
-    const ROLLOUT = 'rollOut';
-    const ZOOMOUT = 'zoomOut';
-    const SLIDEROUTLEFT = 'slideOutLeft';
-    const SLIDEROUTRIGHT = 'slideOutRight';
-    const LIGHTSPEEDOUT = 'lightSpeedOut';
+    const SLIDER           = 'slider';
+    const FADE_OUT         = 'fadeOut';
+    const ROTATE_OUT       = 'rotateOut';
+    const FLIP_OUT         = 'flipOutX';
+    const ROLL_OUT         = 'rollOut';
+    const ZOOM_OUT         = 'zoomOut';
+    const SLIDER_OUT_LEFT  = 'slideOutLeft';
+    const SLIDER_OUT_RIGHT = 'slideOutRight';
+    const LIGHT_SPEED_OUT  = 'lightSpeedOut';
 
     /**
      * to option array
@@ -52,38 +52,39 @@ class Effect implements ArrayInterface
                 'label' => __('Slider')
             ],
             [
-                'value' => self::FADEOUT,
+                'value' => self::FADE_OUT,
                 'label' => __('fadeOut')
             ],
             [
-                'value' => self::ROTATEOUT,
+                'value' => self::ROTATE_OUT,
                 'label' => __('rotateOut')
             ],
             [
-                'value' => self::FLIPOUT,
+                'value' => self::FLIP_OUT,
                 'label' => __('flipOut')
             ],
             [
-                'value' => self::ROLLOUT,
+                'value' => self::ROLL_OUT,
                 'label' => __('rollOut')
             ],
             [
-                'value' => self::ZOOMOUT,
+                'value' => self::ZOOM_OUT,
                 'label' => __('zoomOut')
             ],
             [
-                'value' => self::SLIDEROUTLEFT,
+                'value' => self::SLIDER_OUT_LEFT,
                 'label' => __('slideOutLeft')
             ],
             [
-                'value' => self::SLIDEROUTRIGHT,
+                'value' => self::SLIDER_OUT_RIGHT,
                 'label' => __('slideOutRight')
             ],
             [
-                'value' => self::LIGHTSPEEDOUT,
+                'value' => self::LIGHT_SPEED_OUT,
                 'label' => __('lightSpeedOut')
             ],
         ];
+
         return $options;
 
     }

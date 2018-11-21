@@ -20,17 +20,17 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
-use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
-use Magento\Framework\View\Result\LayoutFactory;
-use Mageplaza\BannerSlider\Model\SliderFactory;
-use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Result\LayoutFactory;
+use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Mageplaza\BannerSlider\Model\SliderFactory;
 
 class Banners extends Slider
 {
     /**
      * Result layout factory
-     * 
+     *
      * @var \Magento\Framework\View\Result\LayoutFactory
      */
     protected $resultLayoutFactory;
@@ -66,6 +66,7 @@ class Banners extends Slider
         if ($bannersBlock) {
             $bannersBlock->setSliderBanners($this->getRequest()->getPost('slider_banners', null));
         }
+
         return $resultLayout;
     }
 }

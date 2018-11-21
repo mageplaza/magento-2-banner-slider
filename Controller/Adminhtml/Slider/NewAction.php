@@ -26,9 +26,7 @@ class NewAction extends Action
 {
 
     /**
-     * forward to edit
-     *
-     * @return \Magento\Backend\Model\View\Result\Forward
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
      */
     public function execute()
     {

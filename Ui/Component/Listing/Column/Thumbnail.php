@@ -20,10 +20,10 @@
  */
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
-use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Mageplaza\BannerSlider\Model\Config\Source\Image;
 use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Framework\View\Element\UiComponentFactory;
+use Mageplaza\BannerSlider\Model\Config\Source\Image;
 
 class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
 {
@@ -55,7 +55,8 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
         UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
-    ) {
+    )
+    {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->imageModel = $imageModel;
         $this->urlBuilder = $urlBuilder;
@@ -65,27 +66,28 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
      * Prepare Data Source
      *
      * @param array $dataSource
+     *
      * @return array
      */
     public function prepareDataSource(array $dataSource)
     {
-        if(isset($dataSource['data']['items'])) {
+        if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
-            $path = $this->imageModel->getBaseUrl();
+            $path      = $this->imageModel->getBaseUrl();
             foreach ($dataSource['data']['items'] as & $item) {
                 $banner = new \Magento\Framework\DataObject($item);
                 if ($item['type'] == 0 && $item['image']) {
-                    $item[$fieldName . '_src'] = $path.$item['image'];
-                    $item[$fieldName . '_alt'] = $item['name'];
-                    $item[$fieldName . '_orig_src'] = $path.$item['image'];
+                    $item[$fieldName . '_src']      = $path . $item['image'];
+                    $item[$fieldName . '_alt']      = $item['name'];
+                    $item[$fieldName . '_orig_src'] = $path . $item['image'];
                 }
                 //  Get Video Image
                 if ($item['type'] == 1 && $item['url_video'] != null) {
-                    $url = $item['url_video'];
-                    $videoId = substr($url,strpos($url,'=')+1);
-                    $url = 'https://img.youtube.com/vi/'.$videoId.'/0.jpg';
-                    $item[$fieldName . '_src'] = $url;
-                    $item[$fieldName . '_alt'] = $item['name'];
+                    $url                            = $item['url_video'];
+                    $videoId                        = substr($url, strpos($url, '=') + 1);
+                    $url                            = 'https://img.youtube.com/vi/' . $videoId . '/0.jpg';
+                    $item[$fieldName . '_src']      = $url;
+                    $item[$fieldName . '_alt']      = $item['name'];
                     $item[$fieldName . '_orig_src'] = $url;
                 }
 

@@ -22,8 +22,8 @@ namespace Mageplaza\BannerSlider\Model\Config\Source;
 
 class Type implements \Magento\Framework\Option\ArrayInterface
 {
-    const IMAGE = '0';
-    const VIDEO = '1';
+    const IMAGE   = '0';
+    const VIDEO   = '1';
     const CONTENT = '2';
 
 
@@ -48,6 +48,7 @@ class Type implements \Magento\Framework\Option\ArrayInterface
                 'label' => __('Advanced')
             ]
         ];
+
         return $options;
 
     }

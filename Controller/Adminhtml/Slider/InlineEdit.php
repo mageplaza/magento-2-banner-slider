@@ -20,22 +20,22 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Mageplaza\BannerSlider\Model\SliderFactory;
-use Magento\Backend\App\Action\Context;
 
 class InlineEdit extends \Magento\Backend\App\Action
 {
     /**
      * JSON Factory
-     * 
+     *
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
     protected $jsonFactory;
 
     /**
      * Banner Factory
-     * 
+     *
      * @var \Mageplaza\BannerSlider\Model\SliderFactory
      */
     protected $sliderFactory;
@@ -65,13 +65,13 @@ class InlineEdit extends \Magento\Backend\App\Action
     {
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
         $resultJson = $this->jsonFactory->create();
-        $error = false;
-        $messages = [];
-        $postItems = $this->getRequest()->getParam('items', []);
+        $error      = false;
+        $messages   = [];
+        $postItems  = $this->getRequest()->getParam('items', []);
         if (!($this->getRequest()->getParam('isAjax') && count($postItems))) {
             return $resultJson->setData([
                 'messages' => [__('Please correct the data sent.')],
-                'error' => true,
+                'error'    => true,
             ]);
         }
         foreach (array_keys($postItems) as $sliderId) {
@@ -83,21 +83,22 @@ class InlineEdit extends \Magento\Backend\App\Action
                 $slider->save();
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $messages[] = $this->getErrorWithSliderId($slider, $e->getMessage());
-                $error = true;
+                $error      = true;
             } catch (\RuntimeException $e) {
                 $messages[] = $this->getErrorWithSliderId($slider, $e->getMessage());
-                $error = true;
+                $error      = true;
             } catch (\Exception $e) {
                 $messages[] = $this->getErrorWithSliderId(
                     $slider,
                     __('Something went wrong while saving the Banner.')
                 );
-                $error = true;
+                $error      = true;
             }
         }
+
         return $resultJson->setData([
             'messages' => $messages,
-            'error' => $error
+            'error'    => $error
         ]);
     }
 

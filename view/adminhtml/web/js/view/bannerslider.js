@@ -19,13 +19,11 @@
  */
 
 define([
-    'jquery',
-    'Magento_Ui/js/modal/modal',
-    'mage/translate'
-],function ($, modal, $t){
+    'jquery'
+], function($) {
     "use strict";
 
-    $.widget('mageplaza.bannerslider',{
+    $.widget('mageplaza.bannerslider', {
         options: {
             loadTemplateUrl: ''
         },
@@ -34,40 +32,41 @@ define([
          * This method constructs a new widget.
          * @private
          */
-        _create: function () {
+        _create: function() {
             this.initObserve();
         },
 
         /**
          * Init observe
          */
-        initObserve: function () {
+        initObserve: function() {
             this.loadTemplate();
             this.changeImageUrl();
+        },
+
+
+        /**
+         * Load template
+         */
+        loadTemplate: function() {
+            var self = this;
+
+            $("#banner_load_template").click(function() {
+                var params = {
+                    templateId: $("#banner_default_template").val()
+                };
+                self.sendAjax(params, self.options.loadTemplateUrl);
+            });
         },
 
         /**
          * Change image url
          */
-        changeImageUrl: function () {
-            $("#banner_default_template").change(function () {
+        changeImageUrl: function() {
+            $("#banner_default_template").change(function() {
                 var imageUrls = JSON.parse($("#banner_images-urls").val());
                 $("#mp-demo-image").attr('src', imageUrls[$("#banner_default_template").val()]);
             })
-        },
-
-        /**
-         * Load template
-         */
-        loadTemplate: function () {
-            var self = this;
-
-            $("#banner_load_template").click(function () {
-                var params = {
-                    templateId: $("#banner_default_template").val()
-                };
-                self.sendAjax(self, params, self.options.loadTemplateUrl);
-            });
         },
 
         /**
@@ -75,17 +74,16 @@ define([
          * @param params
          * @param url
          */
-        sendAjax: function (self, params, url) {
+        sendAjax: function(params, url) {
             $.ajax({
                 method: 'POST',
                 url: url,
                 data: params,
                 showLoader: true
-            }).done(function (response) {
-                if (response.status) {
+            }).done(function(response) {
+                if (response.status){
                     document.getElementById("banner_content").setValue(response.templateHtml)
                 }
-            }).always(function () {
             });
         }
     });

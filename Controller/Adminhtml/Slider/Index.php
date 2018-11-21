@@ -21,28 +21,28 @@
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action;
-use Magento\Framework\View\Result\PageFactory;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\View\Result\PageFactory;
 
 class Index extends Action
 {
     /**
      * Page result factory
-     * 
+     *
      * @var \Magento\Framework\View\Result\PageFactory
      */
     protected $resultPageFactory;
 
     /**
      * Page factory
-     * 
+     *
      * @var \Magento\Backend\Model\View\Result\Page
      */
     protected $resultPage;
 
     /**
      * constructor
-     * 
+     *
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Backend\App\Action\Context $context
      */

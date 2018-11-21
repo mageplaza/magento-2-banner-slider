@@ -20,7 +20,7 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
-class BannersGrid extends \Mageplaza\BannerSlider\Controller\Adminhtml\Slider\Banners
+class BannersGrid extends Banners
 {
 
 }

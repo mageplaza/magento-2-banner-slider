@@ -21,11 +21,11 @@
 
 namespace Mageplaza\BannerSlider\Block;
 
+use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\View\Element\Template;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
-use Magento\Cms\Model\Template\FilterProvider;
 
 class Slider extends Template
 {
@@ -77,7 +77,7 @@ class Slider extends Template
         $this->customerRepository = $customerRepository;
         $this->store              = $context->getStoreManager();
         $this->_date              = $dateTime;
-        $this->filterProvider = $filterProvider;
+        $this->filterProvider     = $filterProvider;
 
         parent::__construct($context, $data);
     }
@@ -107,6 +107,7 @@ class Slider extends Template
 
     /**
      * @param $content
+     *
      * @return string
      * @throws \Exception
      */
@@ -116,18 +117,16 @@ class Slider extends Template
     }
 
     /**
-     * @return bool|\Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
+     * @return array|\Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
      */
     public function getBannerCollection()
     {
+        $collection = [];
         if ($sliderId = $this->getSliderId()) {
-            $collection = $this->helperData->getBannerCollection($sliderId);
-            $collection->addFieldToFilter('status',1);
-
-            return $collection;
+            $collection = $this->helperData->getBannerCollection($sliderId)->addFieldToFilter('status', 1);
         }
 
-        return false;
+        return $collection;
     }
 
     /**
@@ -138,7 +137,7 @@ class Slider extends Template
      */
     public function getAllOptions()
     {
-        $sliderOptions = '';
+        $sliderOptions    = '';
         $allOptionsConfig = $this->helperData->getAllOptions();
 
         $slider = $this->getSlider();
@@ -147,9 +146,9 @@ class Slider extends Template
             foreach ($allOptions as $key => $value) {
                 if ($key == 'responsive_items') {
                     $sliderOptions = $sliderOptions . $this->getResponseValue();
-                } else if ($key != 'responsive') {
-                    if(in_array($key, ['autoWidth','autoHeight','loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])){
-                        $value = $value ? 'true' : 'false';
+                } elseif ($key != 'responsive') {
+                    if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])) {
+                        $value         = $value ? 'true' : 'false';
                         $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
                     }
                     if ($key == 'autoplayTimeout') {

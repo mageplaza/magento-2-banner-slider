@@ -20,12 +20,13 @@
  */
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render;
 
-use Magento\Framework\UrlInterface;
 use Magento\Framework\Data\Form\Element\AbstractElement;
-use Mageplaza\BannerSlider\Model\Config\Source\Image as ImageModel;
-use Magento\Framework\Data\Form\Element\Factory;
 use Magento\Framework\Data\Form\Element\CollectionFactory;
+use Magento\Framework\Data\Form\Element\Factory;
 use Magento\Framework\Escaper;
+use Magento\Framework\UrlInterface;
+use Mageplaza\BannerSlider\Model\Config\Source\Image as ImageModel;
+
 /**
  * @method string getValue()
  */
@@ -67,10 +68,11 @@ class Image extends \Magento\Framework\Data\Form\Element\Image
      */
     protected function _getUrl()
     {
-        $url = false;
+        $url = '';
         if ($this->getValue()) {
-            $url = $this->imageModel->getBaseUrl().$this->getValue();
+            $url = $this->imageModel->getBaseUrl() . $this->getValue();
         }
+
         return $url;
     }
 
@@ -83,7 +85,7 @@ class Image extends \Magento\Framework\Data\Form\Element\Image
     {
         $html = '';
 
-        if ((string)$this->getValue()) {
+        if ((string) $this->getValue()) {
             $url = $this->_getUrl();
 
             if (!preg_match("/^http\:\/\/|https\:\/\//", $url)) {

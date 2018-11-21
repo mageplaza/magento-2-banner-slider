@@ -20,11 +20,11 @@
  */
 namespace Mageplaza\BannerSlider\Model;
 
-use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
-use Magento\Framework\Model\Context;
-use Magento\Framework\Registry;
-use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
 
 /**
  * @method Slider setName($name)
@@ -50,42 +50,42 @@ class Slider extends \Magento\Framework\Model\AbstractModel
 {
     /**
      * Cache tag
-     * 
+     *
      * @var string
      */
     const CACHE_TAG = 'mageplaza_bannerslider_slider';
 
     /**
      * Cache tag
-     * 
+     *
      * @var string
      */
     protected $_cacheTag = 'mageplaza_bannerslider_slider';
 
     /**
      * Event prefix
-     * 
+     *
      * @var string
      */
     protected $_eventPrefix = 'mageplaza_bannerslider_slider';
 
     /**
      * Banner Collection
-     * 
+     *
      * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
      */
     protected $bannerCollection;
 
     /**
      * Banner Collection Factory
-     * 
+     *
      * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
      */
     protected $bannerCollectionFactory;
 
     /**
      * constructor
-     * 
+     *
      * @param \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory $bannerCollectionFactory
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -135,18 +135,19 @@ class Slider extends \Magento\Framework\Model\AbstractModel
      */
     public function getDefaultValues()
     {
-        $values = [];
+        $values           = [];
         $values['status'] = '1';
 
         return $values;
     }
+
     /**
      * @return array|mixed
      */
     public function getBannersPosition()
     {
         if (!$this->getId()) {
-            return array();
+            return [];
         }
 
         $array = $this->getData('banners_position');
@@ -167,7 +168,7 @@ class Slider extends \Magento\Framework\Model\AbstractModel
             $collection = $this->bannerCollectionFactory->create();
             $collection->getSelect()->join(
                 ['banner_slider' => $this->getResource()->getTable('mageplaza_bannerslider_banner_slider')],
-                'main_table.banner_id=banner_slider.banner_id AND banner_slider.slider_id='.$this->getId(),
+                'main_table.banner_id=banner_slider.banner_id AND banner_slider.slider_id=' . $this->getId(),
                 ['position']
             );
             $this->bannerCollection = $collection;

@@ -39,8 +39,8 @@ class Location implements ArrayInterface
     const HOMEPAGE_PAGE_BOTTOM    = 'cms_index_index.footer-container';
     const CATEGORY_CONTENT_TOP    = 'catalog_category_view.content-top';
     const CATEGORY_CONTENT_BOTTOM = 'catalog_category_view.content-bottom';
-    const CATEGORY_PAGE_TOP        = 'catalog_category_view.page-top';
-    const CATEGORY_PAGE_BOTTOM     = 'catalog_category_view.footer-container';
+    const CATEGORY_PAGE_TOP       = 'catalog_category_view.page-top';
+    const CATEGORY_PAGE_BOTTOM    = 'catalog_category_view.footer-container';
     const CATEGORY_SIDEBAR_TOP    = 'catalog_category_view.sidebar-top';
     const CATEGORY_SIDEBAR_BOTTOM = 'catalog_category_view.sidebar-bottom';
     const PRODUCT_CONTENT_TOP     = 'catalog_product_view.content-top';

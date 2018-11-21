@@ -90,6 +90,7 @@ class Store extends Column
      * Prepare Data Source
      *
      * @param array $dataSource
+     *
      * @return array
      */
     public function prepareDataSource(array $dataSource)
@@ -108,6 +109,7 @@ class Store extends Column
      * Get data
      *
      * @param array $item
+     *
      * @return string
      */
     protected function prepareItem(array $item)

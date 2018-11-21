@@ -36,21 +36,21 @@ class Banner extends Extended implements TabInterface
 {
     /**
      * Banner collection factory
-     * 
+     *
      * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
      */
     protected $bannerCollectionFactory;
 
     /**
      * Registry
-     * 
+     *
      * @var \Magento\Framework\Registry
      */
     protected $coreRegistry;
 
     /**
      * Banner factory
-     * 
+     *
      * @var \Mageplaza\BannerSlider\Model\BannerFactory
      */
     protected $bannerFactory;
@@ -95,28 +95,26 @@ class Banner extends Extended implements TabInterface
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
         if ($this->getSlider()->getId()) {
-            $this->setDefaultFilter(['in_banners'=>1]);
+            $this->setDefaultFilter(['in_banners' => 1]);
         }
     }
 
     /**
-     * prepare the collection
-
-     * @return $this
+     * @return Extended|void
      */
     protected function _prepareCollection()
     {
         /** @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection $collection */
         $collection = $this->bannerCollectionFactory->create();
         if ($this->getSlider()->getId()) {
-            $constraint = 'related.slider_id='.$this->getSlider()->getId();
+            $constraint = 'related.slider_id=' . $this->getSlider()->getId();
         } else {
             $constraint = 'related.slider_id=0';
         }
         $collection->getSelect()->joinLeft(
-            array('related' => $collection->getTable('mageplaza_bannerslider_banner_slider')),
-            'related.banner_id=main_table.banner_id AND '.$constraint,
-            array('position')
+            ['related' => $collection->getTable('mageplaza_bannerslider_banner_slider')],
+            'related.banner_id=main_table.banner_id AND ' . $constraint,
+            ['position']
         );
         $this->setCollection($collection);
 
@@ -132,94 +130,74 @@ class Banner extends Extended implements TabInterface
     }
 
     /**
-     * @return $this
+     * @return $this|Extended
+     * @throws \Exception
      */
     protected function _prepareColumns()
     {
-        $this->addColumn(
-            'in_banners',
-            [
-                'header_css_class' => 'a-center',
-                'type'             => 'checkbox',
-                'name'             => 'in_banner',
-                'values'           => $this->_getSelectedBanners(),
-                'align'            => 'center',
-                'index'            => 'banner_id'
-            ]
-        );
-        $this->addColumn(
-            'banner_id',
-            [
-                'header'           => __('ID'),
-                'sortable'         => true,
-                'index'            => 'banner_id',
-                'type'             => 'number',
-                'header_css_class' => 'col-id',
-                'column_css_class' => 'col-id'
-            ]
-        );
+        $this->addColumn('in_banners', [
+            'header_css_class' => 'a-center',
+            'type'             => 'checkbox',
+            'name'             => 'in_banner',
+            'values'           => $this->_getSelectedBanners(),
+            'align'            => 'center',
+            'index'            => 'banner_id'
+        ]);
+        $this->addColumn('banner_id', [
+            'header'           => __('ID'),
+            'sortable'         => true,
+            'index'            => 'banner_id',
+            'type'             => 'number',
+            'header_css_class' => 'col-id',
+            'column_css_class' => 'col-id'
+        ]);
 
-        $this->addColumn(
-            'image',
-            [
-                'header'           => __('Image'),
-                'index'            => 'image',
-                'header_css_class' => 'col-image',
-                'column_css_class' => 'col-image',
-                'sortable'         => false,
-                'renderer'         => "Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\GridImage"
-            ]
-        );
+        $this->addColumn('image', [
+            'header'           => __('Image'),
+            'index'            => 'image',
+            'header_css_class' => 'col-image',
+            'column_css_class' => 'col-image',
+            'sortable'         => false,
+            'renderer'         => "Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\GridImage"
+        ]);
 
-        $this->addColumn(
-            'name',
-            [
-                'header'           => __('Name'),
-                'index'            => 'name',
-                'header_css_class' => 'col-name',
-                'column_css_class' => 'col-name'
-            ]
-        );
+        $this->addColumn('name', [
+            'header'           => __('Name'),
+            'index'            => 'name',
+            'header_css_class' => 'col-name',
+            'column_css_class' => 'col-name'
+        ]);
 
-        $this->addColumn(
-            'type',
-            [
-                'header'           => __('Type'),
-                'index'            => 'type',
-                'header_css_class' => 'col-type',
-                'column_css_class' => 'col-type',
-                'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Type'
-            ]
-        );
+        $this->addColumn('type', [
+            'header'           => __('Type'),
+            'index'            => 'type',
+            'header_css_class' => 'col-type',
+            'column_css_class' => 'col-type',
+            'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Type'
+        ]);
 
-        $this->addColumn(
-            'status',
-            [
-                'header'           => __('Status'),
-                'index'            => 'status',
-                'header_css_class' => 'col-status',
-                'column_css_class' => 'col-status',
-                'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status'
-            ]
-        );
+        $this->addColumn('status', [
+            'header'           => __('Status'),
+            'index'            => 'status',
+            'header_css_class' => 'col-status',
+            'column_css_class' => 'col-status',
+            'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status'
+        ]);
 
-        $this->addColumn(
-            'position',
-            [
-                'header'         => __('Position'),
-                'name'           => 'position',
-                'type'           => 'number',
-                'validate_class' => 'validate-number',
-                'index'          => 'position',
-                'editable'       => true,
-            ]
-        );
+        $this->addColumn('position', [
+            'header'         => __('Position'),
+            'name'           => 'position',
+            'type'           => 'number',
+            'validate_class' => 'validate-number',
+            'index'          => 'position',
+            'editable'       => true,
+        ]);
+
         return $this;
     }
 
     /**
      * Retrieve selected Banners
-
      * @return array
      */
     protected function _getSelectedBanners()
@@ -227,14 +205,15 @@ class Banner extends Extended implements TabInterface
         $banners = $this->getSliderBanners();
         if (!is_array($banners)) {
             $banners = $this->getSlider()->getBannersPosition();
+
             return array_keys($banners);
         }
+
         return $banners;
     }
 
     /**
      * Retrieve selected Banners
-
      * @return array
      */
     public function getSelectedBanners()
@@ -247,11 +226,13 @@ class Banner extends Extended implements TabInterface
                 $selected[$key] = ['position' => $value];
             }
         }
+
         return $selected;
     }
 
     /**
      * @param \Mageplaza\BannerSlider\Model\Banner|\Magento\Framework\Object $item
+     *
      * @return string
      */
     public function getRowUrl($item)
@@ -284,7 +265,9 @@ class Banner extends Extended implements TabInterface
 
     /**
      * @param \Magento\Backend\Block\Widget\Grid\Column $column
-     * @return $this
+     *
+     * @return $this|Extended
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function _addColumnFilterToCollection($column)
     {
@@ -294,15 +277,16 @@ class Banner extends Extended implements TabInterface
                 $bannerIds = 0;
             }
             if ($column->getFilter()->getValue()) {
-                $this->getCollection()->addFieldToFilter('main_table.banner_id', ['in'=>$bannerIds]);
+                $this->getCollection()->addFieldToFilter('main_table.banner_id', ['in' => $bannerIds]);
             } else {
                 if ($bannerIds) {
-                    $this->getCollection()->addFieldToFilter('main_table.banner_id', ['nin'=>$bannerIds]);
+                    $this->getCollection()->addFieldToFilter('main_table.banner_id', ['nin' => $bannerIds]);
                 }
             }
         } else {
             parent::_addColumnFilterToCollection($column);
         }
+
         return $this;
     }
 

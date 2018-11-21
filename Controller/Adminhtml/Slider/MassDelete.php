@@ -20,22 +20,22 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
+use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
-use Magento\Backend\App\Action\Context;
 
 class MassDelete extends \Magento\Backend\App\Action
 {
     /**
      * Mass Action Filter
-     * 
+     *
      * @var \Magento\Ui\Component\MassAction\Filter
      */
     protected $filter;
 
     /**
      * Collection Factory
-     * 
+     *
      * @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory
      */
     protected $collectionFactory;
@@ -76,6 +76,7 @@ class MassDelete extends \Magento\Backend\App\Action
         $this->messageManager->addSuccess(__('A total of %1 record(s) have been deleted.', $delete));
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);
+
         return $resultRedirect->setPath('*/*/');
     }
 }

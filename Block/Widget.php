@@ -41,6 +41,7 @@ class Widget extends Slider
                 break;
             }
         }
+
         return parent::getBannerCollection();
     }
 }

@@ -20,33 +20,37 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Mageplaza\BannerSlider\Model\BannerFactory;
+
 class InlineEdit extends \Magento\Backend\App\Action
 {
     /**
      * JSON Factory
-     * 
-     * @var \Magento\Framework\Controller\Result\JsonFactory
+     *
+     * @var JsonFactory
      */
     protected $jsonFactory;
 
     /**
      * Banner Factory
-     * 
-     * @var \Mageplaza\BannerSlider\Model\BannerFactory
+     *
+     * @var BannerFactory
      */
     protected $bannerFactory;
 
     /**
      * constructor
-     * 
-     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
-     * @param \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory
-     * @param \Magento\Backend\App\Action\Context $context
+     *
+     * @param JsonFactory $jsonFactory
+     * @param BannerFactory $bannerFactory
+     * @param Context $context
      */
     public function __construct(
-        \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
-        \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory,
-        \Magento\Backend\App\Action\Context $context
+        JsonFactory $jsonFactory,
+        BannerFactory $bannerFactory,
+        Context $context
     )
     {
         $this->jsonFactory   = $jsonFactory;
@@ -61,13 +65,13 @@ class InlineEdit extends \Magento\Backend\App\Action
     {
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
         $resultJson = $this->jsonFactory->create();
-        $error = false;
-        $messages = [];
-        $postItems = $this->getRequest()->getParam('items', []);
+        $error      = false;
+        $messages   = [];
+        $postItems  = $this->getRequest()->getParam('items', []);
         if (!($this->getRequest()->getParam('isAjax') && count($postItems))) {
             return $resultJson->setData([
                 'messages' => [__('Please correct the data sent.')],
-                'error' => true,
+                'error'    => true,
             ]);
         }
         foreach (array_keys($postItems) as $bannerId) {
@@ -79,21 +83,22 @@ class InlineEdit extends \Magento\Backend\App\Action
                 $banner->save();
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
-                $error = true;
+                $error      = true;
             } catch (\RuntimeException $e) {
                 $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
-                $error = true;
+                $error      = true;
             } catch (\Exception $e) {
                 $messages[] = $this->getErrorWithBannerId(
                     $banner,
                     __('Something went wrong while saving the Banner.')
                 );
-                $error = true;
+                $error      = true;
             }
         }
+
         return $resultJson->setData([
             'messages' => $messages,
-            'error' => $error
+            'error'    => $error
         ]);
     }
 
@@ -102,6 +107,7 @@ class InlineEdit extends \Magento\Backend\App\Action
      *
      * @param \Mageplaza\BannerSlider\Model\Banner $banner
      * @param string $errorText
+     *
      * @return string
      */
     protected function getErrorWithBannerId(\Mageplaza\BannerSlider\Model\Banner $banner, $errorText)

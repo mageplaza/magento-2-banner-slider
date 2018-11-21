@@ -27,19 +27,19 @@ class Snippet extends AbstractElement
 {
     public function getElementHtml()
     {
-//        $model  = $slider = $this->getSlider();
+        //        $model  = $slider = $this->getSlider();
         $sliderId = '1';
-        $html = '<ul class="banner-location-display"><li><span>';
-        $html .= __('Add Widget with name "Banner Slider widget" and set "Slider Id" for it.');
-        $html .= '</span></li><li><span>';
-        $html .= __('CMS Page/Static Block');
-        $html .= '</span><code>{{block class="Mageplaza\BannerSlider\Block\Widget" slider_id="'.$sliderId.'"}}</code><p>';
-        $html .= __('You can paste the above block of snippet into any page in Magento 2 and set SliderId for it.');
-        $html .= '</p></li><li><span>';
-        $html .= __('Template .phtml file');
-        $html .= '</span><code>'.$this->_escaper->escapeHtml('<?php echo $block->getLayout()->createBlock(\Mageplaza\BannerSlider\Block\Widget::class)->setSliderId(' . $sliderId . ')->toHtml();?>'). '</code><p>';
-        $html .= __('Open a .phtml file and insert where you want to display Banner Slider.');
-        $html .= '</p></li></ul>';
+        $html     = '<ul class="banner-location-display"><li><span>';
+        $html     .= __('Add Widget with name "Banner Slider widget" and set "Slider Id" for it.');
+        $html     .= '</span></li><li><span>';
+        $html     .= __('CMS Page/Static Block');
+        $html     .= '</span><code>{{block class="Mageplaza\BannerSlider\Block\Widget" slider_id="' . $sliderId . '"}}</code><p>';
+        $html     .= __('You can paste the above block of snippet into any page in Magento 2 and set SliderId for it.');
+        $html     .= '</p></li><li><span>';
+        $html     .= __('Template .phtml file');
+        $html     .= '</span><code>' . $this->_escaper->escapeHtml('<?php echo $block->getLayout()->createBlock(\Mageplaza\BannerSlider\Block\Widget::class)->setSliderId(' . $sliderId . ')->toHtml();?>') . '</code><p>';
+        $html     .= __('Open a .phtml file and insert where you want to display Banner Slider.');
+        $html     .= '</p></li></ul>';
 
         return $html;
     }

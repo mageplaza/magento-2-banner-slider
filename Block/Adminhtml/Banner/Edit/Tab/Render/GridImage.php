@@ -21,10 +21,12 @@
 
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render;
 
-use Mageplaza\BannerSlider\Model\Config\Source\Image as ImageModel;
 use Magento\Backend\Block\Context;
+use Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer;
+use Magento\Framework\DataObject;
+use Mageplaza\BannerSlider\Model\Config\Source\Image as ImageModel;
 
-class GridImage extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer
+class GridImage extends AbstractRenderer
 {
     /**
      * @var ImageModel
@@ -52,15 +54,16 @@ class GridImage extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\Abstr
     /**
      * Render Banner Image
      *
-     * @param \Magento\Framework\DataObject $row
+     * @param DataObject $row
      *
      * @return string
      */
-    public function render(\Magento\Framework\DataObject $row)
+    public function render(DataObject $row)
     {
-        if ($row->getData($this->getColumn()->getIndex())){
-            $imageUrl = $this->imageModel->getBaseUrl().$row->getData($this->getColumn()->getIndex());
-            return '<img src="'.$imageUrl.'" width=\'150\' class="admin__control-thumbnail"/>';
+        if ($row->getData($this->getColumn()->getIndex())) {
+            $imageUrl = $this->imageModel->getBaseUrl() . $row->getData($this->getColumn()->getIndex());
+
+            return '<img src="' . $imageUrl . '" width=\'150\' class="admin__control-thumbnail"/>';
         }
 
         return '';

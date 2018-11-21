@@ -21,11 +21,11 @@
 
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render;
 
+use Magento\Framework\AuthorizationInterface;
 use Magento\Framework\Data\Form\Element\CollectionFactory;
 use Magento\Framework\Data\Form\Element\Factory;
 use Magento\Framework\Data\Form\Element\Multiselect;
 use Magento\Framework\Escaper;
-use Magento\Framework\AuthorizationInterface;
 use Magento\Framework\UrlInterface;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as SliderCollectionFactory;
 
@@ -70,8 +70,8 @@ class Slider extends Multiselect
     )
     {
         $this->collectionFactory = $collectionFactory;
-        $this->authorization = $authorization;
-        $this->_urlBuilder = $urlInterface;
+        $this->authorization     = $authorization;
+        $this->_urlBuilder       = $urlInterface;
 
         parent::__construct($factoryElement, $factoryCollection, $escaper, $data);
     }
@@ -115,9 +115,9 @@ class Slider extends Multiselect
         $collection = $this->collectionFactory->create();
         $sliderById = [];
         foreach ($collection as $slider) {
-            $sliderById[$slider->getId()]['value'] = $slider->getId();
+            $sliderById[$slider->getId()]['value']     = $slider->getId();
             $sliderById[$slider->getId()]['is_active'] = 1;
-            $sliderById[$slider->getId()]['label'] = $slider->getName();
+            $sliderById[$slider->getId()]['label']     = $slider->getName();
 
         }
 
@@ -142,8 +142,7 @@ class Slider extends Multiselect
         }
 
         /* @var $collection \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection */
-        $collection = $this->collectionFactory->create()
-            ->addIdFilter($values);
+        $collection = $this->collectionFactory->create()->addIdFilter($values);
 
         $options = [];
         foreach ($collection as $slider) {

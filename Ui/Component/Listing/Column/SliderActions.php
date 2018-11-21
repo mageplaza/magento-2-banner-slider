@@ -20,30 +20,30 @@
  */
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
-use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Ui\Component\Listing\Columns\Column;
 
 class SliderActions extends Column
 {
     /**
      * Url path  to edit
-     * 
+     *
      * @var string
      */
     const URL_PATH_EDIT = 'mpbannerslider/slider/edit';
 
     /**
      * URL builder
-     * 
+     *
      * @var \Magento\Framework\UrlInterface
      */
     protected $urlBuilder;
 
     /**
      * constructor
-     * 
+     *
      * @param \Magento\Framework\UrlInterface $urlBuilder
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
      * @param \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory
@@ -67,6 +67,7 @@ class SliderActions extends Column
      * Prepare Data Source
      *
      * @param array $dataSource
+     *
      * @return array
      */
     public function prepareDataSource(array $dataSource)
@@ -76,7 +77,7 @@ class SliderActions extends Column
                 if (isset($item['slider_id'])) {
                     $item[$this->getData('name')] = [
                         'edit' => [
-                            'href' => $this->urlBuilder->getUrl(
+                            'href'  => $this->urlBuilder->getUrl(
                                 static::URL_PATH_EDIT,
                                 [
                                     'slider_id' => $item['slider_id']
@@ -88,6 +89,7 @@ class SliderActions extends Column
                 }
             }
         }
+
         return $dataSource;
     }
 }

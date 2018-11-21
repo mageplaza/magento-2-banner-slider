@@ -20,11 +20,11 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
-use Mageplaza\BannerSlider\Helper\Image;
-use Mageplaza\BannerSlider\Model\BannerFactory;
-use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Helper\Js;
+use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Helper\Image;
+use Mageplaza\BannerSlider\Model\BannerFactory;
 
 class Save extends \Mageplaza\BannerSlider\Controller\Adminhtml\Banner
 {
@@ -45,6 +45,7 @@ class Save extends \Mageplaza\BannerSlider\Controller\Adminhtml\Banner
 
     /**
      * Save constructor.
+     *
      * @param Image $imageHelper
      * @param \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory
      * @param \Magento\Framework\Registry $registry
@@ -58,15 +59,14 @@ class Save extends \Mageplaza\BannerSlider\Controller\Adminhtml\Banner
         Context $context
     )
     {
-        $this->imageHelper     = $imageHelper;
+        $this->imageHelper = $imageHelper;
         $this->jsHelper    = $jsHelper;
         parent::__construct($bannerFactory, $registry, $context);
     }
 
     /**
-     * run the action
-     *
-     * @return \Magento\Backend\Model\View\Result\Redirect
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface
+     * @throws \Magento\Framework\Exception\FileSystemException
      */
     public function execute()
     {
@@ -88,7 +88,7 @@ class Save extends \Mageplaza\BannerSlider\Controller\Adminhtml\Banner
             $this->_eventManager->dispatch(
                 'mpbannerslider_banner_prepare_save',
                 [
-                    'banner' => $banner,
+                    'banner'  => $banner,
                     'request' => $this->getRequest()
                 ]
             );
@@ -101,12 +101,14 @@ class Save extends \Mageplaza\BannerSlider\Controller\Adminhtml\Banner
                         'mpbannerslider/*/edit',
                         [
                             'banner_id' => $banner->getId(),
-                            '_current' => true
+                            '_current'  => true
                         ]
                     );
+
                     return $resultRedirect;
                 }
                 $resultRedirect->setPath('mpbannerslider/*/');
+
                 return $resultRedirect;
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $this->messageManager->addError($e->getMessage());
@@ -116,12 +118,12 @@ class Save extends \Mageplaza\BannerSlider\Controller\Adminhtml\Banner
                 $this->messageManager->addException($e, __('Something went wrong while saving the Banner.'));
             }
 
-            $this->_getSession()->setData('mageplaza_bannerSlider_banner_data',$data);
+            $this->_getSession()->setData('mageplaza_bannerSlider_banner_data', $data);
             $resultRedirect->setPath(
                 'mpbannerslider/*/edit',
                 [
                     'banner_id' => $banner->getId(),
-                    '_current' => true
+                    '_current'  => true
                 ]
             );
 
