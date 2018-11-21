@@ -47,7 +47,6 @@ class Location implements ArrayInterface
     const PRODUCT_CONTENT_BOTTOM  = 'catalog_product_view.content-bottom';
     const PRODUCT_PAGE_TOP        = 'catalog_product_view.page-top';
     const PRODUCT_PAGE_BOTTOM     = 'catalog_product_view.footer-container';
-    const MANUALLY                = 'custom';
 
     /**
      * Return array of options as value-label pairs
@@ -146,15 +145,6 @@ class Location implements ArrayInterface
                     [
                         'label' => __('Bottom of page'),
                         'value' => self::PRODUCT_PAGE_BOTTOM
-                    ]
-                ]
-            ],
-            [
-                'label' => __('Manually'),
-                'value' => [
-                    [
-                        'label' => __('Use widget or snippet code'),
-                        'value' => self::MANUALLY
                     ]
                 ]
             ]

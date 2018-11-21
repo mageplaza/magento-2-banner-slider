@@ -21,10 +21,39 @@
 
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
+use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
+use Magento\Customer\Model\ResourceModel\Group\Collection as GroupCollection;
 
 class CustomerGroup extends Column
 {
+    /**
+     * @var GroupCollection
+     */
+    protected $customerGroup;
+
+    /**
+     * CustomerGroup constructor.
+     *
+     * @param ContextInterface $context
+     * @param UiComponentFactory $uiComponentFactory
+     * @param GroupCollection $GroupCollection
+     * @param array $components
+     * @param array $data
+     */
+    public function __construct(
+        ContextInterface $context,
+        UiComponentFactory $uiComponentFactory,
+        GroupCollection $GroupCollection,
+        array $components = [],
+        array $data = []
+    )
+    {
+        $this->customerGroup = $GroupCollection;
+        parent::__construct($context, $uiComponentFactory, $components, $data);
+    }
+
     /**
      * Prepare Data Source
      *
@@ -45,34 +74,23 @@ class CustomerGroup extends Column
         return $dataSource;
     }
 
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
     public function prepareItem(array $item)
     {
         $content    = [];
-        $out = [];
         $origGroup = $item['customer_group_ids'];
 
         if (!is_array($origGroup)) {
             $origGroup = [$origGroup];
         }
 
+        $customer = $this->customerGroup->toOptionArray();
         foreach ($origGroup as $group) {
-            switch ($group) {
-                case 0:
-                    $out[$group] = ['value' => $group, 'label' => 'NOT LOGGED IN'];
-                    break;
-                case 1:
-                    $out[$group] = ['value' => $group, 'label' => 'General'];
-                    break;
-                case 2:
-                    $out[$group] = ['value' => $group, 'label' => 'Wholesale'];
-                    break;
-                case 3:
-                    $out[$group] = ['value' => $group, 'label' => 'Retailer'];
-                    break;
-                default:
-                    $out[$group] = ['value' => $group, 'label' => ''];
-            }
-            $content[] = $out[$group]['label'];
+            $content[] = $customer[$group]['label'];
         }
 
         return implode(", ",$content);

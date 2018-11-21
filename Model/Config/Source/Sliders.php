@@ -64,9 +64,7 @@ class Sliders implements ArrayInterface
     {
         $options = [];
 
-        $rules = $this->collectionFactory->create()
-                                         ->addActiveFilter()
-                                         ->addFieldToFilter('location','custom');
+        $rules = $this->collectionFactory->create()->addActiveFilter();
         foreach ($rules as $rule) {
             $options[$rule->getId()] = $rule->getName();
         }

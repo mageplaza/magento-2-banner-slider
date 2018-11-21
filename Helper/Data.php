@@ -204,17 +204,6 @@ class Data extends AbstractData
     }
 
     /**
-     * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function getCustomSlider()
-    {
-        $collection = $this->getActiveSliders()->addFieldToFilter('location','custom');
-
-        return $collection;
-    }
-
-    /**
      * @param $relativePath
      * @return string
      * @throws \Magento\Framework\Exception\FileSystemException

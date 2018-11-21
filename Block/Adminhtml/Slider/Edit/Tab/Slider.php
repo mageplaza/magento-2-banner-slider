@@ -157,17 +157,6 @@ class Slider extends Generic implements TabInterface
             ]
         );
 
-        $fieldset->addField(
-            'location',
-            'multiselect',
-            [
-            'name'   => 'location',
-            'label'  => __('Position'),
-            'title'  => __('Position'),
-            'values' => $this->_location->toOptionArray(),
-            'note'   => __('Select the position to display block.')
-        ]);
-
         if (!$this->_storeManager->isSingleStoreMode()) {
             /** @var \Magento\Framework\Data\Form\Element\Renderer\RendererInterface $rendererBlock */
             $rendererBlock = $this->getLayout()->createBlock('Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element');
@@ -199,6 +188,17 @@ class Slider extends Generic implements TabInterface
             ]
         );
 
+        $fieldset->addField(
+            'location',
+            'multiselect',
+            [
+                'name'   => 'location',
+                'label'  => __('Position'),
+                'title'  => __('Position'),
+                'values' => $this->_location->toOptionArray(),
+                'note'   => __('Select the position to display block.')
+            ]);
+
         $fieldset->addField('from_date', 'date', [
             'name'        => 'from_date',
             'label'       => __('Display from'),
@@ -223,6 +223,19 @@ class Slider extends Generic implements TabInterface
                 'note'  => __('Enter a number to set priority for the slider. A lower number represents a higher priority.')
             ]
         );
+
+        $subfieldset = $form->addFieldset(
+            'sub_fieldset',
+            [
+                'legend' => __('Snippet code'),
+                'class'  => 'fieldset-wide'
+            ]
+        );
+        $subfieldset->addField('snippet', 'Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Snippet', [
+            'name'  => 'snippet',
+            'label' => __('How to use'),
+            'title' => __('How to use'),
+        ]);
 
         $form->addValues($slider->getData());
         $this->setForm($form);

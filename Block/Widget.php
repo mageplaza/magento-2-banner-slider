@@ -34,12 +34,8 @@ class Widget extends Slider
             return false;
         }
 
-        $sliders = $this->helperData->getCustomSlider();
+        $sliders = $this->helperData->getActiveSliders();
         foreach ($sliders as $slider) {
-            if ($slider->getData('location') != 'custom') {
-                continue;
-            }
-
             if ($slider->getId() == $sliderId) {
                 $this->setSlider($slider);
                 break;
