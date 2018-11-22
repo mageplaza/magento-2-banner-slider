@@ -19,36 +19,48 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
-if ($items = $block->getBannerCollection()): ?>
+$banners       = $block->getBannerCollection();
+$sliderId      = $block->getSliderId() . '-' . uniqid();
+$sliderOptions = $block->getBannerOptions();
+
+if (count($banners)): ?>
     <div class="carousel-container">
         <div id="banner-slider-carousel">
             <?php $iterator = 1; ?>
-            <div id="bannerslider-list-items-<?php echo $id =$block->getSliderId().'-'.uniqid(); ?>" class="owl-carousel owl-theme">
-                <?php foreach ($items as $item): ?>
+            <div id="bannerslider-list-items-<?php echo $sliderId; ?>"
+                 class="owl-carousel owl-theme">
+                <?php foreach ($banners as $banner): ?>
+                    <?php
+                    $bnType  = $banner->getType();
+                    $bnTitle = $banner->getTitle();
+                    $bnUrl   = $banner->getUrlBanner();
+                    $bnImg   = $banner->getImageUrl();
+                    ?>
                     <?php echo ($iterator++ == 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
-                    <?php if ($item->getType() == 1): ?>
-                    <div class="item-video">
-                        <a class="owl-video" href="<?php echo $item->getUrlVideo() ?>"></a>
-                    </div>
-                    <?php elseif ($item->getType() == 2): ?>
-                    <div class="item-content">
-                        <?php echo $block->getPageFilter($item->getContent()); ?>
-                    </div>
-                    <?php else: ?>
-                    <div class="item-image">
-                        <?php if (!empty($item->getUrlBanner())): ?>
-                        <a class="owl-image" href="<?php echo $item->getUrlBanner() ?>" <?php echo ($item->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
-                            <?php if (!empty($item->getTitle())): ?>
-                            <div class="banner-title"><?php echo $item->getTitle() ?></div>
+                    <?php if ($bnType == \Mageplaza\BannerSlider\Model\Config\Source\Type::VIDEO): ?>
+                        <div class="item-video">
+                            <a class="owl-video" href="<?php echo $banner->getUrlVideo() ?>"></a>
+                        </div>
+                    <?php elseif ($bnType == \Mageplaza\BannerSlider\Model\Config\Source\Type::CONTENT): ?>
+                        <div class="item-content">
+                            <?php echo $block->getPageFilter($banner->getContent()); ?>
+                        </div>
+                    <?php else: #image type?>
+                        <div class="item-image">
+                            <?php if (!empty($bnUrl)): ?>
+                                <a class="owl-image"
+                                   href="<?php echo $bnUrl ?>" <?php echo ($banner->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
+                                    <?php if (!empty($bnTitle)): ?>
+                                        <div class="banner-title"><?php echo $bnTitle ?></div>
+                                    <?php endif; ?>
+                                    <img class="img-responsive" src="<?php echo $bnImg ?>">
+                                </a>
+                            <?php else: ?>
+                                <img class="owl-image img-responsive" src="<?php echo $bnImg ?>">
                             <?php endif; ?>
-                            <img class="img-responsive" src="<?php echo $item->getImageUrl() ?>">
-                        </a>
-                        <?php else: ?>
-                            <img class="owl-image img-responsive" src="<?php echo $item->getImageUrl() ?>">
-                        <?php endif; ?>
-                    </div>
+                        </div>
                     <?php endif; ?>
-                    <?php echo ($iterator == count($items) + 1) ? '</div>' : '' ?>
+                    <?php echo ($iterator == count($banners) + 1) ? '</div>' : '' ?>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -56,8 +68,8 @@ if ($items = $block->getBannerCollection()): ?>
     </div>
 
     <script>
-        require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
-            $('#bannerslider-list-items-<?php echo $id; ?>').owlCarousel(<?php echo($block->getAllOptions())?>);
+        require(['jquery', 'mageplaza/core/owl.carousel'], function($) {
+            $('#bannerslider-list-items-<?php echo $sliderId; ?>').owlCarousel(<?php echo $sliderOptions; ?>);
         });
     </script>
 <?php endif; ?>

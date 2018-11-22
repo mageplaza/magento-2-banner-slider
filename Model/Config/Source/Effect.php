@@ -49,7 +49,7 @@ class Effect implements ArrayInterface
         $options = [
             [
                 'value' => self::SLIDER,
-                'label' => __('Slider')
+                'label' => __('No')
             ],
             [
                 'value' => self::FADE_OUT,

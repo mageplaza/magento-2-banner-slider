@@ -130,79 +130,10 @@ class Slider extends Template
     }
 
     /**
-     * Retrieve all options for banner slider
-     *
-     * @return string
-     * @throws \Zend_Serializer_Exception
+     * @return false|string
      */
-    public function getAllOptions()
+    public function getBannerOptions()
     {
-        $sliderOptions    = '';
-        $allOptionsConfig = $this->helperData->getAllOptions();
-
-        $slider = $this->getSlider();
-        if ($slider && $slider->getDesign() == 1) {
-            $allOptions = $slider->getData();
-            foreach ($allOptions as $key => $value) {
-                if ($key == 'responsive_items') {
-                    $sliderOptions = $sliderOptions . $this->getResponseValue();
-                } elseif ($key != 'responsive') {
-                    if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])) {
-                        $value         = $value ? 'true' : 'false';
-                        $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
-                    }
-                    if ($key == 'autoplayTimeout') {
-                        $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
-                    }
-                }
-            }
-            $allOptionsConfig = $sliderOptions;
-        }
-
-        $effect = $this->getEffect();
-
-        return '{' . $allOptionsConfig . ',video:true,autoplayHoverPause:true,' . $effect . '}';
+        return $this->helperData->getBannerOptions($this->getSlider());
     }
-
-    /**
-     * @return string
-     */
-    public function getResponseValue()
-    {
-        $slider = $this->getSlider();
-        if ($slider && $slider->getDesign() == 1 && $slider->getIsResponsive()) {
-            try {
-                if ($slider->getIsResponsive() == 0 || $slider->getIsResponsive() == null) {
-                    return $responsiveConfig = $this->helperData->getResponseValue();
-                } else {
-                    $responsiveConfig = $slider->getResponsiveItems() ? $this->helperData->unserialize($slider->getResponsiveItems()) : [];
-                }
-            } catch (\Exception $e) {
-                $responsiveConfig = [];
-            }
-
-            $responsiveOptions = '';
-            foreach ($responsiveConfig as $config) {
-                if ($config['size'] && $config['items']) {
-                    $responsiveOptions = $responsiveOptions . $config['size'] . ':{items:' . $config['items'] . '},';
-                }
-            }
-            $responsiveOptions = rtrim($responsiveOptions, ',');
-
-            return 'responsive:{' . $responsiveOptions . '}';
-        }
-
-        return 'items: 1';
-    }
-
-    public function getEffect()
-    {
-        $effect = '';
-        if ($this->getSlider()) {
-            $effect = $this->getSlider()->getEffect() != 'slider' ? 'animateOut: "' . $this->getSlider()->getEffect() . '"' : '';
-        }
-
-        return $effect;
-    }
-
 }

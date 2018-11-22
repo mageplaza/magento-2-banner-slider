@@ -20,10 +20,8 @@
  */
 namespace Mageplaza\BannerSlider\Helper;
 
-use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Http\Context as HttpContext;
-use Magento\Framework\Filesystem;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Store\Model\StoreManagerInterface;
@@ -40,20 +38,12 @@ class Data extends AbstractData
      */
     protected $date;
 
-    /**
-     * @var Filesystem
-     */
-    protected $fileSystem;
 
     /**
      * @var HttpContext
      */
     protected $httpContext;
 
-    /**
-     * @var DirectoryList
-     */
-    protected $directoryList;
 
     /**
      * @var BannerFactory
@@ -70,9 +60,7 @@ class Data extends AbstractData
      *
      * @param DateTime $date
      * @param Context $context
-     * @param Filesystem $filesystem
      * @param HttpContext $httpContext
-     * @param DirectoryList $directoryList
      * @param BannerFactory $bannerFactory
      * @param SliderFactory $sliderFactory
      * @param StoreManagerInterface $storeManager
@@ -81,9 +69,7 @@ class Data extends AbstractData
     public function __construct(
         DateTime $date,
         Context $context,
-        Filesystem $filesystem,
         HttpContext $httpContext,
-        DirectoryList $directoryList,
         BannerFactory $bannerFactory,
         SliderFactory $sliderFactory,
         StoreManagerInterface $storeManager,
@@ -91,9 +77,7 @@ class Data extends AbstractData
     )
     {
         $this->date          = $date;
-        $this->fileSystem    = $filesystem;
         $this->httpContext   = $httpContext;
-        $this->directoryList = $directoryList;
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
 
@@ -101,54 +85,95 @@ class Data extends AbstractData
     }
 
     /**
-     * Retrieve all configuration options for banner slider
+     * @param null $slider
      *
-     * @return string
-     * @throws \Zend_Serializer_Exception
+     * @return false|string
      */
-    public function getAllOptions()
+    public function getBannerOptions($slider = null)
     {
-        $sliderOptions = '';
-        $allConfig     = $this->getModuleConfig('mpbannerslider_design');
-        foreach ($allConfig as $key => $value) {
-            if ($key == 'item_slider') {
-                $sliderOptions = $sliderOptions . $this->getResponseValue();
-            } elseif ($key != 'responsive') {
-                if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay'])) {
-                    $value = $value ? 'true' : 'false';
-                }
-                $sliderOptions = $sliderOptions . $key . ':' . $value . ',';
-            }
+        if ($slider && $slider->getDesign() === "1") { //not use Config
+            $config = $slider->getData();
+        } else {
+            $config = $this->getModuleConfig('mpbannerslider_design');
         }
 
-        return $sliderOptions;
+        $defaultOpt    = $this->getDefaultConfig($config);
+        $responsiveOpt = $this->getResponsiveConfig($slider);
+        $effectOpt     = $this->getEffectConfig($slider);
+
+        $sliderOptions = array_merge($defaultOpt, $responsiveOpt, $effectOpt);
+
+        return json_encode($sliderOptions);
     }
 
     /**
-     * Retrieve responsive values for banner slider
+     * @param $configs
      *
-     * @return string
-     * @throws \Zend_Serializer_Exception
+     * @return array
      */
-    public function getResponseValue()
+    public function getDefaultConfig($configs)
     {
-        $responsiveOptions = '';
-        $isResponsive      = $this->getModuleConfig('mpbannerslider_design/responsive') == 1;
-        if ($isResponsive) {
-            $responsiveConfig = $this->unserialize($this->getModuleConfig('mpbannerslider_design/item_slider'));
+        $defaultConfig = ["video" => true, "autoplayHoverPause" => true];
+        $basicConfig   = [];
+        foreach ($configs as $key => $value) {
+            if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout'])) {
+                $basicConfig[$key] = (int) $value;
+            }
+        }
 
-            foreach ($responsiveConfig as $config) {
-                if ($config['size'] && $config['items']) {
-                    $responsiveOptions = $responsiveOptions . $config['size'] . ':{items:' . $config['items'] . '},';
-                }
+        return array_merge($basicConfig, $defaultConfig);
+    }
+
+    /**
+     * @param null $slider
+     *
+     * @return array
+     */
+    public function getResponsiveConfig($slider = null)
+    {
+        if (is_null($slider)) {
+            $isResponsive = $this->getModuleConfig('mpbannerslider_design/responsive') == 1;
+            try {
+                $responsiveItems = $this->unserialize($this->getModuleConfig('mpbannerslider_design/item_slider'));
+            } catch (\Exception $e) {
+                $responsiveItems = [];
+            }
+        } else {
+            $isResponsive = $slider->getIsResponsive();
+            try {
+                $responsiveItems = $this->unserialize($slider->getResponsiveItems());
+            } catch (\Exception $e) {
+                $responsiveItems = [];
             }
 
-            $responsiveOptions = rtrim($responsiveOptions, ',');
-
-            return 'responsive:{' . $responsiveOptions . '}';
-        } else {
-            return 'items: 1';
         }
+        if (!$isResponsive || !$responsiveItems) {
+            return ["items" => 1];
+        }
+
+        $result = [];
+        foreach ($responsiveItems as $config) {
+            $size          = $config['size'] ?: 0;
+            $items         = $config['items'] ?: 0;
+            $result[$size] = ["items" => $items];
+
+        }
+
+        return ['responsive' => $result];
+    }
+
+    /**
+     * @param $slider
+     *
+     * @return array
+     */
+    public function getEffectConfig($slider)
+    {
+        if (!$slider) {
+            return [];
+        }
+
+        return ['animateOut' => $slider->getEffect()];
     }
 
     /**
@@ -194,6 +219,7 @@ class Data extends AbstractData
 
     /**
      * Get Demo Template by $id
+     *
      * @param $id
      *
      * @return mixed
@@ -202,15 +228,15 @@ class Data extends AbstractData
     {
 
         $template = [
-            'html' => '<div class="item" style="background:url(ImageURL) center center no-repeat;background-size:cover;">
+            'html' => '<div class="item" style="background:url({{ImageURL}}) center center no-repeat;background-size:cover;">
                                 <div class="container" style="position:relative">
-                                    <img src="ImageURL" class="img-responsive">
+                                    <img src="{{ImageURL}}" class="img-responsive">
                                 </div>
                             </div>'
         ];
 
-        $url = '{{media url="mageplaza/bannerslider/banner/demo/'.$id.'.jpg"}}';
-        $html = str_replace('ImageURL',$url,$template['html']);
+        $url  = '{{media url="mageplaza/bannerslider/banner/demo/' . $id . '.jpg"}}';
+        $html = str_replace('{{ImageURL}}', $url, $template['html']);
 
         return $html;
     }
