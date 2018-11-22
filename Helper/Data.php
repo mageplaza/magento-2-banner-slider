@@ -193,45 +193,25 @@ class Data extends AbstractData
     }
 
     /**
-     * @param $relativePath
+     * Get Demo Template by $id
+     * @param $id
      *
-     * @return string
-     * @throws \Magento\Framework\Exception\FileSystemException
+     * @return mixed
      */
-    public function readFile($relativePath)
+    public function getTemplateHtml($id)
     {
-        $rootDirectory = $this->fileSystem->getDirectoryRead(DirectoryList::ROOT);
 
-        return $rootDirectory->readFile($relativePath);
-    }
+        $template = [
+            'html' => '<div class="item" style="background:url(ImageURL) center center no-repeat;background-size:cover;">
+                                <div class="container" style="position:relative">
+                                    <img src="ImageURL" class="img-responsive">
+                                </div>
+                            </div>'
+        ];
 
-    /**
-     * Get base template path
-     * @return string
-     */
-    public function getBaseTemplatePath()
-    {
-        // Get directory of Data.php
-        $currentDir = __DIR__;
+        $url = '{{media url="mageplaza/bannerslider/banner/demo/'.$id.'.jpg"}}';
+        $html = str_replace('ImageURL',$url,$template['html']);
 
-        // Get root directory(path of magento's project folder)
-        $rootPath = $this->directoryList->getRoot();
-
-        $currentDirArr = explode('\\', $currentDir);
-        if (count($currentDirArr) == 1) {
-            $currentDirArr = explode('/', $currentDir);
-        }
-
-        $rootPathArr = explode('/', $rootPath);
-        if (count($rootPathArr) == 1) {
-            $rootPathArr = explode('\\', $rootPath);
-        }
-
-        $basePath = '';
-        for ($i = count($rootPathArr); $i < count($currentDirArr) - 1; $i++) {
-            $basePath .= $currentDirArr[$i] . '/';
-        }
-
-        return $basePath . 'view/base/templates/demo/';
+        return $html;
     }
 }
