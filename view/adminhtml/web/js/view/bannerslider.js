@@ -81,11 +81,13 @@ define([
                 data: params,
                 showLoader: true
             }).done(function(response) {
-                if($('#banner_content').css('display') === 'none'){
+                if (response.status){
+                    if($('#banner_content').css('display') === 'none'){
+                        $('#togglebanner_content').trigger('click');
+                    }
+                    $('#banner_content').val(response.templateHtml);
                     $('#togglebanner_content').trigger('click');
                 }
-                $('#banner_content').val(response.templateHtml);
-                $('#togglebanner_content').trigger('click');
             });
         }
     });
