@@ -36,10 +36,16 @@ if ($items = $block->getBannerCollection()): ?>
                     </div>
                     <?php else: ?>
                     <div class="item-image">
+                        <?php if (!empty($item->getUrlBanner())): ?>
                         <a class="owl-image" href="<?php echo $item->getUrlBanner() ?>" <?php echo ($item->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
+                            <?php if (!empty($item->getTitle())): ?>
                             <div class="banner-title"><?php echo $item->getTitle() ?></div>
+                            <?php endif; ?>
                             <img class="img-responsive" src="<?php echo $item->getImageUrl() ?>">
                         </a>
+                        <?php else: ?>
+                            <img class="owl-image img-responsive" src="<?php echo $item->getImageUrl() ?>">
+                        <?php endif; ?>
                     </div>
                     <?php endif; ?>
                     <?php echo ($iterator == count($items) + 1) ? '</div>' : '' ?>
