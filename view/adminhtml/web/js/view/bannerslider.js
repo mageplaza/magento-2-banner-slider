@@ -81,9 +81,11 @@ define([
                 data: params,
                 showLoader: true
             }).done(function(response) {
-                if (response.status){
-                    document.getElementById("banner_content").setValue(response.templateHtml)
+                if($('#banner_content').css('display') === 'none'){
+                    $('#togglebanner_content').trigger('click');
                 }
+                $('#banner_content').val(response.templateHtml);
+                $('#togglebanner_content').trigger('click');
             });
         }
     });
