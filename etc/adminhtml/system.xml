@@ -81,7 +81,7 @@
                     <comment>Select Yes to display dots navigation of the slider</comment>
                 </field>
                 <field id="lazyLoad" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Lazy load images</label>
+                    <label>Lazy Loading Images</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <validate>validate-digits</validate>
                     <comment>Select Yes to lazy loading images</comment>
