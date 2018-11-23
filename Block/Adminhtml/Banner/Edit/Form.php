@@ -21,10 +21,37 @@
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit;
 
 use Magento\Backend\Block\Widget\Form\Generic;
+use Mageplaza\BannerSlider\Model\Config\Source\TemplateHtml;
 
 class Form extends Generic
 {
     protected $_template = 'Mageplaza_BannerSlider::widget/form.phtml';
+
+    /**
+     * @var TemplateHtml
+     */
+    protected $TemplateHtml;
+
+    /**
+     * Form constructor.
+     *
+     * @param \Magento\Backend\Block\Template\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @param TemplateHtml $templateHtml
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Backend\Block\Template\Context $context,
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\Data\FormFactory $formFactory,
+        TemplateHtml $templateHtml,
+        array $data = []
+    )
+    {
+        $this->TemplateHtml  = $templateHtml;
+        parent::__construct($context, $registry, $formFactory, $data);
+    }
 
     /**
      * @return Generic
@@ -50,11 +77,15 @@ class Form extends Generic
     }
 
     /**
-     * Get load template url
-     * @return string
+     * Get Demo Template
+     * @param $type
+     *
+     * @return mixed
      */
-    public function getLoadTemplateUrl()
+    public function getTemplateHtml($type)
     {
-        return $this->getUrl('mpbannerslider/banner/load');
+        $result = $this->TemplateHtml->toOptionArray();
+
+        return $result[$type];
     }
 }

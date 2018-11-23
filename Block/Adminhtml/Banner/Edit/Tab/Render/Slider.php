@@ -26,7 +26,6 @@ use Magento\Framework\Data\Form\Element\CollectionFactory;
 use Magento\Framework\Data\Form\Element\Factory;
 use Magento\Framework\Data\Form\Element\Multiselect;
 use Magento\Framework\Escaper;
-use Magento\Framework\UrlInterface;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as SliderCollectionFactory;
 
 class Slider extends Multiselect
@@ -37,11 +36,6 @@ class Slider extends Multiselect
      * @var \Magento\Framework\AuthorizationInterface
      */
     public $authorization;
-
-    /**
-     * @var \Magento\Framework\UrlInterface
-     */
-    protected $_urlBuilder;
 
     /**
      * @var SliderCollectionFactory
@@ -56,7 +50,6 @@ class Slider extends Multiselect
      * @param Escaper $escaper
      * @param SliderCollectionFactory $collectionFactory
      * @param AuthorizationInterface $authorization
-     * @param UrlInterface $urlInterface
      * @param array $data
      */
     public function __construct(
@@ -65,13 +58,11 @@ class Slider extends Multiselect
         Escaper $escaper,
         SliderCollectionFactory $collectionFactory,
         AuthorizationInterface $authorization,
-        UrlInterface $urlInterface,
         array $data = []
     )
     {
         $this->collectionFactory = $collectionFactory;
         $this->authorization     = $authorization;
-        $this->_urlBuilder       = $urlInterface;
 
         parent::__construct($factoryElement, $factoryCollection, $escaper, $data);
     }
@@ -168,7 +159,7 @@ class Slider extends Multiselect
                                 "component": "uiComponent",
                                 "children": {
                                     "banner_select_slider": {
-                                        "component": "Mageplaza_BannerSlider/js/components/new-category",
+                                        "component": "Magento_Catalog/js/components/new-category",
                                         "config": {
                                             "filterOptions": true,
                                             "disableLabel": true,
@@ -177,10 +168,6 @@ class Slider extends Multiselect
                                             "elementTmpl": "ui/grid/filters/elements/ui-select",
                                             "options": ' . json_encode($this->getSliderCollection()) . ',
                                             "value": ' . json_encode($this->getValues()) . ',
-                                            "listens": {
-                                                "index=create_tag:responseData": "setParsed",
-                                                "newOption": "toggleOptionSelected"
-                                            },
                                             "config": {
                                                 "dataScope": "banner_select_slider",
                                                 "sortOrder": 10

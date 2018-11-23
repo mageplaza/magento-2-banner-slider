@@ -25,7 +25,7 @@ define([
 
     $.widget('mageplaza.bannerslider', {
         options: {
-            loadTemplateUrl: ''
+            TemplateHtml: ''
         },
 
         /**
@@ -49,13 +49,29 @@ define([
          * Load template
          */
         loadTemplate: function() {
-            var self = this;
-
+            var TemplateHtml = this.options.TemplateHtml,
+                bannercontent = $('#banner_content'),
+                togglebannercontent = $('#togglebanner_content');
             $("#banner_load_template").click(function() {
-                var params = {
-                    templateId: $("#banner_default_template").val()
-                };
-                self.sendAjax(params, self.options.loadTemplateUrl);
+                var html = TemplateHtml;
+                const regex = /demo\/(.+?).jpg/g;
+                let m;
+
+                while ((m = regex.exec(html)) !== null) {
+                    // This is necessary to avoid infinite loops with zero-width matches
+                    if (m.index === regex.lastIndex) {
+                        regex.lastIndex++;
+                    }
+
+                    // The result can be accessed through the `m`-variable.
+                    if(m[1] !== null) {
+                        html = html.replace(m[1], $("#banner_default_template").val());
+                    }
+                }
+                if(bannercontent.css('display') === 'none'){
+                    togglebannercontent.trigger('click');
+                }
+                bannercontent.val(html);
             });
         },
 
@@ -68,28 +84,6 @@ define([
                 $("#mp-demo-image").attr('src', imageUrls[$("#banner_default_template").val()]);
             })
         },
-
-        /**
-         * Send Ajax
-         * @param params
-         * @param url
-         */
-        sendAjax: function(params, url) {
-            $.ajax({
-                method: 'POST',
-                url: url,
-                data: params,
-                showLoader: true
-            }).done(function(response) {
-                if (response.status){
-                    if($('#banner_content').css('display') === 'none'){
-                        $('#togglebanner_content').trigger('click');
-                    }
-                    $('#banner_content').val(response.templateHtml);
-                    $('#togglebanner_content').trigger('click');
-                }
-            });
-        }
     });
     return $.mageplaza.bannerslider;
 });

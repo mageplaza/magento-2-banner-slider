@@ -84,7 +84,11 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
                 //  Get Video Image
                 if ($item['type'] == 1 && $item['url_video'] != null) {
                     $url                            = $item['url_video'];
-                    $videoId                        = substr($url, strpos($url, '=') + 1);
+                    if (strpos($url,'&') >0) {
+                        preg_match_all('/v=(.+?)&/m', $url, $videoId, PREG_SET_ORDER, 0);
+                        $videoId = $videoId[0][1];
+                    }
+                    else $videoId                        = substr($url, strpos($url, '=') + 1);
                     $url                            = 'https://img.youtube.com/vi/' . $videoId . '/0.jpg';
                     $item[$fieldName . '_src']      = $url;
                     $item[$fieldName . '_alt']      = $item['name'];

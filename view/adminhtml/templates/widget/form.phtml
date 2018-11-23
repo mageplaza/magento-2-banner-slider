@@ -30,7 +30,7 @@
     {
         "#mageplaza-bannerslider": {
             "Mageplaza_BannerSlider/js/view/bannerslider":{
-                "loadTemplateUrl": "<?php /* @escapeNotVerified */ echo $block->getLoadTemplateUrl(); ?>"
+                "TemplateHtml": "<?php /* @escapeNotVerified */ echo $block->escapeJs($block->getTemplateHtml('image')); ?>"
             }
         }
     }
