@@ -140,8 +140,8 @@ class Design extends Generic implements TabInterface
         ]);
         $lazyload       = $fieldset->addField('lazyLoad', 'select', [
             'name'   => 'lazyLoad',
-            'label'  => __('Lazy load images'),
-            'title'  => __('Lazy load images'),
+            'label'  => __('Lazy Loading Images'),
+            'title'  => __('Lazy Loading Images'),
             'values' => $this->_yesno->toOptionArray()
         ]);
         $autoplay       = $fieldset->addField('autoplay', 'select', [
@@ -152,8 +152,8 @@ class Design extends Generic implements TabInterface
         ]);
         $timeout        = $fieldset->addField('autoplayTimeout', 'text', [
             'name'  => 'autoplayTimeout',
-            'label' => __('Autoplay Timeout'),
-            'title' => __('Autoplay Timeout')
+            'label' => __('Autoplay Time-Out'),
+            'title' => __('Autoplay Time-Out')
         ]);
 
         $dependencies = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Form\Element\Dependence')
