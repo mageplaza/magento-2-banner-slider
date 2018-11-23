@@ -33,7 +33,7 @@ use Mageplaza\BannerSlider\Model\BannerFactory;
  */
 class Edit extends Banner
 {
-
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::banner';
     /**
      * Page factory
      *
@@ -61,16 +61,6 @@ class Edit extends Banner
     }
 
     /**
-     * is action allowed
-     *
-     * @return bool
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Mageplaza_BannerSlider::banner');
-    }
-
-    /**
      * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
      */
     public function execute()
@@ -79,7 +69,6 @@ class Edit extends Banner
         $id = $this->getRequest()->getParam('banner_id');
         /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
         $banner = $this->initBanner();
-        /** @var \Magento\Backend\Model\View\Result\Page|\Magento\Framework\View\Result\Page $resultPage */
 
         if ($id) {
             $banner->load($id);
@@ -103,6 +92,7 @@ class Edit extends Banner
             $banner->setData($data);
         }
 
+        /** @var \Magento\Backend\Model\View\Result\Page|\Magento\Framework\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Mageplaza_BannerSlider::banner');
         $resultPage->getConfig()->getTitle()

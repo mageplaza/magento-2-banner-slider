@@ -86,18 +86,6 @@ class Slider extends Multiselect
     }
 
     /**
-     * Get no display
-     *
-     * @return bool
-     */
-    public function getNoDisplay()
-    {
-        $isNotAllowed = !$this->authorization->isAllowed('Mageplaza_BannerSlider::slider');
-
-        return $this->getData('no_display') || $isNotAllowed;
-    }
-
-    /**
      * @return mixed
      */
     public function getSliderCollection()

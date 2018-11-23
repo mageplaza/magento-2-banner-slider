@@ -21,6 +21,7 @@
 namespace Mageplaza\BannerSlider\Model\ResourceModel;
 
 use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
@@ -109,12 +110,12 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     /**
      * before save callback
      *
-     * @param \Magento\Framework\Model\AbstractModel $object
+     * @param AbstractModel $object
      *
      * @return \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @throws \Zend_Serializer_Exception
      */
-    protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
+    protected function _beforeSave(AbstractModel $object)
     {
         //set default Update At and Create At time post
         $object->setUpdatedAt($this->date->date());
@@ -150,11 +151,11 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     /**
      * after save callback
      *
-     * @param \Magento\Framework\Model\AbstractModel|\Mageplaza\BannerSlider\Model\Slider $object
+     * @param AbstractModel|\Mageplaza\BannerSlider\Model\Slider $object
      *
      * @return $this
      */
-    protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
+    protected function _afterSave(AbstractModel $object)
     {
         $this->saveBannerRelation($object);
 
@@ -162,12 +163,12 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * @param \Magento\Framework\Model\AbstractModel $object
+     * @param AbstractModel $object
      *
      * @return $this|\Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @throws \Zend_Serializer_Exception
      */
-    protected function _afterLoad(\Magento\Framework\Model\AbstractModel $object)
+    protected function _afterLoad(AbstractModel $object)
     {
         parent::_afterLoad($object);
 
@@ -249,7 +250,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         if (!empty($insert) || !empty($delete)) {
             $bannerIds = array_unique(array_merge(array_keys($insert), array_keys($delete)));
             $this->eventManager->dispatch(
-                'mageplaza_bannerslider_slider_change_banners',
+                'mageplaza_bannerslider_slider_after_save_banners',
                 ['slider' => $slider, 'banner_ids' => $bannerIds]
             );
         }

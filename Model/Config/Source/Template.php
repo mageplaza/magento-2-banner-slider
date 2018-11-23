@@ -22,9 +22,24 @@
 namespace Mageplaza\BannerSlider\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
+use Magento\Framework\View\Asset\Repository;
 
 class Template implements OptionSourceInterface
 {
+    const DEMO1 = 'demo1.jpg';
+    const DEMO2 = 'demo2.jpg';
+    const DEMO3 = 'demo3.jpg';
+
+    /**
+     * @var Repository
+     */
+    private $_assetRepo;
+
+    public function __construct(Repository $assetRepo)
+    {
+        $this->_assetRepo = $assetRepo;
+    }
+
     /**
      * Retrieve option array with empty value
      *
@@ -34,19 +49,60 @@ class Template implements OptionSourceInterface
     {
         $options = [
             [
-                'value' => 'demo1',
+                'value' => self::DEMO1,
                 'label' => __('Demo template 1')
             ],
             [
-                'value' => 'demo2',
+                'value' => self::DEMO2,
                 'label' => __('Demo template 2')
             ],
             [
-                'value' => 'demo3',
+                'value' => self::DEMO3,
                 'label' => __('Demo template 3')
             ],
         ];
 
         return $options;
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getTemplateHtml()
+    {
+        $imgTmp    = '<div class="item" style="background:url({{media url="mageplaza/bannerslider/banner/demo/{{imgName}}}}) center center no-repeat;background-size:cover;">
+                            <div class="container" style="position:relative">
+                                <img src="{{media url="mageplaza/bannerslider/banner/demo/{{imgName}}}}" alt="{{imgName}}">
+                            </div>
+                        </div>';
+        $templates = [
+            self::DEMO1 => [
+                'tpl' => $imgTmp,
+                'var' => '{{imgName}}'
+            ],
+            self::DEMO2 => [
+                'tpl' => $imgTmp,
+                'var' => '{{imgName}}'
+            ],
+            self::DEMO3 => [
+                'tpl' => $imgTmp,
+                'var' => '{{imgName}}'
+            ],
+        ];
+
+        return json_encode($templates);
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getImageUrls()
+    {
+        $urls = [];
+        foreach ($this->toOptionArray() as $template) {
+            $urls[$template['value']] = $this->_assetRepo->getUrl('Mageplaza_BannerSlider::images/' . $template['value']);
+        }
+
+        return json_encode($urls);
     }
 }

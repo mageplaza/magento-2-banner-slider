@@ -24,66 +24,45 @@ define([
     "use strict";
 
     $.widget('mageplaza.bannerslider', {
-        options: {
-            TemplateHtml: ''
-        },
-
         /**
          * This method constructs a new widget.
          * @private
          */
         _create: function() {
+            this.templates   = JSON.parse(this.options.templateHtml);
+            this.imgUrls     = JSON.parse(this.options.imgUrls);
+            this.tplDropdown = $('#banner_default_template');
             this.initObserve();
         },
-
-        /**
-         * Init observe
-         */
         initObserve: function() {
             this.loadTemplate();
             this.changeImageUrl();
         },
-
-
-        /**
-         * Load template
-         */
         loadTemplate: function() {
-            var TemplateHtml = this.options.TemplateHtml,
-                bannercontent = $('#banner_content'),
-                togglebannercontent = $('#togglebanner_content');
-            $("#banner_load_template").click(function() {
-                var html = TemplateHtml;
-                const regex = /demo\/(.+?).jpg/g;
-                let m;
+            var self            = this;
+            var toggleMCEEditor = $('#togglebanner_content');
+            var bannerContent   = $('#banner_content');
+            var btnLoadContent  = $('#banner_load_template');
+            btnLoadContent.on('click', function() {
+                var tplId     = self.tplDropdown.val();
+                var tpl       = self.templates[tplId]["tpl"];
+                var replaceBy = self.templates[tplId]["var"];
+                var regEx     = new RegExp(replaceBy, 'g');
+                var html      = tpl.replace(regEx, tplId);
 
-                while ((m = regex.exec(html)) !== null) {
-                    // This is necessary to avoid infinite loops with zero-width matches
-                    if (m.index === regex.lastIndex) {
-                        regex.lastIndex++;
-                    }
-
-                    // The result can be accessed through the `m`-variable.
-                    if(m[1] !== null) {
-                        html = html.replace(m[1], $("#banner_default_template").val());
-                    }
+                if (bannerContent.css('display') === 'none'){
+                    toggleMCEEditor.trigger('click');
                 }
-                if(bannercontent.css('display') === 'none'){
-                    togglebannercontent.trigger('click');
-                }
-                bannercontent.val(html);
+                bannerContent.val(html);
             });
         },
-
-        /**
-         * Change image url
-         */
         changeImageUrl: function() {
-            $("#banner_default_template").change(function() {
-                var imageUrls = JSON.parse($("#banner_images-urls").val());
-                $("#mp-demo-image").attr('src', imageUrls[$("#banner_default_template").val()]);
+            var imageUrls = this.imgUrls;
+            var demoImg   = $('#mp-demo-image');
+            this.tplDropdown.on('change', function() {
+                demoImg.attr('src', imageUrls[$(this).val()]);
             })
-        },
+        }
     });
     return $.mageplaza.bannerslider;
 });

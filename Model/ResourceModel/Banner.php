@@ -114,10 +114,6 @@ class Banner extends AbstractDb
             $object->setCreatedAt($this->date->date());
         }
 
-        if ($object->getUrlBanner() && strpos($object->getUrlBanner(), 'http') === false) {
-            $object->setUrlBanner('https://' . $object->getUrlBanner());
-        }
-
         return $this;
     }
 
@@ -125,7 +121,6 @@ class Banner extends AbstractDb
      * @param AbstractModel $object
      *
      * @return AbstractDb
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function _afterSave(AbstractModel $object)
     {
@@ -137,23 +132,7 @@ class Banner extends AbstractDb
     /**
      * @param \Mageplaza\BannerSlider\Model\Banner $banner
      *
-     * @return array
-     */
-    public function getSlidersPosition(\Mageplaza\BannerSlider\Model\Banner $banner)
-    {
-        $select = $this->getConnection()->select()
-            ->from($this->bannerSliderTable, ['slider_id', 'position'])
-            ->where('banner_id = :banner_id');
-        $bind   = ['banner_id' => (int) $banner->getId()];
-
-        return $this->getConnection()->fetchPairs($select, $bind);
-    }
-
-    /**
-     * @param \Mageplaza\BannerSlider\Model\Banner $banner
-     *
      * @return $this
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function saveSliderRelation(\Mageplaza\BannerSlider\Model\Banner $banner)
     {
@@ -187,10 +166,9 @@ class Banner extends AbstractDb
         if (!empty($insert) || !empty($delete)) {
             $sliderIds = array_unique(array_merge(array_keys($insert), array_keys($delete)));
             $this->eventManager->dispatch(
-                'mageplaza_bannerslider_banner_change_sliders',
+                'mageplaza_bannerslider_banner_after_save_sliders',
                 ['banner' => $banner, 'slider_ids' => $sliderIds]);
-        }
-        if (!empty($insert) || !empty($delete)) {
+
             $banner->setIsChangedSliderList(true);
             $sliderIds = array_keys($insert + $delete);
             $banner->setAffectedSliderIds($sliderIds);

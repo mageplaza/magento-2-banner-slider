@@ -30,7 +30,6 @@ use Magento\Framework\Convert\DataObject;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Image as BannerImage;
-use Mageplaza\BannerSlider\Helper\Data as HelperData;
 use Mageplaza\BannerSlider\Helper\Image as HelperImage;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
@@ -192,18 +191,13 @@ class Banner extends Generic implements TabInterface
         ]);
 
         if (!$banner->getId()) {
-            $defaultImage = array_values($this->getImageUrls())[0];
+            $defaultImage = array_values(json_decode($this->template->getImageUrls(), true))[0];
             $demotemplate = $fieldset->addField('default_template', 'select', [
                 'name'   => 'default_template',
                 'label'  => __('Demo template'),
                 'title'  => __('Demo template'),
                 'values' => $this->template->toOptionArray(),
                 'note'   => '<img src="' . $defaultImage . '" alt="demo"  class="article_image" id="mp-demo-image">'
-            ]);
-
-            $fieldset->addField('images-urls', 'hidden', [
-                'name'  => 'image-urls',
-                'value' => HelperData::jsonEncode($this->getImageUrls())
             ]);
 
             $insertVariableButton = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Button', '', [
@@ -269,20 +263,6 @@ class Banner extends Generic implements TabInterface
         $this->setForm($form);
 
         return parent::_prepareForm();
-    }
-
-    /**
-     * Get image url
-     * @return array
-     */
-    public function getImageUrls()
-    {
-        $urls = [];
-        foreach ($this->template->toOptionArray() as $template) {
-            $urls[$template['value']] = $this->_assetRepo->getUrl('Mageplaza_BannerSlider::images/' . $template['value'] . '.jpg');
-        }
-
-        return $urls;
     }
 
     /**

@@ -151,11 +151,7 @@ class Banner extends AbstractModel
      */
     public function getDefaultValues()
     {
-        $values           = [];
-        $values['status'] = '1';
-        $values['type']   = '0';
-
-        return $values;
+        return ['status => 1', 'type' => '0'];
     }
 
     /**

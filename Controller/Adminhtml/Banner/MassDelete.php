@@ -20,11 +20,12 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
+use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
 
-class MassDelete extends \Magento\Backend\App\Action
+class MassDelete extends Action
 {
     /**
      * Mass Action Filter

@@ -23,10 +23,11 @@ namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Helper\Js;
 use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Mageplaza\BannerSlider\Helper\Image;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 
-class Save extends \Mageplaza\BannerSlider\Controller\Adminhtml\Banner
+class Save extends Banner
 {
 
     /**

@@ -23,9 +23,10 @@ namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Ui\Component\Listing\Columns\Column;
 use Mageplaza\BannerSlider\Model\Config\Source\Image;
 
-class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
+class Thumbnail extends Column
 {
 
     /**
@@ -76,10 +77,8 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
             $path      = $this->imageModel->getBaseUrl();
             foreach ($dataSource['data']['items'] as & $item) {
                 $banner = new \Magento\Framework\DataObject($item);
-                if ($item['type'] == 0 && $item['image']) {
-                    $item[$fieldName . '_src']      = $path . $item['image'];
-                    $item[$fieldName . '_alt']      = $item['name'];
-                    $item[$fieldName . '_orig_src'] = $path . $item['image'];
+                if ($item['type'] == \Mageplaza\BannerSlider\Model\Config\Source\Type::IMAGE && $item['image']) {
+                    $item[$fieldName . '_src'] = $path . $item['image'];
                 }
 
                 $item[$fieldName . '_link'] = $this->urlBuilder->getUrl(

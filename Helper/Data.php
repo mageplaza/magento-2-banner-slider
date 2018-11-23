@@ -113,7 +113,7 @@ class Data extends AbstractData
      */
     public function getDefaultConfig($configs)
     {
-        $basicConfig   = [];
+        $basicConfig = [];
         foreach ($configs as $key => $value) {
             if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout'])) {
                 $basicConfig[$key] = (int) $value;
@@ -171,9 +171,7 @@ class Data extends AbstractData
         if (!$slider) {
             return [];
         }
-        if ($slider->getEffect() == 'slider'){
-            return [];
-        }
+
         return ['animateOut' => $slider->getEffect()];
     }
 

@@ -24,8 +24,7 @@ namespace Mageplaza\BannerSlider\Block;
 class Widget extends Slider
 {
     /**
-     * @return bool|\Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return array|bool|\Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
      */
     public function getBannerCollection()
     {
@@ -34,13 +33,9 @@ class Widget extends Slider
             return false;
         }
 
-        $sliders = $this->helperData->getActiveSliders();
-        foreach ($sliders as $slider) {
-            if ($slider->getId() == $sliderId) {
-                $this->setSlider($slider);
-                break;
-            }
-        }
+        $sliderCollection = $this->helperData->getActiveSliders();
+        $slider           = $sliderCollection->addFieldToFilter('slider_id', $sliderId)->getFirstItem();
+        $this->setSlider($slider);
 
         return parent::getBannerCollection();
     }

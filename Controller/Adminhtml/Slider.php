@@ -20,6 +20,7 @@
  */
 namespace Mageplaza\BannerSlider\Controller\Adminhtml;
 
+use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\SliderFactory;
@@ -28,7 +29,7 @@ use Mageplaza\BannerSlider\Model\SliderFactory;
  * Class Slider
  * @package Mageplaza\BannerSlider\Controller\Adminhtml
  */
-abstract class Slider extends \Magento\Backend\App\Action
+abstract class Slider extends Action
 {
     /**
      * Slider Factory

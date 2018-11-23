@@ -19,7 +19,7 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
-    /** @var $block \Magento\Backend\Block\Widget\Form */
+/** @var $block \Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Form */
 ?>
 <div class="entry-edit form-inline" id="mageplaza-bannerslider">
     <?php echo $block->getFormHtml(); ?>
@@ -30,9 +30,11 @@
     {
         "#mageplaza-bannerslider": {
             "Mageplaza_BannerSlider/js/view/bannerslider":{
-                "TemplateHtml": "<?php /* @escapeNotVerified */ echo $block->escapeJs($block->getTemplateHtml('image')); ?>"
+                "templateHtml": "<?php echo $block->escapeJs($block->getTemplateHtml()); ?>",
+                "imgUrls": "<?php echo $block->escapeJs($block->getImageUrls()); ?>"
             }
         }
     }
+
 
 </script>

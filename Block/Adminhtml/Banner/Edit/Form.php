@@ -20,36 +20,39 @@
  */
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit;
 
+use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Form\Generic;
-use Mageplaza\BannerSlider\Model\Config\Source\TemplateHtml;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\Config\Source\Template;
 
 class Form extends Generic
 {
     protected $_template = 'Mageplaza_BannerSlider::widget/form.phtml';
 
     /**
-     * @var TemplateHtml
+     * @var Template
      */
-    protected $TemplateHtml;
+    protected $template;
 
     /**
      * Form constructor.
      *
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Data\FormFactory $formFactory
-     * @param TemplateHtml $templateHtml
+     * @param Context $context
+     * @param Registry $registry
+     * @param FormFactory $formFactory
+     * @param Template $template
      * @param array $data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Data\FormFactory $formFactory,
-        TemplateHtml $templateHtml,
+        Context $context,
+        Registry $registry,
+        FormFactory $formFactory,
+        Template $template,
         array $data = []
     )
     {
-        $this->TemplateHtml  = $templateHtml;
+        $this->template = $template;
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
@@ -78,23 +81,28 @@ class Form extends Generic
 
     /**
      * Get Demo Template
-     * @param $type
      *
      * @return mixed
      */
-    public function getTemplateHtml($type)
+    public function getTemplateHtml()
     {
-        $result = $this->TemplateHtml->toOptionArray();
-
-        return $result[$type];
+        return $this->template->getTemplateHtml();
     }
 
     /**
-     * Escape string for the JavaScript context
+     * @return false|string
+     */
+    public function getImageUrls()
+    {
+        return $this->template->getImageUrls();
+    }
+
+    /**
+     * from Magento Core
      *
      * @param string $string
-     * @return string
-     * @since 100.2.0
+     *
+     * @return string|string[]|null
      */
     public function escapeJs($string)
     {
@@ -110,6 +118,7 @@ class Form extends Generic
                     $chr = mb_convert_encoding($chr, 'UTF-16BE', 'UTF-8');
                     $chr = ($chr === false) ? '' : $chr;
                 }
+
                 return sprintf('\\u%04s', strtoupper(bin2hex($chr)));
             },
             $string

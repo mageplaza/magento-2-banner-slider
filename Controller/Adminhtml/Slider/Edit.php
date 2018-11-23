@@ -32,7 +32,7 @@ use Mageplaza\BannerSlider\Model\SliderFactory;
  */
 class Edit extends Slider
 {
-
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::slider';
     /**
      * Page factory
      *
@@ -57,16 +57,6 @@ class Edit extends Slider
     {
         $this->resultPageFactory = $resultPageFactory;
         parent::__construct($sliderFactory, $registry, $context);
-    }
-
-    /**
-     * is action allowed
-     *
-     * @return bool
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Mageplaza_BannerSlider::slider');
     }
 
     /**

@@ -116,8 +116,6 @@ class SliderLocation extends Column
                 case Location::PRODUCT_PAGE_BOTTOM :
                     $location['type'][] = 'Product Page';
                     break;
-                case Location::MANUALLY :
-                    $location['type'][] = 'Manually';
             }
         }
 

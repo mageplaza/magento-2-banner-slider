@@ -79,9 +79,7 @@ class BannerActions extends Column
                         'edit' => [
                             'href'  => $this->urlBuilder->getUrl(
                                 static::URL_PATH_EDIT,
-                                [
-                                    'banner_id' => $item['banner_id']
-                                ]
+                                ['banner_id' => $item['banner_id']]
                             ),
                             'label' => __('Edit')
                         ]
