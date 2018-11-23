@@ -187,15 +187,8 @@ class Banner extends Generic implements TabInterface
             'label'  => __('Open new tab after click'),
             'title'  => __('Open new tab after click'),
             'values' => $this->statusOptions->toOptionArray(),
-            'note'   => __('Automatically open new tab after click on banner')
+            'note'   => __('Automatically open new tab after clicking on the banner')
 
-        ]);
-
-        $urlVideo = $fieldset->addField('url_video', 'text', [
-            'name'  => 'url_video',
-            'label' => __('Video Url'),
-            'title' => __('Video Url'),
-            'note'  => __('It supports Youtube video only. Just paste a Youtube video URL.')
         ]);
 
         if (!$banner->getId()) {
@@ -253,7 +246,6 @@ class Banner extends Generic implements TabInterface
             ->addFieldMap($typeBanner->getHtmlId(), $typeBanner->getName())
             ->addFieldMap($urlBanner->getHtmlId(), $urlBanner->getName())
             ->addFieldMap($uploadBanner->getHtmlId(), $uploadBanner->getName())
-            ->addFieldMap($urlVideo->getHtmlId(), $urlVideo->getName())
             ->addFieldMap($titleBanner->getHtmlId(), $titleBanner->getName())
             ->addFieldMap($newtab->getHtmlId(), $newtab->getName())
             ->addFieldMap($content->getHtmlId(), $content->getName())
@@ -261,14 +253,13 @@ class Banner extends Generic implements TabInterface
             ->addFieldDependence($uploadBanner->getName(), $typeBanner->getName(), '0')
             ->addFieldDependence($titleBanner->getName(), $typeBanner->getName(), '0')
             ->addFieldDependence($newtab->getName(), $typeBanner->getName(), '0')
-            ->addFieldDependence($content->getName(), $typeBanner->getName(), '2')
-            ->addFieldDependence($urlVideo->getName(), $typeBanner->getName(), '1');
+            ->addFieldDependence($content->getName(), $typeBanner->getName(), '1');
 
         if (!$banner->getId()) {
             $dependencies->addFieldMap($demotemplate->getHtmlId(), $demotemplate->getName())
                 ->addFieldMap($insertbutton->getHtmlId(), $insertbutton->getName())
-                ->addFieldDependence($demotemplate->getName(), $typeBanner->getName(), '2')
-                ->addFieldDependence($insertbutton->getName(), $typeBanner->getName(), '2');
+                ->addFieldDependence($demotemplate->getName(), $typeBanner->getName(), '1')
+                ->addFieldDependence($insertbutton->getName(), $typeBanner->getName(), '1');
         }
 
         // define field dependencies

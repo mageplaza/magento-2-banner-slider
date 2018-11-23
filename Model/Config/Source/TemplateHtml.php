@@ -31,9 +31,7 @@ class TemplateHtml implements \Magento\Framework\Option\ArrayInterface
                             <div class="container" style="position:relative">
                                 <img src="{{media url="mageplaza/bannerslider/banner/demo/demo1.jpg"}}" alt="">
                             </div>
-                        </div>',
-            'video' => '<a class="owl-video" href="#"></a>'
-
+                        </div>'
         ];
 
         return $options;

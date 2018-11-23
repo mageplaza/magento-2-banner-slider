@@ -113,7 +113,6 @@ class Data extends AbstractData
      */
     public function getDefaultConfig($configs)
     {
-        $defaultConfig = ["video" => true, "autoplayHoverPause" => true];
         $basicConfig   = [];
         foreach ($configs as $key => $value) {
             if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout'])) {
@@ -121,7 +120,7 @@ class Data extends AbstractData
             }
         }
 
-        return array_merge($basicConfig, $defaultConfig);
+        return $basicConfig;
     }
 
     /**
@@ -172,7 +171,9 @@ class Data extends AbstractData
         if (!$slider) {
             return [];
         }
-
+        if ($slider->getEffect() == 'slider'){
+            return [];
+        }
         return ['animateOut' => $slider->getEffect()];
     }
 
@@ -215,29 +216,5 @@ class Data extends AbstractData
             ->where('to_date is null OR to_date >= ?', $this->date->date());
 
         return $collection;
-    }
-
-    /**
-     * Get Demo Template by $id
-     *
-     * @param $id
-     *
-     * @return mixed
-     */
-    public function getTemplateHtml($id)
-    {
-
-        $template = [
-            'html' => '<div class="item" style="background:url({{ImageURL}}) center center no-repeat;background-size:cover;">
-                                <div class="container" style="position:relative">
-                                    <img src="{{ImageURL}}" class="img-responsive">
-                                </div>
-                            </div>'
-        ];
-
-        $url  = '{{media url="mageplaza/bannerslider/banner/demo/' . $id . '.jpg"}}';
-        $html = str_replace('{{ImageURL}}', $url, $template['html']);
-
-        return $html;
     }
 }

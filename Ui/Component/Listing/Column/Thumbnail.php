@@ -81,19 +81,6 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
                     $item[$fieldName . '_alt']      = $item['name'];
                     $item[$fieldName . '_orig_src'] = $path . $item['image'];
                 }
-                //  Get Video Image
-                if ($item['type'] == 1 && $item['url_video'] != null) {
-                    $url                            = $item['url_video'];
-                    if (strpos($url,'&') >0) {
-                        preg_match_all('/v=(.+?)&/m', $url, $videoId, PREG_SET_ORDER, 0);
-                        $videoId = $videoId[0][1];
-                    }
-                    else $videoId                        = substr($url, strpos($url, '=') + 1);
-                    $url                            = 'https://img.youtube.com/vi/' . $videoId . '/0.jpg';
-                    $item[$fieldName . '_src']      = $url;
-                    $item[$fieldName . '_alt']      = $item['name'];
-                    $item[$fieldName . '_orig_src'] = $url;
-                }
 
                 $item[$fieldName . '_link'] = $this->urlBuilder->getUrl(
                     'mpbannerslider/banner/edit',

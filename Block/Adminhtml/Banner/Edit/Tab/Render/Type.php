@@ -45,9 +45,6 @@ class Type extends AbstractRenderer
                 $type = 'Image';
                 break;
             case 1:
-                $type = 'Video';
-                break;
-            case 2:
                 $type = 'Advanced';
                 break;
         }

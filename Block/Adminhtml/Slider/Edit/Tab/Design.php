@@ -105,8 +105,8 @@ class Design extends Generic implements TabInterface
         ]);
         $responsiveItem = $fieldset->addField('responsive_items', 'Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Responsive', [
             'name'  => 'responsive_items',
-            'label' => __('Max Items slider'),
-            'title' => __('Max Items slider'),
+            'label' => __('Max Items Slider'),
+            'title' => __('Max Items Slider'),
         ]);
         $autoWidth      = $fieldset->addField('autoWidth', 'select', [
             'name'   => 'autoWidth',
@@ -122,14 +122,14 @@ class Design extends Generic implements TabInterface
         ]);
         $loop           = $fieldset->addField('loop', 'select', [
             'name'   => 'loop',
-            'label'  => __('Infinity loop'),
-            'title'  => __('Infinity loop'),
+            'label'  => __('Infinity Loop'),
+            'title'  => __('Infinity Loop'),
             'values' => $this->_yesno->toOptionArray()
         ]);
         $nav            = $fieldset->addField('nav', 'select', [
             'name'   => 'nav',
-            'label'  => __('Show Next/Prev buttons'),
-            'title'  => __('Show Next/Prev buttons'),
+            'label'  => __('Show Next/Prev Buttons'),
+            'title'  => __('Show Next/Prev Buttons'),
             'values' => $this->_yesno->toOptionArray()
         ]);
         $dots           = $fieldset->addField('dots', 'select', [

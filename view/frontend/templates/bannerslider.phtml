@@ -37,11 +37,7 @@ if (count($banners)): ?>
                     $bnImg   = $banner->getImageUrl();
                     ?>
                     <?php echo ($iterator++ == 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
-                    <?php if ($bnType == \Mageplaza\BannerSlider\Model\Config\Source\Type::VIDEO): ?>
-                        <div class="item-video">
-                            <a class="owl-video" href="<?php echo $banner->getUrlVideo() ?>"></a>
-                        </div>
-                    <?php elseif ($bnType == \Mageplaza\BannerSlider\Model\Config\Source\Type::CONTENT): ?>
+                    <?php if ($bnType == \Mageplaza\BannerSlider\Model\Config\Source\Type::CONTENT): ?>
                         <div class="item-content">
                             <?php echo $block->getPageFilter($banner->getContent()); ?>
                         </div>
