@@ -29,6 +29,8 @@ class Template implements OptionSourceInterface
     const DEMO1 = 'demo1.jpg';
     const DEMO2 = 'demo2.jpg';
     const DEMO3 = 'demo3.jpg';
+    const DEMO4 = 'demo4.jpg';
+    const DEMO5 = 'demo5.jpg';
 
     /**
      * @var Repository
@@ -60,6 +62,14 @@ class Template implements OptionSourceInterface
                 'value' => self::DEMO3,
                 'label' => __('Demo template 3')
             ],
+            [
+                'value' => self::DEMO4,
+                'label' => __('Demo template 4')
+            ],
+            [
+                'value' => self::DEMO5,
+                'label' => __('Demo template 5')
+            ],
         ];
 
         return $options;
@@ -85,6 +95,14 @@ class Template implements OptionSourceInterface
                 'var' => '{{imgName}}'
             ],
             self::DEMO3 => [
+                'tpl' => $imgTmp,
+                'var' => '{{imgName}}'
+            ],
+            self::DEMO4 => [
+                'tpl' => $imgTmp,
+                'var' => '{{imgName}}'
+            ],
+            self::DEMO5 => [
                 'tpl' => $imgTmp,
                 'var' => '{{imgName}}'
             ],

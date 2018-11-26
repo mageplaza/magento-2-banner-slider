@@ -217,9 +217,9 @@ class InstallSchema implements InstallSchemaInterface
             $mediaDirectory->create($url);
             $demos = $this->template->toOptionArray();
             foreach ($demos as $demo) {
-                $targetPath = $mediaDirectory->getAbsolutePath($url . $demo['value'] . '.jpg');
+                $targetPath = $mediaDirectory->getAbsolutePath($url . $demo['value']);
                 $DS         = DIRECTORY_SEPARATOR;
-                $oriPath    = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'] . '.jpg';
+                $oriPath    = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
                 $mediaDirectory->getDriver()->copy($oriPath, $targetPath);
             }
         } catch (\Exception $e) {
