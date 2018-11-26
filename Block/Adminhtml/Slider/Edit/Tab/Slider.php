@@ -204,7 +204,7 @@ class Slider extends Generic implements TabInterface
         ]);
 
         $subfieldset = $form->addFieldset('sub_fieldset', [
-            'legend' => __('Snippet code'),
+            'legend' => __('Another way to add sliders to your page'),
             'class'  => 'fieldset-wide'
         ]);
         $subfieldset->addField('snippet', 'Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Snippet', [
