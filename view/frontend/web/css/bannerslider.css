@@ -44,6 +44,7 @@
     top: 0;
     bottom: 0;
     display: flex;
+    height: auto;
     width: 5%;
     text-align: center;
     font-size: 3.9em;
