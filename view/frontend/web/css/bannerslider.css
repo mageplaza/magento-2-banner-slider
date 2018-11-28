@@ -64,6 +64,10 @@
     right: 1px;
 }
 
+#banner-slider-carousel .owl-item img {
+  transform-style: unset;
+}
+
 #banner-slider-carousel .item-video {
     height: 340px;
 }
