@@ -4,6 +4,10 @@
 
 Magento 2 Banner Slider Module accordingly will help improve customer retention and prevent the site from being abandoned by customers. This actually will increase the rate of subscribers of the website. 
 
+[![Latest Stable Version](https://poser.pugx.org/mageplaza/module-banner-slider/v/stable)](https://packagist.org/packages/mageplaza/module-banner-slider)
+[![Total Downloads](https://poser.pugx.org/mageplaza/module-banner-slider/downloads)](https://packagist.org/packages/mageplaza/module-banner-slider)
+
+
 
 ## 1. Documentation
 
