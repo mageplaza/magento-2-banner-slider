@@ -1,4 +1,4 @@
-# Magento 2 Banner Slider Extension by Mageplaza
+# Magento 2 Banner Slider Extension FREE by Mageplaza
 
 **Mageplaza Banner slider for Magento 2** is a supportive marketing tool which allows store owners to display unlimited eye-catching banner sliders on their Ecommerce website. By this way, the extension helps draw customers' attention as well as optimize their experience, with a user-friendly interface. 
 
@@ -22,8 +22,7 @@ Magento 2 Banner Slider Module accordingly will help improve customer retention 
 Run the following command in Magento 2 root folder:
 
 ```
-# MAGEPLAZA STOP SUPPORT THIS MODULE.
-composer require mageplaza/magento-2-banner-slider-extension
+composer require mageplaza/module-banner-slider
 php bin/magento setup:upgrade
 php bin/magento setup:static-content:deploy
 ```
