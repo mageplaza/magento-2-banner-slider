@@ -18,15 +18,19 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Model\Config\Source;
 
 use Magento\Framework\Option\ArrayInterface;
 
+/**
+ * Class Type
+ * @package Mageplaza\BannerSlider\Model\Config\Source
+ */
 class Type implements ArrayInterface
 {
     const IMAGE   = '0';
     const CONTENT = '1';
-
 
     /**
      * to option array
@@ -47,6 +51,5 @@ class Type implements ArrayInterface
         ];
 
         return $options;
-
     }
 }

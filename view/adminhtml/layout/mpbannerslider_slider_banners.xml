@@ -20,7 +20,7 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/layout_generic.xsd">
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <container name="root" label="Root" output="1">
         <block class="Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Banner" name="slider.edit.tab.banner"/>
         <block class="Magento\Backend\Block\Widget\Grid\Serializer" name="banner_grid_serializer">

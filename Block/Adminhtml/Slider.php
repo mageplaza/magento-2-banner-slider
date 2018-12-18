@@ -18,8 +18,13 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Block\Adminhtml;
 
+/**
+ * Class Slider
+ * @package Mageplaza\BannerSlider\Block\Adminhtml
+ */
 class Slider extends \Magento\Backend\Block\Widget\Grid\Container
 {
     /**
@@ -33,6 +38,7 @@ class Slider extends \Magento\Backend\Block\Widget\Grid\Container
         $this->_blockGroup     = 'Mageplaza_BannerSlider';
         $this->_headerText     = __('Sliders');
         $this->_addButtonLabel = __('Create New Slider');
+
         parent::_construct();
     }
 }

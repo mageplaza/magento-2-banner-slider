@@ -18,11 +18,16 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Model\Config\Source;
 
 use Magento\Framework\Filesystem;
 use Magento\Framework\UrlInterface;
 
+/**
+ * Class Image
+ * @package Mageplaza\BannerSlider\Model\Config\Source
+ */
 class Image
 {
     /**

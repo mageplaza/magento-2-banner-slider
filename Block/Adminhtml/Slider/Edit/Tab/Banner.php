@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab;
 
 use Magento\Backend\Block\Template\Context;
@@ -55,7 +56,6 @@ class Banner extends Extended implements TabInterface
      */
     protected $bannerFactory;
 
-
     /**
      * Banner constructor.
      *
@@ -81,7 +81,6 @@ class Banner extends Extended implements TabInterface
 
         parent::__construct($context, $backendHelper, $data);
     }
-
 
     /**
      * Set grid params

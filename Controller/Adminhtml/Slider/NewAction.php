@@ -18,13 +18,17 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action;
 
+/**
+ * Class NewAction
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Slider
+ */
 class NewAction extends Action
 {
-
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
      */

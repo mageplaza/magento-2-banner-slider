@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
 use Magento\Framework\UrlInterface;
@@ -25,6 +26,10 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
+/**
+ * Class SliderActions
+ * @package Mageplaza\BannerSlider\Ui\Component\Listing\Column
+ */
 class SliderActions extends Column
 {
     /**
@@ -59,9 +64,9 @@ class SliderActions extends Column
     )
     {
         $this->urlBuilder = $urlBuilder;
+
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
-
 
     /**
      * Prepare Data Source

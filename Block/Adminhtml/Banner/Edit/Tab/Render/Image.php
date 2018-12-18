@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render;
 
 use Magento\Framework\Data\Form\Element\AbstractElement;
@@ -28,7 +29,8 @@ use Magento\Framework\UrlInterface;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as ImageModel;
 
 /**
- * @method string getValue()
+ * Class Image
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render
  */
 class Image extends \Magento\Framework\Data\Form\Element\Image
 {
@@ -85,7 +87,7 @@ class Image extends \Magento\Framework\Data\Form\Element\Image
     {
         $html = '';
 
-        if ((string) $this->getValue()) {
+        if ((string)$this->getValue()) {
             $url = $this->_getUrl();
 
             if (!preg_match("/^http\:\/\/|https\:\/\//", $url)) {

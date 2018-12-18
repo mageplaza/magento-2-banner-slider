@@ -67,6 +67,7 @@ abstract class Banner extends Action
     {
         $this->bannerFactory = $bannerFactory;
         $this->coreRegistry  = $coreRegistry;
+
         parent::__construct($context);
     }
 
@@ -77,7 +78,7 @@ abstract class Banner extends Action
      */
     protected function initBanner()
     {
-        $bannerId = (int) $this->getRequest()->getParam('banner_id');
+        $bannerId = (int)$this->getRequest()->getParam('banner_id');
         /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
         $banner = $this->bannerFactory->create();
         if ($bannerId) {

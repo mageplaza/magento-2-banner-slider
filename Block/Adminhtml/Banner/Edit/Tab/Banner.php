@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab;
 
 use Magento\Backend\Block\Template\Context;
@@ -30,10 +31,15 @@ use Magento\Framework\Convert\DataObject;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Image as BannerImage;
+use Mageplaza\BannerSlider\Helper\Data;
 use Mageplaza\BannerSlider\Helper\Image as HelperImage;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
 
+/**
+ * Class Banner
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab
+ */
 class Banner extends Generic implements TabInterface
 {
     /**
@@ -191,7 +197,7 @@ class Banner extends Generic implements TabInterface
         ]);
 
         if (!$banner->getId()) {
-            $defaultImage = array_values(json_decode($this->template->getImageUrls(), true))[0];
+            $defaultImage = array_values(Data::jsonDecode($this->template->getImageUrls(), true))[0];
             $demotemplate = $fieldset->addField('default_template', 'select', [
                 'name'   => 'default_template',
                 'label'  => __('Demo template'),

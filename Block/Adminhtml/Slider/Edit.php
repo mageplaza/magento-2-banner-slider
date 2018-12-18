@@ -18,13 +18,17 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
-namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider;
 
+namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider;
 
 use Magento\Backend\Block\Widget\Context;
 use Magento\Backend\Block\Widget\Form\Container;
 use Magento\Framework\Registry;
 
+/**
+ * Class Edit
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Slider
+ */
 class Edit extends Container
 {
     /**
@@ -98,6 +102,9 @@ class Edit extends Container
         return __('New Slider');
     }
 
+    /**
+     * @return mixed
+     */
     public function getSlider()
     {
         $slider = $this->coreRegistry->registry('mpbannerslider_slider');

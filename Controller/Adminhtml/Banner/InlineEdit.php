@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
 use Magento\Backend\App\Action;
@@ -25,6 +26,10 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 
+/**
+ * Class InlineEdit
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Banner
+ */
 class InlineEdit extends Action
 {
     /**
@@ -56,6 +61,7 @@ class InlineEdit extends Action
     {
         $this->jsonFactory   = $jsonFactory;
         $this->bannerFactory = $bannerFactory;
+
         parent::__construct($context);
     }
 

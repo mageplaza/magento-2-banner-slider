@@ -26,8 +26,13 @@ use Magento\Framework\Data\Form\Element\CollectionFactory;
 use Magento\Framework\Data\Form\Element\Factory;
 use Magento\Framework\Data\Form\Element\Multiselect;
 use Magento\Framework\Escaper;
+use Mageplaza\BannerSlider\Helper\Data;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as SliderCollectionFactory;
 
+/**
+ * Class Slider
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render
+ */
 class Slider extends Multiselect
 {
     /**
@@ -97,7 +102,6 @@ class Slider extends Multiselect
             $sliderById[$slider->getId()]['value']     = $slider->getId();
             $sliderById[$slider->getId()]['is_active'] = 1;
             $sliderById[$slider->getId()]['label']     = $slider->getName();
-
         }
 
         return $sliderById;
@@ -154,8 +158,8 @@ class Slider extends Multiselect
                                             "chipsEnabled": true,
                                             "levelsVisibility": "1",
                                             "elementTmpl": "ui/grid/filters/elements/ui-select",
-                                            "options": ' . json_encode($this->getSliderCollection()) . ',
-                                            "value": ' . json_encode($this->getValues()) . ',
+                                            "options": ' . Data::jsonEncode($this->getSliderCollection()) . ',
+                                            "value": ' . Data::jsonEncode($this->getValues()) . ',
                                             "config": {
                                                 "dataScope": "banner_select_slider",
                                                 "sortOrder": 10

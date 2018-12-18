@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Model;
 
 use Magento\Framework\Data\Collection\AbstractDb;
@@ -106,7 +107,6 @@ class Slider extends \Magento\Framework\Model\AbstractModel
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
-
 
     /**
      * Initialize resource model

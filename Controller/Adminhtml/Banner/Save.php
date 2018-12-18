@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
 use Magento\Backend\App\Action\Context;
@@ -27,9 +28,12 @@ use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Mageplaza\BannerSlider\Helper\Image;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 
+/**
+ * Class Save
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Banner
+ */
 class Save extends Banner
 {
-
     /**
      * Image Helper
      *
@@ -46,11 +50,11 @@ class Save extends Banner
 
     /**
      * Save constructor.
-     *
      * @param Image $imageHelper
-     * @param \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\App\Action\Context $context
+     * @param BannerFactory $bannerFactory
+     * @param Registry $registry
+     * @param Js $jsHelper
+     * @param Context $context
      */
     public function __construct(
         Image $imageHelper,
@@ -62,6 +66,7 @@ class Save extends Banner
     {
         $this->imageHelper = $imageHelper;
         $this->jsHelper    = $jsHelper;
+
         parent::__construct($bannerFactory, $registry, $context);
     }
 

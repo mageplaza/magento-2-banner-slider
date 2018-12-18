@@ -86,6 +86,5 @@ class Effect implements ArrayInterface
         ];
 
         return $options;
-
     }
 }

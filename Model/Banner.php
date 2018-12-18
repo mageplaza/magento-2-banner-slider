@@ -95,7 +95,6 @@ class Banner extends AbstractModel
      */
     protected $imageModel;
 
-
     /**
      * Banner constructor.
      *
@@ -122,7 +121,6 @@ class Banner extends AbstractModel
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
-
 
     /**
      * Initialize resource model
@@ -194,6 +192,6 @@ class Banner extends AbstractModel
             $this->setData('slider_ids', $ids);
         }
 
-        return (array) $this->getData('slider_ids');
+        return (array)$this->getData('slider_ids');
     }
 }

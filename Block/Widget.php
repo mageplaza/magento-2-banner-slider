@@ -21,6 +21,10 @@
 
 namespace Mageplaza\BannerSlider\Block;
 
+/**
+ * Class Widget
+ * @package Mageplaza\BannerSlider\Block
+ */
 class Widget extends Slider
 {
     /**

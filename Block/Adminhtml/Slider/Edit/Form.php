@@ -18,10 +18,15 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit;
 
 use Magento\Backend\Block\Widget\Form\Generic;
 
+/**
+ * Class Form
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit
+ */
 class Form extends Generic
 {
     /**

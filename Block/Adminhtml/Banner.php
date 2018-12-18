@@ -18,10 +18,15 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Block\Adminhtml;
 
 use Magento\Backend\Block\Widget\Grid\Container;
 
+/**
+ * Class Banner
+ * @package Mageplaza\BannerSlider\Block\Adminhtml
+ */
 class Banner extends Container
 {
     /**
@@ -35,6 +40,7 @@ class Banner extends Container
         $this->_blockGroup     = 'Mageplaza_BannerSlider';
         $this->_headerText     = __('Banners');
         $this->_addButtonLabel = __('Create New Banner');
+
         parent::_construct();
     }
 }

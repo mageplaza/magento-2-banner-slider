@@ -26,10 +26,25 @@ use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
 
+/**
+ * Class Banners
+ * @package Mageplaza\BannerSlider\Ui\Component\Listing\Column
+ */
 class Banners extends Column
 {
+    /**
+     * @var bannerHelper
+     */
     protected $helperData;
 
+    /**
+     * Banners constructor.
+     * @param ContextInterface $context
+     * @param UiComponentFactory $uiComponentFactory
+     * @param bannerHelper $helperData
+     * @param array $components
+     * @param array $data
+     */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -64,5 +79,4 @@ class Banners extends Column
 
         return $dataSource;
     }
-
 }

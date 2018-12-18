@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;
@@ -60,6 +61,7 @@ abstract class Slider extends Action
     {
         $this->sliderFactory = $sliderFactory;
         $this->coreRegistry  = $coreRegistry;
+
         parent::__construct($context);
     }
 
@@ -70,7 +72,7 @@ abstract class Slider extends Action
      */
     protected function initSlider()
     {
-        $sliderId = (int) $this->getRequest()->getParam('slider_id');
+        $sliderId = (int)$this->getRequest()->getParam('slider_id');
         /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
         $slider = $this->sliderFactory->create();
         if ($sliderId) {

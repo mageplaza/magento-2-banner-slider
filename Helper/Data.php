@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Helper;
 
 use Magento\Framework\App\Helper\Context;
@@ -29,6 +30,10 @@ use Mageplaza\BannerSlider\Model\BannerFactory;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use Mageplaza\Core\Helper\AbstractData;
 
+/**
+ * Class Data
+ * @package Mageplaza\BannerSlider\Helper
+ */
 class Data extends AbstractData
 {
     const CONFIG_MODULE_PATH = 'mpbannerslider';
@@ -38,12 +43,10 @@ class Data extends AbstractData
      */
     protected $date;
 
-
     /**
      * @var HttpContext
      */
     protected $httpContext;
-
 
     /**
      * @var BannerFactory
@@ -103,7 +106,7 @@ class Data extends AbstractData
 
         $sliderOptions = array_merge($defaultOpt, $responsiveOpt, $effectOpt);
 
-        return json_encode($sliderOptions);
+        return self::jsonEncode($sliderOptions);
     }
 
     /**
@@ -116,7 +119,7 @@ class Data extends AbstractData
         $basicConfig = [];
         foreach ($configs as $key => $value) {
             if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout'])) {
-                $basicConfig[$key] = (int) $value;
+                $basicConfig[$key] = (int)$value;
             }
         }
 
@@ -144,7 +147,6 @@ class Data extends AbstractData
             } catch (\Exception $e) {
                 $responsiveItems = [];
             }
-
         }
         if (!$isResponsive || !$responsiveItems) {
             return ["items" => 1];
@@ -155,7 +157,6 @@ class Data extends AbstractData
             $size          = $config['size'] ?: 0;
             $items         = $config['items'] ?: 0;
             $result[$size] = ["items" => $items];
-
         }
 
         return ['responsive' => $result];
@@ -182,7 +183,6 @@ class Data extends AbstractData
      */
     public function getBannerCollection($id = null)
     {
-
         $collection = $this->bannerFactory->create()->getCollection();
 
         $collection->join(

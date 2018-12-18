@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action\Context;
@@ -33,6 +34,7 @@ use Mageplaza\BannerSlider\Model\SliderFactory;
 class Edit extends Slider
 {
     const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::slider';
+
     /**
      * Page factory
      *
@@ -56,6 +58,7 @@ class Edit extends Slider
     )
     {
         $this->resultPageFactory = $resultPageFactory;
+
         parent::__construct($sliderFactory, $registry, $context);
     }
 

@@ -70,6 +70,10 @@ class Design extends Generic implements TabInterface
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
+    /**
+     * @return Generic
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     protected function _prepareForm()
     {
         $slider = $this->_coreRegistry->registry('mpbannerslider_slider');

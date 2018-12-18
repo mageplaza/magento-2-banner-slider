@@ -69,10 +69,10 @@ class Banner extends AbstractDb
     {
         $this->date         = $date;
         $this->eventManager = $eventManager;
+
         parent::__construct($context);
         $this->bannerSliderTable = $this->getTable('mageplaza_bannerslider_banner_slider');
     }
-
 
     /**
      * Initialize resource model
@@ -96,7 +96,7 @@ class Banner extends AbstractDb
         $select  = $adapter->select()
             ->from($this->getMainTable(), 'name')
             ->where('banner_id = :banner_id');
-        $binds   = ['banner_id' => (int) $id];
+        $binds   = ['banner_id' => (int)$id];
 
         return $adapter->fetchOne($select, $binds);
     }
@@ -156,8 +156,8 @@ class Banner extends AbstractDb
             $data = [];
             foreach ($insert as $tagId) {
                 $data[] = [
-                    'banner_id' => (int) $id,
-                    'slider_id' => (int) $tagId,
+                    'banner_id' => (int)$id,
+                    'slider_id' => (int)$tagId,
                     'position'  => 1
                 ];
             }
@@ -187,7 +187,7 @@ class Banner extends AbstractDb
         $adapter = $this->getConnection();
         $select  = $adapter->select()
             ->from($this->bannerSliderTable, 'slider_id')
-            ->where('banner_id = ?', (int) $banner->getId());
+            ->where('banner_id = ?', (int)$banner->getId());
 
         return $adapter->fetchCol($select);
     }

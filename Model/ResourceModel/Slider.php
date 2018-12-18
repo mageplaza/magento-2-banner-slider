@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Model\ResourceModel;
 
 use Magento\Framework\Event\ManagerInterface;
@@ -26,6 +27,10 @@ use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
 
+/**
+ * Class Slider
+ * @package Mageplaza\BannerSlider\Model\ResourceModel
+ */
 class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     /**
@@ -77,7 +82,6 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->sliderBannerTable = $this->getTable('mageplaza_bannerslider_banner_slider');
     }
 
-
     /**
      * Initialize resource model
      *
@@ -102,7 +106,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $select  = $adapter->select()
             ->from($this->getMainTable(), 'name')
             ->where('slider_id = :slider_id');
-        $binds   = ['slider_id' => (int) $id];
+        $binds   = ['slider_id' => (int)$id];
 
         return $adapter->fetchOne($select, $binds);
     }
@@ -195,7 +199,7 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
             ->where(
                 'slider_id = :slider_id'
             );
-        $bind   = ['slider_id' => (int) $slider->getId()];
+        $bind   = ['slider_id' => (int)$slider->getId()];
 
         return $this->getConnection()->fetchPairs($select, $bind);
     }
@@ -233,17 +237,17 @@ class Slider extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
             $data = [];
             foreach ($insert as $bannerId => $position) {
                 $data[] = [
-                    'slider_id' => (int) $id,
-                    'banner_id' => (int) $bannerId,
-                    'position'  => (int) $position['position']
+                    'slider_id' => (int)$id,
+                    'banner_id' => (int)$bannerId,
+                    'position'  => (int)$position['position']
                 ];
             }
             $adapter->insertMultiple($this->sliderBannerTable, $data);
         }
         if (!empty($update)) {
             foreach ($update as $bannerId => $position) {
-                $where = ['slider_id = ?' => (int) $id, 'banner_id = ?' => (int) $bannerId];
-                $bind  = ['position' => (int) $position['position']];
+                $where = ['slider_id = ?' => (int)$id, 'banner_id = ?' => (int)$bannerId];
+                $bind  = ['position' => (int)$position['position']];
                 $adapter->update($this->sliderBannerTable, $bind, $where);
             }
         }

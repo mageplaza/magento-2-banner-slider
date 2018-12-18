@@ -23,7 +23,12 @@ namespace Mageplaza\BannerSlider\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Framework\View\Asset\Repository;
+use Mageplaza\BannerSlider\Helper\Data;
 
+/**
+ * Class Template
+ * @package Mageplaza\BannerSlider\Model\Config\Source
+ */
 class Template implements OptionSourceInterface
 {
     const DEMO1 = 'demo1.jpg';
@@ -37,6 +42,10 @@ class Template implements OptionSourceInterface
      */
     private $_assetRepo;
 
+    /**
+     * Template constructor.
+     * @param Repository $assetRepo
+     */
     public function __construct(Repository $assetRepo)
     {
         $this->_assetRepo = $assetRepo;
@@ -108,7 +117,7 @@ class Template implements OptionSourceInterface
             ],
         ];
 
-        return json_encode($templates);
+        return Data::jsonEncode($templates);
     }
 
     /**
@@ -121,6 +130,6 @@ class Template implements OptionSourceInterface
             $urls[$template['value']] = $this->_assetRepo->getUrl('Mageplaza_BannerSlider::images/' . $template['value']);
         }
 
-        return json_encode($urls);
+        return Data::jsonEncode($urls);
     }
 }

@@ -26,6 +26,10 @@ use Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer;
 use Magento\Framework\DataObject;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as ImageModel;
 
+/**
+ * Class GridImage
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render
+ */
 class GridImage extends AbstractRenderer
 {
     /**

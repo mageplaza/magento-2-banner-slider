@@ -24,6 +24,10 @@ namespace Mageplaza\BannerSlider\Model\Config\Source;
 use Magento\Framework\Option\ArrayInterface;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
 
+/**
+ * Class Sliders
+ * @package Mageplaza\BannerSlider\Model\Config\Source
+ */
 class Sliders implements ArrayInterface
 {
     /**

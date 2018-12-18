@@ -18,11 +18,16 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Model\ResourceModel\Slider;
 
 use Magento\Framework\DB\Select;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
+/**
+ * Class Collection
+ * @package Mageplaza\BannerSlider\Model\ResourceModel\Slider
+ */
 class Collection extends AbstractCollection
 {
     /**
@@ -97,9 +102,9 @@ class Collection extends AbstractCollection
             if (!empty($sliderIds)) {
                 $condition = ['in' => $sliderIds];
             }
-        } elseif (is_numeric($sliderIds)) {
+        } else if (is_numeric($sliderIds)) {
             $condition = $sliderIds;
-        } elseif (is_string($sliderIds)) {
+        } else if (is_string($sliderIds)) {
             $ids = explode(',', $sliderIds);
             if (empty($ids)) {
                 $condition = $sliderIds;

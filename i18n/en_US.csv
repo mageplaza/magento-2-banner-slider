@@ -1,0 +1,130 @@
+Banners,Banners
+"Create New Banner","Create New Banner"
+"Save Banner","Save Banner"
+"Save and Continue Edit","Save and Continue Edit"
+"Delete Banner","Delete Banner"
+"Edit Banner '%1'","Edit Banner '%1'"
+"New Banner","New Banner"
+"Banner Information","Banner Information"
+Name,Name
+Status,Status
+Type,Type
+"Upload Image","Upload Image"
+"Banner title","Banner title"
+Url,Url
+"Open new tab after click","Open new tab after click"
+"Automatically open new tab after clicking on the banner","Automatically open new tab after clicking on the banner"
+"Demo template","Demo template"
+"Load Template","Load Template"
+Sliders,Sliders
+General,General
+"Screen size from","Screen size from"
+"Number of items","Number of items"
+Add,Add
+"Create New Slider","Create New Slider"
+"Save Slider","Save Slider"
+"Delete Slider","Delete Slider"
+"Edit Slider '%1'","Edit Slider '%1'"
+"New Slider","New Slider"
+ID,ID
+Image,Image
+Position,Position
+Design,Design
+"Animation Effect","Animation Effect"
+"Manually Design","Manually Design"
+"Use Config","Use Config"
+Yes,Yes
+"Is Responsive","Is Responsive"
+"Max Items Slider","Max Items Slider"
+"Auto Width","Auto Width"
+"Auto Height","Auto Height"
+"Infinity Loop","Infinity Loop"
+"Show Next/Prev Buttons","Show Next/Prev Buttons"
+"Show Dots Navigation","Show Dots Navigation"
+"Lazy Loading Images","Lazy Loading Images"
+Autoplay,Autoplay
+"Autoplay Time-Out","Autoplay Time-Out"
+"Add Widget with name ""Banner Slider widget"" and set ""Slider Id"" for it.","Add Widget with name ""Banner Slider widget"" and set ""Slider Id"" for it."
+"CMS Page/Static Block","CMS Page/Static Block"
+"You can paste the above block of snippet into any page in Magento 2 and set SliderId for it.","You can paste the above block of snippet into any page in Magento 2 and set SliderId for it."
+"Template .phtml file","Template .phtml file"
+"Open a .phtml file and insert where you want to display Banner Slider.","Open a .phtml file and insert where you want to display Banner Slider."
+"Slider Information","Slider Information"
+"Store Views","Store Views"
+"Customer Groups","Customer Groups"
+"Select customer group(s) to display the slider to","Select customer group(s) to display the slider to"
+"Select the position to display block.","Select the position to display block."
+"Display from","Display from"
+"Display to","Display to"
+Priority,Priority
+"Enter a number to set priority for the slider. A lower number represents a higher priority.","Enter a number to set priority for the slider. A lower number represents a higher priority."
+"Another way to add sliders to your page","Another way to add sliders to your page"
+"How to use","How to use"
+"The Banner has been deleted.","The Banner has been deleted."
+"This Banner no longer exists.","This Banner no longer exists."
+"Manage Banners","Manage Banners"
+"Please correct the data sent.","Please correct the data sent."
+"Something went wrong while saving the Banner.","Something went wrong while saving the Banner."
+"A total of %1 record(s) have been deleted.","A total of %1 record(s) have been deleted."
+"Something went wrong while updating status for %1.","Something went wrong while updating status for %1."
+"A total of %1 record(s) have been updated.","A total of %1 record(s) have been updated."
+"The Banner has been saved.","The Banner has been saved."
+"The slider has been deleted.","The slider has been deleted."
+"This Slider no longer exists.","This Slider no longer exists."
+"Manage Sliders","Manage Sliders"
+"The Slider has been saved.","The Slider has been saved."
+"Something went wrong while saving the Slider.","Something went wrong while saving the Slider."
+No,No
+fadeOut,fadeOut
+rotateOut,rotateOut
+flipOut,flipOut
+rollOut,rollOut
+zoomOut,zoomOut
+slideOutLeft,slideOutLeft
+slideOutRight,slideOutRight
+lightSpeedOut,lightSpeedOut
+"All Page","All Page"
+"Top of content","Top of content"
+"Bottom of content","Bottom of content"
+"Top of page","Top of page"
+"Bottom of page","Bottom of page"
+"Home Page","Home Page"
+"Category page","Category page"
+"Top of sidebar","Top of sidebar"
+"Bottom of sidebar","Bottom of sidebar"
+"Product page","Product page"
+"Demo template 1","Demo template 1"
+"Demo template 2","Demo template 2"
+"Demo template 3","Demo template 3"
+"Demo template 4","Demo template 4"
+"Demo template 5","Demo template 5"
+Advanced,Advanced
+Edit,Edit
+"No banner added","No banner added"
+"Category Page","Category Page"
+"Product Page","Product Page"
+"All Store Views","All Store Views"
+"Banner Slider","Banner Slider"
+Enable,Enable
+"Select Yes to enable this module","Select Yes to enable this module"
+"Slider Design Configuration","Slider Design Configuration"
+Responsive,Responsive
+"Mageplaza Banner Slider","Mageplaza Banner Slider"
+"Banner Slider list","Banner Slider list"
+"Select Slider","Select Slider"
+"Add New Banner","Add New Banner"
+Delete,Delete
+"Are you sure you wan't to delete selected Banners?","Are you sure you wan't to delete selected Banners?"
+"Change status","Change status"
+Disable,Disable
+Banner,Banner
+Created,Created
+Modified,Modified
+"Add New Slider","Add New Slider"
+"Delete Sliders","Delete Sliders"
+"Are you sure you wan't to delete selected Sliders?","Are you sure you wan't to delete selected Sliders?"
+"Number of banner","Number of banner"
+"Slider Location","Slider Location"
+"Store View","Store View"
+"Start Date","Start Date"
+"End Date","End Date"

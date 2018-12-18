@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action\Context;
@@ -26,6 +27,10 @@ use Magento\Framework\View\Result\LayoutFactory;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 
+/**
+ * Class Banners
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Slider
+ */
 class Banners extends Slider
 {
     /**
@@ -51,6 +56,7 @@ class Banners extends Slider
     )
     {
         $this->resultLayoutFactory = $resultLayoutFactory;
+
         parent::__construct($bannerFactory, $registry, $context);
     }
 

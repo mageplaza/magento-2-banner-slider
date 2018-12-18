@@ -96,7 +96,7 @@
                     <label>Autoplay Time-Out</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <validate>validate-digits</validate>
-                    <comment>The time (ms) in which an item is auto-moved to the left </comment>
+                    <comment>The time (ms) in which an item is auto-moved to the left</comment>
                     <depends>
                         <field id="autoplay">1</field>
                     </depends>

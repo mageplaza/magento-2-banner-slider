@@ -20,7 +20,7 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Mageplaza_BannerSlider::bannerslider" title="Banner Sliders" module="Mageplaza_BannerSlider" sortOrder="100" resource="Mageplaza_BannerSlider::bannerslider" parent="Magento_Backend::content"/>
         <add id="Mageplaza_BannerSlider::banner" title="Manage Banner" module="Mageplaza_BannerSlider" sortOrder="20" parent="Mageplaza_BannerSlider::bannerslider" action="mpbannerslider/banner/index" resource="Mageplaza_BannerSlider::banner"/>

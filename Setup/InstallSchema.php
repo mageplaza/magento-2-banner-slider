@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Setup;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
@@ -30,6 +31,10 @@ use Magento\Framework\Setup\SchemaSetupInterface;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class InstallSchema
+ * @package Mageplaza\BannerSlider\Setup
+ */
 class InstallSchema implements InstallSchemaInterface
 {
     /**
@@ -146,7 +151,6 @@ class InstallSchema implements InstallSchemaInterface
                 ->setComment('Slider Table');
 
             $installer->getConnection()->createTable($table);
-
         }
         if (!$installer->tableExists('mageplaza_bannerslider_banner_slider')) {
             $table = $installer->getConnection()
@@ -208,7 +212,9 @@ class InstallSchema implements InstallSchemaInterface
         $installer->endSetup();
     }
 
-
+    /**
+     * Copy image demo
+     */
     private function copyDemoImage()
     {
         try {

@@ -34,6 +34,7 @@ use Mageplaza\BannerSlider\Model\BannerFactory;
 class Edit extends Banner
 {
     const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::banner';
+
     /**
      * Page factory
      *
@@ -65,7 +66,6 @@ class Edit extends Banner
      */
     public function execute()
     {
-
         $id = $this->getRequest()->getParam('banner_id');
         /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
         $banner = $this->initBanner();

@@ -18,9 +18,13 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
+/**
+ * Class BannersGrid
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Slider
+ */
 class BannersGrid extends Banners
 {
-
 }

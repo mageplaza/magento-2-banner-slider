@@ -74,7 +74,7 @@ class MassStatus extends Action
     public function execute()
     {
         $collection    = $this->filter->getCollection($this->collectionFactory->create());
-        $status        = (int) $this->getRequest()->getParam('status');
+        $status        = (int)$this->getRequest()->getParam('status');
         $sliderUpdated = 0;
         foreach ($collection as $slider) {
             try {

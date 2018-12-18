@@ -52,7 +52,8 @@ if (count($banners)): ?>
                                     <img class="img-responsive" src="<?php echo $bnImg ?>">
                                 </a>
                             <?php else: ?>
-                                <img class="owl-image img-responsive" src="<?php echo $bnImg ?>" title="<?php echo $bnTitle ?>">
+                                <img class="owl-image img-responsive" src="<?php echo $bnImg ?>"
+                                     title="<?php echo $bnTitle ?>">
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
@@ -64,7 +65,7 @@ if (count($banners)): ?>
     </div>
 
     <script>
-        require(['jquery', 'mageplaza/core/owl.carousel'], function($) {
+        require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
             $('#bannerslider-list-items-<?php echo $sliderId; ?>').owlCarousel(<?php echo $sliderOptions; ?>);
         });
     </script>

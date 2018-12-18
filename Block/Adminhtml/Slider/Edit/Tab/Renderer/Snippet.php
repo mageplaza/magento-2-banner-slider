@@ -23,8 +23,15 @@ namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer;
 
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
+/**
+ * Class Snippet
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer
+ */
 class Snippet extends AbstractElement
 {
+    /**
+     * @return string
+     */
     public function getElementHtml()
     {
         $sliderId = '1';

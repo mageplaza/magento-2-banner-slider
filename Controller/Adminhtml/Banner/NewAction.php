@@ -23,9 +23,12 @@ namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
 use Magento\Backend\App\Action;
 
+/**
+ * Class NewAction
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Banner
+ */
 class NewAction extends Action
 {
-
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
      */

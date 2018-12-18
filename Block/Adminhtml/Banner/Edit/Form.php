@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit;
 
 use Magento\Backend\Block\Template\Context;
@@ -26,8 +27,15 @@ use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 
+/**
+ * Class Form
+ * @package Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit
+ */
 class Form extends Generic
 {
+    /**
+     * @var string
+     */
     protected $_template = 'Mageplaza_BannerSlider::widget/form.phtml';
 
     /**
@@ -53,6 +61,7 @@ class Form extends Generic
     )
     {
         $this->template = $template;
+
         parent::__construct($context, $registry, $formFactory, $data);
     }
 

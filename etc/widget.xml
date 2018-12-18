@@ -20,7 +20,6 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-
 <widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
     <widget class="Mageplaza\BannerSlider\Block\Widget" id="mageplaza_bannerslider_widget">
         <label translate="true">Mageplaza Banner Slider</label>

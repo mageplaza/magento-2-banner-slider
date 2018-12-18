@@ -18,12 +18,17 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
 
+/**
+ * Class MassDelete
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Slider
+ */
 class MassDelete extends \Magento\Backend\App\Action
 {
     /**
@@ -55,9 +60,9 @@ class MassDelete extends \Magento\Backend\App\Action
     {
         $this->filter            = $filter;
         $this->collectionFactory = $collectionFactory;
+
         parent::__construct($context);
     }
-
 
     /**
      * @return \Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface

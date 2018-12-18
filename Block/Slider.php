@@ -27,6 +27,10 @@ use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\View\Element\Template;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
 
+/**
+ * Class Slider
+ * @package Mageplaza\BannerSlider\Block
+ */
 class Slider extends Template
 {
     /**

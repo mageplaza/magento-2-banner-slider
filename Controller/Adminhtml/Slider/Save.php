@@ -18,6 +18,7 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action\Context;
@@ -27,9 +28,12 @@ use Magento\Framework\Stdlib\DateTime\Filter\Date;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 
+/**
+ * Class Save
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Slider
+ */
 class Save extends Slider
 {
-
     /**
      * JS helper
      *
@@ -68,9 +72,7 @@ class Save extends Slider
     }
 
     /**
-     * run the action
-     *
-     * @return \Magento\Backend\Model\View\Result\Redirect
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

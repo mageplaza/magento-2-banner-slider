@@ -18,12 +18,17 @@
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
+
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 
+/**
+ * Class Index
+ * @package Mageplaza\BannerSlider\Controller\Adminhtml\Slider
+ */
 class Index extends Action
 {
     /**
@@ -52,6 +57,7 @@ class Index extends Action
     )
     {
         $this->resultPageFactory = $resultPageFactory;
+
         parent::__construct($context);
     }
 
