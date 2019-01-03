@@ -101,14 +101,11 @@ class Collection extends AbstractCollection
         if ($field == 'type' && $condition['like']) {
             $condition['like'] = str_replace("'%", '', $condition['like']);
             $condition['like'] = str_replace("%'", '', $condition['like']);
-            if (stristr('Video', $condition['like'])) {
-                $condition = 1;
-            }
             if (stristr('Image', $condition['like'])) {
                 $condition = 0;
             }
             if (stristr('Advanced', $condition['like'])) {
-                $condition = 2;
+                $condition = 1;
             }
         }
 
