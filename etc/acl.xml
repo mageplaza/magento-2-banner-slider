@@ -24,14 +24,14 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Mageplaza_BannerSlider::bannerslider" title="Banner Slider" sortOrder="55">
+                <resource id="Mageplaza_BannerSlider::bannerslider" title="Mageplaza Banner Slider" sortOrder="55">
                     <resource id="Mageplaza_BannerSlider::banner" title="Manage Banner" sortOrder="10"/>
                     <resource id="Mageplaza_BannerSlider::slider" title="Manage Slider" sortOrder="20"/>
                 </resource>
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Mageplaza_BannerSlider::bannerslider_config" title="Banner Slider"/>
+                            <resource id="Mageplaza_BannerSlider::bannerslider_config" title="Mageplaza Banner Slider"/>
                         </resource>
                     </resource>
                 </resource>
