@@ -133,23 +133,26 @@ class Data extends AbstractData
      */
     public function getResponsiveConfig($slider = null)
     {
-        if (is_null($slider)) {
-            $isResponsive = $this->getModuleConfig('mpbannerslider_design/responsive') == 1;
+        $defaultResponsive = $this->getModuleConfig('mpbannerslider_design/responsive');
+        $sliderResponsive = $slider->getIsResponsive();
+
+        if (!$defaultResponsive || !$sliderResponsive) {
+            return ["items" => 1];
+        }
+
+        if ($slider->getDesign() === 0) {
             try {
                 $responsiveItems = $this->unserialize($this->getModuleConfig('mpbannerslider_design/item_slider'));
             } catch (\Exception $e) {
                 $responsiveItems = [];
             }
         } else {
-            $isResponsive = $slider->getIsResponsive();
             try {
                 $responsiveItems = $this->unserialize($slider->getResponsiveItems());
+                // var_dump($responsiveItems);die;
             } catch (\Exception $e) {
                 $responsiveItems = [];
             }
-        }
-        if (!$isResponsive || !$responsiveItems) {
-            return ["items" => 1];
         }
 
         $result = [];
