@@ -149,7 +149,6 @@ class Data extends AbstractData
         } else {
             try {
                 $responsiveItems = $this->unserialize($slider->getResponsiveItems());
-                // var_dump($responsiveItems);die;
             } catch (\Exception $e) {
                 $responsiveItems = [];
             }
