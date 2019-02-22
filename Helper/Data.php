@@ -136,7 +136,7 @@ class Data extends AbstractData
         $defaultResponsive = $this->getModuleConfig('mpbannerslider_design/responsive');
         $sliderResponsive = $slider->getIsResponsive();
 
-        if (!$defaultResponsive || !$sliderResponsive) {
+        if (!$defaultResponsive && !$sliderResponsive) {
             return ["items" => 1];
         }
 
