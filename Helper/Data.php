@@ -140,7 +140,7 @@ class Data extends AbstractData
             return ["items" => 1];
         }
 
-        if ($slider->getDesign() === 0) {
+        if (!$slider->getDesign()) {
             try {
                 $responsiveItems = $this->unserialize($this->getModuleConfig('mpbannerslider_design/item_slider'));
             } catch (\Exception $e) {
