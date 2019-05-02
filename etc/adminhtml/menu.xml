@@ -23,8 +23,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Mageplaza_BannerSlider::bannerslider" title="Banner Sliders" module="Mageplaza_BannerSlider" sortOrder="100" resource="Mageplaza_BannerSlider::bannerslider" parent="Magento_Backend::content"/>
-        <add id="Mageplaza_BannerSlider::banner" title="Manage Banner" module="Mageplaza_BannerSlider" sortOrder="20" parent="Mageplaza_BannerSlider::bannerslider" action="mpbannerslider/banner/index" resource="Mageplaza_BannerSlider::banner"/>
-        <add id="Mageplaza_BannerSlider::slider" title="Manage Slider" module="Mageplaza_BannerSlider" sortOrder="30" parent="Mageplaza_BannerSlider::bannerslider" action="mpbannerslider/slider/index" resource="Mageplaza_BannerSlider::slider"/>
+        <add id="Mageplaza_BannerSlider::banner" title="Manage Banners" module="Mageplaza_BannerSlider" sortOrder="20" parent="Mageplaza_BannerSlider::bannerslider" action="mpbannerslider/banner/index" resource="Mageplaza_BannerSlider::banner"/>
+        <add id="Mageplaza_BannerSlider::slider" title="Manage Sliders" module="Mageplaza_BannerSlider" sortOrder="30" parent="Mageplaza_BannerSlider::bannerslider" action="mpbannerslider/slider/index" resource="Mageplaza_BannerSlider::slider"/>
         <add id="Mageplaza_BannerSlider::configuration" title="Configuration" module="Mageplaza_BannerSlider" sortOrder="70" parent="Mageplaza_BannerSlider::bannerslider" action="adminhtml/system_config/edit/section/mpbannerslider" resource="Mageplaza_BannerSlider::configuration"/>
     </menu>
 </config>
