@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab;
 
+use Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
@@ -28,10 +29,13 @@ use Magento\Config\Model\Config\Source\Enabledisable;
 use Magento\Customer\Api\GroupRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Convert\DataObject;
+use Magento\Framework\Data\Form\Element\Renderer\RendererInterface;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Magento\Framework\Stdlib\DateTime;
 use Magento\Store\Model\System\Store;
+use Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Snippet;
 use Mageplaza\BannerSlider\Model\Config\Source\Location;
 
 /**
@@ -43,32 +47,32 @@ class Slider extends Generic implements TabInterface
     /**
      * Status options
      *
-     * @var \Magento\Config\Model\Config\Source\Enabledisable
+     * @var Enabledisable
      */
     protected $statusOptions;
 
     /**
-     * @var \Mageplaza\BannerSlider\Model\Config\Source\Location
+     * @var Location
      */
     protected $_location;
 
     /**
-     * @var \Magento\Store\Model\System\Store
+     * @var Store
      */
     protected $_systemStore;
 
     /**
-     * @var \Magento\Customer\Api\GroupRepositoryInterface
+     * @var GroupRepositoryInterface
      */
     protected $_groupRepository;
 
     /**
-     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     * @var SearchCriteriaBuilder
      */
     protected $_searchCriteriaBuilder;
 
     /**
-     * @var \Magento\Framework\Convert\DataObject
+     * @var DataObject
      */
     protected $_objectConverter;
 
@@ -97,27 +101,26 @@ class Slider extends Generic implements TabInterface
         DataObject $objectConverter,
         Store $systemStore,
         array $data = []
-    )
-    {
-        $this->statusOptions          = $statusOptions;
-        $this->_location              = $location;
-        $this->_groupRepository       = $groupRepository;
+    ) {
+        $this->statusOptions = $statusOptions;
+        $this->_location = $location;
+        $this->_groupRepository = $groupRepository;
         $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->_objectConverter       = $objectConverter;
-        $this->_systemStore           = $systemStore;
+        $this->_objectConverter = $objectConverter;
+        $this->_systemStore = $systemStore;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
     /**
      * @return Generic
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
         $slider = $this->_coreRegistry->registry('mpbannerslider_slider');
-        $form   = $this->_formFactory->create();
+        $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('slider_');
         $form->setFieldNameSuffix('slider');
         $fieldset = $form->addFieldset('base_fieldset', [
@@ -143,8 +146,8 @@ class Slider extends Generic implements TabInterface
         ]);
 
         if (!$this->_storeManager->isSingleStoreMode()) {
-            /** @var \Magento\Framework\Data\Form\Element\Renderer\RendererInterface $rendererBlock */
-            $rendererBlock = $this->getLayout()->createBlock('Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element');
+            /** @var RendererInterface $rendererBlock */
+            $rendererBlock = $this->getLayout()->createBlock(Element::class);
             $fieldset->addField('store_ids', 'multiselect', [
                 'name'     => 'store_ids',
                 'label'    => __('Store Views'),
@@ -208,7 +211,7 @@ class Slider extends Generic implements TabInterface
             'legend' => __('Another way to add sliders to your page'),
             'class'  => 'fieldset-wide'
         ]);
-        $subfieldset->addField('snippet', 'Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Snippet', [
+        $subfieldset->addField('snippet', Snippet::class, [
             'name'  => 'snippet',
             'label' => __('How to use'),
             'title' => __('How to use'),

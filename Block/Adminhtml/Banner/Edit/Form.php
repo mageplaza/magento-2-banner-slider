@@ -24,6 +24,7 @@ namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 
@@ -58,8 +59,7 @@ class Form extends Generic
         FormFactory $formFactory,
         Template $template,
         array $data = []
-    )
-    {
+    ) {
         $this->template = $template;
 
         parent::__construct($context, $registry, $formFactory, $data);
@@ -67,7 +67,7 @@ class Form extends Generic
 
     /**
      * @return Generic
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {

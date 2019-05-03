@@ -27,6 +27,7 @@ use Magento\Framework\Data\Form\Element\Factory;
 use Magento\Framework\Data\Form\Element\Multiselect;
 use Magento\Framework\Escaper;
 use Mageplaza\BannerSlider\Helper\Data;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as SliderCollectionFactory;
 
 /**
@@ -38,7 +39,7 @@ class Slider extends Multiselect
     /**
      * Authorization
      *
-     * @var \Magento\Framework\AuthorizationInterface
+     * @var AuthorizationInterface
      */
     public $authorization;
 
@@ -64,10 +65,9 @@ class Slider extends Multiselect
         SliderCollectionFactory $collectionFactory,
         AuthorizationInterface $authorization,
         array $data = []
-    )
-    {
+    ) {
         $this->collectionFactory = $collectionFactory;
-        $this->authorization     = $authorization;
+        $this->authorization = $authorization;
 
         parent::__construct($factoryElement, $factoryCollection, $escaper, $data);
     }
@@ -95,13 +95,13 @@ class Slider extends Multiselect
      */
     public function getSliderCollection()
     {
-        /* @var $collection \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection */
+        /* @var $collection Collection */
         $collection = $this->collectionFactory->create();
         $sliderById = [];
         foreach ($collection as $slider) {
-            $sliderById[$slider->getId()]['value']     = $slider->getId();
+            $sliderById[$slider->getId()]['value'] = $slider->getId();
             $sliderById[$slider->getId()]['is_active'] = 1;
-            $sliderById[$slider->getId()]['label']     = $slider->getName();
+            $sliderById[$slider->getId()]['label'] = $slider->getName();
         }
 
         return $sliderById;
@@ -124,7 +124,7 @@ class Slider extends Multiselect
             return [];
         }
 
-        /* @var $collection \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection */
+        /* @var $collection Collection */
         $collection = $this->collectionFactory->create()->addIdFilter($values);
 
         $options = [];

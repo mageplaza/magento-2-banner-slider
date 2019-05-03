@@ -56,8 +56,7 @@ class Image extends \Magento\Framework\Data\Form\Element\Image
         Escaper $escaper,
         UrlInterface $urlBuilder,
         array $data
-    )
-    {
+    ) {
         $this->imageModel = $imageModel;
 
         parent::__construct($factoryElement, $factoryCollection, $escaper, $urlBuilder, $data);

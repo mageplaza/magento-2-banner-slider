@@ -23,6 +23,7 @@ namespace Mageplaza\BannerSlider\Model\ResourceModel\Slider;
 
 use Magento\Framework\DB\Select;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use Zend_Db_Select;
 
 /**
  * Class Collection
@@ -65,12 +66,12 @@ class Collection extends AbstractCollection
      * Get SQL for get record count.
      * Extra GROUP BY strip added.
      *
-     * @return \Magento\Framework\DB\Select
+     * @return Select
      */
     public function getSelectCountSql()
     {
         $countSelect = parent::getSelectCountSql();
-        $countSelect->reset(\Zend_Db_Select::GROUP);
+        $countSelect->reset(Zend_Db_Select::GROUP);
 
         return $countSelect;
     }
@@ -102,9 +103,9 @@ class Collection extends AbstractCollection
             if (!empty($sliderIds)) {
                 $condition = ['in' => $sliderIds];
             }
-        } else if (is_numeric($sliderIds)) {
+        } elseif (is_numeric($sliderIds)) {
             $condition = $sliderIds;
-        } else if (is_string($sliderIds)) {
+        } elseif (is_string($sliderIds)) {
             $ids = explode(',', $sliderIds);
             if (empty($ids)) {
                 $condition = $sliderIds;

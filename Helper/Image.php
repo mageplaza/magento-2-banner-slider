@@ -29,7 +29,7 @@ use Mageplaza\Core\Helper\Media;
  */
 class Image extends Media
 {
-    const TEMPLATE_MEDIA_PATH        = 'mageplaza/bannerslider';
+    const TEMPLATE_MEDIA_PATH = 'mageplaza/bannerslider';
     const TEMPLATE_MEDIA_TYPE_BANNER = 'banner/image';
     const TEMPLATE_MEDIA_TYPE_SLIDER = 'slider/image';
 }

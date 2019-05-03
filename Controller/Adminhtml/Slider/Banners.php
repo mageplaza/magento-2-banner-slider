@@ -23,7 +23,9 @@ namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Result\Layout;
 use Magento\Framework\View\Result\LayoutFactory;
+use Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Banner;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 
@@ -36,7 +38,7 @@ class Banners extends Slider
     /**
      * Result layout factory
      *
-     * @var \Magento\Framework\View\Result\LayoutFactory
+     * @var LayoutFactory
      */
     protected $resultLayoutFactory;
 
@@ -53,21 +55,20 @@ class Banners extends Slider
         SliderFactory $bannerFactory,
         Registry $registry,
         Context $context
-    )
-    {
+    ) {
         $this->resultLayoutFactory = $resultLayoutFactory;
 
         parent::__construct($bannerFactory, $registry, $context);
     }
 
     /**
-     * @return \Magento\Framework\View\Result\Layout
+     * @return Layout
      */
     public function execute()
     {
         $this->initSlider();
         $resultLayout = $this->resultLayoutFactory->create();
-        /** @var \Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Banner $bannersBlock */
+        /** @var Banner $bannersBlock */
         $bannersBlock = $resultLayout->getLayout()->getBlock('slider.edit.tab.banner');
         if ($bannersBlock) {
             $bannersBlock->setSliderBanners($this->getRequest()->getPost('slider_banners', null));

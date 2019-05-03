@@ -21,11 +21,13 @@
 
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
+use Magento\Framework\DataObject;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 use Mageplaza\BannerSlider\Model\Config\Source\Image;
+use Mageplaza\BannerSlider\Model\Config\Source\Type;
 
 /**
  * Class Thumbnail
@@ -60,8 +62,7 @@ class Thumbnail extends Column
         UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
-    )
-    {
+    ) {
         $this->imageModel = $imageModel;
         $this->urlBuilder = $urlBuilder;
 
@@ -79,10 +80,10 @@ class Thumbnail extends Column
     {
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
-            $path      = $this->imageModel->getBaseUrl();
+            $path = $this->imageModel->getBaseUrl();
             foreach ($dataSource['data']['items'] as & $item) {
-                $banner = new \Magento\Framework\DataObject($item);
-                if ($item['type'] == \Mageplaza\BannerSlider\Model\Config\Source\Type::IMAGE && $item['image']) {
+                $banner = new DataObject($item);
+                if ($item['type'] == Type::IMAGE && $item['image']) {
                     $item[$fieldName . '_src'] = $path . $item['image'];
                 }
 

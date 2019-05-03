@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
@@ -37,7 +38,7 @@ class Store extends Column
     /**
      * Escaper
      *
-     * @var \Magento\Framework\Escaper
+     * @var Escaper
      */
     protected $escaper;
 
@@ -77,11 +78,10 @@ class Store extends Column
         array $components = [],
         array $data = [],
         $storeKey = 'store_ids'
-    )
-    {
+    ) {
         $this->systemStore = $systemStore;
-        $this->escaper     = $escaper;
-        $this->storeKey    = $storeKey;
+        $this->escaper = $escaper;
+        $this->storeKey = $storeKey;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
@@ -114,7 +114,7 @@ class Store extends Column
      */
     protected function prepareItem(array $item)
     {
-        $content    = '';
+        $content = '';
         $origStores = $item[$this->storeKey];
         if (!is_array($origStores)) {
             $origStores = [$origStores];
@@ -160,7 +160,7 @@ class Store extends Column
     private function getStoreManager()
     {
         if ($this->storeManager === null) {
-            $this->storeManager = \Magento\Framework\App\ObjectManager::getInstance()
+            $this->storeManager = ObjectManager::getInstance()
                 ->get('Magento\Store\Model\StoreManagerInterface');
         }
 

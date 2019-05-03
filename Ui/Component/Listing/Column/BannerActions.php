@@ -42,16 +42,16 @@ class BannerActions extends Column
     /**
      * URL builder
      *
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
     protected $urlBuilder;
 
     /**
      * constructor
      *
-     * @param \Magento\Framework\UrlInterface $urlBuilder
-     * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
-     * @param \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory
+     * @param UrlInterface $urlBuilder
+     * @param ContextInterface $context
+     * @param UiComponentFactory $uiComponentFactory
      * @param array $components
      * @param array $data
      */
@@ -61,8 +61,7 @@ class BannerActions extends Column
         UiComponentFactory $uiComponentFactory,
         array $components = [],
         array $data = []
-    )
-    {
+    ) {
         $this->urlBuilder = $urlBuilder;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);

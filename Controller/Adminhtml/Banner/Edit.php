@@ -22,7 +22,11 @@
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Mageplaza\BannerSlider\Model\BannerFactory;
@@ -38,31 +42,30 @@ class Edit extends Banner
     /**
      * Page factory
      *
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     protected $resultPageFactory;
 
     /**
      * Edit constructor.
      *
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Mageplaza\BannerSlider\Model\BannerFactory $bannerFactory
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\App\Action\Context $context
+     * @param PageFactory $resultPageFactory
+     * @param BannerFactory $bannerFactory
+     * @param Registry $registry
+     * @param Context $context
      */
     public function __construct(
         PageFactory $resultPageFactory,
         BannerFactory $bannerFactory,
         Registry $registry,
         Context $context
-    )
-    {
+    ) {
         $this->resultPageFactory = $resultPageFactory;
         parent::__construct($bannerFactory, $registry, $context);
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
+     * @return \Magento\Backend\Model\View\Result\Page|ResponseInterface|Redirect|ResultInterface|Page
      */
     public function execute()
     {
@@ -92,7 +95,7 @@ class Edit extends Banner
             $banner->setData($data);
         }
 
-        /** @var \Magento\Backend\Model\View\Result\Page|\Magento\Framework\View\Result\Page $resultPage */
+        /** @var \Magento\Backend\Model\View\Result\Page|Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Mageplaza_BannerSlider::banner');
         $resultPage->getConfig()->getTitle()

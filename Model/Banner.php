@@ -27,6 +27,7 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as configImage;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as sliderCollectionFactory;
 
 /**
@@ -40,15 +41,15 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as slide
  * @method mixed getUrl()
  * @method mixed getType()
  * @method mixed getStatus()
- * @method Banner setCreatedAt(\string $createdAt)
+ * @method Banner setCreatedAt(string $createdAt)
  * @method string getCreatedAt()
- * @method Banner setUpdatedAt(\string $updatedAt)
+ * @method Banner setUpdatedAt(string $updatedAt)
  * @method string getUpdatedAt()
  * @method Banner setSlidersData(array $data)
  * @method array getSlidersData()
  * @method Banner setSlidersIds(array $sliderIds)
  * @method array getSlidersIds()
- * @method Banner setIsChangedSliderList(\bool $flag)
+ * @method Banner setIsChangedSliderList(bool $flag)
  * @method bool getIsChangedSliderList()
  * @method Banner setAffectedSliderIds(array $ids)
  * @method bool getAffectedSliderIds()
@@ -79,14 +80,14 @@ class Banner extends AbstractModel
     /**
      * Slider Collection
      *
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection
+     * @var Collection
      */
     protected $sliderCollection;
 
     /**
      * Slider Collection Factory
      *
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory
+     * @var sliderCollectionFactory
      */
     protected $sliderCollectionFactory;
 
@@ -114,10 +115,9 @@ class Banner extends AbstractModel
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
+    ) {
         $this->sliderCollectionFactory = $sliderCollectionFactory;
-        $this->imageModel              = $configImage;
+        $this->imageModel = $configImage;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }

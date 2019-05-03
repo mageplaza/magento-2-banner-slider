@@ -35,14 +35,14 @@ abstract class Slider extends Action
     /**
      * Slider Factory
      *
-     * @var \Mageplaza\BannerSlider\Model\SliderFactory
+     * @var SliderFactory
      */
     protected $sliderFactory;
 
     /**
      * Core registry
      *
-     * @var \Magento\Framework\Registry
+     * @var Registry
      */
     protected $coreRegistry;
 
@@ -57,10 +57,9 @@ abstract class Slider extends Action
         SliderFactory $sliderFactory,
         Registry $coreRegistry,
         Context $context
-    )
-    {
+    ) {
         $this->sliderFactory = $sliderFactory;
-        $this->coreRegistry  = $coreRegistry;
+        $this->coreRegistry = $coreRegistry;
 
         parent::__construct($context);
     }

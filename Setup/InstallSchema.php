@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Setup;
 
+use Exception;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Ddl\Table;
@@ -30,6 +31,7 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 use Psr\Log\LoggerInterface;
+use Zend_Db_Exception;
 
 /**
  * Class InstallSchema
@@ -63,10 +65,9 @@ class InstallSchema implements InstallSchemaInterface
         Template $template,
         Filesystem $filesystem,
         LoggerInterface $logger
-    )
-    {
-        $this->logger     = $logger;
-        $this->template   = $template;
+    ) {
+        $this->logger = $logger;
+        $this->template = $template;
         $this->fileSystem = $filesystem;
     }
 
@@ -76,7 +77,7 @@ class InstallSchema implements InstallSchemaInterface
      * @param SchemaSetupInterface $setup
      * @param ModuleContextInterface $context
      *
-     * @throws \Zend_Db_Exception
+     * @throws Zend_Db_Exception
      */
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
@@ -85,13 +86,18 @@ class InstallSchema implements InstallSchemaInterface
         if (!$installer->tableExists('mageplaza_bannerslider_banner')) {
             $table = $installer->getConnection()
                 ->newTable($installer->getTable('mageplaza_bannerslider_banner'))
-                ->addColumn('banner_id', Table::TYPE_INTEGER, null,
+                ->addColumn(
+                    'banner_id',
+                    Table::TYPE_INTEGER,
+                    null,
                     [
                         'identity' => true,
                         'nullable' => false,
                         'primary'  => true,
                         'unsigned' => true
-                    ], 'Banner ID')
+                    ],
+                    'Banner ID'
+                )
                 ->addColumn('name', Table::TYPE_TEXT, 255, ['nullable => false'], 'Banner Name')
                 ->addColumn('status', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Banner Status')
                 ->addColumn('type', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '0'], 'Banner Type')
@@ -119,13 +125,18 @@ class InstallSchema implements InstallSchemaInterface
         if (!$installer->tableExists('mageplaza_bannerslider_slider')) {
             $table = $installer->getConnection()
                 ->newTable($installer->getTable('mageplaza_bannerslider_slider'))
-                ->addColumn('slider_id', Table::TYPE_INTEGER, null,
+                ->addColumn(
+                    'slider_id',
+                    Table::TYPE_INTEGER,
+                    null,
                     [
                         'identity' => true,
                         'nullable' => false,
                         'primary'  => true,
                         'unsigned' => true
-                    ], 'Slider ID')
+                    ],
+                    'Slider ID'
+                )
                 ->addColumn('name', Table::TYPE_TEXT, 255, ['nullable => false'], 'Slider Name')
                 ->addColumn('status', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Slider Status')
                 ->addColumn('location', Table::TYPE_TEXT, 1000, [], 'Location')
@@ -219,16 +230,16 @@ class InstallSchema implements InstallSchemaInterface
     {
         try {
             $mediaDirectory = $this->fileSystem->getDirectoryWrite(DirectoryList::MEDIA);
-            $url            = 'mageplaza/bannerslider/banner/demo/';
+            $url = 'mageplaza/bannerslider/banner/demo/';
             $mediaDirectory->create($url);
             $demos = $this->template->toOptionArray();
             foreach ($demos as $demo) {
                 $targetPath = $mediaDirectory->getAbsolutePath($url . $demo['value']);
-                $DS         = DIRECTORY_SEPARATOR;
-                $oriPath    = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
+                $DS = DIRECTORY_SEPARATOR;
+                $oriPath = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
                 $mediaDirectory->getDriver()->copy($oriPath, $targetPath);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->critical($e->getMessage());
         }
     }

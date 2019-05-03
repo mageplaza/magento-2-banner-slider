@@ -51,8 +51,7 @@ class Banners extends Column
         bannerHelper $helperData,
         array $components = [],
         array $data = []
-    )
-    {
+    ) {
         $this->helperData = $helperData;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);
@@ -70,8 +69,8 @@ class Banners extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['slider_id'])) {
-                    $id                           = $item['slider_id'];
-                    $data                         = $this->helperData->getBannerCollection($id)->getSize();
+                    $id = $item['slider_id'];
+                    $data = $this->helperData->getBannerCollection($id)->getSize();
                     $item[$this->getData('name')] = ($data > 0) ? $data . '<span> banners </span>' : '<b>' . __("No banner added") . '</b>';
                 }
             }

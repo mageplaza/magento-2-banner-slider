@@ -89,7 +89,7 @@ class Template implements OptionSourceInterface
      */
     public function getTemplateHtml()
     {
-        $imgTmp    = '<div class="item" style="background:url({{media url="mageplaza/bannerslider/banner/demo/{{imgName}}}}) center center no-repeat;background-size:cover;">
+        $imgTmp = '<div class="item" style="background:url({{media url="mageplaza/bannerslider/banner/demo/{{imgName}}}}) center center no-repeat;background-size:cover;">
                             <div class="container" style="position:relative">
                                 <img src="{{media url="mageplaza/bannerslider/banner/demo/{{imgName}}}}" alt="{{imgName}}">
                             </div>

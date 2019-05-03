@@ -22,17 +22,18 @@
 /** @var $block \Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Form */
 ?>
 <div class="entry-edit form-inline" id="mageplaza-bannerslider">
-    <?php echo $block->getFormHtml(); ?>
+    <?= $block->getFormHtml(); ?>
 </div>
-<?php echo $block->getChildHtml('form_after'); ?>
+<?= $block->getChildHtml('form_after'); ?>
 
 <script type="text/x-magento-init">
     {
         "#mageplaza-bannerslider": {
             "Mageplaza_BannerSlider/js/view/bannerslider":{
-                "templateHtml": "<?php echo $block->escapeJs($block->getTemplateHtml()); ?>",
-                "imgUrls": "<?php echo $block->escapeJs($block->getImageUrls()); ?>"
+                "templateHtml": "<?= $block->escapeJs($block->getTemplateHtml()); ?>",
+                "imgUrls": "<?= $block->escapeJs($block->getImageUrls()); ?>"
             }
         }
     }
+
 </script>

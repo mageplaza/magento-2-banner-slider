@@ -19,54 +19,56 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
-$banners       = $block->getBannerCollection();
-$sliderId      = $block->getSliderId() . '-' . uniqid();
+use Mageplaza\BannerSlider\Model\Config\Source\Type;
+
+$banners = $block->getBannerCollection();
+$sliderId = $block->getSliderId() . uniqid('-', false);
 $sliderOptions = $block->getBannerOptions();
 
-if (count($banners)): ?>
+if (count($banners)) : ?>
     <div class="carousel-container">
         <div id="banner-slider-carousel">
             <?php $iterator = 1; ?>
-            <div id="bannerslider-list-items-<?php echo $sliderId; ?>"
+            <div id="bannerslider-list-items-<?= $sliderId; ?>"
                  class="owl-carousel owl-theme">
-                <?php foreach ($banners as $banner): ?>
+                <?php foreach ($banners as $banner) : ?>
                     <?php
-                    $bnType  = $banner->getType();
+                    $bnType = $banner->getType();
                     $bnTitle = $banner->getTitle();
-                    $bnUrl   = $banner->getUrlBanner();
-                    $bnImg   = $banner->getImageUrl();
+                    $bnUrl = $banner->getUrlBanner();
+                    $bnImg = $banner->getImageUrl();
                     ?>
-                    <?php echo ($iterator++ == 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
-                    <?php if ($bnType == \Mageplaza\BannerSlider\Model\Config\Source\Type::CONTENT): ?>
+                    <?= ($iterator++ == 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
+                    <?php if ($bnType == Type::CONTENT) : ?>
                         <div class="item-content">
-                            <?php echo $block->getPageFilter($banner->getContent()); ?>
+                            <?= $block->getPageFilter($banner->getContent()); ?>
                         </div>
-                    <?php else: #image type?>
+                    <?php else : #image type?>
                         <div class="item-image">
-                            <?php if (!empty($bnUrl)): ?>
+                            <?php if (!empty($bnUrl)) : ?>
                                 <a class="owl-image"
-                                   href="<?php echo $bnUrl ?>" <?php echo ($banner->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
-                                    <?php if (!empty($bnTitle)): ?>
-                                        <div class="banner-title"><?php echo $bnTitle ?></div>
+                                   href="<?= $bnUrl ?>" <?= ($banner->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
+                                    <?php if (!empty($bnTitle)) : ?>
+                                        <div class="banner-title"><?= $bnTitle ?></div>
                                     <?php endif; ?>
-                                    <img class="img-responsive" src="<?php echo $bnImg ?>">
+                                    <img class="img-responsive" src="<?= $bnImg ?>">
                                 </a>
-                            <?php else: ?>
-                                <img class="owl-image img-responsive" src="<?php echo $bnImg ?>"
-                                     title="<?php echo $bnTitle ?>">
+                            <?php else : ?>
+                                <img class="owl-image img-responsive" src="<?= $bnImg ?>"
+                                     title="<?= $bnTitle ?>">
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
-                    <?php echo ($iterator == count($banners) + 1) ? '</div>' : '' ?>
+                    <?= ($iterator == count($banners) + 1) ? '</div>' : '' ?>
                 <?php endforeach; ?>
             </div>
         </div>
-        <?php echo $block->getPagerHtml() ?>
+        <?= $block->getPagerHtml() ?>
     </div>
 
     <script>
         require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
-            $('#bannerslider-list-items-<?php echo $sliderId; ?>').owlCarousel(<?php echo $sliderOptions; ?>);
+            $('#bannerslider-list-items-<?= $sliderId; ?>').owlCarousel(<?= $sliderOptions; ?>);
         });
     </script>
 <?php endif; ?>

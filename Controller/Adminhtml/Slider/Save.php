@@ -21,12 +21,19 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
+use Exception;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Helper\Js;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Magento\Framework\Stdlib\DateTime\Filter\Date;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
+use RuntimeException;
+use Zend_Filter_Input;
 
 /**
  * Class Save
@@ -37,14 +44,14 @@ class Save extends Slider
     /**
      * JS helper
      *
-     * @var \Magento\Backend\Helper\Js
+     * @var Js
      */
     protected $jsHelper;
 
     /**
      * Date filter
      *
-     * @var \Magento\Framework\Stdlib\DateTime\Filter\Date
+     * @var Date
      */
     protected $_dateFilter;
 
@@ -63,23 +70,22 @@ class Save extends Slider
         Registry $registry,
         Context $context,
         Date $dateFilter
-    )
-    {
-        $this->jsHelper    = $jsHelper;
+    ) {
+        $this->jsHelper = $jsHelper;
         $this->_dateFilter = $dateFilter;
 
         parent::__construct($sliderFactory, $registry, $context);
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface
+     * @return ResponseInterface|Redirect|ResultInterface
      */
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if ($data = $this->getRequest()->getPost('slider')) {
-            $data   = $this->_filterData($data);
+            $data = $this->_filterData($data);
             $slider = $this->initSlider();
 
             $banners = $this->getRequest()->getPost('banners', -1);
@@ -114,11 +120,11 @@ class Save extends Slider
                 $resultRedirect->setPath('mpbannerslider/*/');
 
                 return $resultRedirect;
-            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            } catch (LocalizedException $e) {
                 $this->messageManager->addError($e->getMessage());
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $this->messageManager->addError($e->getMessage());
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addException($e, __('Something went wrong while saving the Slider.'));
             }
 
@@ -148,8 +154,8 @@ class Save extends Slider
      */
     protected function _filterData($data)
     {
-        $inputFilter = new \Zend_Filter_Input(['from_date' => $this->_dateFilter,], [], $data);
-        $data        = $inputFilter->getUnescaped();
+        $inputFilter = new Zend_Filter_Input(['from_date' => $this->_dateFilter,], [], $data);
+        $data = $inputFilter->getUnescaped();
 
         if (isset($data['responsive_items'])) {
             unset($data['responsive_items']['__empty']);

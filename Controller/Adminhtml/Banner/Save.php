@@ -21,12 +21,19 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
+use Exception;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Helper\Js;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\FileSystemException;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Mageplaza\BannerSlider\Helper\Image;
 use Mageplaza\BannerSlider\Model\BannerFactory;
+use RuntimeException;
 
 /**
  * Class Save
@@ -37,14 +44,14 @@ class Save extends Banner
     /**
      * Image Helper
      *
-     * @var \Mageplaza\BannerSlider\Helper\Image
+     * @var Image
      */
     protected $imageHelper;
 
     /**
      * JS helper
      *
-     * @var \Magento\Backend\Helper\Js
+     * @var Js
      */
     public $jsHelper;
 
@@ -62,17 +69,16 @@ class Save extends Banner
         Registry $registry,
         Js $jsHelper,
         Context $context
-    )
-    {
+    ) {
         $this->imageHelper = $imageHelper;
-        $this->jsHelper    = $jsHelper;
+        $this->jsHelper = $jsHelper;
 
         parent::__construct($bannerFactory, $registry, $context);
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface
-     * @throws \Magento\Framework\Exception\FileSystemException
+     * @return ResponseInterface|Redirect|ResultInterface
+     * @throws FileSystemException
      */
     public function execute()
     {
@@ -116,11 +122,11 @@ class Save extends Banner
                 $resultRedirect->setPath('mpbannerslider/*/');
 
                 return $resultRedirect;
-            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            } catch (LocalizedException $e) {
                 $this->messageManager->addError($e->getMessage());
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $this->messageManager->addError($e->getMessage());
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addException($e, __('Something went wrong while saving the Banner.'));
             }
 

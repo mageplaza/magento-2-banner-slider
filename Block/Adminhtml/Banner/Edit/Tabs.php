@@ -22,7 +22,7 @@
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit;
 
 /**
- * @method Tabs setTitle(\string $title)
+ * @method Tabs setTitle(string $title)
  */
 class Tabs extends \Magento\Backend\Block\Widget\Tabs
 {

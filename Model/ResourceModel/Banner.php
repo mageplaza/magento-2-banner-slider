@@ -22,6 +22,7 @@
 namespace Mageplaza\BannerSlider\Model\ResourceModel;
 
 use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
@@ -36,7 +37,7 @@ class Banner extends AbstractDb
     /**
      * Date model
      *
-     * @var \Magento\Framework\Stdlib\DateTime\DateTime
+     * @var DateTime
      */
     protected $date;
 
@@ -50,24 +51,23 @@ class Banner extends AbstractDb
     /**
      * Event Manager
      *
-     * @var \Magento\Framework\Event\ManagerInterface
+     * @var ManagerInterface
      */
     protected $eventManager;
 
     /**
      * constructor
      *
-     * @param \Magento\Framework\Stdlib\DateTime\DateTime $date
-     * @param \Magento\Framework\Event\ManagerInterface $eventManager
-     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
+     * @param DateTime $date
+     * @param ManagerInterface $eventManager
+     * @param Context $context
      */
     public function __construct(
         DateTime $date,
         ManagerInterface $eventManager,
         Context $context
-    )
-    {
-        $this->date         = $date;
+    ) {
+        $this->date = $date;
         $this->eventManager = $eventManager;
 
         parent::__construct($context);
@@ -88,15 +88,15 @@ class Banner extends AbstractDb
      * @param $id
      *
      * @return string
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function getBannerNameById($id)
     {
         $adapter = $this->getConnection();
-        $select  = $adapter->select()
+        $select = $adapter->select()
             ->from($this->getMainTable(), 'name')
             ->where('banner_id = :banner_id');
-        $binds   = ['banner_id' => (int)$id];
+        $binds = ['banner_id' => (int)$id];
 
         return $adapter->fetchOne($select, $binds);
     }
@@ -137,15 +137,15 @@ class Banner extends AbstractDb
     protected function saveSliderRelation(\Mageplaza\BannerSlider\Model\Banner $banner)
     {
         $banner->setIsChangedSliderList(false);
-        $id      = $banner->getId();
+        $id = $banner->getId();
         $sliders = $banner->getSlidersIds();
         if ($sliders === null) {
             return $this;
         }
         $oldSliders = $banner->getSliderIds();
 
-        $insert  = array_diff($sliders, $oldSliders);
-        $delete  = array_diff($oldSliders, $sliders);
+        $insert = array_diff($sliders, $oldSliders);
+        $delete = array_diff($oldSliders, $sliders);
         $adapter = $this->getConnection();
 
         if (!empty($delete)) {
@@ -167,7 +167,8 @@ class Banner extends AbstractDb
             $sliderIds = array_unique(array_merge(array_keys($insert), array_keys($delete)));
             $this->eventManager->dispatch(
                 'mageplaza_bannerslider_banner_after_save_sliders',
-                ['banner' => $banner, 'slider_ids' => $sliderIds]);
+                ['banner' => $banner, 'slider_ids' => $sliderIds]
+            );
 
             $banner->setIsChangedSliderList(true);
             $sliderIds = array_keys($insert + $delete);
@@ -185,7 +186,7 @@ class Banner extends AbstractDb
     public function getSliderIds(\Mageplaza\BannerSlider\Model\Banner $banner)
     {
         $adapter = $this->getConnection();
-        $select  = $adapter->select()
+        $select = $adapter->select()
             ->from($this->bannerSliderTable, 'slider_id')
             ->where('banner_id = ?', (int)$banner->getId());
 

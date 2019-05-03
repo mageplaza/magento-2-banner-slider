@@ -21,10 +21,13 @@
 
 namespace Mageplaza\BannerSlider\Block;
 
+use Exception;
 use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\View\Element\Template;
+use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
 
 /**
@@ -34,22 +37,22 @@ use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
 class Slider extends Template
 {
     /**
-     * @type \Mageplaza\BannerSlider\Helper\Data
+     * @type bannerHelper
      */
     public $helperData;
 
     /**
-     * @type \Magento\Store\Model\StoreManagerInterface
+     * @type StoreManagerInterface
      */
     protected $store;
 
     /**
-     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     * @var CustomerRepositoryInterface
      */
     protected $customerRepository;
 
     /**
-     * @var \Magento\Framework\Stdlib\DateTime\DateTime
+     * @var DateTime
      */
     protected $_date;
 
@@ -75,13 +78,12 @@ class Slider extends Template
         DateTime $dateTime,
         FilterProvider $filterProvider,
         array $data = []
-    )
-    {
-        $this->helperData         = $helperData;
+    ) {
+        $this->helperData = $helperData;
         $this->customerRepository = $customerRepository;
-        $this->store              = $context->getStoreManager();
-        $this->_date              = $dateTime;
-        $this->filterProvider     = $filterProvider;
+        $this->store = $context->getStoreManager();
+        $this->_date = $dateTime;
+        $this->filterProvider = $filterProvider;
 
         parent::__construct($context, $data);
     }
@@ -113,7 +115,7 @@ class Slider extends Template
      * @param $content
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPageFilter($content)
     {
@@ -121,7 +123,7 @@ class Slider extends Template
     }
 
     /**
-     * @return array|\Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+     * @return array|AbstractCollection
      */
     public function getBannerCollection()
     {

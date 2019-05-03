@@ -29,6 +29,7 @@ use Magento\Config\Model\Config\Source\Enabledisable;
 use Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory;
 use Magento\Framework\Convert\DataObject;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Image as BannerImage;
 use Mageplaza\BannerSlider\Helper\Data;
@@ -45,7 +46,7 @@ class Banner extends Generic implements TabInterface
     /**
      * Type options
      *
-     * @var \Mageplaza\BannerSlider\Model\Config\Source\Type
+     * @var Type
      */
     protected $typeOptions;
 
@@ -59,27 +60,27 @@ class Banner extends Generic implements TabInterface
     /**
      * Status options
      *
-     * @var \Magento\Config\Model\Config\Source\Enabledisable
+     * @var Enabledisable
      */
     protected $statusOptions;
 
     /**
-     * @var \Mageplaza\BannerSlider\Helper\Image
+     * @var HelperImage
      */
     protected $imageHelper;
 
     /**
-     * @var \Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory
+     * @var FieldFactory
      */
     protected $_fieldFactory;
 
     /**
-     * @var \Magento\Framework\Convert\DataObject
+     * @var DataObject
      */
     protected $_objectConverter;
 
     /**
-     * @var \Magento\Cms\Model\Wysiwyg\Config
+     * @var WysiwygConfig
      */
     protected $_wysiwygConfig;
 
@@ -110,28 +111,27 @@ class Banner extends Generic implements TabInterface
         DataObject $objectConverter,
         WysiwygConfig $wysiwygConfig,
         array $data = []
-    )
-    {
-        $this->typeOptions      = $typeOptions;
-        $this->template         = $template;
-        $this->statusOptions    = $statusOptions;
-        $this->imageHelper      = $imageHelper;
-        $this->_fieldFactory    = $fieldFactory;
+    ) {
+        $this->typeOptions = $typeOptions;
+        $this->template = $template;
+        $this->statusOptions = $statusOptions;
+        $this->imageHelper = $imageHelper;
+        $this->_fieldFactory = $fieldFactory;
         $this->_objectConverter = $objectConverter;
-        $this->_wysiwygConfig   = $wysiwygConfig;
+        $this->_wysiwygConfig = $wysiwygConfig;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
     /**
      * @return Generic
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
         $banner = $this->_coreRegistry->registry('mpbannerslider_banner');
-        $form   = $this->_formFactory->create();
+        $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('banner_');
         $form->setFieldNameSuffix('banner');
         $fieldset = $form->addFieldset('base_fieldset', [
@@ -212,7 +212,7 @@ class Banner extends Generic implements TabInterface
                     'label' => __('Load Template'),
                 ]
             ]);
-            $insertbutton         = $fieldset->addField('load_template', 'note', [
+            $insertbutton = $fieldset->addField('load_template', 'note', [
                 'text'  => $insertVariableButton->toHtml(),
                 'label' => ''
             ]);

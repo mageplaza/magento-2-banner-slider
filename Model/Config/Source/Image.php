@@ -21,6 +21,8 @@
 
 namespace Mageplaza\BannerSlider\Model\Config\Source;
 
+use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\UrlInterface;
 
@@ -77,10 +79,10 @@ class Image
      * get base image dir
      *
      * @return string
-     * @throws \Magento\Framework\Exception\FileSystemException
+     * @throws FileSystemException
      */
     public function getBaseDir()
     {
-        return $this->fileSystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath($this->subDir . '/image/');
+        return $this->fileSystem->getDirectoryWrite(DirectoryList::MEDIA)->getAbsolutePath($this->subDir . '/image/');
     }
 }

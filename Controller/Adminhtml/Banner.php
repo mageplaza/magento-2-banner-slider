@@ -23,6 +23,7 @@ namespace Mageplaza\BannerSlider\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 
@@ -49,7 +50,7 @@ abstract class Banner extends Action
     /**
      * Result redirect factory
      *
-     * @var \Magento\Backend\Model\View\Result\RedirectFactory
+     * @var RedirectFactory
      */
 
     /**
@@ -63,10 +64,9 @@ abstract class Banner extends Action
         BannerFactory $bannerFactory,
         Registry $coreRegistry,
         Context $context
-    )
-    {
+    ) {
         $this->bannerFactory = $bannerFactory;
-        $this->coreRegistry  = $coreRegistry;
+        $this->coreRegistry = $coreRegistry;
 
         parent::__construct($context);
     }

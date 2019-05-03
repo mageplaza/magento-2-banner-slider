@@ -22,6 +22,7 @@
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit;
 
 use Magento\Backend\Block\Widget\Form\Generic;
+use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Class Form
@@ -31,7 +32,7 @@ class Form extends Generic
 {
     /**
      * @return Generic
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {

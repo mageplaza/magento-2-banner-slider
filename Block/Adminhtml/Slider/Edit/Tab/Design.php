@@ -22,11 +22,14 @@
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab;
 
 use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Form\Element\Dependence;
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
 use Magento\Config\Model\Config\Source\Yesno;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Responsive;
 use Mageplaza\BannerSlider\Model\Config\Source\Effect;
 
 /**
@@ -62,17 +65,16 @@ class Design extends Generic implements TabInterface
         Effect $effect,
         Yesno $yesno,
         array $data = []
-    )
-    {
+    ) {
         $this->_effect = $effect;
-        $this->_yesno  = $yesno;
+        $this->_yesno = $yesno;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
     /**
      * @return Generic
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
@@ -92,7 +94,7 @@ class Design extends Generic implements TabInterface
             'title'  => __('Animation Effect'),
             'values' => $this->_effect->toOptionArray()
         ]);
-        $design         = $fieldset->addField('design', 'select', [
+        $design = $fieldset->addField('design', 'select', [
             'name'    => 'design',
             'label'   => __('Manually Design'),
             'title'   => __('Manually Design'),
@@ -101,66 +103,66 @@ class Design extends Generic implements TabInterface
                 '1' => __('Yes')
             ]
         ]);
-        $responsive     = $fieldset->addField('is_responsive', 'select', [
+        $responsive = $fieldset->addField('is_responsive', 'select', [
             'name'   => 'is_responsive',
             'label'  => __('Is Responsive'),
             'title'  => __('Is Responsive'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $responsiveItem = $fieldset->addField('responsive_items', 'Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Responsive', [
+        $responsiveItem = $fieldset->addField('responsive_items', Responsive::class, [
             'name'  => 'responsive_items',
             'label' => __('Max Items Slider'),
             'title' => __('Max Items Slider'),
         ]);
-        $autoWidth      = $fieldset->addField('autoWidth', 'select', [
+        $autoWidth = $fieldset->addField('autoWidth', 'select', [
             'name'   => 'autoWidth',
             'label'  => __('Auto Width'),
             'title'  => __('Auto Width'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $autoHeight     = $fieldset->addField('autoHeight', 'select', [
+        $autoHeight = $fieldset->addField('autoHeight', 'select', [
             'name'   => 'autoHeight',
             'label'  => __('Auto Height'),
             'title'  => __('Auto Height'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $loop           = $fieldset->addField('loop', 'select', [
+        $loop = $fieldset->addField('loop', 'select', [
             'name'   => 'loop',
             'label'  => __('Infinity Loop'),
             'title'  => __('Infinity Loop'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $nav            = $fieldset->addField('nav', 'select', [
+        $nav = $fieldset->addField('nav', 'select', [
             'name'   => 'nav',
             'label'  => __('Show Next/Prev Buttons'),
             'title'  => __('Show Next/Prev Buttons'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $dots           = $fieldset->addField('dots', 'select', [
+        $dots = $fieldset->addField('dots', 'select', [
             'name'   => 'dots',
             'label'  => __('Show Dots Navigation'),
             'title'  => __('Show Dots Navigation'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $lazyload       = $fieldset->addField('lazyLoad', 'select', [
+        $lazyload = $fieldset->addField('lazyLoad', 'select', [
             'name'   => 'lazyLoad',
             'label'  => __('Lazy Loading Images'),
             'title'  => __('Lazy Loading Images'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $autoplay       = $fieldset->addField('autoplay', 'select', [
+        $autoplay = $fieldset->addField('autoplay', 'select', [
             'name'   => 'autoplay',
             'label'  => __('Autoplay'),
             'title'  => __('Autoplay'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $timeout        = $fieldset->addField('autoplayTimeout', 'text', [
+        $timeout = $fieldset->addField('autoplayTimeout', 'text', [
             'name'  => 'autoplayTimeout',
             'label' => __('Autoplay Time-Out'),
             'title' => __('Autoplay Time-Out')
         ]);
 
-        $dependencies = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Form\Element\Dependence')
+        $dependencies = $this->getLayout()->createBlock(Dependence::class)
             ->addFieldMap($design->getHtmlId(), $design->getName())
             ->addFieldMap($responsive->getHtmlId(), $responsive->getName())
             ->addFieldMap($responsiveItem->getHtmlId(), $responsiveItem->getName())

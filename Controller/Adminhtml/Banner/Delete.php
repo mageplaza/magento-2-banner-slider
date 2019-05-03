@@ -21,6 +21,10 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
+use Exception;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Controller\ResultInterface;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 
 /**
@@ -30,7 +34,7 @@ use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 class Delete extends Banner
 {
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface
+     * @return ResponseInterface|Redirect|ResultInterface
      */
     public function execute()
     {
@@ -40,7 +44,7 @@ class Delete extends Banner
                 ->load($this->getRequest()->getParam('banner_id'))
                 ->delete();
             $this->messageManager->addSuccess(__('The Banner has been deleted.'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // display error message
             $this->messageManager->addErrorMessage($e->getMessage());
             // go back to edit form

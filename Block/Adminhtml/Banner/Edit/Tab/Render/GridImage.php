@@ -48,8 +48,7 @@ class GridImage extends AbstractRenderer
         Context $context,
         ImageModel $imageModel,
         array $data = []
-    )
-    {
+    ) {
         $this->imageModel = $imageModel;
 
         parent::__construct($context, $data);

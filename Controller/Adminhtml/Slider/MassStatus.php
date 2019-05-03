@@ -21,9 +21,13 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
@@ -37,14 +41,14 @@ class MassStatus extends Action
     /**
      * Mass Action Filter
      *
-     * @var \Magento\Ui\Component\MassAction\Filter
+     * @var Filter
      */
     public $filter;
 
     /**
      * Collection Factory
      *
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory
+     * @var CollectionFactory
      */
     public $collectionFactory;
 
@@ -59,22 +63,21 @@ class MassStatus extends Action
         Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory
-    )
-    {
-        $this->filter            = $filter;
+    ) {
+        $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
 
         parent::__construct($context);
     }
 
     /**
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @return $this|ResponseInterface|ResultInterface
      * @throws LocalizedException
      */
     public function execute()
     {
-        $collection    = $this->filter->getCollection($this->collectionFactory->create());
-        $status        = (int)$this->getRequest()->getParam('status');
+        $collection = $this->filter->getCollection($this->collectionFactory->create());
+        $status = (int)$this->getRequest()->getParam('status');
         $sliderUpdated = 0;
         foreach ($collection as $slider) {
             try {
@@ -84,7 +87,7 @@ class MassStatus extends Action
                 $sliderUpdated++;
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addErrorMessage(__('Something went wrong while updating status for %1.', $slider->getName()));
             }
         }
@@ -93,7 +96,7 @@ class MassStatus extends Action
             $this->messageManager->addSuccessMessage(__('A total of %1 record(s) have been updated.', $sliderUpdated));
         }
 
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
 
         return $resultRedirect->setPath('*/*/');

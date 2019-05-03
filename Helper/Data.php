@@ -21,12 +21,14 @@
 
 namespace Mageplaza\BannerSlider\Helper;
 
+use Exception;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Http\Context as HttpContext;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Model\BannerFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use Mageplaza\Core\Helper\AbstractData;
 
@@ -77,10 +79,9 @@ class Data extends AbstractData
         SliderFactory $sliderFactory,
         StoreManagerInterface $storeManager,
         ObjectManagerInterface $objectManager
-    )
-    {
-        $this->date          = $date;
-        $this->httpContext   = $httpContext;
+    ) {
+        $this->date = $date;
+        $this->httpContext = $httpContext;
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
 
@@ -100,9 +101,9 @@ class Data extends AbstractData
             $config = $this->getModuleConfig('mpbannerslider_design');
         }
 
-        $defaultOpt    = $this->getDefaultConfig($config);
+        $defaultOpt = $this->getDefaultConfig($config);
         $responsiveOpt = $this->getResponsiveConfig($slider);
-        $effectOpt     = $this->getEffectConfig($slider);
+        $effectOpt = $this->getEffectConfig($slider);
 
         $sliderOptions = array_merge($defaultOpt, $responsiveOpt, $effectOpt);
 
@@ -137,27 +138,23 @@ class Data extends AbstractData
         $sliderResponsive = $slider->getIsResponsive();
 
         if (!$defaultResponsive && !$sliderResponsive) {
-            return ["items" => 1];
+            return ['items' => 1];
         }
 
-        if (!$slider->getDesign()) {
-            try {
-                $responsiveItems = $this->unserialize($this->getModuleConfig('mpbannerslider_design/item_slider'));
-            } catch (\Exception $e) {
-                $responsiveItems = [];
-            }
-        } else {
-            try {
-                $responsiveItems = $this->unserialize($slider->getResponsiveItems());
-            } catch (\Exception $e) {
-                $responsiveItems = [];
-            }
+        $responsiveItemsValue = $slider->getDesign()
+            ? $slider->getResponsiveItems()
+            : $this->getModuleConfig('mpbannerslider_design/item_slider');
+
+        try {
+            $responsiveItems = $this->unserialize($responsiveItemsValue);
+        } catch (Exception $e) {
+            $responsiveItems = [];
         }
 
         $result = [];
         foreach ($responsiveItems as $config) {
-            $size          = $config['size'] ?: 0;
-            $items         = $config['items'] ?: 0;
+            $size = $config['size'] ?: 0;
+            $items = $config['items'] ?: 0;
             $result[$size] = ["items" => $items];
         }
 
@@ -181,7 +178,7 @@ class Data extends AbstractData
     /**
      * @param null $id
      *
-     * @return \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
+     * @return Collection
      */
     public function getBannerCollection($id = null)
     {
@@ -200,13 +197,16 @@ class Data extends AbstractData
 
     /**
      * @return Collection
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getActiveSliders()
     {
         /** @var Collection $collection */
         $collection = $this->sliderFactory->create()
             ->getCollection()
-            ->addFieldToFilter('customer_group_ids', ['finset' => $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_GROUP)])
+            ->addFieldToFilter('customer_group_ids', [
+                'finset' => $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_GROUP)
+            ])
             ->addFieldToFilter('status', 1)
             ->addOrder('priority');
 

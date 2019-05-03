@@ -21,13 +21,20 @@
 
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab;
 
+use Exception;
 use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Grid\Column;
 use Magento\Backend\Block\Widget\Grid\Extended;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
 use Magento\Backend\Helper\Data as backendHelper;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\GridImage;
+use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status;
+use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Type;
 use Mageplaza\BannerSlider\Model\BannerFactory;
-use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory as bannerCollectionFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory as BannerCollectionFactory;
 
 /**
  * Class Banner
@@ -38,28 +45,28 @@ class Banner extends Extended implements TabInterface
     /**
      * Banner collection factory
      *
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
+     * @var BannerCollectionFactory
      */
     protected $bannerCollectionFactory;
 
     /**
      * Registry
      *
-     * @var \Magento\Framework\Registry
+     * @var Registry
      */
     protected $coreRegistry;
 
     /**
      * Banner factory
      *
-     * @var \Mageplaza\BannerSlider\Model\BannerFactory
+     * @var BannerFactory
      */
     protected $bannerFactory;
 
     /**
      * Banner constructor.
      *
-     * @param bannerCollectionFactory $bannerCollectionFactory
+     * @param BannerCollectionFactory $bannerCollectionFactory
      * @param Registry $coreRegistry
      * @param BannerFactory $bannerFactory
      * @param Context $context
@@ -67,17 +74,16 @@ class Banner extends Extended implements TabInterface
      * @param array $data
      */
     public function __construct(
-        bannerCollectionFactory $bannerCollectionFactory,
+        BannerCollectionFactory $bannerCollectionFactory,
         Registry $coreRegistry,
         BannerFactory $bannerFactory,
         Context $context,
         backendHelper $backendHelper,
         array $data = []
-    )
-    {
+    ) {
         $this->bannerCollectionFactory = $bannerCollectionFactory;
-        $this->coreRegistry            = $coreRegistry;
-        $this->bannerFactory           = $bannerFactory;
+        $this->coreRegistry = $coreRegistry;
+        $this->bannerFactory = $bannerFactory;
 
         parent::__construct($context, $backendHelper, $data);
     }
@@ -103,7 +109,7 @@ class Banner extends Extended implements TabInterface
      */
     protected function _prepareCollection()
     {
-        /** @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection $collection */
+        /** @var Collection $collection */
         $collection = $this->bannerCollectionFactory->create();
         if ($this->getSlider()->getId()) {
             $constraint = 'related.slider_id=' . $this->getSlider()->getId();
@@ -130,7 +136,7 @@ class Banner extends Extended implements TabInterface
 
     /**
      * @return $this|Extended
-     * @throws \Exception
+     * @throws Exception
      */
     protected function _prepareColumns()
     {
@@ -157,7 +163,7 @@ class Banner extends Extended implements TabInterface
             'header_css_class' => 'col-image',
             'column_css_class' => 'col-image',
             'sortable'         => false,
-            'renderer'         => "Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\GridImage"
+            'renderer'         => GridImage::class
         ]);
 
         $this->addColumn('name', [
@@ -172,7 +178,7 @@ class Banner extends Extended implements TabInterface
             'index'            => 'type',
             'header_css_class' => 'col-type',
             'column_css_class' => 'col-type',
-            'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Type'
+            'renderer'         => Type::class
         ]);
 
         $this->addColumn('status', [
@@ -180,7 +186,7 @@ class Banner extends Extended implements TabInterface
             'index'            => 'status',
             'header_css_class' => 'col-status',
             'column_css_class' => 'col-status',
-            'renderer'         => 'Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Status'
+            'renderer'         => Status::class
         ]);
 
         $this->addColumn('position', [
@@ -230,7 +236,7 @@ class Banner extends Extended implements TabInterface
     }
 
     /**
-     * @param \Mageplaza\BannerSlider\Model\Banner|\Magento\Framework\Object $item
+     * @param \Mageplaza\BannerSlider\Model\Banner|Object $item
      *
      * @return string
      */
@@ -263,10 +269,10 @@ class Banner extends Extended implements TabInterface
     }
 
     /**
-     * @param \Magento\Backend\Block\Widget\Grid\Column $column
+     * @param Column $column
      *
      * @return $this|Extended
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _addColumnFilterToCollection($column)
     {

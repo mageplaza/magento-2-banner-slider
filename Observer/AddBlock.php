@@ -24,6 +24,8 @@ namespace Mageplaza\BannerSlider\Observer;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\View\Layout;
+use Mageplaza\BannerSlider\Block\Slider;
 use Mageplaza\BannerSlider\Helper\Data;
 
 /**
@@ -38,7 +40,7 @@ class AddBlock implements ObserverInterface
     protected $request;
 
     /**
-     * @var \Mageplaza\BannerSlider\Helper\Data
+     * @var Data
      */
     protected $helperData;
 
@@ -51,9 +53,8 @@ class AddBlock implements ObserverInterface
     public function __construct(
         RequestInterface $request,
         Data $helperData
-    )
-    {
-        $this->request    = $request;
+    ) {
+        $this->request = $request;
         $this->helperData = $helperData;
     }
 
@@ -77,10 +78,10 @@ class AddBlock implements ObserverInterface
         ]);
 
         if ($type !== false) {
-            /** @var \Magento\Framework\View\Layout $layout */
-            $layout         = $observer->getEvent()->getLayout();
+            /** @var Layout $layout */
+            $layout = $observer->getEvent()->getLayout();
             $fullActionName = $this->request->getFullActionName();
-            $output         = $observer->getTransport()->getOutput();
+            $output = $observer->getTransport()->getOutput();
 
             foreach ($this->helperData->getActiveSliders() as $slider) {
                 $locations = explode(",", $slider->getLocation());
@@ -89,7 +90,7 @@ class AddBlock implements ObserverInterface
                     if (($fullActionName == $pageType || $pageType == 'allpage') &&
                         strpos($location, $type) !== false
                     ) {
-                        $content = $layout->createBlock(\Mageplaza\BannerSlider\Block\Slider::class)
+                        $content = $layout->createBlock(Slider::class)
                             ->setSlider($slider)
                             ->toHtml();
 

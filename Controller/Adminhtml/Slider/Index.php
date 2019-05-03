@@ -23,6 +23,7 @@ namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
 /**
@@ -34,7 +35,7 @@ class Index extends Action
     /**
      * Page result factory
      *
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     protected $resultPageFactory;
 
@@ -48,14 +49,13 @@ class Index extends Action
     /**
      * constructor
      *
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Magento\Backend\App\Action\Context $context
+     * @param PageFactory $resultPageFactory
+     * @param Context $context
      */
     public function __construct(
         PageFactory $resultPageFactory,
         Context $context
-    )
-    {
+    ) {
         $this->resultPageFactory = $resultPageFactory;
 
         parent::__construct($context);
@@ -64,7 +64,7 @@ class Index extends Action
     /**
      * execute the action
      *
-     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\View\Result\Page
+     * @return \Magento\Backend\Model\View\Result\Page|Page
      */
     public function execute()
     {

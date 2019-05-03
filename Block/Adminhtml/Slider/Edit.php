@@ -24,6 +24,7 @@ namespace Mageplaza\BannerSlider\Block\Adminhtml\Slider;
 use Magento\Backend\Block\Widget\Context;
 use Magento\Backend\Block\Widget\Form\Container;
 use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\Slider;
 
 /**
  * Class Edit
@@ -49,9 +50,9 @@ class Edit extends Container
         Registry $coreRegistry,
         Context $context,
         array $data = []
-    )
-    {
+    ) {
         $this->coreRegistry = $coreRegistry;
+
         parent::__construct($context, $data);
     }
 
@@ -62,7 +63,7 @@ class Edit extends Container
      */
     protected function _construct()
     {
-        $this->_objectId   = 'slider_id';
+        $this->_objectId = 'slider_id';
         $this->_blockGroup = 'Mageplaza_BannerSlider';
         $this->_controller = 'adminhtml_slider';
         parent::_construct();
@@ -93,7 +94,7 @@ class Edit extends Container
      */
     public function getHeaderText()
     {
-        /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
+        /** @var Slider $slider */
         $slider = $this->getSlider();
         if ($slider->getId()) {
             return __("Edit Slider '%1'", $this->escapeHtml($slider->getName()));
@@ -107,8 +108,6 @@ class Edit extends Container
      */
     public function getSlider()
     {
-        $slider = $this->coreRegistry->registry('mpbannerslider_slider');
-
-        return $slider;
+        return $this->coreRegistry->registry('mpbannerslider_slider');
     }
 }

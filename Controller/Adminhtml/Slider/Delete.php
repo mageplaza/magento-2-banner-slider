@@ -21,7 +21,12 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
+use Exception;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Controller\ResultInterface;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Mageplaza\BannerSlider\Model\Banner;
 
 /**
  * Class Delete
@@ -30,18 +35,18 @@ use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 class Delete extends Slider
 {
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface
+     * @return ResponseInterface|Redirect|ResultInterface
      */
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         try {
-            /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
+            /** @var Banner $banner */
             $this->sliderFactory->create()
                 ->load($this->getRequest()->getParam('slider_id'))
                 ->delete();
             $this->messageManager->addSuccess(__('The slider has been deleted.'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // display error message
             $this->messageManager->addErrorMessage($e->getMessage());
             // go back to edit form

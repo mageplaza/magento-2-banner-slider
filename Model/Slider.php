@@ -22,9 +22,11 @@
 namespace Mageplaza\BannerSlider\Model;
 
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
 
 /**
@@ -36,18 +38,18 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
  * @method mixed getDescription()
  * @method mixed getStatus()
  * @method mixed getConfigSerialized()
- * @method Slider setCreatedAt(\string $createdAt)
+ * @method Slider setCreatedAt(string $createdAt)
  * @method string getCreatedAt()
- * @method Slider setUpdatedAt(\string $updatedAt)
+ * @method Slider setUpdatedAt(string $updatedAt)
  * @method string getUpdatedAt()
  * @method Slider setBannersData(array $data)
  * @method array getBannersData()
- * @method Slider setIsChangedBannerList(\bool $flag)
+ * @method Slider setIsChangedBannerList(bool $flag)
  * @method bool getIsChangedBannerList()
  * @method Slider setAffectedBannerIds(array $ids)
  * @method bool getAffectedBannerIds()
  */
-class Slider extends \Magento\Framework\Model\AbstractModel
+class Slider extends AbstractModel
 {
     /**
      * Cache tag
@@ -73,25 +75,25 @@ class Slider extends \Magento\Framework\Model\AbstractModel
     /**
      * Banner Collection
      *
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
+     * @var Collection
      */
     protected $bannerCollection;
 
     /**
      * Banner Collection Factory
      *
-     * @var \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory
+     * @var CollectionFactory
      */
     protected $bannerCollectionFactory;
 
     /**
      * constructor
      *
-     * @param \Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory $bannerCollectionFactory
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
+     * @param CollectionFactory $bannerCollectionFactory
+     * @param Context $context
+     * @param Registry $registry
+     * @param AbstractResource $resource
+     * @param AbstractDb $resourceCollection
      * @param array $data
      */
     public function __construct(
@@ -101,8 +103,7 @@ class Slider extends \Magento\Framework\Model\AbstractModel
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
+    ) {
         $this->bannerCollectionFactory = $bannerCollectionFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
@@ -135,7 +136,7 @@ class Slider extends \Magento\Framework\Model\AbstractModel
      */
     public function getDefaultValues()
     {
-        $values           = [];
+        $values = [];
         $values['status'] = '1';
 
         return $values;
@@ -160,7 +161,7 @@ class Slider extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * @return \Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection
+     * @return Collection
      */
     public function getSelectedBannersCollection()
     {
