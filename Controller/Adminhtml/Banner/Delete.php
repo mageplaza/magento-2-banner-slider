@@ -48,7 +48,10 @@ class Delete extends Banner
             // display error message
             $this->messageManager->addErrorMessage($e->getMessage());
             // go back to edit form
-            $resultRedirect->setPath('mpbannerslider/*/edit', ['banner_id' => $this->getRequest()->getParam('banner_id')]);
+            $resultRedirect->setPath(
+                'mpbannerslider/*/edit',
+                ['banner_id' => $this->getRequest()->getParam('banner_id')]
+            );
 
             return $resultRedirect;
         }

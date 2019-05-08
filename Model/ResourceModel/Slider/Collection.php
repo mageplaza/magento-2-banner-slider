@@ -114,7 +114,7 @@ class Collection extends AbstractCollection
             }
         }
 
-        if ($condition != '') {
+        if ($condition !== '') {
             $this->addFieldToFilter('slider_id', $condition);
         }
 

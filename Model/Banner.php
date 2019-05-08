@@ -29,6 +29,7 @@ use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as configImage;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as sliderCollectionFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
 
 /**
  * @method Banner setName($name)
@@ -129,7 +130,7 @@ class Banner extends AbstractModel
      */
     protected function _construct()
     {
-        $this->_init('Mageplaza\BannerSlider\Model\ResourceModel\Banner');
+        $this->_init(ResourceBanner::class);
     }
 
     /**
@@ -157,7 +158,8 @@ class Banner extends AbstractModel
      */
     public function getSelectedSlidersCollection()
     {
-        if (is_null($this->sliderCollection)) {
+        if ($this->sliderCollection === null) {
+            /** @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection $collection */
             $collection = $this->sliderCollectionFactory->create();
             $collection->getSelect()->join(
                 ['banner_slider' => $this->getResource()->getTable('mageplaza_bannerslider_banner_slider')],

@@ -79,7 +79,7 @@ class InlineEdit extends Action
         $error = false;
         $messages = [];
         $postItems = $this->getRequest()->getParam('items', []);
-        if (!($this->getRequest()->getParam('isAjax') && count($postItems))) {
+        if (!(!empty($postItems) && $this->getRequest()->getParam('isAjax'))) {
             return $resultJson->setData([
                 'messages' => [__('Please correct the data sent.')],
                 'error'    => true,
@@ -92,9 +92,6 @@ class InlineEdit extends Action
                 $sliderData = $postItems[$sliderId];
                 $slider->addData($sliderData);
                 $slider->save();
-            } catch (LocalizedException $e) {
-                $messages[] = $this->getErrorWithSliderId($slider, $e->getMessage());
-                $error = true;
             } catch (RuntimeException $e) {
                 $messages[] = $this->getErrorWithSliderId($slider, $e->getMessage());
                 $error = true;

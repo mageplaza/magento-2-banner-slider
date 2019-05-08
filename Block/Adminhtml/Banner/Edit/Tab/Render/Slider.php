@@ -67,7 +67,7 @@ class Slider extends Multiselect
         array $data = []
     ) {
         $this->collectionFactory = $collectionFactory;
-        $this->authorization = $authorization;
+        $this->authorization     = $authorization;
 
         parent::__construct($factoryElement, $factoryCollection, $escaper, $data);
     }
@@ -88,51 +88,6 @@ class Slider extends Multiselect
         $html .= $this->getAfterElementHtml();
 
         return $html;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSliderCollection()
-    {
-        /* @var $collection Collection */
-        $collection = $this->collectionFactory->create();
-        $sliderById = [];
-        foreach ($collection as $slider) {
-            $sliderById[$slider->getId()]['value'] = $slider->getId();
-            $sliderById[$slider->getId()]['is_active'] = 1;
-            $sliderById[$slider->getId()]['label'] = $slider->getName();
-        }
-
-        return $sliderById;
-    }
-
-    /**
-     * Get values for select
-     *
-     * @return array
-     */
-    public function getValues()
-    {
-        $values = $this->getValue();
-
-        if (!is_array($values)) {
-            $values = explode(',', $values);
-        }
-
-        if (!sizeof($values)) {
-            return [];
-        }
-
-        /* @var $collection Collection */
-        $collection = $this->collectionFactory->create()->addIdFilter($values);
-
-        $options = [];
-        foreach ($collection as $slider) {
-            $options[] = $slider->getId();
-        }
-
-        return $options;
     }
 
     /**
@@ -175,5 +130,51 @@ class Slider extends Multiselect
         </script>';
 
         return $html;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSliderCollection()
+    {
+        /* @var $collection Collection */
+        $collection = $this->collectionFactory->create();
+        $sliderById = [];
+        foreach ($collection as $slider) {
+            $sliderId = $slider->getId();
+            $sliderById[$sliderId]['value']     = $sliderId;
+            $sliderById[$sliderId]['is_active'] = 1;
+            $sliderById[$sliderId]['label']     = $slider->getName();
+        }
+
+        return $sliderById;
+    }
+
+    /**
+     * Get values for select
+     *
+     * @return array
+     */
+    public function getValues()
+    {
+        $values = $this->getValue();
+
+        if (!is_array($values)) {
+            $values = explode(',', $values);
+        }
+
+        if (empty($values)) {
+            return [];
+        }
+
+        /* @var $collection Collection */
+        $collection = $this->collectionFactory->create()->addIdFilter($values);
+
+        $options = [];
+        foreach ($collection as $slider) {
+            $options[] = $slider->getId();
+        }
+
+        return $options;
     }
 }

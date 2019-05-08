@@ -54,7 +54,7 @@ class AddBlock implements ObserverInterface
         RequestInterface $request,
         Data $helperData
     ) {
-        $this->request = $request;
+        $this->request    = $request;
         $this->helperData = $helperData;
     }
 
@@ -62,6 +62,7 @@ class AddBlock implements ObserverInterface
      * @param Observer $observer
      *
      * @return $this
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function execute(Observer $observer)
     {
@@ -75,19 +76,19 @@ class AddBlock implements ObserverInterface
             'page-top'         => 'page.top',
             'footer-container' => 'footer-container',
             'sidebar'          => 'catalog.leftnav'
-        ]);
+        ], true);
 
         if ($type !== false) {
             /** @var Layout $layout */
-            $layout = $observer->getEvent()->getLayout();
+            $layout         = $observer->getEvent()->getLayout();
             $fullActionName = $this->request->getFullActionName();
-            $output = $observer->getTransport()->getOutput();
+            $output         = $observer->getTransport()->getOutput();
 
             foreach ($this->helperData->getActiveSliders() as $slider) {
-                $locations = explode(",", $slider->getLocation());
+                $locations = explode(',', $slider->getLocation());
                 foreach ($locations as $value) {
                     list($pageType, $location) = explode('.', $value);
-                    if (($fullActionName == $pageType || $pageType == 'allpage') &&
+                    if (($fullActionName === $pageType || $pageType === 'allpage') &&
                         strpos($location, $type) !== false
                     ) {
                         $content = $layout->createBlock(Slider::class)
@@ -95,9 +96,11 @@ class AddBlock implements ObserverInterface
                             ->toHtml();
 
                         if (strpos($location, 'top') !== false) {
-                            $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">$content</div>" . $output;
+                            $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
+                                        $content</div>" . $output;
                         } else {
-                            $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">$content</div>";
+                            $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
+                                        $content</div>";
                         }
                     }
                 }

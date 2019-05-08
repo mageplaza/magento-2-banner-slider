@@ -70,7 +70,6 @@ class CustomerGroup extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item[$this->getData('name')])) {
-                    $item[$this->getData('name')] = explode(',', $item[$this->getData('name')]);
                     $item[$this->getData('name')] = $this->prepareItem($item);
                 }
             }
@@ -87,10 +86,9 @@ class CustomerGroup extends Column
     public function prepareItem(array $item)
     {
         $content = [];
-        $origGroup = $item['customer_group_ids'];
-
+        $origGroup = $item['customer_group'];
         if (!is_array($origGroup)) {
-            $origGroup = [$origGroup];
+            $origGroup = explode(',', $origGroup);
         }
 
         $customer = $this->customerGroup->toOptionArray();
@@ -98,6 +96,6 @@ class CustomerGroup extends Column
             $content[] = $customer[$group]['label'];
         }
 
-        return implode(", ", $content);
+        return implode(', ', $content);
     }
 }

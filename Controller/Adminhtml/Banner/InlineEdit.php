@@ -80,7 +80,7 @@ class InlineEdit extends Action
         $error = false;
         $messages = [];
         $postItems = $this->getRequest()->getParam('items', []);
-        if (!($this->getRequest()->getParam('isAjax') && count($postItems))) {
+        if (!(!empty($postItems) && $this->getRequest()->getParam('isAjax'))) {
             return $resultJson->setData([
                 'messages' => [__('Please correct the data sent.')],
                 'error'    => true,
@@ -93,9 +93,6 @@ class InlineEdit extends Action
                 $bannerData = $postItems[$bannerId];//todo: handle dates
                 $banner->addData($bannerData);
                 $banner->save();
-            } catch (LocalizedException $e) {
-                $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
-                $error = true;
             } catch (RuntimeException $e) {
                 $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
                 $error = true;

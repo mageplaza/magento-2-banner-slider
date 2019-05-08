@@ -85,8 +85,6 @@ class MassStatus extends Action
                     ->save();
 
                 $bannerUpdated++;
-            } catch (LocalizedException $e) {
-                $this->messageManager->addErrorMessage($e->getMessage());
             } catch (Exception $e) {
                 $this->messageManager->addErrorMessage(__('Something went wrong while updating status for %1.', $banner->getName()));
             }

@@ -36,6 +36,9 @@ use Mageplaza\BannerSlider\Helper\Data;
 use Mageplaza\BannerSlider\Helper\Image as HelperImage;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
+use Magento\Backend\Block\Widget\Button;
+use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Slider;
+use Magento\Backend\Block\Widget\Form\Element\Dependence;
 
 /**
  * Class Banner
@@ -112,15 +115,55 @@ class Banner extends Generic implements TabInterface
         WysiwygConfig $wysiwygConfig,
         array $data = []
     ) {
-        $this->typeOptions = $typeOptions;
-        $this->template = $template;
-        $this->statusOptions = $statusOptions;
-        $this->imageHelper = $imageHelper;
-        $this->_fieldFactory = $fieldFactory;
+        $this->typeOptions      = $typeOptions;
+        $this->template         = $template;
+        $this->statusOptions    = $statusOptions;
+        $this->imageHelper      = $imageHelper;
+        $this->_fieldFactory    = $fieldFactory;
         $this->_objectConverter = $objectConverter;
-        $this->_wysiwygConfig = $wysiwygConfig;
+        $this->_wysiwygConfig   = $wysiwygConfig;
 
         parent::__construct($context, $registry, $formFactory, $data);
+    }
+
+    /**
+     * Prepare title for tab
+     *
+     * @return string
+     */
+    public function getTabTitle()
+    {
+        return $this->getTabLabel();
+    }
+
+    /**
+     * Prepare label for tab
+     *
+     * @return string
+     */
+    public function getTabLabel()
+    {
+        return __('General');
+    }
+
+    /**
+     * Can show tab in tabs
+     *
+     * @return boolean
+     */
+    public function canShowTab()
+    {
+        return true;
+    }
+
+    /**
+     * Tab is hidden
+     *
+     * @return boolean
+     */
+    public function isHidden()
+    {
+        return false;
     }
 
     /**
@@ -131,7 +174,7 @@ class Banner extends Generic implements TabInterface
     {
         /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
         $banner = $this->_coreRegistry->registry('mpbannerslider_banner');
-        $form = $this->_formFactory->create();
+        $form   = $this->_formFactory->create();
         $form->setHtmlIdPrefix('banner_');
         $form->setFieldNameSuffix('banner');
         $fieldset = $form->addFieldset('base_fieldset', [
@@ -187,7 +230,7 @@ class Banner extends Generic implements TabInterface
             'title' => __('Url'),
         ]);
 
-        $newtab = $fieldset->addField('newtab', 'select', [
+        $newTab = $fieldset->addField('newtab', 'select', [
             'name'   => 'newtab',
             'label'  => __('Open new tab after click'),
             'title'  => __('Open new tab after click'),
@@ -197,8 +240,8 @@ class Banner extends Generic implements TabInterface
         ]);
 
         if (!$banner->getId()) {
-            $defaultImage = array_values(Data::jsonDecode($this->template->getImageUrls(), true))[0];
-            $demotemplate = $fieldset->addField('default_template', 'select', [
+            $defaultImage = array_values(Data::jsonDecode($this->template->getImageUrls()))[0];
+            $demoTemplate = $fieldset->addField('default_template', 'select', [
                 'name'   => 'default_template',
                 'label'  => __('Demo template'),
                 'title'  => __('Demo template'),
@@ -206,13 +249,13 @@ class Banner extends Generic implements TabInterface
                 'note'   => '<img src="' . $defaultImage . '" alt="demo"  class="article_image" id="mp-demo-image">'
             ]);
 
-            $insertVariableButton = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Button', '', [
+            $insertVariableButton = $this->getLayout()->createBlock(Button::class, '', [
                 'data' => [
                     'type'  => 'button',
                     'label' => __('Load Template'),
                 ]
             ]);
-            $insertbutton = $fieldset->addField('load_template', 'note', [
+            $insertButton         = $fieldset->addField('load_template', 'note', [
                 'text'  => $insertVariableButton->toHtml(),
                 'label' => ''
             ]);
@@ -221,10 +264,15 @@ class Banner extends Generic implements TabInterface
         $content = $fieldset->addField('content', 'editor', [
             'name'     => 'content',
             'required' => false,
-            'config'   => $this->_wysiwygConfig->getConfig(['hidden' => true, 'add_variables' => false, 'add_widgets' => false, 'add_directives' => true])
+            'config'   => $this->_wysiwygConfig->getConfig([
+                'hidden'         => true,
+                'add_variables'  => false,
+                'add_widgets'    => false,
+                'add_directives' => true
+            ])
         ]);
 
-        $fieldset->addField('sliders_ids', '\Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Slider', [
+        $fieldset->addField('sliders_ids', Slider::class, [
             'name'  => 'sliders_ids',
             'label' => __('Sliders'),
             'title' => __('Sliders'),
@@ -242,24 +290,24 @@ class Banner extends Generic implements TabInterface
             }
         }
 
-        $dependencies = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Form\Element\Dependence')
+        $dependencies = $this->getLayout()->createBlock(Dependence::class)
             ->addFieldMap($typeBanner->getHtmlId(), $typeBanner->getName())
             ->addFieldMap($urlBanner->getHtmlId(), $urlBanner->getName())
             ->addFieldMap($uploadBanner->getHtmlId(), $uploadBanner->getName())
             ->addFieldMap($titleBanner->getHtmlId(), $titleBanner->getName())
-            ->addFieldMap($newtab->getHtmlId(), $newtab->getName())
+            ->addFieldMap($newTab->getHtmlId(), $newTab->getName())
             ->addFieldMap($content->getHtmlId(), $content->getName())
             ->addFieldDependence($urlBanner->getName(), $typeBanner->getName(), '0')
             ->addFieldDependence($uploadBanner->getName(), $typeBanner->getName(), '0')
             ->addFieldDependence($titleBanner->getName(), $typeBanner->getName(), '0')
-            ->addFieldDependence($newtab->getName(), $typeBanner->getName(), '0')
+            ->addFieldDependence($newTab->getName(), $typeBanner->getName(), '0')
             ->addFieldDependence($content->getName(), $typeBanner->getName(), '1');
 
         if (!$banner->getId()) {
-            $dependencies->addFieldMap($demotemplate->getHtmlId(), $demotemplate->getName())
-                ->addFieldMap($insertbutton->getHtmlId(), $insertbutton->getName())
-                ->addFieldDependence($demotemplate->getName(), $typeBanner->getName(), '1')
-                ->addFieldDependence($insertbutton->getName(), $typeBanner->getName(), '1');
+            $dependencies->addFieldMap($demoTemplate->getHtmlId(), $demoTemplate->getName())
+                ->addFieldMap($insertButton->getHtmlId(), $insertButton->getName())
+                ->addFieldDependence($demoTemplate->getName(), $typeBanner->getName(), '1')
+                ->addFieldDependence($insertButton->getName(), $typeBanner->getName(), '1');
         }
 
         // define field dependencies
@@ -269,45 +317,5 @@ class Banner extends Generic implements TabInterface
         $this->setForm($form);
 
         return parent::_prepareForm();
-    }
-
-    /**
-     * Prepare label for tab
-     *
-     * @return string
-     */
-    public function getTabLabel()
-    {
-        return __('General');
-    }
-
-    /**
-     * Prepare title for tab
-     *
-     * @return string
-     */
-    public function getTabTitle()
-    {
-        return $this->getTabLabel();
-    }
-
-    /**
-     * Can show tab in tabs
-     *
-     * @return boolean
-     */
-    public function canShowTab()
-    {
-        return true;
-    }
-
-    /**
-     * Tab is hidden
-     *
-     * @return boolean
-     */
-    public function isHidden()
-    {
-        return false;
     }
 }

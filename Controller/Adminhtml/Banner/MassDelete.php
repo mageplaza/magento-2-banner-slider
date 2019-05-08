@@ -73,6 +73,7 @@ class MassDelete extends Action
     /**
      * @return Redirect|ResponseInterface|ResultInterface
      * @throws LocalizedException
+     * @throws \Exception
      */
     public function execute()
     {

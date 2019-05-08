@@ -97,7 +97,6 @@ class Store extends Column
     {
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
-                $item[$this->getData('name')] = explode(',', $item[$this->getData('name')]);
                 $item[$this->getData('name')] = $this->prepareItem($item);
             }
         }
@@ -117,9 +116,9 @@ class Store extends Column
         $content = '';
         $origStores = $item[$this->storeKey];
         if (!is_array($origStores)) {
-            $origStores = [$origStores];
+            $origStores = explode(',', $item[$this->storeKey]);
         }
-        if (in_array(0, $origStores)) {
+        if (in_array('0', $origStores, true)) {
             return __('All Store Views');
         }
         $data = $this->systemStore->getStoresStructure(false, $origStores);
@@ -161,7 +160,7 @@ class Store extends Column
     {
         if ($this->storeManager === null) {
             $this->storeManager = ObjectManager::getInstance()
-                ->get('Magento\Store\Model\StoreManagerInterface');
+                ->get(StoreManager::class);
         }
 
         return $this->storeManager;

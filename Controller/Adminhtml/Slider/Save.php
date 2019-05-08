@@ -84,8 +84,8 @@ class Save extends Slider
     {
         $resultRedirect = $this->resultRedirectFactory->create();
 
-        if ($data = $this->getRequest()->getPost('slider')) {
-            $data = $this->_filterData($data);
+        if ($this->getRequest()->getPost('slider')) {
+            $data = $this->_filterData($this->getRequest()->getPost('slider'));
             $slider = $this->initSlider();
 
             $banners = $this->getRequest()->getPost('banners', -1);
@@ -120,8 +120,6 @@ class Save extends Slider
                 $resultRedirect->setPath('mpbannerslider/*/');
 
                 return $resultRedirect;
-            } catch (LocalizedException $e) {
-                $this->messageManager->addError($e->getMessage());
             } catch (RuntimeException $e) {
                 $this->messageManager->addError($e->getMessage());
             } catch (Exception $e) {
@@ -161,8 +159,8 @@ class Save extends Slider
             unset($data['responsive_items']['__empty']);
         }
 
-        if ($banners = $this->getRequest()->getParam('banners')) {
-            $data['banner_ids'] = $banners;
+        if ($this->getRequest()->getParam('banners')) {
+            $data['banner_ids'] = $this->getRequest()->getParam('banners');
         }
 
         return $data;

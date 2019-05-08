@@ -112,7 +112,7 @@ class Image extends \Magento\Framework\Data\Form\Element\Image
                 '"' .
                 ' alt="' .
                 $this->getValue() .
-                '" height="156" class="small-image-preview v-middle"  ' .
+                '" height="156" width="350px" class="small-image-preview v-middle"  ' .
                 $this->_getUiId() .
                 ' />' .
                 '</a> ';

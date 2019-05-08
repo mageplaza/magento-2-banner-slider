@@ -159,7 +159,7 @@ class Slider extends AbstractDb
      *
      * @param AbstractModel|\Mageplaza\BannerSlider\Model\Slider $object
      *
-     * @return $this
+     * @return AbstractDb
      */
     protected function _afterSave(AbstractModel $object)
     {
@@ -178,7 +178,7 @@ class Slider extends AbstractDb
     {
         parent::_afterLoad($object);
 
-        if (!is_null($object->getResponsiveItems())) {
+        if ($object->getResponsiveItems() !== null) {
             $object->setResponsiveItems($this->bannerHelper->unserialize($object->getResponsiveItems()));
         } else {
             $object->setResponsiveItems(null);

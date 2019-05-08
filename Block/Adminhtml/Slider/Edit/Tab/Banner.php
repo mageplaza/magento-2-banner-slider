@@ -276,7 +276,7 @@ class Banner extends Extended implements TabInterface
      */
     protected function _addColumnFilterToCollection($column)
     {
-        if ($column->getId() == 'in_banners') {
+        if ($column->getId() === 'in_banners') {
             $bannerIds = $this->_getSelectedBanners();
             if (empty($bannerIds)) {
                 $bannerIds = 0;

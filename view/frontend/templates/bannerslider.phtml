@@ -22,10 +22,10 @@
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
 
 $banners = $block->getBannerCollection();
-$sliderId = $block->getSliderId() . uniqid('-', false);
-$sliderOptions = $block->getBannerOptions();
-
 if (count($banners)) : ?>
+    <?php
+    $sliderId      = $block->getSliderId() . uniqid('-', false);
+    $sliderOptions = $block->getBannerOptions(); ?>
     <div class="carousel-container">
         <div id="banner-slider-carousel">
             <?php $iterator = 1; ?>
@@ -33,13 +33,15 @@ if (count($banners)) : ?>
                  class="owl-carousel owl-theme">
                 <?php foreach ($banners as $banner) : ?>
                     <?php
-                    $bnType = $banner->getType();
+                    $bnType  = $banner->getType();
                     $bnTitle = $banner->getTitle();
-                    $bnUrl = $banner->getUrlBanner();
-                    $bnImg = $banner->getImageUrl();
+                    $bnUrl   = $banner->getUrlBanner();
+                    $bnImg   = $banner->getImageUrl();
                     ?>
-                    <?= ($iterator++ == 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
-                    <?php if ($bnType == Type::CONTENT) : ?>
+                    <?php if (($bnType === Type::CONTENT && empty($banner->getContent())) || ($bnType === Type::IMAGE && empty($banner->getImage()))) : continue; ?>
+                    <?php endif; ?>
+                    <?= ($iterator++ === 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
+                    <?php if ($bnType === Type::CONTENT) : ?>
                         <div class="item-content">
                             <?= $block->getPageFilter($banner->getContent()); ?>
                         </div>
@@ -47,7 +49,7 @@ if (count($banners)) : ?>
                         <div class="item-image">
                             <?php if (!empty($bnUrl)) : ?>
                                 <a class="owl-image"
-                                   href="<?= $bnUrl ?>" <?= ($banner->getNewtab() == 1) ? 'target="_blank"' : '' ?>>
+                                   href="<?= $bnUrl ?>" <?= ($banner->getNewtab() === '1') ? 'target="_blank"' : '' ?>>
                                     <?php if (!empty($bnTitle)) : ?>
                                         <div class="banner-title"><?= $bnTitle ?></div>
                                     <?php endif; ?>
@@ -59,7 +61,7 @@ if (count($banners)) : ?>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
-                    <?= ($iterator == count($banners) + 1) ? '</div>' : '' ?>
+                    <?= ($iterator === count($banners) + 1) ? '</div>' : '' ?>
                 <?php endforeach; ?>
             </div>
         </div>

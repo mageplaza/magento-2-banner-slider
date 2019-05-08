@@ -152,7 +152,7 @@ class Slider extends AbstractModel
         }
 
         $array = $this->getData('banners_position');
-        if (is_null($array)) {
+        if ($array === null) {
             $array = $this->getResource()->getBannersPosition($this);
             $this->setData('banners_position', $array);
         }
@@ -165,7 +165,7 @@ class Slider extends AbstractModel
      */
     public function getSelectedBannersCollection()
     {
-        if (is_null($this->bannerCollection)) {
+        if ($this->bannerCollection === null) {
             $collection = $this->bannerCollectionFactory->create();
             $collection->getSelect()->join(
                 ['banner_slider' => $this->getResource()->getTable('mageplaza_bannerslider_banner_slider')],

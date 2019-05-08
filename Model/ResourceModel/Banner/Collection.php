@@ -96,28 +96,28 @@ class Collection extends AbstractCollection
      */
     public function addFieldToFilter($field, $condition = null)
     {
-        if ($field == 'banner_id') {
+        if ($field === 'banner_id') {
             $field = 'main_table.banner_id';
         }
 
-        if ($field == 'type' && $condition['like']) {
+        if ($field === 'type' && isset($condition['like'])) {
             $condition['like'] = str_replace("'%", '', $condition['like']);
             $condition['like'] = str_replace("%'", '', $condition['like']);
-            if (stristr('Image', $condition['like'])) {
+            if (stripos('Image', $condition['like']) !== false) {
                 $condition = 0;
             }
-            if (stristr('Advanced', $condition['like'])) {
+            if (stripos('Advanced', $condition['like']) !== false) {
                 $condition = 1;
             }
         }
 
-        if ($field == 'status' && $condition['like']) {
+        if ($field === 'status' && isset($condition['like'])) {
             $condition['like'] = str_replace("'%", '', $condition['like']);
             $condition['like'] = str_replace("%'", '', $condition['like']);
-            if (stristr('Enable', $condition['like'])) {
+            if (stripos('Enable', $condition['like']) !== false) {
                 $condition = 1;
             }
-            if (stristr('Disable', $condition['like'])) {
+            if (stripos('Disable', $condition['like']) !== false) {
                 $condition = 0;
             }
         }

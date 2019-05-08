@@ -50,7 +50,10 @@ class Delete extends Slider
             // display error message
             $this->messageManager->addErrorMessage($e->getMessage());
             // go back to edit form
-            $resultRedirect->setPath('mpbannerslider/*/edit', ['slider_id' => $this->getRequest()->getParam('slider_id')]);
+            $resultRedirect->setPath(
+                'mpbannerslider/*/edit',
+                ['slider_id' => $this->getRequest()->getParam('slider_id')]
+            );
 
             return $resultRedirect;
         }

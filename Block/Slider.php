@@ -128,8 +128,8 @@ class Slider extends Template
     public function getBannerCollection()
     {
         $collection = [];
-        if ($sliderId = $this->getSliderId()) {
-            $collection = $this->helperData->getBannerCollection($sliderId)->addFieldToFilter('status', 1);
+        if ($this->getSliderId()) {
+            $collection = $this->helperData->getBannerCollection($this->getSliderId())->addFieldToFilter('status', 1);
         }
 
         return $collection;

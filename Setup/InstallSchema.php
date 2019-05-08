@@ -66,8 +66,8 @@ class InstallSchema implements InstallSchemaInterface
         Filesystem $filesystem,
         LoggerInterface $logger
     ) {
-        $this->logger = $logger;
-        $this->template = $template;
+        $this->logger     = $logger;
+        $this->template   = $template;
         $this->fileSystem = $filesystem;
     }
 
@@ -99,13 +99,13 @@ class InstallSchema implements InstallSchemaInterface
                     'Banner ID'
                 )
                 ->addColumn('name', Table::TYPE_TEXT, 255, ['nullable => false'], 'Banner Name')
-                ->addColumn('status', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Banner Status')
+                ->addColumn('status', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Status')
                 ->addColumn('type', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '0'], 'Banner Type')
                 ->addColumn('content', Table::TYPE_TEXT, '64k', [], 'Custom html, css')
                 ->addColumn('image', Table::TYPE_TEXT, 255, [], 'Banner Image')
                 ->addColumn('url_banner', Table::TYPE_TEXT, 255, [], 'Banner Url')
                 ->addColumn('title', Table::TYPE_TEXT, 255, [], 'Title')
-                ->addColumn('newtab', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Open new tab')
+                ->addColumn('newtab', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Open tab')
                 ->addColumn('created_at', Table::TYPE_TIMESTAMP, null, [], 'Banner Created At')
                 ->addColumn('updated_at', Table::TYPE_TIMESTAMP, null, [], 'Banner Updated At')
                 ->setComment('Banner Table');
@@ -138,15 +138,16 @@ class InstallSchema implements InstallSchemaInterface
                     'Slider ID'
                 )
                 ->addColumn('name', Table::TYPE_TEXT, 255, ['nullable => false'], 'Slider Name')
-                ->addColumn('status', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Slider Status')
+                ->addColumn('status', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Status')
                 ->addColumn('location', Table::TYPE_TEXT, 1000, [], 'Location')
                 ->addColumn('store_ids', Table::TYPE_TEXT, 255, [])
                 ->addColumn('customer_group_ids', Table::TYPE_TEXT, 255, [])
-                ->addColumn('priority', Table::TYPE_INTEGER, null, ['unsigned' => true, 'nullable' => false, 'default' => '0'], 'Priority')
+                ->addColumn('priority', Table::TYPE_INTEGER, null,
+                    ['unsigned' => true, 'nullable' => false, 'default' => '0'], 'Priority')
                 ->addColumn('effect', Table::TYPE_TEXT, 255, [], 'Animation effect')
                 ->addColumn('autoWidth', Table::TYPE_SMALLINT, null, [], 'Auto Width')
                 ->addColumn('autoHeight', Table::TYPE_SMALLINT, null, [], 'Auto Height')
-                ->addColumn('design', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '0'], 'Manually design')
+                ->addColumn('design', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '0'], 'Design')
                 ->addColumn('loop', Table::TYPE_SMALLINT, null, [], 'Loop slider')
                 ->addColumn('lazyLoad', Table::TYPE_SMALLINT, null, [], 'Lazyload image')
                 ->addColumn('autoplay', Table::TYPE_SMALLINT, null, [], 'Autoplay')
@@ -166,8 +167,10 @@ class InstallSchema implements InstallSchemaInterface
         if (!$installer->tableExists('mageplaza_bannerslider_banner_slider')) {
             $table = $installer->getConnection()
                 ->newTable($installer->getTable('mageplaza_bannerslider_banner_slider'))
-                ->addColumn('slider_id', Table::TYPE_INTEGER, null, ['unsigned' => true, 'nullable' => false, 'primary' => true,], 'Slider ID')
-                ->addColumn('banner_id', Table::TYPE_INTEGER, null, ['unsigned' => true, 'nullable' => false, 'primary' => true,], 'Banner ID')
+                ->addColumn('slider_id', Table::TYPE_INTEGER, null,
+                    ['unsigned' => true, 'nullable' => false, 'primary' => true,], 'Slider ID')
+                ->addColumn('banner_id', Table::TYPE_INTEGER, null,
+                    ['unsigned' => true, 'nullable' => false, 'primary' => true,], 'Banner ID')
                 ->addColumn('position', Table::TYPE_INTEGER, null, ['nullable' => false, 'default' => '0'], 'Position')
                 ->addIndex($installer->getIdxName('mageplaza_bannerslider_banner_slider', ['slider_id']), ['slider_id'])
                 ->addIndex($installer->getIdxName('mageplaza_bannerslider_banner_slider', ['banner_id']), ['banner_id'])
@@ -181,7 +184,6 @@ class InstallSchema implements InstallSchemaInterface
                     'slider_id',
                     $installer->getTable('mageplaza_bannerslider_slider'),
                     'slider_id',
-                    Table::ACTION_CASCADE,
                     Table::ACTION_CASCADE
                 )
                 ->addForeignKey(
@@ -194,7 +196,6 @@ class InstallSchema implements InstallSchemaInterface
                     'banner_id',
                     $installer->getTable('mageplaza_bannerslider_banner'),
                     'banner_id',
-                    Table::ACTION_CASCADE,
                     Table::ACTION_CASCADE
                 )
                 ->addIndex(
@@ -230,13 +231,13 @@ class InstallSchema implements InstallSchemaInterface
     {
         try {
             $mediaDirectory = $this->fileSystem->getDirectoryWrite(DirectoryList::MEDIA);
-            $url = 'mageplaza/bannerslider/banner/demo/';
+            $url            = 'mageplaza/bannerslider/banner/demo/';
             $mediaDirectory->create($url);
             $demos = $this->template->toOptionArray();
             foreach ($demos as $demo) {
                 $targetPath = $mediaDirectory->getAbsolutePath($url . $demo['value']);
-                $DS = DIRECTORY_SEPARATOR;
-                $oriPath = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
+                $DS         = DIRECTORY_SEPARATOR;
+                $oriPath    = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
                 $mediaDirectory->getDriver()->copy($oriPath, $targetPath);
             }
         } catch (Exception $e) {

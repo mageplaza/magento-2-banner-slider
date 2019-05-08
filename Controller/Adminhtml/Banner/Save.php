@@ -28,7 +28,6 @@ use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\FileSystemException;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Mageplaza\BannerSlider\Helper\Image;
@@ -42,6 +41,12 @@ use RuntimeException;
 class Save extends Banner
 {
     /**
+     * JS helper
+     *
+     * @var Js
+     */
+    public $jsHelper;
+    /**
      * Image Helper
      *
      * @var Image
@@ -49,14 +54,8 @@ class Save extends Banner
     protected $imageHelper;
 
     /**
-     * JS helper
-     *
-     * @var Js
-     */
-    public $jsHelper;
-
-    /**
      * Save constructor.
+     *
      * @param Image $imageHelper
      * @param BannerFactory $bannerFactory
      * @param Registry $registry
@@ -71,7 +70,7 @@ class Save extends Banner
         Context $context
     ) {
         $this->imageHelper = $imageHelper;
-        $this->jsHelper = $jsHelper;
+        $this->jsHelper    = $jsHelper;
 
         parent::__construct($bannerFactory, $registry, $context);
     }
@@ -84,14 +83,16 @@ class Save extends Banner
     {
         $resultRedirect = $this->resultRedirectFactory->create();
 
-        if ($data = $this->getRequest()->getPost('banner')) {
+        if ($this->getRequest()->getPost('banner')) {
+            $data   = $this->getRequest()->getPost('banner');
             $banner = $this->initBanner();
 
             $this->imageHelper->uploadImage($data, 'image', Image::TEMPLATE_MEDIA_TYPE_BANNER, $banner->getImage());
-            $data['sliders_ids'] = (isset($data['sliders_ids']) && $data['sliders_ids']) ? explode(',', $data['sliders_ids']) : [];
-            if ($sliders = $this->getRequest()->getPost('sliders', false)) {
+            $data['sliders_ids'] = (isset($data['sliders_ids']) && $data['sliders_ids'])
+                ? explode(',', $data['sliders_ids']) : [];
+            if ($this->getRequest()->getPost('sliders', false)) {
                 $banner->setTagsData(
-                    $this->jsHelper->decodeGridSerializedInput($sliders)
+                    $this->jsHelper->decodeGridSerializedInput($this->getRequest()->getPost('sliders', false))
                 );
             }
 
@@ -122,8 +123,6 @@ class Save extends Banner
                 $resultRedirect->setPath('mpbannerslider/*/');
 
                 return $resultRedirect;
-            } catch (LocalizedException $e) {
-                $this->messageManager->addError($e->getMessage());
             } catch (RuntimeException $e) {
                 $this->messageManager->addError($e->getMessage());
             } catch (Exception $e) {

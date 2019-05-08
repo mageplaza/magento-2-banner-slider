@@ -85,8 +85,6 @@ class MassStatus extends Action
                     ->save();
 
                 $sliderUpdated++;
-            } catch (LocalizedException $e) {
-                $this->messageManager->addErrorMessage($e->getMessage());
             } catch (Exception $e) {
                 $this->messageManager->addErrorMessage(__('Something went wrong while updating status for %1.', $slider->getName()));
             }

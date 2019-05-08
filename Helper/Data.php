@@ -28,6 +28,7 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Model\BannerFactory;
+use Mageplaza\BannerSlider\Model\Config\Source\Effect;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use Mageplaza\Core\Helper\AbstractData;
@@ -39,26 +40,22 @@ use Mageplaza\Core\Helper\AbstractData;
 class Data extends AbstractData
 {
     const CONFIG_MODULE_PATH = 'mpbannerslider';
-
-    /**
-     * @var DateTime
-     */
-    protected $date;
-
-    /**
-     * @var HttpContext
-     */
-    protected $httpContext;
-
     /**
      * @var BannerFactory
      */
     public $bannerFactory;
-
     /**
      * @var SliderFactory
      */
     public $sliderFactory;
+    /**
+     * @var DateTime
+     */
+    protected $date;
+    /**
+     * @var HttpContext
+     */
+    protected $httpContext;
 
     /**
      * Data constructor.
@@ -80,8 +77,8 @@ class Data extends AbstractData
         StoreManagerInterface $storeManager,
         ObjectManagerInterface $objectManager
     ) {
-        $this->date = $date;
-        $this->httpContext = $httpContext;
+        $this->date          = $date;
+        $this->httpContext   = $httpContext;
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
 
@@ -89,21 +86,21 @@ class Data extends AbstractData
     }
 
     /**
-     * @param null $slider
+     * @param \Mageplaza\BannerSlider\Model\Slider $slider
      *
      * @return false|string
      */
-    public function getBannerOptions($slider = null)
+    public function getBannerOptions($slider)
     {
-        if ($slider && $slider->getDesign() === "1") { //not use Config
+        if ($slider && $slider->getDesign() === '1') { //not use Config
             $config = $slider->getData();
         } else {
             $config = $this->getModuleConfig('mpbannerslider_design');
         }
 
-        $defaultOpt = $this->getDefaultConfig($config);
+        $defaultOpt    = $this->getDefaultConfig($config);
         $responsiveOpt = $this->getResponsiveConfig($slider);
-        $effectOpt = $this->getEffectConfig($slider);
+        $effectOpt     = $this->getEffectConfig($slider);
 
         $sliderOptions = array_merge($defaultOpt, $responsiveOpt, $effectOpt);
 
@@ -111,7 +108,7 @@ class Data extends AbstractData
     }
 
     /**
-     * @param $configs
+     * @param array $configs
      *
      * @return array
      */
@@ -119,7 +116,10 @@ class Data extends AbstractData
     {
         $basicConfig = [];
         foreach ($configs as $key => $value) {
-            if (in_array($key, ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout'])) {
+            if (in_array(
+                $key,
+                ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout']
+            )) {
                 $basicConfig[$key] = (int)$value;
             }
         }
@@ -135,7 +135,7 @@ class Data extends AbstractData
     public function getResponsiveConfig($slider = null)
     {
         $defaultResponsive = $this->getModuleConfig('mpbannerslider_design/responsive');
-        $sliderResponsive = $slider->getIsResponsive();
+        $sliderResponsive  = $slider->getIsResponsive();
 
         if (!$defaultResponsive && !$sliderResponsive) {
             return ['items' => 1];
@@ -153,9 +153,9 @@ class Data extends AbstractData
 
         $result = [];
         foreach ($responsiveItems as $config) {
-            $size = $config['size'] ?: 0;
-            $items = $config['items'] ?: 0;
-            $result[$size] = ["items" => $items];
+            $size          = $config['size'] ?: 0;
+            $items         = $config['items'] ?: 0;
+            $result[$size] = ['items' => $items];
         }
 
         return ['responsive' => $result];
@@ -169,6 +169,10 @@ class Data extends AbstractData
     public function getEffectConfig($slider)
     {
         if (!$slider) {
+            return [];
+        }
+
+        if ($slider->getEffect() === Effect::SLIDER) {
             return [];
         }
 
@@ -196,12 +200,12 @@ class Data extends AbstractData
     }
 
     /**
-     * @return Collection
+     * @return \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getActiveSliders()
     {
-        /** @var Collection $collection */
+        /** @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection $collection */
         $collection = $this->sliderFactory->create()
             ->getCollection()
             ->addFieldToFilter('customer_group_ids', [
