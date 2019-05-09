@@ -105,6 +105,7 @@ class CustomerGroup extends Column
             $origGroup = explode(',', $origGroup);
         }
 
+        $origGroup = array_intersect($this->customerGroup->getAllIds(), $origGroup);
         foreach ($origGroup as $group) {
             $content[] = $this->groupRepository->getById($group)->getCode();
         }
