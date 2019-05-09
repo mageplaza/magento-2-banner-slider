@@ -36,7 +36,7 @@ class Widget extends Slider
     {
         $sliderId = $this->getData('slider_id');
         if (!$sliderId || !$this->helperData->isEnabled()) {
-            return false;
+            return [];
         }
 
         $sliderCollection = $this->helperData->getActiveSliders();
