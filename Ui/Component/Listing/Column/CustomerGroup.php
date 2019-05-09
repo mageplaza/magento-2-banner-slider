@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
+use Magento\Customer\Api\GroupRepositoryInterface;
 use Magento\Customer\Model\ResourceModel\Group\Collection as GroupCollection;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
@@ -33,6 +34,11 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class CustomerGroup extends Column
 {
     /**
+     * @var GroupRepositoryInterface
+     */
+    protected $groupRepository;
+
+    /**
      * @var GroupCollection
      */
     protected $customerGroup;
@@ -42,6 +48,7 @@ class CustomerGroup extends Column
      *
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
+     * @param GroupRepositoryInterface $groupRepository
      * @param GroupCollection $GroupCollection
      * @param array $components
      * @param array $data
@@ -49,11 +56,13 @@ class CustomerGroup extends Column
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
+        GroupRepositoryInterface $groupRepository,
         GroupCollection $GroupCollection,
         array $components = [],
         array $data = []
     ) {
-        $this->customerGroup = $GroupCollection;
+        $this->groupRepository = $groupRepository;
+        $this->customerGroup   = $GroupCollection;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
@@ -64,6 +73,8 @@ class CustomerGroup extends Column
      * @param array $dataSource
      *
      * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function prepareDataSource(array $dataSource)
     {
@@ -79,9 +90,12 @@ class CustomerGroup extends Column
     }
 
     /**
+     * Get customer group name
      * @param array $item
      *
-     * @return string
+     * @return \Magento\Framework\Phrase|string
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function prepareItem(array $item)
     {
@@ -91,9 +105,12 @@ class CustomerGroup extends Column
             $origGroup = explode(',', $origGroup);
         }
 
-        $customer = $this->customerGroup->toOptionArray();
         foreach ($origGroup as $group) {
-            $content[] = $customer[$group]['label'];
+            $content[] = $this->groupRepository->getById($group)->getCode();
+        }
+
+        if (empty($content) || count($content) === $this->customerGroup->count()) {
+            return __('All Customer Groups');
         }
 
         return implode(', ', $content);
