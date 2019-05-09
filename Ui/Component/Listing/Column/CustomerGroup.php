@@ -100,7 +100,7 @@ class CustomerGroup extends Column
     public function prepareItem(array $item)
     {
         $content = [];
-        $origGroup = $item['customer_group'];
+        $origGroup = $item[$this->getData('name')];
         if (!is_array($origGroup)) {
             $origGroup = explode(',', $origGroup);
         }
