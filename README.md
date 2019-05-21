@@ -415,7 +415,7 @@ Click on `Continue` to move to the next step.
 
 - **Step 3**: Insert the required information to **Storefront Properties**. 
 
-!<a href="https://imgur.com/19z4R2T"><img src="https://i.imgur.com/19z4R2T.png" title="source: imgur.com" /></a>
+<img src="https://i.imgur.com/19z4R2T.png" alt="Insert the required information" />
 
 - **Step 4**: Select position to show the Slider.
 
@@ -427,5 +427,28 @@ Click on `Continue` to move to the next step.
 
 - **Step 6**: Click on `Save` button to save the configuration, then check how it works on the frontend.
 
+**People also search:**
+- magento 2 slider
+- mageplaza banner slider
+- banner slider magento 2
+- magento 2 slider extension
+- magento 2 banner slider extension free
+- magento 2 slider module
+- slider for magento 2
+- magento 2 slider extension free
+- magento 2 banner module
+- magento 2 slider widget
+- how to add slider in magento 2 home page
+- magento 2 homepage slider
 
+
+**Other free extension on Github**
+- [Magento 2 Seo Module](https://github.com/mageplaza/magento-2-seo)
+- [Magento 2 Security Suite](https://github.com/mageplaza/magento-2-security)
+- [Magento 2 Maps extension](https://github.com/mageplaza/magento-2-google-maps)
+- [Magento 2 ReCaptcha extension](https://github.com/mageplaza/magento-2-google-recaptcha)
+- [Magento 2 social login module](https://github.com/mageplaza/magento-2-social-login)
+- [Magento 2 blog extension](https://github.com/mageplaza/magento-2-blog)
+- [Magento 2 Layered Navigation](https://github.com/mageplaza/magento-2-ajax-layered-navigation)
+- [Magento 2 security suite](https://github.com/mageplaza/magento-2-security)
 
