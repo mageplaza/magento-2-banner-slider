@@ -1,0 +1,32 @@
+<!--
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+
+<div class="thumbnail-preview" data-role="thumbnail-preview">
+    <div class="thumbnail-preview-image-block content-preview-block">
+        <% if(!type) { %>
+        <img class="thumbnail-preview-image" src="<%- src %>" alt="<%- alt %>" />
+        <% } %>
+    </div>
+    <div class="thumbnail-preview-content">
+        <a class="thumbnail-preview-link" href="<%- link %>"><%- linkText %></a>
+    </div>
+</div>
