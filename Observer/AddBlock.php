@@ -85,6 +85,9 @@ class AddBlock implements ObserverInterface
             $output         = $observer->getTransport()->getOutput();
 
             foreach ($this->helperData->getActiveSliders() as $slider) {
+                // For using the shortcode exclusively (no fixed location).
+                if (empty($slider->getLocation())) continue;
+
                 $locations = explode(',', $slider->getLocation());
                 foreach ($locations as $value) {
                     list($pageType, $location) = explode('.', $value);
