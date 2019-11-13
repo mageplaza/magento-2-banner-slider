@@ -83,7 +83,7 @@ class Slider extends Multiselect
         $html .= '<input name="banner[sliders_ids]" data-bind="value: value" style="display: none"/>';
         $html .= '<!-- ko template: elementTmpl --><!-- /ko -->';
         $html .= '<!-- /ko -->';
-        $html .= '</div>';
+        $html .= '</div></div>';
 
         $html .= $this->getAfterElementHtml();
 
