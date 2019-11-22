@@ -85,8 +85,12 @@ class AddBlock implements ObserverInterface
             $output         = $observer->getTransport()->getOutput();
 
             foreach ($this->helperData->getActiveSliders() as $slider) {
-                $locations = explode(',', $slider->getLocation());
+               if($slider->getLocation()){
+                   
+                   $locations = explode(',', $slider->getLocation());
+             
                 foreach ($locations as $value) {
+                    
                     list($pageType, $location) = explode('.', $value);
                     if (($fullActionName === $pageType || $pageType === 'allpage') &&
                         strpos($location, $type) !== false
@@ -104,6 +108,9 @@ class AddBlock implements ObserverInterface
                         }
                     }
                 }
+                   
+               }
+              
             }
 
             $observer->getTransport()->setOutput($output);
