@@ -87,6 +87,9 @@ class AddBlock implements ObserverInterface
             foreach ($this->helperData->getActiveSliders() as $slider) {
                 $locations = array_filter(explode(',', $slider->getLocation()));
                 foreach ($locations as $value) {
+                    if(!$value) {
+                        continue;//when location doesn't set, $value is ''
+                    }
                     list($pageType, $location) = explode('.', $value);
                     if (($fullActionName === $pageType || $pageType === 'allpage') &&
                         strpos($location, $type) !== false
