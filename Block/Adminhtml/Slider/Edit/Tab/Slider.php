@@ -215,6 +215,7 @@ class Slider extends Generic implements TabInterface
             'name'  => 'snippet',
             'label' => __('How to use'),
             'title' => __('How to use'),
+            'slider_id' => $slider->getId(),
         ]);
 
         $form->addValues($slider->getData());

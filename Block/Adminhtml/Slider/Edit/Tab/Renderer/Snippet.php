@@ -34,7 +34,7 @@ class Snippet extends AbstractElement
      */
     public function getElementHtml()
     {
-        $sliderId = '1';
+        $sliderId = $this->getSliderId() ?? 1;
         $html = '<ul class="banner-location-display"><li><span>';
         $html .= __('Add Widget with name "Banner Slider widget" and set "Slider Id" for it.');
         $html .= '</span></li><li><span>';
