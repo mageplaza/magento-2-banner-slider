@@ -129,10 +129,8 @@ class Slider extends AbstractDb
             $object->setCreatedAt($this->date->date());
         }
 
-        $location = $object->getLocation();
-        if (is_array($location)) {
-            $object->setLocation(implode(',', $location));
-        }
+        $location = (array)$object->getLocation();
+        $object->setLocation(implode(',', $location));
 
         $storeIds = $object->getStoreIds();
         if (is_array($storeIds)) {
