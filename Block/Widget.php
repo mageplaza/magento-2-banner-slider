@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Block;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 /**
@@ -30,7 +31,8 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 class Widget extends Slider
 {
     /**
-     * @return array|bool|AbstractCollection
+     * @return array|AbstractCollection
+     * @throws NoSuchEntityException
      */
     public function getBannerCollection()
     {

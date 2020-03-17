@@ -22,14 +22,15 @@
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
 
 $banners = $block->getBannerCollection();
-if (count($banners)) : ?>
+$check   = is_array($banners) ? !empty($banners) : $banners->getSize();
+if ($check) : ?>
     <?php
     $sliderId      = $block->getSliderId() . uniqid('-', false);
     $sliderOptions = $block->getBannerOptions(); ?>
     <div class="carousel-container">
         <div id="banner-slider-carousel">
             <?php $iterator = 1; ?>
-            <div id="bannerslider-list-items-<?= $sliderId; ?>"
+            <div id="bannerslider-list-items-<?= /* @noEscape */ $sliderId ?>"
                  class="owl-carousel owl-theme">
                 <?php foreach ($banners as $banner) : ?>
                     <?php
@@ -43,21 +44,21 @@ if (count($banners)) : ?>
                     <?= ($iterator++ === 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
                     <?php if ($bnType === Type::CONTENT) : ?>
                         <div class="item-content">
-                            <?= $block->getPageFilter($banner->getContent()); ?>
+                            <?= /* @noEscape */ $block->getPageFilter($banner->getContent()) ?>
                         </div>
                     <?php else : #image type?>
                         <div class="item-image">
                             <?php if (!empty($bnUrl)) : ?>
                                 <a class="owl-image"
-                                   href="<?= $bnUrl ?>" <?= ($banner->getNewtab() === '1') ? 'target="_blank"' : '' ?>>
+                                   href="<?= $block->escapeUrl($bnUrl) ?>" <?= /* @noEscape */ ($banner->getNewtab() === '1') ? 'target="_blank"' : '' ?>>
                                     <?php if (!empty($bnTitle)) : ?>
-                                        <div class="banner-title"><?= $bnTitle ?></div>
+                                        <div class="banner-title"><?= $block->escapeHtml($bnTitle) ?></div>
                                     <?php endif; ?>
-                                    <img class="img-responsive" src="<?= $bnImg ?>">
+                                    <img class="img-responsive" src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
                                 </a>
                             <?php else : ?>
-                                <img class="owl-image img-responsive" src="<?= $bnImg ?>"
-                                     title="<?= $bnTitle ?>">
+                                <img class="owl-image img-responsive" src="<?= $block->escapeUrl($bnImg) ?>"
+                                     title="<?= $block->escapeHtml($bnTitle) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
@@ -70,7 +71,7 @@ if (count($banners)) : ?>
 
     <script>
         require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
-            $('#bannerslider-list-items-<?= $sliderId; ?>').owlCarousel(<?= $sliderOptions; ?>);
+            $('#bannerslider-list-items-<?= /* @noEscape */ $sliderId ?>').owlCarousel(<?= /* @noEscape */ $sliderOptions ?>);
         });
     </script>
 <?php endif; ?>

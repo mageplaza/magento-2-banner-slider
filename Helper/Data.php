@@ -24,12 +24,14 @@ namespace Mageplaza\BannerSlider\Helper;
 use Exception;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Http\Context as HttpContext;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 use Mageplaza\BannerSlider\Model\Config\Source\Effect;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection;
+use Mageplaza\BannerSlider\Model\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use Mageplaza\Core\Helper\AbstractData;
 
@@ -86,7 +88,7 @@ class Data extends AbstractData
     }
 
     /**
-     * @param \Mageplaza\BannerSlider\Model\Slider $slider
+     * @param Slider $slider
      *
      * @return false|string
      */
@@ -201,7 +203,7 @@ class Data extends AbstractData
 
     /**
      * @return \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getActiveSliders()
     {

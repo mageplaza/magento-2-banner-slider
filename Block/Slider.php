@@ -108,7 +108,7 @@ class Slider extends Template
             return $this->getSlider()->getSliderId();
         }
 
-        return time();
+        return uniqid('-', false);
     }
 
     /**

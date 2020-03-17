@@ -145,7 +145,15 @@ class Slider extends Generic implements TabInterface
             'values' => array_merge(['' => ''], $this->statusOptions->toOptionArray()),
         ]);
 
-        if (!$this->_storeManager->isSingleStoreMode()) {
+        if (!$slider->hasData('store_ids')) {
+            $slider->setStoreIds(0);
+        }
+        if ($this->_storeManager->isSingleStoreMode()) {
+            $fieldset->addField('store_ids', 'hidden', [
+                'name'  => 'store_ids',
+                'value' => $this->_storeManager->getStore()->getId()
+            ]);
+        } else {
             /** @var RendererInterface $rendererBlock */
             $rendererBlock = $this->getLayout()->createBlock(Element::class);
             $fieldset->addField('store_ids', 'multiselect', [
@@ -155,14 +163,6 @@ class Slider extends Generic implements TabInterface
                 'required' => true,
                 'values'   => $this->_systemStore->getStoreValuesForForm(false, true)
             ])->setRenderer($rendererBlock);
-            if (!$slider->hasData('store_ids')) {
-                $slider->setStoreIds(0);
-            }
-        } else {
-            $fieldset->addField('store_ids', 'hidden', [
-                'name'  => 'store_ids',
-                'value' => $this->_storeManager->getStore()->getId()
-            ]);
         }
 
         $customerGroups = $this->_groupRepository->getList($this->_searchCriteriaBuilder->create())->getItems();
@@ -180,7 +180,8 @@ class Slider extends Generic implements TabInterface
             'label'  => __('Position'),
             'title'  => __('Position'),
             'values' => $this->_location->toOptionArray(),
-            'note'   => __('Select the position to display block.')
+            'note'   => __('Select the position to display block.'),
+            'required' => true,
         ]);
 
         $fieldset->addField('from_date', 'date', [
@@ -215,6 +216,7 @@ class Slider extends Generic implements TabInterface
             'name'  => 'snippet',
             'label' => __('How to use'),
             'title' => __('How to use'),
+            'slider_id' => $slider->getId(),
         ]);
 
         $form->addValues($slider->getData());

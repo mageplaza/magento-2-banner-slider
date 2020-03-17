@@ -27,11 +27,11 @@ use Magento\Backend\Helper\Js;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Mageplaza\BannerSlider\Helper\Image;
 use Mageplaza\BannerSlider\Model\BannerFactory;
+use Mageplaza\BannerSlider\Model\Config\Source\Type;
 use RuntimeException;
 
 /**
@@ -77,7 +77,6 @@ class Save extends Banner
 
     /**
      * @return ResponseInterface|Redirect|ResultInterface
-     * @throws FileSystemException
      */
     public function execute()
     {
@@ -86,8 +85,9 @@ class Save extends Banner
         if ($this->getRequest()->getPost('banner')) {
             $data   = $this->getRequest()->getPost('banner');
             $banner = $this->initBanner();
-
-            $this->imageHelper->uploadImage($data, 'image', Image::TEMPLATE_MEDIA_TYPE_BANNER, $banner->getImage());
+            if ($data['type'] === Type::IMAGE) {
+                $this->imageHelper->uploadImage($data, 'image', Image::TEMPLATE_MEDIA_TYPE_BANNER, $banner->getImage());
+            }
             $data['sliders_ids'] = (isset($data['sliders_ids']) && $data['sliders_ids'])
                 ? explode(',', $data['sliders_ids']) : [];
             if ($this->getRequest()->getPost('sliders', false)) {

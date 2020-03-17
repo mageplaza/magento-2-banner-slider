@@ -24,9 +24,11 @@ namespace Mageplaza\BannerSlider\Observer;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Layout;
 use Mageplaza\BannerSlider\Block\Slider;
 use Mageplaza\BannerSlider\Helper\Data;
+use Mageplaza\BannerSlider\Model\Config\Source\Location;
 
 /**
  * Class AddBlock
@@ -62,7 +64,7 @@ class AddBlock implements ObserverInterface
      * @param Observer $observer
      *
      * @return $this
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function execute(Observer $observer)
     {
@@ -87,7 +89,10 @@ class AddBlock implements ObserverInterface
             foreach ($this->helperData->getActiveSliders() as $slider) {
                 $locations = explode(',', $slider->getLocation());
                 foreach ($locations as $value) {
-                    list($pageType, $location) = explode('.', $value);
+                    if ($value === Location::USING_SNIPPET_CODE) {
+                        continue;
+                    }
+                    [$pageType, $location] = explode('.', $value);
                     if (($fullActionName === $pageType || $pageType === 'allpage') &&
                         strpos($location, $type) !== false
                     ) {

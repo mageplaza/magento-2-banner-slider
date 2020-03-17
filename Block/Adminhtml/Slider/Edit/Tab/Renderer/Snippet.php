@@ -34,7 +34,7 @@ class Snippet extends AbstractElement
      */
     public function getElementHtml()
     {
-        $sliderId = '1';
+        $sliderId = $this->getSliderId() ?? 1;
         $html = '<ul class="banner-location-display"><li><span>';
         $html .= __('Add Widget with name "Banner Slider widget" and set "Slider Id" for it.');
         $html .= '</span></li><li><span>';
@@ -43,7 +43,7 @@ class Snippet extends AbstractElement
         $html .= __('You can paste the above block of snippet into any page in Magento 2 and set SliderId for it.');
         $html .= '</p></li><li><span>';
         $html .= __('Template .phtml file');
-        $html .= '</span><code>' . $this->_escaper->escapeHtml('<?= $block->getLayout()->createBlock("Mageplaza\BannerSlider\Block\Widget::class")->setSliderId(' . $sliderId . ')->toHtml();?>') . '</code><p>';
+        $html .= '</span><code>' . $this->_escaper->escapeHtml('<?= $block->getLayout()->createBlock(\'Mageplaza\BannerSlider\Block\Widget\')->setSliderId(' . $sliderId . ')->toHtml();?>') . '</code><p>';
         $html .= __('Open a .phtml file and insert where you want to display Banner Slider.');
         $html .= '</p></li></ul>';
 

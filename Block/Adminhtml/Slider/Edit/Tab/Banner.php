@@ -100,7 +100,7 @@ class Banner extends Extended implements TabInterface
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
         if ($this->getSlider()->getId()) {
-            $this->setDefaultFilter(['in_banners' => 1]);
+            $this->setDefaultFilter((string) ['in_banners' => 1]);
         }
     }
 
@@ -224,12 +224,12 @@ class Banner extends Extended implements TabInterface
     public function getSelectedBanners()
     {
         $selected = $this->getSlider()->getBannersPosition();
-        if (!is_array($selected)) {
-            $selected = [];
-        } else {
+        if (is_array($selected)) {
             foreach ($selected as $key => $value) {
                 $selected[$key] = ['position' => $value];
             }
+        } else {
+            $selected = [];
         }
 
         return $selected;

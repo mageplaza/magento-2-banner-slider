@@ -117,6 +117,9 @@ class SliderLocation extends Column
                 case Location::PRODUCT_PAGE_BOTTOM:
                     $location['type'][] = __('Product Page');
                     break;
+                case Location::USING_SNIPPET_CODE:
+                    $location['type'][] = __('Custom');
+                    break;
             }
         }
 

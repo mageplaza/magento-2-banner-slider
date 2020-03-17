@@ -25,7 +25,7 @@
         <label translate="true">Mageplaza Banner Slider</label>
         <description translate="true">Banner Slider list</description>
         <parameters>
-            <parameter name="slider_id" xsi:type="select" required="true" visible="true" source_model="Mageplaza\BannerSlider\Model\Config\Source\Sliders">
+            <parameter name="slider_id" xsi:type="select" required="true" visible="true" source_model="Mageplaza\BannerSlider\Model\Config\Source\SlidersWidget">
                 <label translate="true">Select Slider</label>
             </parameter>
         </parameters>

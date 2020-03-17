@@ -22,6 +22,7 @@
 namespace Mageplaza\BannerSlider\Model;
 
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
@@ -49,7 +50,7 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
  * @method Slider setAffectedBannerIds(array $ids)
  * @method bool getAffectedBannerIds()
  */
-class Slider extends AbstractModel
+class Slider extends AbstractModel implements IdentityInterface
 {
     /**
      * Cache tag

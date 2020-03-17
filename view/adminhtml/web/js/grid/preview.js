@@ -23,10 +23,9 @@ define([
     'jquery',
     'mage/template',
     'text!Mageplaza_BannerSlider/template/grid/cells/preview.html',
-    'underscore',
     'Magento_Ui/js/modal/modal',
     'mage/translate'
-], function (Thumbnail, $, mageTemplate, previewTemplate, _) {
+], function (Thumbnail, $, mageTemplate, previewTemplate) {
     'use strict';
 
     return Thumbnail.extend({
