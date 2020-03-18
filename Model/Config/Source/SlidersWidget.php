@@ -67,10 +67,10 @@ class SlidersWidget implements ArrayInterface
     protected function toArray()
     {
         $options = [];
-
         $rules = $this->collectionFactory->create()
             ->addActiveFilter()
-            ->addFieldToFilter('location', Location::USING_SNIPPET_CODE);
+            ->addFieldToFilter('location', ['finset' => Location::USING_SNIPPET_CODE]);
+
         foreach ($rules as $rule) {
             $options[$rule->getId()] = $rule->getName();
         }

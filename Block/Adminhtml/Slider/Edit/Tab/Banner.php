@@ -193,7 +193,7 @@ class Banner extends Extended implements TabInterface
             'header'         => __('Position'),
             'name'           => 'position',
             'type'           => 'number',
-            'validate_class' => 'validate-number',
+            'validate_class' => 'validate-number validate-zero-or-greater validate-digits',
             'index'          => 'position',
             'editable'       => true,
         ]);
