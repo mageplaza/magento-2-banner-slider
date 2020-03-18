@@ -100,7 +100,7 @@ class Banner extends Extended implements TabInterface
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
         if ($this->getSlider()->getId()) {
-            $this->setDefaultFilter((string) ['in_banners' => 1]);
+            $this->setDefaultFilter(['in_banners' => 1]);
         }
     }
 
