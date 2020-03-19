@@ -87,20 +87,22 @@ class AddBlock implements ObserverInterface
             foreach ($this->helperData->getActiveSliders() as $slider) {
                 $locations = array_filter(explode(',', $slider->getLocation()));
                 foreach ($locations as $value) {
-                    list($pageType, $location) = explode('.', $value);
-                    if (($fullActionName === $pageType || $pageType === 'allpage') &&
-                        strpos($location, $type) !== false
-                    ) {
-                        $content = $layout->createBlock(Slider::class)
-                            ->setSlider($slider)
-                            ->toHtml();
+                    if (stripos($value, '.') !== false) {
+                        list($pageType, $location) = explode('.', $value);
+                        if (($fullActionName === $pageType || $pageType === 'allpage') &&
+                            strpos($location, $type) !== false
+                        ) {
+                            $content = $layout->createBlock(Slider::class)
+                                ->setSlider($slider)
+                                ->toHtml();
 
-                        if (strpos($location, 'top') !== false) {
-                            $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
-                                        $content</div>" . $output;
-                        } else {
-                            $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
-                                        $content</div>";
+                            if (strpos($location, 'top') !== false) {
+                                $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
+                                    $content</div>" . $output;
+                            } else {
+                                $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
+                                    $content</div>";
+                            }
                         }
                     }
                 }
