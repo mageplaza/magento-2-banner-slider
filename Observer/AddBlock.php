@@ -75,7 +75,7 @@ class AddBlock implements ObserverInterface
         $type = array_search($observer->getEvent()->getElementName(), [
             'header'           => 'header',
             'content'          => 'content',
-            'page-top'         => 'page.top',
+            'page-top'         => 'main.content',
             'footer-container' => 'footer-container',
             'sidebar'          => 'catalog.leftnav'
         ], true);
