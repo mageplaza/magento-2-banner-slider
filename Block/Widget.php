@@ -23,12 +23,13 @@ namespace Mageplaza\BannerSlider\Block;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use Magento\Widget\Block\BlockInterface;
 
 /**
  * Class Widget
  * @package Mageplaza\BannerSlider\Block
  */
-class Widget extends Slider
+class Widget extends Slider implements BlockInterface
 {
     /**
      * @return array|AbstractCollection
