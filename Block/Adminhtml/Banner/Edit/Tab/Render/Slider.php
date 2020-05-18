@@ -141,7 +141,7 @@ class Slider extends Multiselect
         $collection = $this->collectionFactory->create();
         $sliderById = [];
         foreach ($collection as $slider) {
-            $sliderId = $slider->getId();
+            $sliderId                           = $slider->getId();
             $sliderById[$sliderId]['value']     = $sliderId;
             $sliderById[$sliderId]['is_active'] = 1;
             $sliderById[$sliderId]['label']     = $slider->getName();

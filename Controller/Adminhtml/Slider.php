@@ -59,7 +59,7 @@ abstract class Slider extends Action
         Context $context
     ) {
         $this->sliderFactory = $sliderFactory;
-        $this->coreRegistry = $coreRegistry;
+        $this->coreRegistry  = $coreRegistry;
 
         parent::__construct($context);
     }
@@ -71,7 +71,7 @@ abstract class Slider extends Action
      */
     protected function initSlider()
     {
-        $sliderId = (int)$this->getRequest()->getParam('slider_id');
+        $sliderId = (int) $this->getRequest()->getParam('slider_id');
         /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
         $slider = $this->sliderFactory->create();
         if ($sliderId) {

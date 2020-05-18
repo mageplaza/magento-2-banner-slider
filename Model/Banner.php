@@ -22,14 +22,15 @@
 namespace Mageplaza\BannerSlider\Model;
 
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as configImage;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as sliderCollectionFactory;
-use Mageplaza\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
 
 /**
  * @method Banner setName($name)
@@ -55,7 +56,7 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
  * @method Banner setAffectedSliderIds(array $ids)
  * @method bool getAffectedSliderIds()
  */
-class Banner extends AbstractModel
+class Banner extends AbstractModel implements IdentityInterface
 {
     /**
      * Cache tag
@@ -118,7 +119,7 @@ class Banner extends AbstractModel
         array $data = []
     ) {
         $this->sliderCollectionFactory = $sliderCollectionFactory;
-        $this->imageModel = $configImage;
+        $this->imageModel              = $configImage;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -159,7 +160,7 @@ class Banner extends AbstractModel
     public function getSelectedSlidersCollection()
     {
         if ($this->sliderCollection === null) {
-            /** @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection $collection */
+            /** @var Collection $collection */
             $collection = $this->sliderCollectionFactory->create();
             $collection->getSelect()->join(
                 ['banner_slider' => $this->getResource()->getTable('mageplaza_bannerslider_banner_slider')],
@@ -194,6 +195,6 @@ class Banner extends AbstractModel
             $this->setData('slider_ids', $ids);
         }
 
-        return (array)$this->getData('slider_ids');
+        return (array) $this->getData('slider_ids');
     }
 }

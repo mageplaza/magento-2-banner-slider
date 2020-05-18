@@ -82,8 +82,8 @@ class Banner extends Extended implements TabInterface
         array $data = []
     ) {
         $this->bannerCollectionFactory = $bannerCollectionFactory;
-        $this->coreRegistry = $coreRegistry;
-        $this->bannerFactory = $bannerFactory;
+        $this->coreRegistry            = $coreRegistry;
+        $this->bannerFactory           = $bannerFactory;
 
         parent::__construct($context, $backendHelper, $data);
     }
@@ -193,7 +193,7 @@ class Banner extends Extended implements TabInterface
             'header'         => __('Position'),
             'name'           => 'position',
             'type'           => 'number',
-            'validate_class' => 'validate-number',
+            'validate_class' => 'validate-number validate-zero-or-greater validate-digits',
             'index'          => 'position',
             'editable'       => true,
         ]);
@@ -224,12 +224,12 @@ class Banner extends Extended implements TabInterface
     public function getSelectedBanners()
     {
         $selected = $this->getSlider()->getBannersPosition();
-        if (!is_array($selected)) {
-            $selected = [];
-        } else {
+        if (is_array($selected)) {
             foreach ($selected as $key => $value) {
                 $selected[$key] = ['position' => $value];
             }
+        } else {
+            $selected = [];
         }
 
         return $selected;

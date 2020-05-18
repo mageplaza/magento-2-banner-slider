@@ -27,7 +27,6 @@ use Magento\Backend\Helper\Js;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Magento\Framework\Stdlib\DateTime\Filter\Date;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
@@ -71,7 +70,7 @@ class Save extends Slider
         Context $context,
         Date $dateFilter
     ) {
-        $this->jsHelper = $jsHelper;
+        $this->jsHelper    = $jsHelper;
         $this->_dateFilter = $dateFilter;
 
         parent::__construct($sliderFactory, $registry, $context);
@@ -85,7 +84,7 @@ class Save extends Slider
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if ($this->getRequest()->getPost('slider')) {
-            $data = $this->_filterData($this->getRequest()->getPost('slider'));
+            $data   = $this->_filterData($this->getRequest()->getPost('slider'));
             $slider = $this->initSlider();
 
             $banners = $this->getRequest()->getPost('banners', -1);
@@ -153,7 +152,7 @@ class Save extends Slider
     protected function _filterData($data)
     {
         $inputFilter = new Zend_Filter_Input(['from_date' => $this->_dateFilter,], [], $data);
-        $data = $inputFilter->getUnescaped();
+        $data        = $inputFilter->getUnescaped();
 
         if (isset($data['responsive_items'])) {
             unset($data['responsive_items']['__empty']);

@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Block;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Widget\Block\BlockInterface;
 
@@ -31,7 +32,8 @@ use Magento\Widget\Block\BlockInterface;
 class Widget extends Slider implements BlockInterface
 {
     /**
-     * @return array|bool|AbstractCollection
+     * @return array|AbstractCollection
+     * @throws NoSuchEntityException
      */
     public function getBannerCollection()
     {
@@ -41,7 +43,7 @@ class Widget extends Slider implements BlockInterface
         }
 
         $sliderCollection = $this->helperData->getActiveSliders();
-        $slider = $sliderCollection->addFieldToFilter('slider_id', $sliderId)->getFirstItem();
+        $slider           = $sliderCollection->addFieldToFilter('slider_id', $sliderId)->getFirstItem();
         $this->setSlider($slider);
 
         return parent::getBannerCollection();

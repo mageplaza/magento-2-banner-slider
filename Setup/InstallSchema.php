@@ -142,8 +142,13 @@ class InstallSchema implements InstallSchemaInterface
                 ->addColumn('location', Table::TYPE_TEXT, 1000, [], 'Location')
                 ->addColumn('store_ids', Table::TYPE_TEXT, 255, [])
                 ->addColumn('customer_group_ids', Table::TYPE_TEXT, 255, [])
-                ->addColumn('priority', Table::TYPE_INTEGER, null,
-                    ['unsigned' => true, 'nullable' => false, 'default' => '0'], 'Priority')
+                ->addColumn(
+                    'priority',
+                    Table::TYPE_INTEGER,
+                    null,
+                    ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+                    'Priority'
+                )
                 ->addColumn('effect', Table::TYPE_TEXT, 255, [], 'Animation effect')
                 ->addColumn('autoWidth', Table::TYPE_SMALLINT, null, [], 'Auto Width')
                 ->addColumn('autoHeight', Table::TYPE_SMALLINT, null, [], 'Auto Height')
@@ -167,10 +172,20 @@ class InstallSchema implements InstallSchemaInterface
         if (!$installer->tableExists('mageplaza_bannerslider_banner_slider')) {
             $table = $installer->getConnection()
                 ->newTable($installer->getTable('mageplaza_bannerslider_banner_slider'))
-                ->addColumn('slider_id', Table::TYPE_INTEGER, null,
-                    ['unsigned' => true, 'nullable' => false, 'primary' => true,], 'Slider ID')
-                ->addColumn('banner_id', Table::TYPE_INTEGER, null,
-                    ['unsigned' => true, 'nullable' => false, 'primary' => true,], 'Banner ID')
+                ->addColumn(
+                    'slider_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    ['unsigned' => true, 'nullable' => false, 'primary' => true,],
+                    'Slider ID'
+                )
+                ->addColumn(
+                    'banner_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    ['unsigned' => true, 'nullable' => false, 'primary' => true,],
+                    'Banner ID'
+                )
                 ->addColumn('position', Table::TYPE_INTEGER, null, ['nullable' => false, 'default' => '0'], 'Position')
                 ->addIndex($installer->getIdxName('mageplaza_bannerslider_banner_slider', ['slider_id']), ['slider_id'])
                 ->addIndex($installer->getIdxName('mageplaza_bannerslider_banner_slider', ['banner_id']), ['banner_id'])

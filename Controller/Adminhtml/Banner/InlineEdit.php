@@ -27,7 +27,6 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\LocalizedException;
 use Mageplaza\BannerSlider\Model\Banner;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 use RuntimeException;
@@ -64,7 +63,7 @@ class InlineEdit extends Action
         BannerFactory $bannerFactory,
         Context $context
     ) {
-        $this->jsonFactory = $jsonFactory;
+        $this->jsonFactory   = $jsonFactory;
         $this->bannerFactory = $bannerFactory;
 
         parent::__construct($context);
@@ -77,9 +76,9 @@ class InlineEdit extends Action
     {
         /** @var Json $resultJson */
         $resultJson = $this->jsonFactory->create();
-        $error = false;
-        $messages = [];
-        $postItems = $this->getRequest()->getParam('items', []);
+        $error      = false;
+        $messages   = [];
+        $postItems  = $this->getRequest()->getParam('items', []);
         if (!(!empty($postItems) && $this->getRequest()->getParam('isAjax'))) {
             return $resultJson->setData([
                 'messages' => [__('Please correct the data sent.')],
@@ -95,13 +94,13 @@ class InlineEdit extends Action
                 $banner->save();
             } catch (RuntimeException $e) {
                 $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
-                $error = true;
+                $error      = true;
             } catch (Exception $e) {
                 $messages[] = $this->getErrorWithBannerId(
                     $banner,
                     __('Something went wrong while saving the Banner.')
                 );
-                $error = true;
+                $error      = true;
             }
         }
 

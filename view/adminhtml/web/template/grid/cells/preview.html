@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <!--
 /**
  * Mageplaza
@@ -20,11 +19,14 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Mageplaza_BannerSlider" setup_version="2.0.0">
-        <sequence>
-            <module name="Magento_Backend"/>
-            <module name="Mageplaza_Core"/>
-        </sequence>
-    </module>
-</config>
+
+<div class="thumbnail-preview" data-role="thumbnail-preview">
+    <div class="thumbnail-preview-image-block content-preview-block">
+        <% if(!type) { %>
+        <img class="thumbnail-preview-image" src="<%- src %>" alt="<%- alt %>" />
+        <% } %>
+    </div>
+    <div class="thumbnail-preview-content">
+        <a class="thumbnail-preview-link" href="<%- link %>"><%- linkText %></a>
+    </div>
+</div>

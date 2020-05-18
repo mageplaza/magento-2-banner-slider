@@ -21,6 +21,8 @@
 
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
+use Exception;
+use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\DataObject;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
@@ -30,15 +32,15 @@ use Mageplaza\BannerSlider\Model\Config\Source\Image;
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
 
 /**
- * Class Thumbnail
+ * Class Content
  * @package Mageplaza\BannerSlider\Ui\Component\Listing\Column
  */
-class Thumbnail extends Column
+class Content extends Column
 {
     /**
-     * @var Image
+     * @var FilterProvider
      */
-    protected $imageModel;
+    public $filterProvider;
 
     /**
      * @var UrlInterface
@@ -46,47 +48,57 @@ class Thumbnail extends Column
     protected $urlBuilder;
 
     /**
-     * Thumbnail constructor.
+     * @var Image
+     */
+    protected $imageModel;
+
+    /**
+     * Content constructor.
      *
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param Image $imageModel
+     * @param FilterProvider $filterProvider
      * @param UrlInterface $urlBuilder
+     * @param Image $imageModel
      * @param array $components
      * @param array $data
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        Image $imageModel,
+        FilterProvider $filterProvider,
         UrlInterface $urlBuilder,
+        Image $imageModel,
         array $components = [],
         array $data = []
     ) {
-        $this->imageModel = $imageModel;
-        $this->urlBuilder = $urlBuilder;
+        $this->filterProvider = $filterProvider;
+        $this->urlBuilder     = $urlBuilder;
+        $this->imageModel     = $imageModel;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
     /**
-     * Prepare Data Source
-     *
      * @param array $dataSource
      *
      * @return array
+     * @throws Exception
      */
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
-            $path = $this->imageModel->getBaseUrl();
+            $path      = $this->imageModel->getBaseUrl();
             foreach ($dataSource['data']['items'] as & $item) {
                 $banner = new DataObject($item);
-                if ($item['type'] == Type::IMAGE && $item['image']) {
+                if ($item['type'] === Type::IMAGE && $item['image']) {
                     $item[$fieldName . '_src'] = $path . $item['image'];
+                } else {
+                    $item[$fieldName] = $this->filterProvider->getPageFilter()->filter($item[$fieldName]);
                 }
 
+                $item[$fieldName . '_type'] = $item['type'];
                 $item[$fieldName . '_link'] = $this->urlBuilder->getUrl(
                     'mpbannerslider/banner/edit',
                     ['banner_id' => $banner->getBannerId(), 'store' => $this->context->getRequestParam('store')]

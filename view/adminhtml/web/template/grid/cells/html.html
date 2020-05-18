@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <!--
 /**
  * Mageplaza
@@ -20,11 +19,6 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Mageplaza_BannerSlider" setup_version="2.0.0">
-        <sequence>
-            <module name="Magento_Backend"/>
-            <module name="Mageplaza_Core"/>
-        </sequence>
-    </module>
-</config>
+
+<div class="data-grid-cell-content" html="$col.getLabel($row())" if="getType($row())"/>
+<img class="admin__control-thumbnail" attr="src: $col.getSrc($row()), alt: $col.getAlt($row())" ifnot="getType($row())"/>

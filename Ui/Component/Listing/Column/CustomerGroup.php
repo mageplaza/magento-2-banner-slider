@@ -23,6 +23,9 @@ namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
 use Magento\Customer\Api\GroupRepositoryInterface;
 use Magento\Customer\Model\ResourceModel\Group\Collection as GroupCollection;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Phrase;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
@@ -73,8 +76,8 @@ class CustomerGroup extends Column
      * @param array $dataSource
      *
      * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function prepareDataSource(array $dataSource)
     {
@@ -91,15 +94,16 @@ class CustomerGroup extends Column
 
     /**
      * Get customer group name
+     *
      * @param array $item
      *
-     * @return \Magento\Framework\Phrase|string
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return Phrase|string
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function prepareItem(array $item)
     {
-        $content = [];
+        $content   = [];
         $origGroup = $item[$this->getData('name')];
         if (!is_array($origGroup)) {
             $origGroup = explode(',', $origGroup);

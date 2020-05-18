@@ -22,6 +22,8 @@
 namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab;
 
 use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Button;
+use Magento\Backend\Block\Widget\Form\Element\Dependence;
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
 use Magento\Cms\Model\Wysiwyg\Config as WysiwygConfig;
@@ -32,13 +34,11 @@ use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Image as BannerImage;
+use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Slider;
 use Mageplaza\BannerSlider\Helper\Data;
 use Mageplaza\BannerSlider\Helper\Image as HelperImage;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
-use Magento\Backend\Block\Widget\Button;
-use Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render\Slider;
-use Magento\Backend\Block\Widget\Form\Element\Dependence;
 
 /**
  * Class Banner

@@ -63,7 +63,7 @@ class Edit extends Container
      */
     protected function _construct()
     {
-        $this->_objectId = 'banner_id';
+        $this->_objectId   = 'banner_id';
         $this->_blockGroup = 'Mageplaza_BannerSlider';
         $this->_controller = 'adminhtml_banner';
         parent::_construct();
