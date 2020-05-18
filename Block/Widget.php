@@ -43,7 +43,7 @@ class Widget extends Slider implements BlockInterface
         }
 
         $sliderCollection = $this->helperData->getActiveSliders();
-        $slider = $sliderCollection->addFieldToFilter('slider_id', $sliderId)->getFirstItem();
+        $slider           = $sliderCollection->addFieldToFilter('slider_id', $sliderId)->getFirstItem();
         $this->setSlider($slider);
 
         return parent::getBannerCollection();

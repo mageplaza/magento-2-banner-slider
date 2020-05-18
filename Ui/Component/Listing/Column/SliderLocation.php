@@ -42,8 +42,8 @@ class SliderLocation extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item[$this->getData('name')])) {
-                    $data = $this->getLocation($item[$this->getData('name')]);
-                    $type = array_unique($data['type']);
+                    $data                         = $this->getLocation($item[$this->getData('name')]);
+                    $type                         = array_unique($data['type']);
                     $item[$this->getData('name')] = '<b>' . implode(', ', $type) . '</b></br>';
                 }
             }
@@ -60,7 +60,7 @@ class SliderLocation extends Column
     public function getLocation($data)
     {
         $location = [];
-        $data = explode(',', $data);
+        $data     = explode(',', $data);
         foreach ($data as $item) {
             switch ($item) {
                 case Location::ALLPAGE_CONTENT_TOP:

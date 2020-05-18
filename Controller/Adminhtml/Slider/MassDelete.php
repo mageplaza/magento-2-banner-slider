@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
@@ -64,7 +65,7 @@ class MassDelete extends Action
         CollectionFactory $collectionFactory,
         Context $context
     ) {
-        $this->filter = $filter;
+        $this->filter            = $filter;
         $this->collectionFactory = $collectionFactory;
 
         parent::__construct($context);
@@ -73,7 +74,7 @@ class MassDelete extends Action
     /**
      * @return Redirect|ResponseInterface|ResultInterface
      * @throws LocalizedException
-     * @throws \Exception
+     * @throws Exception
      */
     public function execute()
     {

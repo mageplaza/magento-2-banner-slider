@@ -22,15 +22,15 @@
 namespace Mageplaza\BannerSlider\Model;
 
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
-use Magento\Framework\DataObject\IdentityInterface;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as configImage;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as sliderCollectionFactory;
-use Mageplaza\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
 
 /**
  * @method Banner setName($name)
@@ -119,7 +119,7 @@ class Banner extends AbstractModel implements IdentityInterface
         array $data = []
     ) {
         $this->sliderCollectionFactory = $sliderCollectionFactory;
-        $this->imageModel = $configImage;
+        $this->imageModel              = $configImage;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -195,6 +195,6 @@ class Banner extends AbstractModel implements IdentityInterface
             $this->setData('slider_ids', $ids);
         }
 
-        return (array)$this->getData('slider_ids');
+        return (array) $this->getData('slider_ids');
     }
 }

@@ -29,7 +29,7 @@ use Magento\Framework\Option\ArrayInterface;
  */
 class Type implements ArrayInterface
 {
-    const IMAGE = '0';
+    const IMAGE   = '0';
     const CONTENT = '1';
 
     /**

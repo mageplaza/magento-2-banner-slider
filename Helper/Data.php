@@ -42,18 +42,22 @@ use Mageplaza\Core\Helper\AbstractData;
 class Data extends AbstractData
 {
     const CONFIG_MODULE_PATH = 'mpbannerslider';
+
     /**
      * @var BannerFactory
      */
     public $bannerFactory;
+
     /**
      * @var SliderFactory
      */
     public $sliderFactory;
+
     /**
      * @var DateTime
      */
     protected $date;
+
     /**
      * @var HttpContext
      */
@@ -122,7 +126,7 @@ class Data extends AbstractData
                 $key,
                 ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout']
             )) {
-                $basicConfig[$key] = (int)$value;
+                $basicConfig[$key] = (int) $value;
             }
         }
 

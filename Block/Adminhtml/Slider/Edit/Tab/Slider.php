@@ -102,12 +102,12 @@ class Slider extends Generic implements TabInterface
         Store $systemStore,
         array $data = []
     ) {
-        $this->statusOptions = $statusOptions;
-        $this->_location = $location;
-        $this->_groupRepository = $groupRepository;
+        $this->statusOptions          = $statusOptions;
+        $this->_location              = $location;
+        $this->_groupRepository       = $groupRepository;
         $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->_objectConverter = $objectConverter;
-        $this->_systemStore = $systemStore;
+        $this->_objectConverter       = $objectConverter;
+        $this->_systemStore           = $systemStore;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
@@ -120,7 +120,7 @@ class Slider extends Generic implements TabInterface
     {
         /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
         $slider = $this->_coreRegistry->registry('mpbannerslider_slider');
-        $form = $this->_formFactory->create();
+        $form   = $this->_formFactory->create();
         $form->setHtmlIdPrefix('slider_');
         $form->setFieldNameSuffix('slider');
         $fieldset = $form->addFieldset('base_fieldset', [
@@ -176,11 +176,11 @@ class Slider extends Generic implements TabInterface
         ]);
 
         $fieldset->addField('location', 'multiselect', [
-            'name'   => 'location',
-            'label'  => __('Position'),
-            'title'  => __('Position'),
-            'values' => $this->_location->toOptionArray(),
-            'note'   => __('Select the position to display block.'),
+            'name'     => 'location',
+            'label'    => __('Position'),
+            'title'    => __('Position'),
+            'values'   => $this->_location->toOptionArray(),
+            'note'     => __('Select the position to display block.'),
             'required' => true,
         ]);
 
@@ -213,9 +213,9 @@ class Slider extends Generic implements TabInterface
             'class'  => 'fieldset-wide'
         ]);
         $subfieldset->addField('snippet', Snippet::class, [
-            'name'  => 'snippet',
-            'label' => __('How to use'),
-            'title' => __('How to use'),
+            'name'      => 'snippet',
+            'label'     => __('How to use'),
+            'title'     => __('How to use'),
             'slider_id' => $slider->getId(),
         ]);
 

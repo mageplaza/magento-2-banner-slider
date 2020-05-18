@@ -94,6 +94,7 @@ class CustomerGroup extends Column
 
     /**
      * Get customer group name
+     *
      * @param array $item
      *
      * @return Phrase|string
@@ -102,7 +103,7 @@ class CustomerGroup extends Column
      */
     public function prepareItem(array $item)
     {
-        $content = [];
+        $content   = [];
         $origGroup = $item[$this->getData('name')];
         if (!is_array($origGroup)) {
             $origGroup = explode(',', $origGroup);

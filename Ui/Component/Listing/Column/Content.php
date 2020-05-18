@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Ui\Component\Listing\Column;
 
+use Exception;
 use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\DataObject;
 use Magento\Framework\UrlInterface;
@@ -82,7 +83,7 @@ class Content extends Column
      * @param array $dataSource
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function prepareDataSource(array $dataSource)
     {

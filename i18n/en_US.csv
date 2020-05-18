@@ -5,6 +5,7 @@ Banners,Banners
 "Delete Banner","Delete Banner"
 "Edit Banner '%1'","Edit Banner '%1'"
 "New Banner","New Banner"
+General,General
 "Banner Information","Banner Information"
 Name,Name
 Status,Status
@@ -17,7 +18,6 @@ Url,Url
 "Demo template","Demo template"
 "Load Template","Load Template"
 Sliders,Sliders
-General,General
 "Screen size from","Screen size from"
 "Number of items","Number of items"
 Add,Add
@@ -93,6 +93,8 @@ lightSpeedOut,lightSpeedOut
 "Top of sidebar","Top of sidebar"
 "Bottom of sidebar","Bottom of sidebar"
 "Product page","Product page"
+Custom,Custom
+"Using snippet code, widget","Using snippet code, widget"
 "Demo template 1","Demo template 1"
 "Demo template 2","Demo template 2"
 "Demo template 3","Demo template 3"
@@ -101,9 +103,11 @@ lightSpeedOut,lightSpeedOut
 Advanced,Advanced
 Edit,Edit
 "No banner added","No banner added"
+"All Customer Groups","All Customer Groups"
 "Category Page","Category Page"
 "Product Page","Product Page"
 "All Store Views","All Store Views"
+"Go to Details Page","Go to Details Page"
 "Banner Slider","Banner Slider"
 Enable,Enable
 "Select Yes to enable this module","Select Yes to enable this module"

@@ -27,7 +27,6 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\LocalizedException;
 use Mageplaza\BannerSlider\Model\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use RuntimeException;
@@ -54,6 +53,7 @@ class InlineEdit extends Action
 
     /**
      * InlineEdit constructor.
+     *
      * @param JsonFactory $jsonFactory
      * @param SliderFactory $sliderFactory
      * @param Context $context
@@ -63,7 +63,7 @@ class InlineEdit extends Action
         SliderFactory $sliderFactory,
         Context $context
     ) {
-        $this->jsonFactory = $jsonFactory;
+        $this->jsonFactory   = $jsonFactory;
         $this->sliderFactory = $sliderFactory;
 
         parent::__construct($context);
@@ -76,9 +76,9 @@ class InlineEdit extends Action
     {
         /** @var Json $resultJson */
         $resultJson = $this->jsonFactory->create();
-        $error = false;
-        $messages = [];
-        $postItems = $this->getRequest()->getParam('items', []);
+        $error      = false;
+        $messages   = [];
+        $postItems  = $this->getRequest()->getParam('items', []);
         if (!(!empty($postItems) && $this->getRequest()->getParam('isAjax'))) {
             return $resultJson->setData([
                 'messages' => [__('Please correct the data sent.')],
@@ -94,13 +94,13 @@ class InlineEdit extends Action
                 $slider->save();
             } catch (RuntimeException $e) {
                 $messages[] = $this->getErrorWithSliderId($slider, $e->getMessage());
-                $error = true;
+                $error      = true;
             } catch (Exception $e) {
                 $messages[] = $this->getErrorWithSliderId(
                     $slider,
                     __('Something went wrong while saving the Banner.')
                 );
-                $error = true;
+                $error      = true;
             }
         }
 

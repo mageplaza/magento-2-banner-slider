@@ -86,7 +86,7 @@ class Image extends \Magento\Framework\Data\Form\Element\Image
     {
         $html = '';
 
-        if ((string)$this->getValue()) {
+        if ((string) $this->getValue()) {
             $url = $this->_getUrl();
 
             if (!preg_match("/^http\:\/\/|https\:\/\//", $url)) {

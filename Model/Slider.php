@@ -137,7 +137,7 @@ class Slider extends AbstractModel implements IdentityInterface
      */
     public function getDefaultValues()
     {
-        $values = [];
+        $values           = [];
         $values['status'] = '1';
 
         return $values;

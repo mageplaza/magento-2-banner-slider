@@ -82,8 +82,8 @@ class Banner extends Extended implements TabInterface
         array $data = []
     ) {
         $this->bannerCollectionFactory = $bannerCollectionFactory;
-        $this->coreRegistry = $coreRegistry;
-        $this->bannerFactory = $bannerFactory;
+        $this->coreRegistry            = $coreRegistry;
+        $this->bannerFactory           = $bannerFactory;
 
         parent::__construct($context, $backendHelper, $data);
     }
