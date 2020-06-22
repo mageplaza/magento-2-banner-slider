@@ -24,6 +24,7 @@ namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 use Exception;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Helper\Js;
+use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\ResultInterface;
@@ -55,6 +56,11 @@ class Save extends Slider
     protected $_dateFilter;
 
     /**
+     * @var DataPersistorInterface
+     */
+    protected $dataPersistor;
+
+    /**
      * Save constructor.
      *
      * @param Js $jsHelper
@@ -62,16 +68,19 @@ class Save extends Slider
      * @param Registry $registry
      * @param Context $context
      * @param Date $dateFilter
+     * @param DataPersistorInterface $dataPersistor
      */
     public function __construct(
         Js $jsHelper,
         SliderFactory $sliderFactory,
         Registry $registry,
         Context $context,
-        Date $dateFilter
+        Date $dateFilter,
+        DataPersistorInterface $dataPersistor
     ) {
         $this->jsHelper    = $jsHelper;
         $this->_dateFilter = $dateFilter;
+        $this->dataPersistor = $dataPersistor;
 
         parent::__construct($sliderFactory, $registry, $context);
     }
@@ -86,6 +95,25 @@ class Save extends Slider
         if ($this->getRequest()->getPost('slider')) {
             $data   = $this->_filterData($this->getRequest()->getPost('slider'));
             $slider = $this->initSlider();
+
+            $fromDate = $toDate = null;
+            if (isset($data['from_date']) && isset($data['to_date'])) {
+                $fromDate = $data['from_date'];
+                $toDate = $data['to_date'];
+            }
+            if ($fromDate && $toDate) {
+                $fromDate = new \DateTime($fromDate);
+                $toDate = new \DateTime($toDate);
+
+                if ($fromDate > $toDate) {
+                    $this->messageManager->addErrorMessage(__('End Date must follow Start Date.'));
+                    $this->_session->setPageData($data);
+                    $this->dataPersistor->set('mpbannerslider_slider', $data);
+                    $this->_redirect('*/*/edit', ['slider_id' => $slider->getId()]);
+
+                    return;
+                }
+            }
 
             $banners = $this->getRequest()->getPost('banners', -1);
             if ($banners != -1) {
@@ -105,6 +133,7 @@ class Save extends Slider
                 $slider->save();
                 $this->messageManager->addSuccess(__('The Slider has been saved.'));
                 $this->_session->setMageplazaBannerSliderSliderData(false);
+                $this->dataPersistor->set('mpbannerslider_slider', $data);
                 if ($this->getRequest()->getParam('back')) {
                     $resultRedirect->setPath(
                         'mpbannerslider/*/edit',
@@ -120,9 +149,9 @@ class Save extends Slider
 
                 return $resultRedirect;
             } catch (RuntimeException $e) {
-                $this->messageManager->addError($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
             } catch (Exception $e) {
-                $this->messageManager->addException($e, __('Something went wrong while saving the Slider.'));
+                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Slider.'));
             }
 
             $this->_getSession()->setMageplazaBannerSliderSliderData($data);
