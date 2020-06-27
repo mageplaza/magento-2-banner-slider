@@ -25,18 +25,26 @@ Magento 2 Banner Slider Module accordingly will help improve customer retention 
 
 Run the following command in Magento 2 root folder:
 
+With Social Proof (recommend):
 ```
-composer require mageplaza/module-banner-slider
+composer require mageplaza/module-banner-slider avada/module-proofo
 php bin/magento setup:upgrade
 php bin/magento setup:static-content:deploy
 ```
+
+Without Social Proof:
+```
+composer require mageplaza/module-banner-slider 
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy
+```
+
 
 ### ✓ Install Package from Mageplaza
 
 
 - Download the latest version at [Mageplaza Banner Slider for Magento 2](https://www.mageplaza.com/magento-2-banner-slider-extension/)
 -  [Installation guide](https://www.mageplaza.com/install-magento-2-extension/)
-
 
 
 ## 3. FAQs
