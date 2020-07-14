@@ -72,6 +72,7 @@ Priority,Priority
 "The slider has been deleted.","The slider has been deleted."
 "This Slider no longer exists.","This Slider no longer exists."
 "Manage Sliders","Manage Sliders"
+"End Date must follow Start Date.","End Date must follow Start Date."
 "The Slider has been saved.","The Slider has been saved."
 "Something went wrong while saving the Slider.","Something went wrong while saving the Slider."
 No,No

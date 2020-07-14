@@ -205,7 +205,6 @@
         <column name="location" class="Mageplaza\BannerSlider\Ui\Component\Listing\Column\SliderLocation">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">select</item>
                     <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
                     <item name="label" xsi:type="string" translate="true">Slider Location</item>
                     <item name="sortOrder" xsi:type="number">50</item>

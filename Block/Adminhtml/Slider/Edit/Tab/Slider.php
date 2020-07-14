@@ -205,6 +205,7 @@ class Slider extends Generic implements TabInterface
         $fieldset->addField('priority', 'text', [
             'name'  => 'priority',
             'label' => __('Priority'),
+            'class' => 'validate-digits',
             'note'  => __('Enter a number to set priority for the slider. A lower number represents a higher priority.')
         ]);
 
