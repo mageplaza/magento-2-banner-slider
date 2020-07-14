@@ -21,6 +21,7 @@
 
 namespace Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 
+use DateTime;
 use Exception;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Helper\Js;
@@ -78,8 +79,8 @@ class Save extends Slider
         Date $dateFilter,
         DataPersistorInterface $dataPersistor
     ) {
-        $this->jsHelper    = $jsHelper;
-        $this->_dateFilter = $dateFilter;
+        $this->jsHelper      = $jsHelper;
+        $this->_dateFilter   = $dateFilter;
         $this->dataPersistor = $dataPersistor;
 
         parent::__construct($sliderFactory, $registry, $context);
@@ -99,11 +100,11 @@ class Save extends Slider
             $fromDate = $toDate = null;
             if (isset($data['from_date']) && isset($data['to_date'])) {
                 $fromDate = $data['from_date'];
-                $toDate = $data['to_date'];
+                $toDate   = $data['to_date'];
             }
             if ($fromDate && $toDate) {
-                $fromDate = new \DateTime($fromDate);
-                $toDate = new \DateTime($toDate);
+                $fromDate = new DateTime($fromDate);
+                $toDate   = new DateTime($toDate);
 
                 if ($fromDate > $toDate) {
                     $this->messageManager->addErrorMessage(__('End Date must follow Start Date.'));
