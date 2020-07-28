@@ -7,7 +7,7 @@ Magento 2 Banner Slider Module accordingly will help improve customer retention 
 [![Latest Stable Version](https://poser.pugx.org/mageplaza/module-banner-slider/v/stable)](https://packagist.org/packages/mageplaza/module-banner-slider)
 [![Total Downloads](https://poser.pugx.org/mageplaza/module-banner-slider/downloads)](https://packagist.org/packages/mageplaza/module-banner-slider)
 
-
+**IMPORTANT NOTE:** This version of Mageplaza Banner Slider extension on Github is free as a contribution to the Magento community from Mageplaza. This package does not include the technical support. Should you need technical support for this extension, you will have to buy a license from Mageplaza. [Click here to buy](https://www.mageplaza.com/magento-2-banner-slider-extension/).
 
 ## 1. Documentation
 
