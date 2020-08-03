@@ -27,6 +27,7 @@ use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
+use Magento\Framework\DataObject\IdentityInterface;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as configImage;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection;

@@ -27,14 +27,17 @@ use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Helper\Data as bannerHelper;
+use Mageplaza\BannerSlider\Model\Banner;
+use Mageplaza\BannerSlider\Model\Slider;
 
 /**
  * Class Slider
  * @package Mageplaza\BannerSlider\Block
  */
-class Slider extends Template
+class Slider extends Template implements IdentityInterface
 {
     /**
      * @type bannerHelper
@@ -141,5 +144,28 @@ class Slider extends Template
     public function getBannerOptions()
     {
         return $this->helperData->getBannerOptions($this->getSlider());
+    }
+    
+    /**
+     * Return unique cache ID(s)
+     * to trigger cache invalidation when banner and slider are changed
+     *
+     * @return string[]
+     */
+    public function getIdentities()
+    {
+        $identities = [];
+
+        /** @var Slider $slider */
+        if($slider = $this->getSlider()) {
+            $identities = array_merge($identities, $slider->getIdentities());
+        }
+
+        /** @var Banner $banner */
+        foreach ($this->getBannerCollection() as $banner) {
+            $identities = array_merge($identities, $banner->getIdentities());
+        }
+
+        return $identities;
     }
 }
