@@ -27,7 +27,7 @@ if ($check) : ?>
     <?php
     $sliderId      = $block->getSliderId() . uniqid('-', false);
     $sliderOptions = $block->getBannerOptions(); ?>
-    <div class="carousel-container">
+    <div class="carousel-container mp-banner-slider">
         <div id="banner-slider-carousel">
             <?php $iterator = 1; ?>
             <div id="bannerslider-list-items-<?= /* @noEscape */ $sliderId ?>"
