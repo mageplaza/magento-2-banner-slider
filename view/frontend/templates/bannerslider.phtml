@@ -54,11 +54,20 @@ if ($check) : ?>
                                     <?php if (!empty($bnTitle)) : ?>
                                         <div class="banner-title"><?= $block->escapeHtml($bnTitle) ?></div>
                                     <?php endif; ?>
-                                    <img class="img-responsive" src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
+                                    <?php if (strpos($sliderOptions, '"lazyLoad":1')) : ?>
+                                    	<img class="img-responsive owl-lazy" data-src-retina="<?= $block->escapeUrl($bnImg) ?>" data-src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
+                                    <?php else : ?>
+                                    	<img class="img-responsive" src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
+                                    <?php endif; ?>
                                 </a>
                             <?php else : ?>
-                                <img class="owl-image img-responsive" src="<?= $block->escapeUrl($bnImg) ?>"
+                            	<?php if (strpos($sliderOptions, '"lazyLoad":1')) : ?>
+                                	<img class="owl-image img-responsive owl-lazy" data-src-retina="<?= $block->escapeUrl($bnImg) ?>" data-src="<?= $block->escapeUrl($bnImg) ?>"
                                      title="<?= $block->escapeHtml($bnTitle) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
+                                <?php else : ?>
+                                	<img class="owl-image img-responsive" src="<?= $block->escapeUrl($bnImg) ?>"
+                                     title="<?= $block->escapeHtml($bnTitle) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
