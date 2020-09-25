@@ -101,11 +101,21 @@ class AddBlock implements ObserverInterface
                             ->toHtml();
 
                         if (strpos($location, 'top') !== false) {
-                            $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
+                            if ($type === 'sidebar'){
+                                $output = "<div class=\"mp-banner-sidebar\" id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
                                         $content</div>" . $output;
+                            }else{
+                                $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
+                                        $content</div>" . $output;
+                            }
                         } else {
-                            $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
+                            if ($type === 'sidebar'){
+                                $output .= "<div class=\"mp-banner-sidebar\" id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
                                         $content</div>";
+                            }else{
+                                $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
+                                        $content</div>";
+                            }
                         }
                     }
                 }

@@ -77,10 +77,28 @@ if ($check) : ?>
         </div>
         <?= $block->getPagerHtml() ?>
     </div>
-
     <script>
         require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
             $('#bannerslider-list-items-<?= /* @noEscape */ $sliderId ?>').owlCarousel(<?= /* @noEscape */ $sliderOptions ?>);
+            if(/Android|webOS|iPhone|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            	var widthMb = parseFloat($('.page-wrapper').width()) - 30;
+				$('.mp-banner-sidebar').attr('style','max-width: '+widthMb+'px');
+			}
         });
     </script>
+
+	<style type="text/css">
+		.sidebar .mp-banner-slider .owl-nav button span{
+			font-size: 30px;
+			top: 30%;
+		}
+		.sidebar .mp-banner-slider .owl-dots .owl-dot span{
+			width: 7.5px;
+			height: 7.5px;
+		}
+		.sidebar .mp-banner-slider .owl-dots{
+			top: 70%;
+    		left: 42.5%;
+		}
+	</style>
 <?php endif; ?>
