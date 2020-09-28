@@ -54,14 +54,14 @@ if ($check) : ?>
                                     <?php if (!empty($bnTitle)) : ?>
                                         <div class="banner-title"><?= $block->escapeHtml($bnTitle) ?></div>
                                     <?php endif; ?>
-                                    <?php if (strpos($sliderOptions, '"lazyLoad":1')) : ?>
+                                    <?php if ($block->isLazyLoad()) : ?>
                                     	<img class="img-responsive owl-lazy" data-src-retina="<?= $block->escapeUrl($bnImg) ?>" data-src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
                                     <?php else : ?>
                                     	<img class="img-responsive" src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
                                     <?php endif; ?>
                                 </a>
                             <?php else : ?>
-                            	<?php if (strpos($sliderOptions, '"lazyLoad":1')) : ?>
+                                <?php if ($block->isLazyLoad()) : ?>
                                 	<img class="owl-image img-responsive owl-lazy" data-src-retina="<?= $block->escapeUrl($bnImg) ?>" data-src="<?= $block->escapeUrl($bnImg) ?>"
                                      title="<?= $block->escapeHtml($bnTitle) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
                                 <?php else : ?>
@@ -86,19 +86,4 @@ if ($check) : ?>
 			}
         });
     </script>
-
-	<style type="text/css">
-		.sidebar .mp-banner-slider .owl-nav button span{
-			font-size: 30px;
-			top: 30%;
-		}
-		.sidebar .mp-banner-slider .owl-dots .owl-dot span{
-			width: 7.5px;
-			height: 7.5px;
-		}
-		.sidebar .mp-banner-slider .owl-dots{
-			top: 70%;
-    		left: 42.5%;
-		}
-	</style>
 <?php endif; ?>

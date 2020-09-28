@@ -38,6 +38,19 @@
 .mp-banner-slider .owl-dots .owl-dot{
     box-shadow: none;
 }
+.sidebar .mp-banner-slider .owl-nav button span{
+    font-size: 30px;
+    top: 30%;
+}
+.sidebar .mp-banner-slider .owl-dots .owl-dot span{
+    width: 8px;
+    height: 8px;
+}
+.sidebar .mp-banner-slider .owl-dots{
+    top: 70%;
+    left: 42.5%;
+}
+
 @media only screen and (max-width: 764px) {
     .mp-banner-slider .owl-nav button span{
         top: 20%;
