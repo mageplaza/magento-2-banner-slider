@@ -134,7 +134,6 @@ class Save extends Slider
                 $slider->save();
                 $this->messageManager->addSuccess(__('The Slider has been saved.'));
                 $this->_session->setMageplazaBannerSliderSliderData(false);
-                $this->dataPersistor->set('mpbannerslider_slider', $data);
                 if ($this->getRequest()->getParam('back')) {
                     $resultRedirect->setPath(
                         'mpbannerslider/*/edit',
