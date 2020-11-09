@@ -63,7 +63,7 @@ class Edit extends Container
      */
     protected function _construct()
     {
-        $this->_objectId   = 'slider_id';
+        $this->_objectId = 'slider_id';
         $this->_blockGroup = 'Mageplaza_BannerSlider';
         $this->_controller = 'adminhtml_slider';
         parent::_construct();
@@ -71,12 +71,12 @@ class Edit extends Container
         $this->buttonList->add(
             'save-and-continue',
             [
-                'label'          => __('Save and Continue Edit'),
-                'class'          => 'save',
+                'label' => __('Save and Continue Edit'),
+                'class' => 'save',
                 'data_attribute' => [
                     'mage-init' => [
                         'button' => [
-                            'event'  => 'saveAndContinueEdit',
+                            'event' => 'saveAndContinueEdit',
                             'target' => '#edit_form'
                         ]
                     ]

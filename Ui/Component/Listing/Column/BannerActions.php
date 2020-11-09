@@ -81,7 +81,7 @@ class BannerActions extends Column
                 if (isset($item['banner_id'])) {
                     $item[$this->getData('name')] = [
                         'edit' => [
-                            'href'  => $this->urlBuilder->getUrl(
+                            'href' => $this->urlBuilder->getUrl(
                                 static::URL_PATH_EDIT,
                                 ['banner_id' => $item['banner_id']]
                             ),

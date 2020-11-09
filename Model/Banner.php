@@ -119,7 +119,7 @@ class Banner extends AbstractModel implements IdentityInterface
         array $data = []
     ) {
         $this->sliderCollectionFactory = $sliderCollectionFactory;
-        $this->imageModel              = $configImage;
+        $this->imageModel = $configImage;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
@@ -195,6 +195,6 @@ class Banner extends AbstractModel implements IdentityInterface
             $this->setData('slider_ids', $ids);
         }
 
-        return (array) $this->getData('slider_ids');
+        return (array)$this->getData('slider_ids');
     }
 }

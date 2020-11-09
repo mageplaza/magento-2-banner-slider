@@ -83,8 +83,8 @@ class Data extends AbstractData
         StoreManagerInterface $storeManager,
         ObjectManagerInterface $objectManager
     ) {
-        $this->date          = $date;
-        $this->httpContext   = $httpContext;
+        $this->date = $date;
+        $this->httpContext = $httpContext;
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
 
@@ -104,9 +104,9 @@ class Data extends AbstractData
             $config = $this->getModuleConfig('mpbannerslider_design');
         }
 
-        $defaultOpt    = $this->getDefaultConfig($config);
+        $defaultOpt = $this->getDefaultConfig($config);
         $responsiveOpt = $this->getResponsiveConfig($slider);
-        $effectOpt     = $this->getEffectConfig($slider);
+        $effectOpt = $this->getEffectConfig($slider);
 
         $sliderOptions = array_merge($defaultOpt, $responsiveOpt, $effectOpt);
 
@@ -126,7 +126,7 @@ class Data extends AbstractData
                 $key,
                 ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout']
             )) {
-                $basicConfig[$key] = (int) $value;
+                $basicConfig[$key] = (int)$value;
             }
         }
 
@@ -141,7 +141,7 @@ class Data extends AbstractData
     public function getResponsiveConfig($slider = null)
     {
         $defaultResponsive = $this->getModuleConfig('mpbannerslider_design/responsive');
-        $sliderResponsive  = $slider->getIsResponsive();
+        $sliderResponsive = $slider->getIsResponsive();
 
         if ((!$defaultResponsive && !$sliderResponsive) || (!$sliderResponsive && $slider->getDesign())) {
             return ['items' => 1];
@@ -159,8 +159,8 @@ class Data extends AbstractData
 
         $result = [];
         foreach ($responsiveItems as $config) {
-            $size          = $config['size'] ?: 0;
-            $items         = $config['items'] ?: 0;
+            $size = $config['size'] ?: 0;
+            $items = $config['items'] ?: 0;
             $result[$size] = ['items' => $items];
         }
 

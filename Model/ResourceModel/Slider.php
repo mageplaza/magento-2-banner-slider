@@ -76,7 +76,7 @@ class Slider extends AbstractDb
         Context $context,
         bannerHelper $helperData
     ) {
-        $this->date         = $date;
+        $this->date = $date;
         $this->eventManager = $eventManager;
         $this->bannerHelper = $helperData;
 
@@ -105,10 +105,10 @@ class Slider extends AbstractDb
     public function getSliderNameById($id)
     {
         $adapter = $this->getConnection();
-        $select  = $adapter->select()
+        $select = $adapter->select()
             ->from($this->getMainTable(), 'name')
             ->where('slider_id = :slider_id');
-        $binds   = ['slider_id' => (int) $id];
+        $binds = ['slider_id' => (int)$id];
 
         return $adapter->fetchOne($select, $binds);
     }
@@ -201,7 +201,7 @@ class Slider extends AbstractDb
             ->where(
                 'slider_id = :slider_id'
             );
-        $bind   = ['slider_id' => (int) $slider->getId()];
+        $bind = ['slider_id' => (int)$slider->getId()];
 
         return $this->getConnection()->fetchPairs($select, $bind);
     }
@@ -214,22 +214,22 @@ class Slider extends AbstractDb
     protected function saveBannerRelation(\Mageplaza\BannerSlider\Model\Slider $slider)
     {
         $slider->setIsChangedBannerList(false);
-        $id      = $slider->getId();
+        $id = $slider->getId();
         $banners = $slider->getBannersData();
         if ($banners === null) {
             return $this;
         }
         $oldBanners = $slider->getBannersPosition();
-        $insert     = array_diff_key($banners, $oldBanners);
-        $delete     = array_diff_key($oldBanners, $banners);
-        $update     = array_intersect_key($banners, $oldBanners);
-        $_update    = [];
+        $insert = array_diff_key($banners, $oldBanners);
+        $delete = array_diff_key($oldBanners, $banners);
+        $update = array_intersect_key($banners, $oldBanners);
+        $_update = [];
         foreach ($update as $key => $settings) {
             if (isset($oldBanners[$key]) && $oldBanners[$key] != $settings['position']) {
                 $_update[$key] = $settings;
             }
         }
-        $update  = $_update;
+        $update = $_update;
         $adapter = $this->getConnection();
         if (!empty($delete)) {
             $condition = ['banner_id IN(?)' => array_keys($delete), 'slider_id=?' => $id];
@@ -239,17 +239,17 @@ class Slider extends AbstractDb
             $data = [];
             foreach ($insert as $bannerId => $position) {
                 $data[] = [
-                    'slider_id' => (int) $id,
-                    'banner_id' => (int) $bannerId,
-                    'position'  => (int) $position['position']
+                    'slider_id' => (int)$id,
+                    'banner_id' => (int)$bannerId,
+                    'position' => (int)$position['position']
                 ];
             }
             $adapter->insertMultiple($this->sliderBannerTable, $data);
         }
         if (!empty($update)) {
             foreach ($update as $bannerId => $position) {
-                $where = ['slider_id = ?' => (int) $id, 'banner_id = ?' => (int) $bannerId];
-                $bind  = ['position' => (int) $position['position']];
+                $where = ['slider_id = ?' => (int)$id, 'banner_id = ?' => (int)$bannerId];
+                $bind = ['position' => (int)$position['position']];
                 $adapter->update($this->sliderBannerTable, $bind, $where);
             }
         }

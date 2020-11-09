@@ -43,7 +43,7 @@ class Responsive extends AbstractFieldArray
             ['label' => __('Number of items'), 'renderer' => false, 'class' => 'required-entry validate-digits']
         );
 
-        $this->_addAfter       = false;
+        $this->_addAfter = false;
         $this->_addButtonLabel = __('Add');
     }
 }

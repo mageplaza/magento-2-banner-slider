@@ -107,7 +107,7 @@ class Collection extends AbstractCollection
 
             if (strpos('image', $condition['like']) !== false) {
                 $condition = 0;
-            }elseif (strpos('advanced', $condition['like']) !== false) {
+            } elseif (strpos('advanced', $condition['like']) !== false) {
                 $condition = 1;
             }
 
@@ -120,7 +120,7 @@ class Collection extends AbstractCollection
 
             if (strpos('enable', $condition['like']) !== false) {
                 $condition = 1;
-            }elseif (strpos('disable', $condition['like']) !== false) {
+            } elseif (strpos('disable', $condition['like']) !== false) {
                 $condition = 0;
             }
         }

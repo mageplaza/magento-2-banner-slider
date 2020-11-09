@@ -23,7 +23,7 @@ use Mageplaza\BannerSlider\Model\Config\Source\Type;
 
 $banners = $block->getBannerCollection();
 $check   = is_array($banners) ? !empty($banners) : $banners->getSize();
-if ($check) : ?>
+if ($check): ?>
     <?php
     $sliderId      = $block->getSliderId() . uniqid('-', false);
     $sliderOptions = $block->getBannerOptions(); ?>
@@ -32,40 +32,40 @@ if ($check) : ?>
             <?php $iterator = 1; ?>
             <div id="bannerslider-list-items-<?= /* @noEscape */ $sliderId ?>"
                  class="owl-carousel owl-theme">
-                <?php foreach ($banners as $banner) : ?>
+                <?php foreach ($banners as $banner): ?>
                     <?php
                     $bnType  = $banner->getType();
                     $bnTitle = $banner->getTitle();
                     $bnUrl   = $banner->getUrlBanner();
                     $bnImg   = $banner->getImageUrl();
                     ?>
-                    <?php if (($bnType === Type::CONTENT && empty($banner->getContent())) || ($bnType === Type::IMAGE && empty($banner->getImage()))) : continue; ?>
+                    <?php if (($bnType === Type::CONTENT && empty($banner->getContent())) || ($bnType === Type::IMAGE && empty($banner->getImage()))): continue; ?>
                     <?php endif; ?>
                     <?= ($iterator++ === 1) ? '<div class="banner-item banner-slider">' : '</div><div class="banner-item banner-slider">' ?>
-                    <?php if ($bnType === Type::CONTENT) : ?>
+                    <?php if ($bnType === Type::CONTENT): ?>
                         <div class="item-content">
                             <?= /* @noEscape */ $block->getPageFilter($banner->getContent()) ?>
                         </div>
-                    <?php else : #image type?>
+                    <?php else: #image type?>
                         <div class="item-image">
-                            <?php if (!empty($bnUrl)) : ?>
+                            <?php if (!empty($bnUrl)): ?>
                                 <a class="owl-image"
                                    href="<?= $block->escapeUrl($bnUrl) ?>" <?= /* @noEscape */ ($banner->getNewtab() === '1') ? 'target="_blank"' : '' ?>>
-                                    <?php if (!empty($bnTitle)) : ?>
+                                    <?php if (!empty($bnTitle)): ?>
                                         <div class="banner-title"><?= $block->escapeHtml($bnTitle) ?></div>
                                     <?php endif; ?>
-                                    <?php if ($block->isLazyLoad()) : ?>
-                                    	<img class="img-responsive owl-lazy" data-src-retina="<?= $block->escapeUrl($bnImg) ?>" data-src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
-                                    <?php else : ?>
-                                    	<img class="img-responsive" src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
+                                    <?php if ($block->isLazyLoad()): ?>
+                                        <img class="img-responsive owl-lazy" data-src-retina="<?= $block->escapeUrl($bnImg) ?>" data-src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
+                                    <?php else: ?>
+                                        <img class="img-responsive" src="<?= $block->escapeUrl($bnImg) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
                                     <?php endif; ?>
                                 </a>
-                            <?php else : ?>
-                                <?php if ($block->isLazyLoad()) : ?>
-                                	<img class="owl-image img-responsive owl-lazy" data-src-retina="<?= $block->escapeUrl($bnImg) ?>" data-src="<?= $block->escapeUrl($bnImg) ?>"
+                            <?php else: ?>
+                                <?php if ($block->isLazyLoad()): ?>
+                                    <img class="owl-image img-responsive owl-lazy" data-src-retina="<?= $block->escapeUrl($bnImg) ?>" data-src="<?= $block->escapeUrl($bnImg) ?>"
                                      title="<?= $block->escapeHtml($bnTitle) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
-                                <?php else : ?>
-                                	<img class="owl-image img-responsive" src="<?= $block->escapeUrl($bnImg) ?>"
+                                <?php else: ?>
+                                    <img class="owl-image img-responsive" src="<?= $block->escapeUrl($bnImg) ?>"
                                      title="<?= $block->escapeHtml($bnTitle) ?>" alt="<?= $block->escapeHtml($bnTitle) ?>">
                                 <?php endif; ?>
                             <?php endif; ?>
@@ -81,9 +81,9 @@ if ($check) : ?>
         require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
             $('#bannerslider-list-items-<?= /* @noEscape */ $sliderId ?>').owlCarousel(<?= /* @noEscape */ $sliderOptions ?>);
             if(/Android|webOS|iPhone|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            	var widthMb = parseFloat($('.page-wrapper').width()) - 30;
-				$('.mp-banner-sidebar').attr('style','max-width: '+widthMb+'px');
-			}
+                var widthMb = parseFloat($('.page-wrapper').width()) - 30;
+                $('.mp-banner-sidebar').attr('style','max-width: '+widthMb+'px');
+            }
         });
     </script>
 <?php endif; ?>

@@ -115,13 +115,13 @@ class Banner extends Generic implements TabInterface
         WysiwygConfig $wysiwygConfig,
         array $data = []
     ) {
-        $this->typeOptions      = $typeOptions;
-        $this->template         = $template;
-        $this->statusOptions    = $statusOptions;
-        $this->imageHelper      = $imageHelper;
-        $this->_fieldFactory    = $fieldFactory;
+        $this->typeOptions = $typeOptions;
+        $this->template = $template;
+        $this->statusOptions = $statusOptions;
+        $this->imageHelper = $imageHelper;
+        $this->_fieldFactory = $fieldFactory;
         $this->_objectConverter = $objectConverter;
-        $this->_wysiwygConfig   = $wysiwygConfig;
+        $this->_wysiwygConfig = $wysiwygConfig;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
@@ -174,12 +174,12 @@ class Banner extends Generic implements TabInterface
     {
         /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
         $banner = $this->_coreRegistry->registry('mpbannerslider_banner');
-        $form   = $this->_formFactory->create();
+        $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('banner_');
         $form->setFieldNameSuffix('banner');
         $fieldset = $form->addFieldset('base_fieldset', [
             'legend' => __('Banner Information'),
-            'class'  => 'fieldset-wide'
+            'class' => 'fieldset-wide'
         ]);
 
         if ($banner->getId()) {
@@ -191,89 +191,89 @@ class Banner extends Generic implements TabInterface
         }
 
         $fieldset->addField('name', 'text', [
-            'name'     => 'name',
-            'label'    => __('Name'),
-            'title'    => __('Name'),
+            'name' => 'name',
+            'label' => __('Name'),
+            'title' => __('Name'),
             'required' => true,
         ]);
 
         $fieldset->addField('status', 'select', [
-            'name'   => 'status',
-            'label'  => __('Status'),
-            'title'  => __('Status'),
+            'name' => 'status',
+            'label' => __('Status'),
+            'title' => __('Status'),
             'values' => $this->statusOptions->toOptionArray(),
         ]);
 
         $typeBanner = $fieldset->addField('type', 'select', [
-            'name'   => 'type',
-            'label'  => __('Type'),
-            'title'  => __('Type'),
+            'name' => 'type',
+            'label' => __('Type'),
+            'title' => __('Type'),
             'values' => $this->typeOptions->toOptionArray(),
         ]);
 
         $uploadBanner = $fieldset->addField('image', BannerImage::class, [
-            'name'  => 'image',
+            'name' => 'image',
             'label' => __('Upload Image'),
             'title' => __('Upload Image'),
-            'path'  => $this->imageHelper->getBaseMediaPath(HelperImage::TEMPLATE_MEDIA_TYPE_BANNER)
+            'path' => $this->imageHelper->getBaseMediaPath(HelperImage::TEMPLATE_MEDIA_TYPE_BANNER)
         ]);
 
         $titleBanner = $fieldset->addField('title', 'text', [
-            'name'  => 'title',
+            'name' => 'title',
             'label' => __('Banner title'),
             'title' => __('Banner title'),
         ]);
 
         $urlBanner = $fieldset->addField('url_banner', 'text', [
-            'name'  => 'url_banner',
+            'name' => 'url_banner',
             'label' => __('Url'),
             'title' => __('Url'),
         ]);
 
         $newTab = $fieldset->addField('newtab', 'select', [
-            'name'   => 'newtab',
-            'label'  => __('Open new tab after click'),
-            'title'  => __('Open new tab after click'),
+            'name' => 'newtab',
+            'label' => __('Open new tab after click'),
+            'title' => __('Open new tab after click'),
             'values' => $this->statusOptions->toOptionArray(),
-            'note'   => __('Automatically open new tab after clicking on the banner')
+            'note' => __('Automatically open new tab after clicking on the banner')
 
         ]);
 
         if (!$banner->getId()) {
             $defaultImage = array_values(Data::jsonDecode($this->template->getImageUrls()))[0];
             $demoTemplate = $fieldset->addField('default_template', 'select', [
-                'name'   => 'default_template',
-                'label'  => __('Demo template'),
-                'title'  => __('Demo template'),
+                'name' => 'default_template',
+                'label' => __('Demo template'),
+                'title' => __('Demo template'),
                 'values' => $this->template->toOptionArray(),
-                'note'   => '<img src="' . $defaultImage . '" alt="demo"  class="article_image" id="mp-demo-image">'
+                'note' => '<img src="' . $defaultImage . '" alt="demo"  class="article_image" id="mp-demo-image">'
             ]);
 
             $insertVariableButton = $this->getLayout()->createBlock(Button::class, '', [
                 'data' => [
-                    'type'  => 'button',
+                    'type' => 'button',
                     'label' => __('Load Template'),
                 ]
             ]);
-            $insertButton         = $fieldset->addField('load_template', 'note', [
-                'text'  => $insertVariableButton->toHtml(),
+            $insertButton = $fieldset->addField('load_template', 'note', [
+                'text' => $insertVariableButton->toHtml(),
                 'label' => ''
             ]);
         }
 
         $content = $fieldset->addField('content', 'editor', [
-            'name'     => 'content',
+            'name' => 'content',
             'required' => false,
-            'config'   => $this->_wysiwygConfig->getConfig([
-                'hidden'         => true,
-                'add_variables'  => false,
-                'add_widgets'    => false,
+            'config' => $this->_wysiwygConfig->getConfig([
+                'hidden' => true,
+                'add_variables' => false,
+                'add_widgets' => false,
                 'add_directives' => true
             ])
         ]);
 
         $fieldset->addField('sliders_ids', Slider::class, [
-            'name'  => 'sliders_ids',
+            'name' => 'sliders_ids',
             'label' => __('Sliders'),
             'title' => __('Sliders'),
         ]);
