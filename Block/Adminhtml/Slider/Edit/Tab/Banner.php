@@ -82,8 +82,8 @@ class Banner extends Extended implements TabInterface
         array $data = []
     ) {
         $this->bannerCollectionFactory = $bannerCollectionFactory;
-        $this->coreRegistry            = $coreRegistry;
-        $this->bannerFactory           = $bannerFactory;
+        $this->coreRegistry = $coreRegistry;
+        $this->bannerFactory = $bannerFactory;
 
         parent::__construct($context, $backendHelper, $data);
     }
@@ -142,60 +142,60 @@ class Banner extends Extended implements TabInterface
     {
         $this->addColumn('in_banners', [
             'header_css_class' => 'a-center',
-            'type'             => 'checkbox',
-            'name'             => 'in_banner',
-            'values'           => $this->_getSelectedBanners(),
-            'align'            => 'center',
-            'index'            => 'banner_id'
+            'type' => 'checkbox',
+            'name' => 'in_banner',
+            'values' => $this->_getSelectedBanners(),
+            'align' => 'center',
+            'index' => 'banner_id'
         ]);
         $this->addColumn('banner_id', [
-            'header'           => __('ID'),
-            'sortable'         => true,
-            'index'            => 'banner_id',
-            'type'             => 'number',
+            'header' => __('ID'),
+            'sortable' => true,
+            'index' => 'banner_id',
+            'type' => 'number',
             'header_css_class' => 'col-id',
             'column_css_class' => 'col-id'
         ]);
 
         $this->addColumn('image', [
-            'header'           => __('Image'),
-            'index'            => 'image',
+            'header' => __('Image'),
+            'index' => 'image',
             'header_css_class' => 'col-image',
             'column_css_class' => 'col-image',
-            'sortable'         => false,
-            'renderer'         => GridImage::class
+            'sortable' => false,
+            'renderer' => GridImage::class
         ]);
 
         $this->addColumn('name', [
-            'header'           => __('Name'),
-            'index'            => 'name',
+            'header' => __('Name'),
+            'index' => 'name',
             'header_css_class' => 'col-name',
             'column_css_class' => 'col-name'
         ]);
 
         $this->addColumn('type', [
-            'header'           => __('Type'),
-            'index'            => 'type',
+            'header' => __('Type'),
+            'index' => 'type',
             'header_css_class' => 'col-type',
             'column_css_class' => 'col-type',
-            'renderer'         => Type::class
+            'renderer' => Type::class
         ]);
 
         $this->addColumn('status', [
-            'header'           => __('Status'),
-            'index'            => 'status',
+            'header' => __('Status'),
+            'index' => 'status',
             'header_css_class' => 'col-status',
             'column_css_class' => 'col-status',
-            'renderer'         => Status::class
+            'renderer' => Status::class
         ]);
 
         $this->addColumn('position', [
-            'header'         => __('Position'),
-            'name'           => 'position',
-            'type'           => 'number',
+            'header' => __('Position'),
+            'name' => 'position',
+            'type' => 'number',
             'validate_class' => 'validate-number validate-zero-or-greater validate-digits',
-            'index'          => 'position',
-            'editable'       => true,
+            'index' => 'position',
+            'editable' => true,
         ]);
 
         return $this;

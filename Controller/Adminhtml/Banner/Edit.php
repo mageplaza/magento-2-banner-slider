@@ -82,7 +82,7 @@ class Edit extends Banner
                     'mpbannerslider/*/edit',
                     [
                         'banner_id' => $banner->getId(),
-                        '_current'  => true
+                        '_current' => true
                     ]
                 );
 

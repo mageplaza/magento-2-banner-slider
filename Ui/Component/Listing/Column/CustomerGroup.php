@@ -65,7 +65,7 @@ class CustomerGroup extends Column
         array $data = []
     ) {
         $this->groupRepository = $groupRepository;
-        $this->customerGroup   = $GroupCollection;
+        $this->customerGroup = $GroupCollection;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
@@ -103,7 +103,7 @@ class CustomerGroup extends Column
      */
     public function prepareItem(array $item)
     {
-        $content   = [];
+        $content = [];
         $origGroup = $item[$this->getData('name')];
         if (!is_array($origGroup)) {
             $origGroup = explode(',', $origGroup);

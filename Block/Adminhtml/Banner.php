@@ -36,9 +36,9 @@ class Banner extends Container
      */
     protected function _construct()
     {
-        $this->_controller     = 'adminhtml_banner';
-        $this->_blockGroup     = 'Mageplaza_BannerSlider';
-        $this->_headerText     = __('Banners');
+        $this->_controller = 'adminhtml_banner';
+        $this->_blockGroup = 'Mageplaza_BannerSlider';
+        $this->_headerText = __('Banners');
         $this->_addButtonLabel = __('Create New Banner');
 
         parent::_construct();

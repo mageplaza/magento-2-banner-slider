@@ -67,7 +67,7 @@ class Design extends Generic implements TabInterface
         array $data = []
     ) {
         $this->_effect = $effect;
-        $this->_yesno  = $yesno;
+        $this->_yesno = $yesno;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
@@ -85,79 +85,79 @@ class Design extends Generic implements TabInterface
         $form->setFieldNameSuffix('slider');
         $fieldset = $form->addFieldset('base_fieldset', [
             'legend' => __('Design'),
-            'class'  => 'fieldset-wide'
+            'class' => 'fieldset-wide'
         ]);
 
         $fieldset->addField('effect', 'select', [
-            'name'   => 'effect',
-            'label'  => __('Animation Effect'),
-            'title'  => __('Animation Effect'),
+            'name' => 'effect',
+            'label' => __('Animation Effect'),
+            'title' => __('Animation Effect'),
             'values' => $this->_effect->toOptionArray()
         ]);
-        $design         = $fieldset->addField('design', 'select', [
-            'name'    => 'design',
-            'label'   => __('Manually Design'),
-            'title'   => __('Manually Design'),
+        $design = $fieldset->addField('design', 'select', [
+            'name' => 'design',
+            'label' => __('Manually Design'),
+            'title' => __('Manually Design'),
             'options' => [
                 '0' => __('Use Config'),
                 '1' => __('Yes')
             ]
         ]);
-        $responsive     = $fieldset->addField('is_responsive', 'select', [
-            'name'   => 'is_responsive',
-            'label'  => __('Is Responsive'),
-            'title'  => __('Is Responsive'),
+        $responsive = $fieldset->addField('is_responsive', 'select', [
+            'name' => 'is_responsive',
+            'label' => __('Is Responsive'),
+            'title' => __('Is Responsive'),
             'values' => $this->_yesno->toOptionArray()
         ]);
         $responsiveItem = $fieldset->addField('responsive_items', Responsive::class, [
-            'name'  => 'responsive_items',
+            'name' => 'responsive_items',
             'label' => __('Max Items Slider'),
             'title' => __('Max Items Slider'),
         ]);
-        $autoWidth      = $fieldset->addField('autoWidth', 'select', [
-            'name'   => 'autoWidth',
-            'label'  => __('Auto Width'),
-            'title'  => __('Auto Width'),
+        $autoWidth = $fieldset->addField('autoWidth', 'select', [
+            'name' => 'autoWidth',
+            'label' => __('Auto Width'),
+            'title' => __('Auto Width'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $autoHeight     = $fieldset->addField('autoHeight', 'select', [
-            'name'   => 'autoHeight',
-            'label'  => __('Auto Height'),
-            'title'  => __('Auto Height'),
+        $autoHeight = $fieldset->addField('autoHeight', 'select', [
+            'name' => 'autoHeight',
+            'label' => __('Auto Height'),
+            'title' => __('Auto Height'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $loop           = $fieldset->addField('loop', 'select', [
-            'name'   => 'loop',
-            'label'  => __('Infinity Loop'),
-            'title'  => __('Infinity Loop'),
+        $loop = $fieldset->addField('loop', 'select', [
+            'name' => 'loop',
+            'label' => __('Infinity Loop'),
+            'title' => __('Infinity Loop'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $nav            = $fieldset->addField('nav', 'select', [
-            'name'   => 'nav',
-            'label'  => __('Show Next/Prev Buttons'),
-            'title'  => __('Show Next/Prev Buttons'),
+        $nav = $fieldset->addField('nav', 'select', [
+            'name' => 'nav',
+            'label' => __('Show Next/Prev Buttons'),
+            'title' => __('Show Next/Prev Buttons'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $dots           = $fieldset->addField('dots', 'select', [
-            'name'   => 'dots',
-            'label'  => __('Show Dots Navigation'),
-            'title'  => __('Show Dots Navigation'),
+        $dots = $fieldset->addField('dots', 'select', [
+            'name' => 'dots',
+            'label' => __('Show Dots Navigation'),
+            'title' => __('Show Dots Navigation'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $lazyload       = $fieldset->addField('lazyLoad', 'select', [
-            'name'   => 'lazyLoad',
-            'label'  => __('Lazy Loading Images'),
-            'title'  => __('Lazy Loading Images'),
+        $lazyload = $fieldset->addField('lazyLoad', 'select', [
+            'name' => 'lazyLoad',
+            'label' => __('Lazy Loading Images'),
+            'title' => __('Lazy Loading Images'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $autoplay       = $fieldset->addField('autoplay', 'select', [
-            'name'   => 'autoplay',
-            'label'  => __('Autoplay'),
-            'title'  => __('Autoplay'),
+        $autoplay = $fieldset->addField('autoplay', 'select', [
+            'name' => 'autoplay',
+            'label' => __('Autoplay'),
+            'title' => __('Autoplay'),
             'values' => $this->_yesno->toOptionArray()
         ]);
-        $timeout        = $fieldset->addField('autoplayTimeout', 'text', [
-            'name'  => 'autoplayTimeout',
+        $timeout = $fieldset->addField('autoplayTimeout', 'text', [
+            'name' => 'autoplayTimeout',
             'label' => __('Autoplay Time-Out'),
             'title' => __('Autoplay Time-Out')
         ]);

@@ -29,15 +29,15 @@ use Magento\Framework\Option\ArrayInterface;
  */
 class Effect implements ArrayInterface
 {
-    const SLIDER           = 'slider';
-    const FADE_OUT         = 'fadeOut';
-    const ROTATE_OUT       = 'rotateOut';
-    const FLIP_OUT         = 'flipOutX';
-    const ROLL_OUT         = 'rollOut';
-    const ZOOM_OUT         = 'zoomOut';
-    const SLIDER_OUT_LEFT  = 'slideOutLeft';
+    const SLIDER = 'slider';
+    const FADE_OUT = 'fadeOut';
+    const ROTATE_OUT = 'rotateOut';
+    const FLIP_OUT = 'flipOutX';
+    const ROLL_OUT = 'rollOut';
+    const ZOOM_OUT = 'zoomOut';
+    const SLIDER_OUT_LEFT = 'slideOutLeft';
     const SLIDER_OUT_RIGHT = 'slideOutRight';
-    const LIGHT_SPEED_OUT  = 'lightSpeedOut';
+    const LIGHT_SPEED_OUT = 'lightSpeedOut';
 
     /**
      * to option array

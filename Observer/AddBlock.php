@@ -56,7 +56,7 @@ class AddBlock implements ObserverInterface
         RequestInterface $request,
         Data $helperData
     ) {
-        $this->request    = $request;
+        $this->request = $request;
         $this->helperData = $helperData;
     }
 
@@ -73,18 +73,18 @@ class AddBlock implements ObserverInterface
         }
 
         $type = array_search($observer->getEvent()->getElementName(), [
-            'header'           => 'header',
-            'content'          => 'content',
-            'page-top'         => 'main.content',
+            'header' => 'header',
+            'content' => 'content',
+            'page-top' => 'main.content',
             'footer-container' => 'footer-container',
-            'sidebar'          => 'catalog.leftnav'
+            'sidebar' => 'catalog.leftnav'
         ], true);
 
         if ($type !== false) {
             /** @var Layout $layout */
-            $layout         = $observer->getEvent()->getLayout();
+            $layout = $observer->getEvent()->getLayout();
             $fullActionName = $this->request->getFullActionName();
-            $output         = $observer->getTransport()->getOutput();
+            $output = $observer->getTransport()->getOutput();
 
             foreach ($this->helperData->getActiveSliders() as $slider) {
                 $locations = array_filter(explode(',', $slider->getLocation()));
@@ -101,11 +101,21 @@ class AddBlock implements ObserverInterface
                             ->toHtml();
 
                         if (strpos($location, 'top') !== false) {
-                            $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
+                            if ($type === 'sidebar') {
+                                $output = "<div class=\"mp-banner-sidebar\" id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
                                         $content</div>" . $output;
+                            } else {
+                                $output = "<div id=\"mageplaza-bannerslider-block-before-{$type}-{$slider->getId()}\">
+                                        $content</div>" . $output;
+                            }
                         } else {
-                            $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
+                            if ($type === 'sidebar') {
+                                $output .= "<div class=\"mp-banner-sidebar\" id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
                                         $content</div>";
+                            } else {
+                                $output .= "<div id=\"mageplaza-bannerslider-block-after-{$type}-{$slider->getId()}\">
+                                        $content</div>";
+                            }
                         }
                     }
                 }

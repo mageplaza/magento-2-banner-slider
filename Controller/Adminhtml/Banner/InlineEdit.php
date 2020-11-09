@@ -63,7 +63,7 @@ class InlineEdit extends Action
         BannerFactory $bannerFactory,
         Context $context
     ) {
-        $this->jsonFactory   = $jsonFactory;
+        $this->jsonFactory = $jsonFactory;
         $this->bannerFactory = $bannerFactory;
 
         parent::__construct($context);
@@ -76,13 +76,13 @@ class InlineEdit extends Action
     {
         /** @var Json $resultJson */
         $resultJson = $this->jsonFactory->create();
-        $error      = false;
-        $messages   = [];
-        $postItems  = $this->getRequest()->getParam('items', []);
+        $error = false;
+        $messages = [];
+        $postItems = $this->getRequest()->getParam('items', []);
         if (!(!empty($postItems) && $this->getRequest()->getParam('isAjax'))) {
             return $resultJson->setData([
                 'messages' => [__('Please correct the data sent.')],
-                'error'    => true,
+                'error' => true,
             ]);
         }
         foreach (array_keys($postItems) as $bannerId) {
@@ -94,19 +94,19 @@ class InlineEdit extends Action
                 $banner->save();
             } catch (RuntimeException $e) {
                 $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
-                $error      = true;
+                $error = true;
             } catch (Exception $e) {
                 $messages[] = $this->getErrorWithBannerId(
                     $banner,
                     __('Something went wrong while saving the Banner.')
                 );
-                $error      = true;
+                $error = true;
             }
         }
 
         return $resultJson->setData([
             'messages' => $messages,
-            'error'    => $error
+            'error' => $error
         ]);
     }
 

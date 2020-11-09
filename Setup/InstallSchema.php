@@ -66,8 +66,8 @@ class InstallSchema implements InstallSchemaInterface
         Filesystem $filesystem,
         LoggerInterface $logger
     ) {
-        $this->logger     = $logger;
-        $this->template   = $template;
+        $this->logger = $logger;
+        $this->template = $template;
         $this->fileSystem = $filesystem;
     }
 
@@ -93,7 +93,7 @@ class InstallSchema implements InstallSchemaInterface
                     [
                         'identity' => true,
                         'nullable' => false,
-                        'primary'  => true,
+                        'primary' => true,
                         'unsigned' => true
                     ],
                     'Banner ID'
@@ -132,7 +132,7 @@ class InstallSchema implements InstallSchemaInterface
                     [
                         'identity' => true,
                         'nullable' => false,
-                        'primary'  => true,
+                        'primary' => true,
                         'unsigned' => true
                     ],
                     'Slider ID'
@@ -246,13 +246,13 @@ class InstallSchema implements InstallSchemaInterface
     {
         try {
             $mediaDirectory = $this->fileSystem->getDirectoryWrite(DirectoryList::MEDIA);
-            $url            = 'mageplaza/bannerslider/banner/demo/';
+            $url = 'mageplaza/bannerslider/banner/demo/';
             $mediaDirectory->create($url);
             $demos = $this->template->toOptionArray();
             foreach ($demos as $demo) {
                 $targetPath = $mediaDirectory->getAbsolutePath($url . $demo['value']);
-                $DS         = DIRECTORY_SEPARATOR;
-                $oriPath    = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
+                $DS = DIRECTORY_SEPARATOR;
+                $oriPath = dirname(__DIR__) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
                 $mediaDirectory->getDriver()->copy($oriPath, $targetPath);
             }
         } catch (Exception $e) {

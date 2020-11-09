@@ -67,7 +67,7 @@ class Banner extends AbstractDb
         ManagerInterface $eventManager,
         Context $context
     ) {
-        $this->date         = $date;
+        $this->date = $date;
         $this->eventManager = $eventManager;
 
         parent::__construct($context);
@@ -93,10 +93,10 @@ class Banner extends AbstractDb
     public function getBannerNameById($id)
     {
         $adapter = $this->getConnection();
-        $select  = $adapter->select()
+        $select = $adapter->select()
             ->from($this->getMainTable(), 'name')
             ->where('banner_id = :banner_id');
-        $binds   = ['banner_id' => (int) $id];
+        $binds = ['banner_id' => (int)$id];
 
         return $adapter->fetchOne($select, $binds);
     }
@@ -137,15 +137,15 @@ class Banner extends AbstractDb
     protected function saveSliderRelation(\Mageplaza\BannerSlider\Model\Banner $banner)
     {
         $banner->setIsChangedSliderList(false);
-        $id      = $banner->getId();
+        $id = $banner->getId();
         $sliders = $banner->getSlidersIds();
         if ($sliders === null) {
             return $this;
         }
         $oldSliders = $banner->getSliderIds();
 
-        $insert  = array_diff($sliders, $oldSliders);
-        $delete  = array_diff($oldSliders, $sliders);
+        $insert = array_diff($sliders, $oldSliders);
+        $delete = array_diff($oldSliders, $sliders);
         $adapter = $this->getConnection();
 
         if (!empty($delete)) {
@@ -156,9 +156,9 @@ class Banner extends AbstractDb
             $data = [];
             foreach ($insert as $tagId) {
                 $data[] = [
-                    'banner_id' => (int) $id,
-                    'slider_id' => (int) $tagId,
-                    'position'  => 1
+                    'banner_id' => (int)$id,
+                    'slider_id' => (int)$tagId,
+                    'position' => 1
                 ];
             }
             $adapter->insertMultiple($this->bannerSliderTable, $data);
@@ -186,9 +186,9 @@ class Banner extends AbstractDb
     public function getSliderIds(\Mageplaza\BannerSlider\Model\Banner $banner)
     {
         $adapter = $this->getConnection();
-        $select  = $adapter->select()
+        $select = $adapter->select()
             ->from($this->bannerSliderTable, 'slider_id')
-            ->where('banner_id = ?', (int) $banner->getId());
+            ->where('banner_id = ?', (int)$banner->getId());
 
         return $adapter->fetchCol($select);
     }

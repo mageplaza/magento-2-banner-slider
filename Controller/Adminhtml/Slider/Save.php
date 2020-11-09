@@ -79,8 +79,8 @@ class Save extends Slider
         Date $dateFilter,
         DataPersistorInterface $dataPersistor
     ) {
-        $this->jsHelper      = $jsHelper;
-        $this->_dateFilter   = $dateFilter;
+        $this->jsHelper = $jsHelper;
+        $this->_dateFilter = $dateFilter;
         $this->dataPersistor = $dataPersistor;
 
         parent::__construct($sliderFactory, $registry, $context);
@@ -94,17 +94,17 @@ class Save extends Slider
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if ($this->getRequest()->getPost('slider')) {
-            $data   = $this->_filterData($this->getRequest()->getPost('slider'));
+            $data = $this->_filterData($this->getRequest()->getPost('slider'));
             $slider = $this->initSlider();
 
             $fromDate = $toDate = null;
             if (isset($data['from_date']) && isset($data['to_date'])) {
                 $fromDate = $data['from_date'];
-                $toDate   = $data['to_date'];
+                $toDate = $data['to_date'];
             }
             if ($fromDate && $toDate) {
                 $fromDate = new DateTime($fromDate);
-                $toDate   = new DateTime($toDate);
+                $toDate = new DateTime($toDate);
 
                 if ($fromDate > $toDate) {
                     $this->messageManager->addErrorMessage(__('End Date must follow Start Date.'));
@@ -125,7 +125,7 @@ class Save extends Slider
             $this->_eventManager->dispatch(
                 'mpbannerslider_slider_prepare_save',
                 [
-                    'slider'  => $slider,
+                    'slider' => $slider,
                     'request' => $this->getRequest()
                 ]
             );
@@ -134,13 +134,12 @@ class Save extends Slider
                 $slider->save();
                 $this->messageManager->addSuccess(__('The Slider has been saved.'));
                 $this->_session->setMageplazaBannerSliderSliderData(false);
-                $this->dataPersistor->set('mpbannerslider_slider', $data);
                 if ($this->getRequest()->getParam('back')) {
                     $resultRedirect->setPath(
                         'mpbannerslider/*/edit',
                         [
                             'slider_id' => $slider->getId(),
-                            '_current'  => true
+                            '_current' => true
                         ]
                     );
 
@@ -160,7 +159,7 @@ class Save extends Slider
                 'mpbannerslider/*/edit',
                 [
                     'slider_id' => $slider->getId(),
-                    '_current'  => true
+                    '_current' => true
                 ]
             );
 
@@ -182,7 +181,7 @@ class Save extends Slider
     protected function _filterData($data)
     {
         $inputFilter = new Zend_Filter_Input(['from_date' => $this->_dateFilter,], [], $data);
-        $data        = $inputFilter->getUnescaped();
+        $data = $inputFilter->getUnescaped();
 
         if (isset($data['responsive_items'])) {
             unset($data['responsive_items']['__empty']);

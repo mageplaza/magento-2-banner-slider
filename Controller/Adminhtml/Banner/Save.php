@@ -71,7 +71,7 @@ class Save extends Banner
         Context $context
     ) {
         $this->imageHelper = $imageHelper;
-        $this->jsHelper    = $jsHelper;
+        $this->jsHelper = $jsHelper;
 
         parent::__construct($bannerFactory, $registry, $context);
     }
@@ -84,7 +84,7 @@ class Save extends Banner
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if ($this->getRequest()->getPost('banner')) {
-            $data   = $this->getRequest()->getPost('banner');
+            $data = $this->getRequest()->getPost('banner');
             $banner = $this->initBanner();
             if ($data['type'] === Type::IMAGE) {
                 $this->imageHelper->uploadImage($data, 'image', Image::TEMPLATE_MEDIA_TYPE_BANNER, $banner->getImage());
@@ -104,7 +104,7 @@ class Save extends Banner
             $this->_eventManager->dispatch(
                 'mpbannerslider_banner_prepare_save',
                 [
-                    'banner'  => $banner,
+                    'banner' => $banner,
                     'request' => $this->getRequest()
                 ]
             );
@@ -117,7 +117,7 @@ class Save extends Banner
                         'mpbannerslider/*/edit',
                         [
                             'banner_id' => $banner->getId(),
-                            '_current'  => true
+                            '_current' => true
                         ]
                     );
 
@@ -137,7 +137,7 @@ class Save extends Banner
                 'mpbannerslider/*/edit',
                 [
                     'banner_id' => $banner->getId(),
-                    '_current'  => true
+                    '_current' => true
                 ]
             );
 

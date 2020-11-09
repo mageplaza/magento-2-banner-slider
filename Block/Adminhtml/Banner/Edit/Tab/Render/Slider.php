@@ -67,7 +67,7 @@ class Slider extends Multiselect
         array $data = []
     ) {
         $this->collectionFactory = $collectionFactory;
-        $this->authorization     = $authorization;
+        $this->authorization = $authorization;
 
         parent::__construct($factoryElement, $factoryCollection, $escaper, $data);
     }
@@ -141,10 +141,10 @@ class Slider extends Multiselect
         $collection = $this->collectionFactory->create();
         $sliderById = [];
         foreach ($collection as $slider) {
-            $sliderId                           = $slider->getId();
-            $sliderById[$sliderId]['value']     = $sliderId;
+            $sliderId = $slider->getId();
+            $sliderById[$sliderId]['value'] = $sliderId;
             $sliderById[$sliderId]['is_active'] = 1;
-            $sliderById[$sliderId]['label']     = $slider->getName();
+            $sliderById[$sliderId]['label'] = $slider->getName();
         }
 
         return $sliderById;

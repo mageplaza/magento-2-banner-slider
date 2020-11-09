@@ -73,8 +73,8 @@ class Content extends Column
         array $data = []
     ) {
         $this->filterProvider = $filterProvider;
-        $this->urlBuilder     = $urlBuilder;
-        $this->imageModel     = $imageModel;
+        $this->urlBuilder = $urlBuilder;
+        $this->imageModel = $imageModel;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
@@ -89,7 +89,7 @@ class Content extends Column
     {
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
-            $path      = $this->imageModel->getBaseUrl();
+            $path = $this->imageModel->getBaseUrl();
             foreach ($dataSource['data']['items'] as & $item) {
                 $banner = new DataObject($item);
                 if ($item['type'] === Type::IMAGE && $item['image']) {

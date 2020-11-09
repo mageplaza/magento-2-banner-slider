@@ -1,0 +1,74 @@
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+
+.mp-banner-slider .owl-nav button span{
+    position: absolute;
+    top: 40%;
+    font-size: 80px;
+    color: #869791;
+}
+.mp-banner-slider .owl-nav .owl-prev span{
+    left: 1%;
+}
+.mp-banner-slider .owl-nav .owl-next span{
+    right: 1%;
+}
+.mp-banner-slider .owl-dots{
+    position: absolute;
+    top: 88%;
+    left: 49%;
+}
+.mp-banner-slider .owl-dots .owl-dot{
+    box-shadow: none;
+}
+.sidebar .mp-banner-slider .owl-nav button span{
+    font-size: 30px;
+    top: 30%;
+}
+.sidebar .mp-banner-slider .owl-dots .owl-dot span{
+    width: 8px;
+    height: 8px;
+}
+.sidebar .mp-banner-slider .owl-dots{
+    top: 70%;
+    left: 42.5%;
+}
+
+@media only screen and (max-width: 764px) {
+    .mp-banner-slider .owl-nav button span{
+        top: 20%;
+        font-size: 45px;
+    }
+    .mp-banner-slider .owl-dots{
+        top: 62%;
+        left: 47%;
+    }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+    .mp-banner-slider .owl-nav button span{
+        top: 30%;
+        font-size: 80px;
+    }
+    .mp-banner-slider .owl-dots{
+        top: 75%;
+        left: 49%;
+    }
+}

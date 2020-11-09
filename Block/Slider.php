@@ -79,11 +79,11 @@ class Slider extends Template
         FilterProvider $filterProvider,
         array $data = []
     ) {
-        $this->helperData         = $helperData;
+        $this->helperData = $helperData;
         $this->customerRepository = $customerRepository;
-        $this->store              = $context->getStoreManager();
-        $this->_date              = $dateTime;
-        $this->filterProvider     = $filterProvider;
+        $this->store = $context->getStoreManager();
+        $this->_date = $dateTime;
+        $this->filterProvider = $filterProvider;
 
         parent::__construct($context, $data);
     }
@@ -141,5 +141,14 @@ class Slider extends Template
     public function getBannerOptions()
     {
         return $this->helperData->getBannerOptions($this->getSlider());
+    }
+
+
+    /**
+     * @return array|mixed
+     */
+    public function isLazyLoad()
+    {
+        return $this->helperData->getModuleConfig('mpbannerslider_design/lazyLoad');
     }
 }

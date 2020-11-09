@@ -103,21 +103,24 @@ class Collection extends AbstractCollection
         if ($field === 'type' && isset($condition['like'])) {
             $condition['like'] = str_replace("'%", '', $condition['like']);
             $condition['like'] = str_replace("%'", '', $condition['like']);
-            if (stripos('Image', $condition['like']) !== false) {
+            $condition['like'] = strtolower($condition['like']);
+
+            if (strpos('image', $condition['like']) !== false) {
                 $condition = 0;
-            }
-            if (stripos('Advanced', $condition['like']) !== false) {
+            } elseif (strpos('advanced', $condition['like']) !== false) {
                 $condition = 1;
             }
+
         }
 
         if ($field === 'status' && isset($condition['like'])) {
             $condition['like'] = str_replace("'%", '', $condition['like']);
             $condition['like'] = str_replace("%'", '', $condition['like']);
-            if (stripos('Enable', $condition['like']) !== false) {
+            $condition['like'] = strtolower($condition['like']);
+
+            if (strpos('enable', $condition['like']) !== false) {
                 $condition = 1;
-            }
-            if (stripos('Disable', $condition['like']) !== false) {
+            } elseif (strpos('disable', $condition['like']) !== false) {
                 $condition = 0;
             }
         }
