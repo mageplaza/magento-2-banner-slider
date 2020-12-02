@@ -33,8 +33,6 @@ use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
  */
 class Delete extends Banner
 {
-    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::banner';
-    
     /**
      * @return ResponseInterface|Redirect|ResultInterface
      */

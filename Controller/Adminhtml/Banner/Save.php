@@ -40,8 +40,6 @@ use RuntimeException;
  */
 class Save extends Banner
 {
-    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::banner';
-    
     /**
      * JS helper
      *

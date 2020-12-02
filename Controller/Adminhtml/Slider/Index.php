@@ -32,6 +32,8 @@ use Magento\Framework\View\Result\PageFactory;
  */
 class Index extends Action
 {
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::slider';
+
     /**
      * Page result factory
      *
