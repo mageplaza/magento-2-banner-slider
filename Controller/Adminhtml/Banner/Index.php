@@ -45,6 +45,8 @@ class Index extends Action
      * @var \Magento\Backend\Model\View\Result\Page
      */
     protected $resultPage;
+    
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::banner';
 
     /**
      * Index constructor.
