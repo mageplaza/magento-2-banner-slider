@@ -31,6 +31,8 @@ use Magento\Framework\Controller\ResultInterface;
  */
 class NewAction extends Action
 {
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::banner';
+    
     /**
      * @return ResponseInterface|ResultInterface|void
      */
