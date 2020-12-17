@@ -41,7 +41,7 @@ class Form extends Generic
             [
                 'data' => [
                     'id'      => 'edit_form',
-                    'action'  => $this->getUrl('*/*/save', ['id' => $this->getRequest()->getParam('id')]),
+                    'action'  => $this->getUrl('*/*/save', ['slider_id' => $this->getRequest()->getParam('slider_id')]),
                     'method'  => 'post',
                     'enctype' => 'multipart/form-data'
                 ]

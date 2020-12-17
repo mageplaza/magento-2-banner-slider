@@ -23,6 +23,7 @@ namespace Mageplaza\BannerSlider\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 
@@ -68,6 +69,7 @@ abstract class Slider extends Action
      * Init Slider
      *
      * @return \Mageplaza\BannerSlider\Model\Slider
+     * @throws LocalizedException
      */
     protected function initSlider()
     {
@@ -76,6 +78,9 @@ abstract class Slider extends Action
         $slider = $this->sliderFactory->create();
         if ($sliderId) {
             $slider->load($sliderId);
+            if (!$slider->getId()) {
+                throw new LocalizedException(__('The wrong slider is specified.'));
+            }
         }
         $this->coreRegistry->register('mpbannerslider_slider', $slider);
 
