@@ -81,7 +81,7 @@ class Edit extends Banner
                 $resultRedirect->setPath(
                     'mpbannerslider/*/edit',
                     [
-                        'banner_id' => $banner->getId(),
+                        'banner_id' => $id,
                         '_current' => true
                     ]
                 );
