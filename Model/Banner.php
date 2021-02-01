@@ -151,7 +151,7 @@ class Banner extends AbstractModel implements IdentityInterface
      */
     public function getDefaultValues()
     {
-        return ['status => 1', 'type' => '0'];
+        return ['status' => '1', 'type' => '0'];
     }
 
     /**
