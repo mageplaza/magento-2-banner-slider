@@ -58,6 +58,9 @@ class Location implements ArrayInterface
     {
         $options = [
             [
+                'label' => 'Manually', 'value' => ''
+            ],
+            [
                 'label' => __('All Page'),
                 'value' => [
                     [
