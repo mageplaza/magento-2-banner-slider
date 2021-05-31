@@ -228,6 +228,7 @@ class Banner extends Generic implements TabInterface
             'name' => 'url_banner',
             'label' => __('Url'),
             'title' => __('Url'),
+            'class' => 'validate-url validate-no-html-tags'
         ]);
 
         $newTab = $fieldset->addField('newtab', 'select', [

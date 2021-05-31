@@ -137,7 +137,7 @@ class InstallSchema implements InstallSchemaInterface
                     ],
                     'Slider ID'
                 )
-                ->addColumn('name', Table::TYPE_TEXT, 255, ['nullable => false'], 'Slider Name')
+                ->addColumn('name', Table::TYPE_TEXT, 255, ['nullable' => false], 'Slider Name')
                 ->addColumn('status', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Status')
                 ->addColumn('location', Table::TYPE_TEXT, 1000, [], 'Location')
                 ->addColumn('store_ids', Table::TYPE_TEXT, 255, [])

@@ -149,6 +149,6 @@ class Slider extends Template
      */
     public function isLazyLoad()
     {
-        return $this->helperData->getModuleConfig('mpbannerslider_design/lazyLoad');
+        return $this->helperData->getModuleConfig('mpbannerslider_design/lazyLoad') || $this->getSlider()->getData('lazyLoad');
     }
 }
