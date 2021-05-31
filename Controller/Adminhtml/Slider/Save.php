@@ -134,7 +134,6 @@ class Save extends Slider
                 $slider->save();
                 $this->messageManager->addSuccess(__('The Slider has been saved.'));
                 $this->_session->setMageplazaBannerSliderSliderData(false);
-                $this->dataPersistor->set('mpbannerslider_slider', $data);
                 if ($this->getRequest()->getParam('back')) {
                     $resultRedirect->setPath(
                         'mpbannerslider/*/edit',
@@ -151,8 +150,16 @@ class Save extends Slider
                 return $resultRedirect;
             } catch (RuntimeException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
+                if ($slider->getId()) {
+                    $this->_redirect('mpbannerslider/*/edit', ['slider_id' => $slider->getId()]);
+                } else {
+                    $this->_redirect('mpbannerslider/*/new');
+                }
             } catch (Exception $e) {
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Slider.'));
+                $this->_redirect('mpbannerslider/*/edit', [
+                    'slider_id' => $slider->getId()
+                ]);
             }
 
             $this->_getSession()->setMageplazaBannerSliderSliderData($data);
