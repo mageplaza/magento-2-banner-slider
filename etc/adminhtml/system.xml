@@ -32,7 +32,9 @@
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Select Yes to enable this module</comment>
+                    <comment><![CDATA[Select <b>Yes</b> to enable this module.<br />
+                        1. It helps to reduce abandonment cart with <a href="https://www.mageplaza.com/magento-2-one-step-checkout-extension/" target="_blank">One Step Checkout</a>. <br />
+                        2. Magento stores see upwards of 30% revenue 💰 with AVADA. <a href="https://go.avada.io/mageplaza">Learn more</a>]]></comment>
                 </field>
             </group>
             <group id="mpbannerslider_design" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
