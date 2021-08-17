@@ -1,6 +1,6 @@
 # Magento 2 Banner Slider Extension FREE by Mageplaza
 
-**Mageplaza Banner slider for Magento 2** is a supportive marketing tool which allows store owners to display unlimited eye-catching banner sliders on their Ecommerce website. By this way, the extension helps draw customers' attention as well as optimize their experience, with a user-friendly interface. 
+**[Banner slider for Magento 2](https://www.mageplaza.com/magento-2-banner-slider-extension/)** is a supportive marketing tool which allows store owners to display unlimited eye-catching banner sliders on their Ecommerce website. By this way, the extension helps draw customers' attention as well as optimize their experience, with a user-friendly interface. 
 
 Magento 2 Banner Slider Module accordingly will help improve customer retention and prevent the site from being abandoned by customers. This actually will increase the rate of subscribers of the website. 
 
@@ -19,7 +19,7 @@ Magento 2 Banner Slider Module accordingly will help improve customer retention 
 
 
 
-## 2. How to install
+## 2. How to install Banner Slider in Magento 2
 
 ### ✓ Install via composer (recommend)
 
@@ -71,7 +71,7 @@ A: Yes, you can create the widget by navigating to `Content > Elements > Widgets
 
 
 
-## 4. Highlight features
+## 4. Highlight features of Magento 2 Banner Slider
 
 ### Unlimited Banners and Sliders
 
@@ -190,7 +190,7 @@ The extension will publish a report on Click and Impression data, which represen
 - View banner sliders on multi-devices
 
 
-## 7. User Guide
+## 7. Magento 2 Banner Slider User Guide
 
 In this guide, I will show you how to insert A banner slider into Homepage of Magento 2 store.
 
@@ -460,3 +460,15 @@ Click on `Continue` to move to the next step.
 - [Magento 2 Layered Navigation](https://github.com/mageplaza/magento-2-ajax-layered-navigation)
 - [Magento 2 security suite](https://github.com/mageplaza/magento-2-security)
 
+
+**Get more [Magento 2 extensions on Marketplace](https://marketplace.magento.com/partner/Mageplaza):**
+- [M2 Reward Points](https://marketplace.magento.com/mageplaza-module-reward-points.html)
+- [M2 Affiliate Module](https://marketplace.magento.com/mageplaza-module-affiliate.html)
+- [M2 Product Feed](https://marketplace.magento.com/mageplaza-module-product-feed.html)
+- [M2 Custom Order Number](https://marketplace.magento.com/mageplaza-module-custom-order-number.html)
+- [M2 Multiple Coupons](https://marketplace.magento.com/mageplaza-module-multiple-coupons.html)
+- [M2 Import Export CMS](https://marketplace.magento.com/mageplaza-module-import-export-cms.html)
+- [Magento 2 Shipping Restrictions](https://marketplace.magento.com/mageplaza-module-shipping-restriction.html)
+- [Magento 2 Multiple Coupons](https://marketplace.magento.com/mageplaza-module-multiple-coupons.html)
+- [Magento 2 Order Attributes](https://marketplace.magento.com/mageplaza-module-order-attributes.html)
+- [Magento 2 Barcode](https://marketplace.magento.com/mageplaza-module-barcode.html)
