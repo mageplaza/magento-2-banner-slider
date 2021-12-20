@@ -60,7 +60,7 @@ class Upload
             }
         } catch (\Exception $e) {
             if ($e->getCode() != \Magento\Framework\File\Uploader::TMP_NAME_EMPTY) {
-                throw new \Magento\Framework\Exception\LocalizedException($e->getMessage());
+                throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
             } else {
                 if (isset($data[$input]['value'])) {
                     return $data[$input]['value'];
