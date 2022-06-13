@@ -196,6 +196,7 @@ class Banner extends Extended implements TabInterface
             'validate_class' => 'validate-number validate-zero-or-greater validate-digits',
             'index' => 'position',
             'editable' => true,
+            'edit_only' => true,
         ]);
 
         return $this;

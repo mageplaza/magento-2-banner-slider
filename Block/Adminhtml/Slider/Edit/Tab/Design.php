@@ -159,7 +159,8 @@ class Design extends Generic implements TabInterface
         $timeout = $fieldset->addField('autoplayTimeout', 'text', [
             'name' => 'autoplayTimeout',
             'label' => __('Autoplay Time-Out'),
-            'title' => __('Autoplay Time-Out')
+            'title' => __('Autoplay Time-Out'),
+            'class' => 'validate-number validate-zero-or-greater validate-digits',
         ]);
 
         $dependencies = $this->getLayout()->createBlock(Dependence::class)
