@@ -160,7 +160,7 @@ class Design extends Generic implements TabInterface
             'name' => 'autoplayTimeout',
             'label' => __('Autoplay Time-Out'),
             'title' => __('Autoplay Time-Out'),
-            'class' => 'validate-number validate-zero-or-greater validate-digits'
+            'class' => 'validate-number validate-zero-or-greater validate-digits',
         ]);
 
         $dependencies = $this->getLayout()->createBlock(Dependence::class)
