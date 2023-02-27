@@ -87,7 +87,7 @@ class AddBlock implements ObserverInterface
             $output = $observer->getTransport()->getOutput();
 
             foreach ($this->helperData->getActiveSliders() as $slider) {
-                $locations = array_filter(explode(',', $slider->getLocation()));
+                $locations = array_filter(explode(',', $slider->getLocation() ?: ''));
                 foreach ($locations as $value) {
                     if ($value === Location::USING_SNIPPET_CODE) {
                         continue;
