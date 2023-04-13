@@ -23,7 +23,6 @@ namespace Mageplaza\BannerSlider\Model\ResourceModel\Banner;
 
 use Magento\Framework\DB\Select;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
-use Zend_Db_Select;
 
 /**
  * Class Collection
@@ -71,7 +70,7 @@ class Collection extends AbstractCollection
     public function getSelectCountSql()
     {
         $countSelect = parent::getSelectCountSql();
-        $countSelect->reset(Zend_Db_Select::GROUP);
+        $countSelect->reset(Select::GROUP);
 
         return $countSelect;
     }
