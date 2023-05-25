@@ -148,7 +148,7 @@ class Banner extends Extended implements TabInterface
             'align' => 'center',
             'index' => 'banner_id'
         ]);
-        $this->addColumn('banner_id', [
+        $this->addColumn('banner_ids', [
             'header' => __('ID'),
             'sortable' => true,
             'index' => 'banner_id',

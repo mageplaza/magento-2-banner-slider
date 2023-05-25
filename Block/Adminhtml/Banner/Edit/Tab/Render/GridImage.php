@@ -23,8 +23,10 @@ namespace Mageplaza\BannerSlider\Block\Adminhtml\Banner\Edit\Tab\Render;
 
 use Magento\Backend\Block\Context;
 use Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer;
+use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\DataObject;
 use Mageplaza\BannerSlider\Model\Config\Source\Image as ImageModel;
+use Mageplaza\BannerSlider\Model\Config\Source\Type;
 
 /**
  * Class GridImage
@@ -38,18 +40,26 @@ class GridImage extends AbstractRenderer
     protected $imageModel;
 
     /**
+     * @var FilterProvider
+     */
+    protected $filterProvider;
+
+    /**
      * GridImage constructor.
      *
      * @param Context $context
      * @param ImageModel $imageModel
+     * @param FilterProvider $filterProvider
      * @param array $data
      */
     public function __construct(
         Context $context,
         ImageModel $imageModel,
+        FilterProvider $filterProvider,
         array $data = []
     ) {
-        $this->imageModel = $imageModel;
+        $this->imageModel     = $imageModel;
+        $this->filterProvider = $filterProvider;
 
         parent::__construct($context, $data);
     }
@@ -67,6 +77,8 @@ class GridImage extends AbstractRenderer
             $imageUrl = $this->imageModel->getBaseUrl() . $row->getData($this->getColumn()->getIndex());
 
             return '<img src="' . $imageUrl . '" width=\'150\' class="admin__control-thumbnail"/>';
+        } elseif ($row->getType() === Type::CONTENT) {
+            return $this->filterProvider->getPageFilter()->filter($row->getContent());
         }
 
         return '';
