@@ -24,6 +24,7 @@ namespace Mageplaza\BannerSlider\Block;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Widget\Block\BlockInterface;
+use Mageplaza\BannerSlider\Model\Config\Source\Location;
 
 /**
  * Class Widget
@@ -43,7 +44,9 @@ class Widget extends Slider implements BlockInterface
         }
 
         $sliderCollection = $this->helperData->getActiveSliders();
-        $slider = $sliderCollection->addFieldToFilter('slider_id', $sliderId)->getFirstItem();
+        $slider           = $sliderCollection->addFieldToFilter('slider_id', $sliderId)
+            ->addFieldToFilter('location', ['finset' => Location::USING_SNIPPET_CODE])->getFirstItem();
+        
         $this->setSlider($slider);
 
         return parent::getBannerCollection();
