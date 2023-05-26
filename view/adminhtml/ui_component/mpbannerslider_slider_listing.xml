@@ -67,14 +67,6 @@
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
         <filters name="listing_filters">
-            <filterSelect name="customer_group_filter" provider="${ $.parentName }">
-                <settings>
-                    <caption translate="true">All Customer Group</caption>
-                    <options class="Mageplaza\BannerSlider\Ui\Component\Listing\Column\CustomerGroup\Options"/>
-                    <label translate="true">Customer Group</label>
-                    <dataScope>customer_group_filter</dataScope>
-                </settings>
-            </filterSelect>
             <filterSelect name="store_ids">
                 <argument name="optionsProvider" xsi:type="configurableObject">
                     <argument name="class" xsi:type="string">Magento\Store\Ui\Component\Listing\Column\Store\Options</argument>
@@ -244,13 +236,14 @@
                 </item>
             </argument>
         </column>
-        <column name="customer_group_ids" class="Mageplaza\BannerSlider\Ui\Component\Listing\Column\CustomerGroup">
+        <column name="customer_group_ids">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Mageplaza\BannerSlider\Ui\Component\Listing\Column\CustomerGroup\Options</item>
                 <item name="config" xsi:type="array">
-                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
-                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>
                     <item name="label" xsi:type="string" translate="true">Customer Groups</item>
-                    <item name="sortOrder" xsi:type="number">65</item>
                 </item>
             </argument>
         </column>

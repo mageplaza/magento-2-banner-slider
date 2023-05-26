@@ -90,8 +90,10 @@ class Collection extends SearchResult
             case 'banners':
                 $field = 'main_table.name';
                 break;
-            case 'customer_group_filter':
+            case 'customer_group_ids':
                 return parent::addFieldToFilter('customer_group_ids', ['finset' => $condition['eq']]);
+            case 'store_ids':
+                return parent::addFieldToFilter('store_ids', [['finset' => $condition['eq']], ['finset' => 0]]);
         }
 
         return parent::addFieldToFilter($field, $condition);
