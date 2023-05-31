@@ -2,10 +2,10 @@
   "name": "mageplaza/module-banner-slider",
   "description": "Magento 2 Banner Slider extension",
   "require": {
-    "mageplaza/module-core": "^1.4.12"
+    "mageplaza/module-core": "^1.5.3"
   },
   "type": "magento2-module",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "license": "proprietary",
   "authors": [
     {
