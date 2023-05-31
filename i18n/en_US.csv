@@ -69,6 +69,7 @@ Priority,Priority
 "Something went wrong while updating status for %1.","Something went wrong while updating status for %1."
 "A total of %1 record(s) have been updated.","A total of %1 record(s) have been updated."
 "The Banner has been saved.","The Banner has been saved."
+"The wrong slider is specified.","The wrong slider is specified."
 "The slider has been deleted.","The slider has been deleted."
 "This Slider no longer exists.","This Slider no longer exists."
 "Manage Sliders","Manage Sliders"
@@ -111,7 +112,11 @@ Edit,Edit
 "Go to Details Page","Go to Details Page"
 "Banner Slider","Banner Slider"
 Enable,Enable
-"Select Yes to enable this module","Select Yes to enable this module"
+"Select <b>Yes</b> to enable this module.<br />
+                        1. It helps to reduce abandonment cart with <a href=""https://www.mageplaza.com/magento-2-one-step-checkout-extension/"" target=""_blank"">One Step Checkout</a>. <br />
+                        2. Magento stores see upwards of 30% revenue 💰 with AVADA. <a href=""https://go.avada.io/mageplaza"">Learn more</a>","Select <b>Yes</b> to enable this module.<br />
+                        1. It helps to reduce abandonment cart with <a href=""https://www.mageplaza.com/magento-2-one-step-checkout-extension/"" target=""_blank"">One Step Checkout</a>. <br />
+                        2. Magento stores see upwards of 30% revenue 💰 with AVADA. <a href=""https://go.avada.io/mageplaza"">Learn more</a>"
 "Slider Design Configuration","Slider Design Configuration"
 Responsive,Responsive
 "Select Yes to use auto-width","Select Yes to use auto-width"
@@ -134,10 +139,10 @@ Banner,Banner
 Created,Created
 Modified,Modified
 "Add New Slider","Add New Slider"
+"Store View","Store View"
 "Delete Sliders","Delete Sliders"
 "Are you sure you wan't to delete selected Sliders?","Are you sure you wan't to delete selected Sliders?"
 "Number of banner","Number of banner"
 "Slider Location","Slider Location"
-"Store View","Store View"
 "Start Date","Start Date"
 "End Date","End Date"
