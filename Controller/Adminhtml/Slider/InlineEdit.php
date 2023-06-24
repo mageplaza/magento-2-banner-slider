@@ -37,6 +37,8 @@ use RuntimeException;
  */
 class InlineEdit extends Action
 {
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::slider';
+
     /**
      * JSON Factory
      *

@@ -39,6 +39,8 @@ use Mageplaza\BannerSlider\Model\Slider;
  */
 class MassDelete extends Action
 {
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::slider';
+
     /**
      * Mass Action Filter
      *

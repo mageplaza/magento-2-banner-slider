@@ -37,8 +37,6 @@ use Mageplaza\BannerSlider\Model\BannerFactory;
  */
 class Edit extends Banner
 {
-    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::banner';
-
     /**
      * Page factory
      *
