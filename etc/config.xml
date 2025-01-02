@@ -23,6 +23,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <mpbannerslider>
+            <module>
+                <user_guide>magento/module-banner-slider</user_guide>
+            </module>
             <general>
                 <enabled>1</enabled>
             </general>
