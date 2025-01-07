@@ -24,7 +24,7 @@
     <default>
         <mpbannerslider>
             <module>
-                <user_guide>magento/module-banner-slider</user_guide>
+                <user_guide>magento/banner-slider</user_guide>
             </module>
             <general>
                 <enabled>1</enabled>
