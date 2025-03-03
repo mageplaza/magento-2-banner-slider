@@ -92,7 +92,8 @@ class Design extends Generic implements TabInterface
             'name' => 'effect',
             'label' => __('Animation Effect'),
             'title' => __('Animation Effect'),
-            'values' => $this->_effect->toOptionArray()
+            'values' => $this->_effect->toOptionArray(),
+            'note' => __('Only the fadeOut animation is available on Hyva. The other animations are not currently available.')
         ]);
         $design = $fieldset->addField('design', 'select', [
             'name' => 'design',

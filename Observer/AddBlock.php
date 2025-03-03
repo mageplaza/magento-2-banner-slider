@@ -29,6 +29,7 @@ use Magento\Framework\View\Layout;
 use Mageplaza\BannerSlider\Block\Slider;
 use Mageplaza\BannerSlider\Helper\Data;
 use Mageplaza\BannerSlider\Model\Config\Source\Location;
+use Mageplaza\BannerSlider\Block\HyvaSlider;
 
 /**
  * Class AddBlock
@@ -96,9 +97,16 @@ class AddBlock implements ObserverInterface
                     if (($fullActionName === $pageType || $pageType === 'allpage') &&
                         strpos($location, $type) !== false
                     ) {
-                        $content = $layout->createBlock(Slider::class)
-                            ->setSlider($slider)
-                            ->toHtml();
+                        if ($this->helperData->checkHyvaTheme()) {
+                            $content = $layout->createBlock(HyvaSlider::class)
+                                ->setSlider($slider)
+                                ->toHtml();
+                        } else {
+                            $content = $layout->createBlock(Slider::class)
+                                ->setSlider($slider)
+                                ->toHtml();
+                        }
+
 
                         if (strpos($location, 'top') !== false) {
                             if ($type === 'sidebar') {
