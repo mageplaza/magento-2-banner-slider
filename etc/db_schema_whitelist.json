@@ -14,7 +14,10 @@
             "updated_at": true
         },
         "index": {
-            "MAGEPLAZA_BANNERSLIDER_BANNER_NAME_IMAGE_URL": true
+            "MAGEPLAZA_BANNERSLIDER_BANNER_NAME_IMAGE_URL_BANNER": true
+        },
+        "constraint": {
+            "PRIMARY": true
         }
     },
     "mageplaza_bannerslider_slider": {
@@ -42,6 +45,9 @@
             "to_date": true,
             "created_at": true,
             "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
         }
     },
     "mageplaza_bannerslider_banner_slider": {
@@ -53,7 +59,12 @@
         "index": {
             "MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_SLIDER_ID": true,
             "MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_BANNER_ID": true,
-            "MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_UNIQUE": true
+            "MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_SLIDER_ID_BANNER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_988AB80B5D2DF60CAD31BAFF020B3903": true,
+            "FK_824689F307EEDC9AF4DD5A7D11110615": true
         }
     }
 }
