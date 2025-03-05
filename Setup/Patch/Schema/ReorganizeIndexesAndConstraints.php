@@ -1,15 +1,17 @@
 <?php
+declare(strict_types=1);
+
 namespace Mageplaza\BannerSlider\Setup\Patch\Schema;
 
-use Exception;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
-use Mageplaza\BannerSlider\Model\Config\Source\Template;
-use Psr\Log\LoggerInterface;
 use Magento\Framework\Setup\Patch\SchemaPatchInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\DB\Ddl\Table;
+use Mageplaza\BannerSlider\Model\Config\Source\Template;
+use Psr\Log\LoggerInterface;
 
-class UpdateBannerSliderSchema implements SchemaPatchInterface
+class ReorganizeIndexesAndConstraints implements SchemaPatchInterface
 {
     /**
      * @var SchemaSetupInterface
@@ -47,27 +49,65 @@ class UpdateBannerSliderSchema implements SchemaPatchInterface
     }
 
     /**
-     * @return $this|UpdateBannerSliderSchema
+     * @inheritdoc
      */
     public function apply()
     {
         $setup = $this->schemaSetup;
+        $connection = $setup->getConnection();
         $setup->startSetup();
 
-        $connection = $setup->getConnection();
         $tableName = $setup->getTable('mageplaza_bannerslider_banner_slider');
 
-        $indexList = $connection->getIndexList($tableName);
-        $indexesToRemove = [
-            'MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_SLIDER_ID',
-            'MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_BANNER_ID',
-            'MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_UNIQUE'
-        ];
-
-        foreach ($indexesToRemove as $indexName) {
-            if (isset($indexList[$indexName])) {
-                $connection->dropIndex($tableName, $indexName);
+        if ($connection->isTableExists($tableName)) {
+            $foreignKeys = $connection->getForeignKeys($tableName);
+            foreach ($foreignKeys as $foreignKey) {
+                $connection->dropForeignKey($tableName, $foreignKey['FK_NAME']);
             }
+
+            $indexes = $connection->getIndexList($tableName);
+            foreach ($indexes as $indexName => $indexData) {
+                if ($indexName !== 'PRIMARY') {
+                    $connection->dropIndex($tableName, $indexName);
+                }
+            }
+
+            $connection->addForeignKey(
+                $setup->getFkName(
+                    'mageplaza_bannerslider_banner_slider',
+                    'slider_id',
+                    'mageplaza_bannerslider_slider',
+                    'slider_id'
+                ),
+                $tableName,
+                'slider_id',
+                $setup->getTable('mageplaza_bannerslider_slider'),
+                'slider_id',
+                Table::ACTION_CASCADE
+            );
+
+            $connection->addForeignKey(
+                $setup->getFkName(
+                    'mageplaza_bannerslider_banner_slider',
+                    'banner_id',
+                    'mageplaza_bannerslider_banner',
+                    'banner_id'
+                ),
+                $tableName,
+                'banner_id',
+                $setup->getTable('mageplaza_bannerslider_banner'),
+                'banner_id',
+                Table::ACTION_CASCADE
+            );
+
+            $connection->addIndex(
+                $tableName,
+                $setup->getIdxName(
+                    'mageplaza_bannerslider_banner_slider',
+                    ['slider_id', 'banner_id']
+                ),
+                ['slider_id', 'banner_id']
+            );
         }
 
         $this->copyDemoImage();
@@ -91,13 +131,13 @@ class UpdateBannerSliderSchema implements SchemaPatchInterface
                 $oriPath = dirname(__DIR__, 4) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
                 $mediaDirectory->getDriver()->copy($oriPath, $targetPath);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->critical($e->getMessage());
         }
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -105,7 +145,7 @@ class UpdateBannerSliderSchema implements SchemaPatchInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getAliases()
     {
