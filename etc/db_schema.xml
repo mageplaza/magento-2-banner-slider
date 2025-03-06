@@ -64,19 +64,5 @@
             <column name="slider_id"/>
             <column name="banner_id"/>
         </constraint>
-
-        <constraint xsi:type="foreign" referenceId="MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_SLIDER_ID" table="mageplaza_bannerslider_banner_slider" column="slider_id" referenceTable="mageplaza_bannerslider_slider" referenceColumn="slider_id" onDelete="CASCADE"/>
-        <constraint xsi:type="foreign" referenceId="MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_BANNER_ID" table="mageplaza_bannerslider_banner_slider" column="banner_id" referenceTable="mageplaza_bannerslider_banner" referenceColumn="banner_id" onDelete="CASCADE"/>
-
-        <index referenceId="MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_SLIDER_ID" indexType="btree">
-            <column name="slider_id"/>
-        </index>
-        <index referenceId="MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_BANNER_ID" indexType="btree">
-            <column name="banner_id"/>
-        </index>
-        <index referenceId="MAGEPLAZA_BANNERSLIDER_BANNER_SLIDER_UNIQUE" indexType="btree">
-            <column name="slider_id"/>
-            <column name="banner_id"/>
-        </index>
     </table>
 </schema>
