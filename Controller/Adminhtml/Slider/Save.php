@@ -184,7 +184,11 @@ class Save extends Slider
      */
     protected function _filterData($data)
     {
-        $inputFilter = new \Magento\Framework\Filter\FilterInput(['from_date' => $this->_dateFilter,], [], $data);
+        if (class_exists('Magento\Framework\Filter\FilterInput')) {
+            $inputFilter = new \Magento\Framework\Filter\FilterInput(['from_date' => $this->_dateFilter,], [], $data);
+        } else {
+            $inputFilter = new \Zend_Filter_Input(['from_date' => $this->_dateFilter,], [], $data);
+        }
         $data = $inputFilter->getUnescaped();
         if (isset($data['responsive_items'])) {
             unset($data['responsive_items']['__empty']);
