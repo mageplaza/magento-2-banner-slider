@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Mageplaza\BannerSlider\Setup\Patch\Schema;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Setup\Patch\SchemaPatchInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
@@ -64,7 +65,6 @@ class ReorganizeIndexesAndConstraints implements SchemaPatchInterface
             foreach ($foreignKeys as $foreignKey) {
                 $connection->dropForeignKey($tableName, $foreignKey['FK_NAME']);
             }
-
             $indexes = $connection->getIndexList($tableName);
             foreach ($indexes as $indexName => $indexData) {
                 if ($indexName !== 'PRIMARY') {
@@ -85,7 +85,6 @@ class ReorganizeIndexesAndConstraints implements SchemaPatchInterface
                 'slider_id',
                 Table::ACTION_CASCADE
             );
-
             $connection->addForeignKey(
                 $setup->getFkName(
                     'mageplaza_bannerslider_banner_slider',
@@ -102,11 +101,23 @@ class ReorganizeIndexesAndConstraints implements SchemaPatchInterface
 
             $connection->addIndex(
                 $tableName,
+                $setup->getIdxName($tableName, ['slider_id']),
+                ['slider_id']
+            );
+            $connection->addIndex(
+                $tableName,
+                $setup->getIdxName($tableName, ['banner_id']),
+                ['banner_id']
+            );
+            $connection->addIndex(
+                $tableName,
                 $setup->getIdxName(
-                    'mageplaza_bannerslider_banner_slider',
-                    ['slider_id', 'banner_id']
+                    $tableName,
+                    ['slider_id', 'banner_id'],
+                    AdapterInterface::INDEX_TYPE_UNIQUE
                 ),
-                ['slider_id', 'banner_id']
+                ['slider_id', 'banner_id'],
+                AdapterInterface::INDEX_TYPE_UNIQUE
             );
         }
 
@@ -128,7 +139,7 @@ class ReorganizeIndexesAndConstraints implements SchemaPatchInterface
             foreach ($demos as $demo) {
                 $targetPath = $mediaDirectory->getAbsolutePath($url . $demo['value']);
                 $DS = DIRECTORY_SEPARATOR;
-                $oriPath = dirname(__DIR__, 4) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
+                $oriPath = dirname(__DIR__, 3) . $DS . 'view' . $DS . 'adminhtml' . $DS . 'web' . $DS . 'images' . $DS . $demo['value'];
                 $mediaDirectory->getDriver()->copy($oriPath, $targetPath);
             }
         } catch (\Exception $e) {
