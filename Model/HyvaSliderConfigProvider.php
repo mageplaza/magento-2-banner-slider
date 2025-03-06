@@ -120,10 +120,16 @@ class HyvaSliderConfigProvider
     {
         /**
          * splidejs
-         * If true, the width of slides are determined by their width.
+         * If true, the width/height of slides are determined by their width/height.
          * Do not provide perPage and perMove options (or set them to 1).
          */
-        if ($sliderOptions['autoWidth']) {
+        if (
+            ($sliderOptions['autoWidth'] || $sliderOptions['autoHeight']) &&
+            (
+                (($sliderOptions['perPage'] ?? 1) > 1) ||
+                isset($sliderOptions['breakpoints'])
+            )
+        ) {
             unset($sliderOptions['perPage'], $sliderOptions['breakpoints'], $sliderOptions['mediaQuery']);
         }
         /**
