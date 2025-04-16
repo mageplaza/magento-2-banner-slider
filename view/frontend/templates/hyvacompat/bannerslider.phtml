@@ -93,7 +93,7 @@ if ($check): ?>
                     this.initSplideJs();
                 },
                 initSplideJs() {
-                    <?php $splideJsUrl = $block->getViewFileUrl('Mageplaza_BannerSlider::js/hyvacompat/splide.min.js'); ?>
+                    <?php $splideJsUrl = $block->getViewFileUrl('Mageplaza_Core::js/splide.min.js'); ?>
                     const scriptSource = '<?= $escaper->escapeJs($escaper->escapeUrl($splideJsUrl)) ?>';
 
                     if (!window.splideLoadingPromise) {
@@ -121,7 +121,7 @@ if ($check): ?>
                 initSplideCss() {
                     if (window.SplideCSS === 'loaded') return;
 
-                    <?php $splideCssUrl = $block->getViewFileUrl('Mageplaza_BannerSlider::css/hyvacompat/splide.min.css'); ?>
+                    <?php $splideCssUrl = $block->getViewFileUrl('Mageplaza_Core::css/splide.min.css'); ?>
                     const styleSheetHref = '<?= $escaper->escapeJs($escaper->escapeUrl($splideCssUrl)) ?>'
                     const style = document.createElement("link");
                     style.rel = "stylesheet";

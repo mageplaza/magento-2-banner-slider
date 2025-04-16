@@ -118,7 +118,7 @@ class HyvaSlider extends Template
      */
     public function isLazyLoad()
     {
-        if ($this->getSlider()->getDesign() === '1') {
+        if ($this->getSlider()->getDesign()) {
             return $this->getSlider()->getData('lazyLoad');
         }
         return $this->helperData->getMpHelper()->getModuleConfig('mpbannerslider_design/lazyLoad');

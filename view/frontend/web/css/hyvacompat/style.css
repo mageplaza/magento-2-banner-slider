@@ -1,0 +1,11 @@
+.splide .splide__list{
+    transition: height .5s ease-in-out
+}
+.splide .splide__slide__container .container{
+    max-width:unset;
+    padding:0
+}
+.splide .splide__slide img{
+    vertical-align:bottom;
+    width:100%
+}

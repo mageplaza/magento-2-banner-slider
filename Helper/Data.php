@@ -25,6 +25,7 @@ use Exception;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Http\Context as HttpContext;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Module\Manager;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\View\Design\Theme\ThemeProviderInterface;
@@ -65,6 +66,10 @@ class Data extends AbstractData
      * @var HttpContext
      */
     protected $httpContext;
+    /**
+     * @var Manager
+     */
+    protected Manager $moduleManager;
 
     /**
      * Data constructor.
@@ -76,6 +81,7 @@ class Data extends AbstractData
      * @param SliderFactory $sliderFactory
      * @param StoreManagerInterface $storeManager
      * @param ObjectManagerInterface $objectManager
+     * @param Manager $moduleManager
      */
     public function __construct(
         DateTime $date,
@@ -84,12 +90,14 @@ class Data extends AbstractData
         BannerFactory $bannerFactory,
         SliderFactory $sliderFactory,
         StoreManagerInterface $storeManager,
-        ObjectManagerInterface $objectManager
+        ObjectManagerInterface $objectManager,
+        Manager $moduleManager
     ) {
         $this->date = $date;
         $this->httpContext = $httpContext;
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
+        $this->moduleManager = $moduleManager;
 
         parent::__construct($context, $objectManager, $storeManager);
     }
@@ -272,5 +280,10 @@ class Data extends AbstractData
         $themeProviderInterface = $this->objectManager->create(DesignInterface::Class);
 
         return $themeProviderInterface->getDesignTheme();
+    }
+
+    public function isHyvaThemeEnabled(): bool
+    {
+        return $this->moduleManager->isEnabled('Hyva_Theme');
     }
 }

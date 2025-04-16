@@ -30,6 +30,7 @@ use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Renderer\Responsive;
+use Mageplaza\BannerSlider\Helper\Data;
 use Mageplaza\BannerSlider\Model\Config\Source\Effect;
 
 /**
@@ -47,6 +48,10 @@ class Design extends Generic implements TabInterface
      * @var Yesno
      */
     protected $_yesno;
+    /**
+     * @var Data
+     */
+    protected Data $_mpHelper;
 
     /**
      * Design constructor.
@@ -64,10 +69,12 @@ class Design extends Generic implements TabInterface
         FormFactory $formFactory,
         Effect $effect,
         Yesno $yesno,
+        Data $mpHelper,
         array $data = []
     ) {
         $this->_effect = $effect;
         $this->_yesno = $yesno;
+        $this->_mpHelper = $mpHelper;
 
         parent::__construct($context, $registry, $formFactory, $data);
     }
@@ -93,7 +100,7 @@ class Design extends Generic implements TabInterface
             'label' => __('Animation Effect'),
             'title' => __('Animation Effect'),
             'values' => $this->_effect->toOptionArray(),
-            'note' => __('Only the fadeOut animation is available on Hyva. The other animations are not currently available.')
+            'note' => $this->_mpHelper->isHyvaThemeEnabled() ? __('Only the fadeOut animation is available on Hyva. The other animations are not currently available.') : ''
         ]);
         $design = $fieldset->addField('design', 'select', [
             'name' => 'design',

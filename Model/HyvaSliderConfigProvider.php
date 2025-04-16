@@ -96,7 +96,7 @@ class HyvaSliderConfigProvider
      */
     public function getBannerOptions(Slider $slider)
     {
-        if ($slider->getDesign() === '1') { //not use Config
+        if ($slider->getDesign()) { //not use Config
             $config = $slider->getData();
         } else {
             $config = $this->mpHelper->getModuleConfig('mpbannerslider_design');
