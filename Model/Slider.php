@@ -50,6 +50,11 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
  * @method Slider setAffectedBannerIds(array $ids)
  * @method bool getAffectedBannerIds()
  */
+
+/**
+ * Class Slider
+ * @package Mageplaza\BannerSlider\Model
+ */
 class Slider extends AbstractModel implements IdentityInterface
 {
     /**
@@ -93,16 +98,16 @@ class Slider extends AbstractModel implements IdentityInterface
      * @param CollectionFactory $bannerCollectionFactory
      * @param Context $context
      * @param Registry $registry
-     * @param AbstractResource $resource
-     * @param AbstractDb $resourceCollection
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
      * @param array $data
      */
     public function __construct(
         CollectionFactory $bannerCollectionFactory,
         Context $context,
         Registry $registry,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->bannerCollectionFactory = $bannerCollectionFactory;

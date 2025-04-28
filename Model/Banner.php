@@ -56,6 +56,11 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as slide
  * @method Banner setAffectedSliderIds(array $ids)
  * @method bool getAffectedSliderIds()
  */
+
+/**
+ * Class Banner
+ * @package Mageplaza\BannerSlider\Model
+ */
 class Banner extends AbstractModel implements IdentityInterface
 {
     /**
@@ -114,12 +119,12 @@ class Banner extends AbstractModel implements IdentityInterface
         Context $context,
         Registry $registry,
         configImage $configImage,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->sliderCollectionFactory = $sliderCollectionFactory;
-        $this->imageModel = $configImage;
+        $this->imageModel              = $configImage;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
