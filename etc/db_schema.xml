@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mageplaza_bannerslider_banner" resource="default" engine="innodb">
+        <column xsi:type="int" name="banner_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Banner ID"/>
+        <column xsi:type="varchar" name="name" length="255" nullable="false" comment="Banner Name"/>
+        <column xsi:type="smallint" name="status" padding="6" nullable="false" default="1" comment="Status"/>
+        <column xsi:type="smallint" name="type" padding="6" nullable="false" default="0" comment="Banner Type"/>
+        <column xsi:type="text" name="content" nullable="true" comment="Custom html, css"/>
+        <column xsi:type="varchar" name="image" length="255" nullable="true" comment="Banner Image"/>
+        <column xsi:type="varchar" name="url_banner" length="255" nullable="true" comment="Banner Url"/>
+        <column xsi:type="varchar" name="title" length="255" nullable="true" comment="Title"/>
+        <column xsi:type="smallint" name="newtab" padding="6" nullable="false" default="1" comment="Open tab"/>
+        <column xsi:type="timestamp" name="created_at" nullable="true" comment="Banner Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="true" comment="Banner Updated At"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="banner_id"/>
+        </constraint>
+
+        <index referenceId="MAGEPLAZA_BANNERSLIDER_BANNER_NAME_IMAGE_URL" indexType="fulltext">
+            <column name="name"/>
+            <column name="image"/>
+            <column name="url_banner"/>
+        </index>
+    </table>
+
+    <table name="mageplaza_bannerslider_slider" resource="default" engine="innodb">
+        <column xsi:type="int" name="slider_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Slider ID"/>
+        <column xsi:type="varchar" name="name" length="255" nullable="false" comment="Slider Name"/>
+        <column xsi:type="smallint" name="status" padding="6" nullable="false" default="1" comment="Status"/>
+        <column xsi:type="text" name="location" nullable="true" comment="Location"/>
+        <column xsi:type="varchar" name="store_ids" length="255" nullable="true"/>
+        <column xsi:type="varchar" name="customer_group_ids" length="255" nullable="true"/>
+        <column xsi:type="int" name="priority" padding="10" unsigned="true" nullable="false" default="0" comment="Priority"/>
+        <column xsi:type="varchar" name="effect" length="255" nullable="true" comment="Animation effect"/>
+        <column xsi:type="smallint" name="autoWidth" padding="6" nullable="true" comment="Auto Width"/>
+        <column xsi:type="smallint" name="autoHeight" padding="6" nullable="true" comment="Auto Height"/>
+        <column xsi:type="smallint" name="design" padding="6" nullable="false" default="0" comment="Design"/>
+        <column xsi:type="smallint" name="loop" padding="6" nullable="true" comment="Loop slider"/>
+        <column xsi:type="smallint" name="lazyLoad" padding="6" nullable="true" comment="Lazyload image"/>
+        <column xsi:type="smallint" name="autoplay" padding="6" nullable="true" comment="Autoplay"/>
+        <column xsi:type="varchar" name="autoplayTimeout" length="255" default="5000" nullable="true" comment="Autoplay Timeout"/>
+        <column xsi:type="smallint" name="nav" padding="6" nullable="true" comment="Navigation"/>
+        <column xsi:type="smallint" name="dots" padding="6" nullable="true" comment="Dots"/>
+        <column xsi:type="smallint" name="is_responsive" padding="6" nullable="true" comment="Responsive"/>
+        <column xsi:type="varchar" name="responsive_items" length="255" nullable="true" comment="Max Items Slider"/>
+        <column xsi:type="date" name="from_date" nullable="true" comment="From"/>
+        <column xsi:type="date" name="to_date" nullable="true" comment="To"/>
+        <column xsi:type="timestamp" name="created_at" nullable="true" comment="Slider Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="true" comment="Slider Updated At"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="slider_id"/>
+        </constraint>
+    </table>
+
+    <table name="mageplaza_bannerslider_banner_slider" resource="default" engine="innodb">
+        <column xsi:type="int" name="slider_id" padding="10" unsigned="true" nullable="false" comment="Slider ID"/>
+        <column xsi:type="int" name="banner_id" padding="10" unsigned="true" nullable="false" comment="Banner ID"/>
+        <column xsi:type="int" name="position" padding="10" nullable="false" default="0" comment="Position"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="slider_id"/>
+            <column name="banner_id"/>
+        </constraint>
+    </table>
+</schema>

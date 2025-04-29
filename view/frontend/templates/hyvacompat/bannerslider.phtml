@@ -1,0 +1,168 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_BannerSlider
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+
+use Mageplaza\BannerSlider\Model\Config\Source\Type;
+use Mageplaza\BannerSlider\Block\HyvaSlider;
+use Magento\Framework\Escaper;
+
+/** @var Escaper $escaper */
+/** @var HyvaSlider $block */
+$banners = $block->getBannerCollection();
+$check   = is_array($banners) ? !empty($banners) : $banners->getSize();
+
+
+if ($check): ?>
+    <?php
+    $sliderId      = $block->getSliderId() . uniqid('_', false);
+    $sliderOptions = $block->getBannerOptions();
+    $iterator = 1;
+    ?>
+    <div class="splide"
+         x-data="initSplideSlider_<?= /* @noEscape */ $sliderId ?>($el)"
+         x-defer="intersect"
+    >
+        <div class="splide__track">
+            <ul class="splide__list">
+                <?php foreach ($banners as $banner): ?>
+                    <?php
+                    $bnType  = $banner->getType();
+                    $bnTitle = $banner->getTitle();
+                    $bnUrl   = $banner->getUrlBanner();
+                    $bnImg   = $banner->getImageUrl();
+                    ?>
+                    <?php if (($bnType === Type::CONTENT && empty($banner->getContent())) || ($bnType === Type::IMAGE && empty($banner->getImage()))): continue; ?>
+                    <?php endif; ?>
+                    <li class="splide__slide">
+                        <?php if ($bnType === Type::CONTENT): ?>
+                            <div class="splide__slide__container">
+                                <?= /* @noEscape */ $block->getPageFilter($banner->getContent()) ?>
+                            </div>
+                        <?php else: #image type?>
+                            <div class="splide__slide__container">
+                                <?php if (!empty($bnUrl)): ?>
+                                    <a  href="<?= $escaper->escapeUrl($bnUrl) ?>" <?= /* @noEscape */ ($banner->getNewtab() === '1') ? 'target="_blank"' : '' ?>>
+                                        <?php if (!empty($bnTitle)): ?>
+                                            <div><?= $escaper->escapeHtml($bnTitle) ?></div>
+                                        <?php endif; ?>
+                                        <?php if ($block->isLazyLoad()): ?>
+                                            <img data-splide-lazy="<?= $escaper->escapeUrl($bnImg) ?>" alt="<?= $escaper->escapeHtml($bnTitle) ?>">
+                                        <?php else: ?>
+                                            <img src="<?= $escaper->escapeUrl($bnImg) ?>" alt="<?= $escaper->escapeHtml($bnTitle) ?>">
+                                        <?php endif; ?>
+                                    </a>
+                                <?php else: ?>
+                                    <?php if ($block->isLazyLoad()): ?>
+                                        <img data-splide-lazy="<?= $escaper->escapeUrl($bnImg) ?>" alt="<?= $escaper->escapeHtml($bnTitle) ?>">
+                                    <?php else: ?>
+                                        <img src="<?= $escaper->escapeUrl($bnImg) ?>" alt="<?= $escaper->escapeHtml($bnTitle) ?>">
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?= $block->getPagerHtml() ?>
+    </div>
+
+    <script>
+        function initSplideSlider_<?= /* @noEscape */ $sliderId ?>(el) {
+            return {
+                el: el,
+                init() {
+                    this.initSplideCss();
+                    this.initSplideJs();
+                },
+                initSplideJs() {
+                    <?php $splideJsUrl = $block->getViewFileUrl('Mageplaza_Core::js/splide.min.js'); ?>
+                    const scriptSource = '<?= $escaper->escapeJs($escaper->escapeUrl($splideJsUrl)) ?>';
+
+                    if (!window.splideLoadingPromise) {
+                        window.splideLoadingPromise = new Promise((resolve, reject) => {
+                            const script = document.createElement('script');
+                            script.src = scriptSource;
+                            script.async = true;
+                            script.addEventListener('load', () => {
+                                resolve();
+                            });
+                            script.addEventListener('error', () => {
+                                reject(new Error('Failed to load Splide'));
+                            });
+                            document.head.append(script);
+                        });
+                    }
+                    window.splideLoadingPromise.then(() => {
+                        if (!this.el.__splideInitialized && typeof window.Splide === 'function') {
+                            this.initSplide();
+                        }
+                    }).catch((err) => {
+                        console.error(err);
+                    });
+                },
+                initSplideCss() {
+                    if (window.SplideCSS === 'loaded') return;
+
+                    <?php $splideCssUrl = $block->getViewFileUrl('Mageplaza_Core::css/splide.min.css'); ?>
+                    const styleSheetHref = '<?= $escaper->escapeJs($escaper->escapeUrl($splideCssUrl)) ?>'
+                    const style = document.createElement("link");
+                    style.rel = "stylesheet";
+                    style.type = "text/css";
+                    style.href = styleSheetHref;
+                    const insertAt = document.getElementsByTagName('link')[0];
+                    if (insertAt) { // prevent conflicts by loading before other CSS
+                        insertAt.parentNode.insertBefore(style, insertAt);
+                    } else {
+                        document.head.appendChild(style);
+                    }
+                    window.SplideCSS = 'loaded';
+                },
+                initSplide() {
+                    if (this.el.__splideInitialized) return;
+
+                    const splide = new Splide(this.el, <?= /* @noEscape */ $sliderOptions ?>);
+                    this.splideExtensions(splide);
+                    splide.mount();
+                    this.el.__splideInitialized = true;
+                },
+                splideExtensions(Splide) {
+                    <?php $sliderOptionsArr = json_decode($sliderOptions, true); ?>
+                    <?php if ($sliderOptionsArr['autoHeight']): ?>
+                    this.autoHeightHorizontal(Splide);
+                    <?php endif; ?>
+                },
+                autoHeightHorizontal(Splide) {
+                    <?php $extUrl = $block->getViewFileUrl('Mageplaza_BannerSlider::js/hyvacompat/autoHeightHorizontal.js'); ?>
+                    const extHref = '<?= $escaper->escapeJs($escaper->escapeUrl($extUrl)) ?>'
+                    import(extHref)
+                        .then(module => {
+                            const { AutoHeightHorizontal } = module;
+                            const autoHeightHorizontal = AutoHeightHorizontal(Splide, Splide.Components, Splide.options);
+                            autoHeightHorizontal.mount();
+                        })
+                        .catch(err => {
+                            console.error("Unable to load the AutoHeightHorizontal extension: ", err);
+                        });
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

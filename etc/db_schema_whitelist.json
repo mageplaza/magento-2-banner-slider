@@ -1,0 +1,63 @@
+{
+    "mageplaza_bannerslider_banner": {
+        "column": {
+            "banner_id": true,
+            "name": true,
+            "status": true,
+            "type": true,
+            "content": true,
+            "image": true,
+            "url_banner": true,
+            "title": true,
+            "newtab": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "MAGEPLAZA_BANNERSLIDER_BANNER_NAME_IMAGE_URL_BANNER": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "mageplaza_bannerslider_slider": {
+        "column": {
+            "slider_id": true,
+            "name": true,
+            "status": true,
+            "location": true,
+            "store_ids": true,
+            "customer_group_ids": true,
+            "priority": true,
+            "effect": true,
+            "autoWidth": true,
+            "autoHeight": true,
+            "design": true,
+            "loop": true,
+            "lazyLoad": true,
+            "autoplay": true,
+            "autoplayTimeout": true,
+            "nav": true,
+            "dots": true,
+            "is_responsive": true,
+            "responsive_items": true,
+            "from_date": true,
+            "to_date": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "mageplaza_bannerslider_banner_slider": {
+        "column": {
+            "slider_id": true,
+            "banner_id": true,
+            "position": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

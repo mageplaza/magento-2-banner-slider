@@ -34,7 +34,6 @@ use Magento\Framework\Stdlib\DateTime\Filter\Date;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use RuntimeException;
-use Magento\Framework\Filter\FilterInput;
 
 /**
  * Class Save
@@ -180,17 +179,13 @@ class Save extends Slider
     }
 
     /**
-     * filter values
-     *
-     * @param array $data
-     *
-     * @return array
+     * @param $data
+     * @return array|mixed
      */
     protected function _filterData($data)
     {
-        $inputFilter = new FilterInput(['from_date' => $this->_dateFilter,], [], $data);
+        $inputFilter = new \Magento\Framework\Filter\FilterInput(['from_date' => $this->_dateFilter,], [], $data);
         $data = $inputFilter->getUnescaped();
-
         if (isset($data['responsive_items'])) {
             unset($data['responsive_items']['__empty']);
         }

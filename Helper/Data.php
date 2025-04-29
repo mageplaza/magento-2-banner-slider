@@ -25,8 +25,12 @@ use Exception;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Http\Context as HttpContext;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Module\Manager;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
+use Magento\Framework\View\Design\Theme\ThemeProviderInterface;
+use Magento\Framework\View\Design\ThemeInterface;
+use Magento\Framework\View\DesignInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 use Mageplaza\BannerSlider\Model\Config\Source\Effect;
@@ -62,6 +66,10 @@ class Data extends AbstractData
      * @var HttpContext
      */
     protected $httpContext;
+    /**
+     * @var Manager
+     */
+    protected Manager $moduleManager;
 
     /**
      * Data constructor.
@@ -73,6 +81,7 @@ class Data extends AbstractData
      * @param SliderFactory $sliderFactory
      * @param StoreManagerInterface $storeManager
      * @param ObjectManagerInterface $objectManager
+     * @param Manager $moduleManager
      */
     public function __construct(
         DateTime $date,
@@ -81,12 +90,14 @@ class Data extends AbstractData
         BannerFactory $bannerFactory,
         SliderFactory $sliderFactory,
         StoreManagerInterface $storeManager,
-        ObjectManagerInterface $objectManager
+        ObjectManagerInterface $objectManager,
+        Manager $moduleManager
     ) {
         $this->date = $date;
         $this->httpContext = $httpContext;
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
+        $this->moduleManager = $moduleManager;
 
         parent::__construct($context, $objectManager, $storeManager);
     }
@@ -226,5 +237,53 @@ class Data extends AbstractData
             ->where('to_date is null OR to_date >= ?', $this->date->date());
 
         return $collection;
+    }
+
+    /**
+     * Return is Hyva Theme
+     *
+     * @return bool
+     */
+    public function checkHyvaTheme()
+    {
+        try {
+            $theme = $this->getThemeByCache();
+        } catch (\Exception $e) {
+            try {
+                /** @var ThemeProviderInterface $themeProviderInterface */
+                $themeProviderInterface = $this->objectManager->create(ThemeProviderInterface::Class);
+                $themeId                = $this->storeManager->getStore()->getConfig('design/theme/theme_id');
+                $theme                  = $themeProviderInterface->getThemeById($themeId);
+            } catch (NoSuchEntityException $noSuchEntityException) {
+                return false;
+            }
+        }
+
+        while ($theme) {
+            if (str_starts_with($theme->getCode(), 'Hyva/')) {
+                return true;
+            }
+            $theme = $theme->getParentTheme();
+        }
+
+        return false;
+    }
+
+    /**
+     * GetTheme By Cache in DesignInterface
+     *
+     * @return ThemeInterface
+     */
+    private function getThemeByCache()
+    {
+        /** @var DesignInterface $themeProviderInterface */
+        $themeProviderInterface = $this->objectManager->create(DesignInterface::Class);
+
+        return $themeProviderInterface->getDesignTheme();
+    }
+
+    public function isHyvaThemeEnabled(): bool
+    {
+        return $this->moduleManager->isEnabled('Hyva_Theme');
     }
 }
