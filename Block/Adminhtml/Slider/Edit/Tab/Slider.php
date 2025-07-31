@@ -123,6 +123,7 @@ class Slider extends Generic implements TabInterface
         $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('slider_');
         $form->setFieldNameSuffix('slider');
+        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::SHORT);
         $fieldset = $form->addFieldset('base_fieldset', [
             'legend' => __('Slider Information'),
             'class' => 'fieldset-wide'
@@ -188,7 +189,7 @@ class Slider extends Generic implements TabInterface
             'name' => 'from_date',
             'label' => __('Display from'),
             'title' => __('Display from'),
-            'date_format' => 'M/d/yyyy',
+            'date_format' => $dateFormat,
             'input_format' => DateTime::DATE_INTERNAL_FORMAT,
             'timezone' => false
         ]);
@@ -197,7 +198,7 @@ class Slider extends Generic implements TabInterface
             'name' => 'to_date',
             'label' => __('Display to'),
             'title' => __('Display to'),
-            'date_format' => 'M/d/yyyy',
+            'date_format' => $dateFormat,
             'input_format' => DateTime::DATE_INTERNAL_FORMAT,
             'timezone' => false
         ]);
