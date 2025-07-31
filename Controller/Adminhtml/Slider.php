@@ -33,6 +33,8 @@ use Mageplaza\BannerSlider\Model\SliderFactory;
  */
 abstract class Slider extends Action
 {
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::slider';
+
     /**
      * Slider Factory
      *
