@@ -2,18 +2,27 @@
 /**
  * Mageplaza_BetterSlider extension
  *                     NOTICE OF LICENSE
- * 
+ *
  *                     This source file is subject to the Mageplaza License
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * https://www.mageplaza.com/LICENSE.txt
- * 
+ *
  *                     @category  Mageplaza
  *                     @package   Mageplaza_BetterSlider
  *                     @copyright Copyright (c) 2016
  *                     @license   https://www.mageplaza.com/LICENSE.txt
  */
 namespace Mageplaza\BetterSlider\Model;
+
+use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
+use Magento\Framework\UrlInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Mageplaza\BetterSlider\Model\ResourceModel\Slider\CollectionFactory;
 
 /**
  * @method Banner setName($name)
@@ -23,7 +32,6 @@ namespace Mageplaza\BetterSlider\Model;
  * @method Banner setStatus($status)
  * @method mixed getName()
  * @method mixed getUploadFile()
- * @method mixed getUrl()
  * @method mixed getType()
  * @method mixed getStatus()
  * @method Banner setCreatedAt(\string $createdAt)
@@ -39,71 +47,85 @@ namespace Mageplaza\BetterSlider\Model;
  */
 class Banner extends \Magento\Framework\Model\AbstractModel
 {
+    const BASE_URL_PLACEHOLDER = '{{base_url}}';
+
     /**
      * Cache tag
-     * 
+     *
      * @var string
      */
     const CACHE_TAG = 'mageplaza_betterslider_banner';
 
     /**
      * Cache tag
-     * 
+     *
      * @var string
      */
     protected $_cacheTag = 'mageplaza_betterslider_banner';
 
     /**
      * Event prefix
-     * 
+     *
      * @var string
      */
     protected $_eventPrefix = 'mageplaza_betterslider_banner';
 
     /**
      * Slider Collection
-     * 
+     *
      * @var \Mageplaza\BetterSlider\Model\ResourceModel\Slider\Collection
      */
     protected $sliderCollection;
 
     /**
      * Slider Collection Factory
-     * 
-     * @var \Mageplaza\BetterSlider\Model\ResourceModel\Slider\CollectionFactory
+     *
+     * @var CollectionFactory
      */
 
     protected $imageModel;
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
     private $urlBuilder;
 
+    /**
+     * @var CollectionFactory
+     */
+    protected $sliderCollectionFactory;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
 
     /**
      * constructor
      *
-     * @param \Mageplaza\BetterSlider\Model\ResourceModel\Slider\CollectionFactory $sliderCollectionFactory
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\UrlInterface $urlBuilder
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
+     * @param CollectionFactory $sliderCollectionFactory
+     * @param Context $context
+     * @param Registry $registry
+     * @param UrlInterface $urlBuilder
+     * @param StoreManagerInterface $storeManager
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
      * @param array $data
      */
     public function __construct(
-        \Mageplaza\BetterSlider\Model\ResourceModel\Slider\CollectionFactory $sliderCollectionFactory,
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\UrlInterface $urlBuilder,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        CollectionFactory $sliderCollectionFactory,
+        Context $context,
+        Registry $registry,
+        UrlInterface $urlBuilder,
+        StoreManagerInterface $storeManager,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     )
     {
         $this->sliderCollectionFactory = $sliderCollectionFactory;
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
         $this->urlBuilder = $urlBuilder;
+        $this->storeManager = $storeManager;
     }
 
 
@@ -179,6 +201,23 @@ class Banner extends \Magento\Framework\Model\AbstractModel
      */
     public function getBannerUrl()
     {
-        return $this->urlBuilder->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]).'mageplaza/betterslider/banner/image' . $this->getUploadFile();
+        return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]).'mageplaza/betterslider/banner/image' . $this->getUploadFile();
+    }
+
+    /**
+     * Get the banner-url and replace the base-url with the url of the current store.
+     *
+     * @throws NoSuchEntityException
+     */
+    public function getUrl()
+    {
+        $url = $this->getData('url');
+
+        if ($url && str_contains($url, self::BASE_URL_PLACEHOLDER)) {
+            $baseUrl = $this->storeManager->getStore()->getBaseUrl();
+            $url = str_replace(self::BASE_URL_PLACEHOLDER, $baseUrl, $url);
+        }
+
+        return $url;
     }
 }
