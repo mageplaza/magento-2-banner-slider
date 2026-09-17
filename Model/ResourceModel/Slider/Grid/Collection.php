@@ -64,6 +64,8 @@ class Collection extends SearchResult
      * @param ManagerInterface $eventManager
      * @param string $mainTable
      * @param string $resourceModel
+     * @param string|null $identifierName
+     * @param string|null $connectionName
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -73,9 +75,20 @@ class Collection extends SearchResult
         FetchStrategyInterface $fetchStrategy,
         ManagerInterface $eventManager,
         $mainTable = 'mageplaza_bannerslider_slider',
-        $resourceModel = Slider::class
+        $resourceModel = Slider::class,
+        $identifierName = null,
+        $connectionName = null
     ) {
-        parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $mainTable, $resourceModel);
+        parent::__construct(
+            $entityFactory,
+            $logger,
+            $fetchStrategy,
+            $eventManager,
+            $mainTable,
+            $resourceModel,
+            $identifierName,
+            $connectionName
+        );
     }
 
     /**
