@@ -96,9 +96,9 @@ class Slider extends Template
         parent::_construct();
 
         if ($this->helperData->checkHyvaTheme()) {
-            $this->setTemplate('Mageplaza_BannerSlider::hyvacompat/bannerslider.phtml');
+            $this->_template = 'Mageplaza_BannerSlider::hyvacompat/bannerslider.phtml';
         } else {
-            $this->setTemplate('Mageplaza_BannerSlider::bannerslider.phtml');
+            $this->_template = 'Mageplaza_BannerSlider::bannerslider.phtml';
         }
     }
 

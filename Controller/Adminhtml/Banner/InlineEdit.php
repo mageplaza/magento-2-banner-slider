@@ -29,6 +29,7 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Mageplaza\BannerSlider\Model\Banner;
 use Mageplaza\BannerSlider\Model\BannerFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner as BannerResource;
 use RuntimeException;
 
 /**
@@ -37,6 +38,11 @@ use RuntimeException;
  */
 class InlineEdit extends Action
 {
+    /**
+     * @var BannerResource
+     */
+    protected $bannerResource;
+
     /**
      * JSON Factory
      *
@@ -56,13 +62,16 @@ class InlineEdit extends Action
      *
      * @param JsonFactory $jsonFactory
      * @param BannerFactory $bannerFactory
+     * @param BannerResource $bannerResource
      * @param Context $context
      */
     public function __construct(
         JsonFactory $jsonFactory,
         BannerFactory $bannerFactory,
+        BannerResource $bannerResource,
         Context $context
     ) {
+        $this->bannerResource = $bannerResource;
         $this->jsonFactory = $jsonFactory;
         $this->bannerFactory = $bannerFactory;
 
@@ -87,11 +96,12 @@ class InlineEdit extends Action
         }
         foreach (array_keys($postItems) as $bannerId) {
             /** @var Banner $banner */
-            $banner = $this->bannerFactory->create()->load($bannerId);
+            $banner = $this->bannerFactory->create();
+            $this->bannerResource->load($banner, $bannerId);
             try {
                 $bannerData = $postItems[$bannerId];//todo: handle dates
                 $banner->addData($bannerData);
-                $banner->save();
+                $this->bannerResource->save($banner);
             } catch (RuntimeException $e) {
                 $messages[] = $this->getErrorWithBannerId($banner, $e->getMessage());
                 $error = true;

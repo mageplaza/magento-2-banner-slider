@@ -27,6 +27,7 @@ use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider as ResourceSlider;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
 
@@ -57,6 +58,11 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
  */
 class Slider extends AbstractModel implements IdentityInterface
 {
+    /**
+     * @var ResourceSlider
+     */
+    protected $sliderResource;
+
     /**
      * Cache tag
      *
@@ -98,6 +104,7 @@ class Slider extends AbstractModel implements IdentityInterface
      * @param CollectionFactory $bannerCollectionFactory
      * @param Context $context
      * @param Registry $registry
+     * @param ResourceSlider $sliderResource
      * @param AbstractResource|null $resource
      * @param AbstractDb|null $resourceCollection
      * @param array $data
@@ -106,10 +113,12 @@ class Slider extends AbstractModel implements IdentityInterface
         CollectionFactory $bannerCollectionFactory,
         Context $context,
         Registry $registry,
+        ResourceSlider $sliderResource,
         ?AbstractResource $resource = null,
         ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
+        $this->sliderResource = $sliderResource;
         $this->bannerCollectionFactory = $bannerCollectionFactory;
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
@@ -159,7 +168,7 @@ class Slider extends AbstractModel implements IdentityInterface
 
         $array = $this->getData('banners_position');
         if ($array === null) {
-            $array = $this->getResource()->getBannersPosition($this);
+            $array = $this->sliderResource->getBannersPosition($this);
             $this->setData('banners_position', $array);
         }
 
@@ -174,7 +183,7 @@ class Slider extends AbstractModel implements IdentityInterface
         if ($this->bannerCollection === null) {
             $collection = $this->bannerCollectionFactory->create();
             $collection->getSelect()->join(
-                ['banner_slider' => $this->getResource()->getTable('mageplaza_bannerslider_banner_slider')],
+                ['banner_slider' => $this->sliderResource->getTable('mageplaza_bannerslider_banner_slider')],
                 'main_table.banner_id=banner_slider.banner_id AND banner_slider.slider_id=' . $this->getId(),
                 ['position']
             );

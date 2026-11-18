@@ -31,6 +31,7 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 use Mageplaza\BannerSlider\Model\Banner;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner as BannerResource;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
 
 /**
@@ -39,6 +40,11 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
  */
 class MassDelete extends Action
 {
+    /**
+     * @var BannerResource
+     */
+    protected $bannerResource;
+
     /**
      * Mass Action Filter
      *
@@ -58,13 +64,16 @@ class MassDelete extends Action
      *
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
+     * @param BannerResource $bannerResource
      * @param Context $context
      */
     public function __construct(
         Filter $filter,
         CollectionFactory $collectionFactory,
+        BannerResource $bannerResource,
         Context $context
     ) {
+        $this->bannerResource = $bannerResource;
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
 
@@ -83,7 +92,7 @@ class MassDelete extends Action
         $delete = 0;
         foreach ($collection as $item) {
             /** @var Banner $item */
-            $item->delete();
+            $this->bannerResource->delete($item);
             $delete++;
         }
         $this->messageManager->addSuccess(__('A total of %1 record(s) have been deleted.', $delete));

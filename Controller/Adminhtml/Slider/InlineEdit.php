@@ -27,6 +27,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider as SliderResource;
 use Mageplaza\BannerSlider\Model\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use RuntimeException;
@@ -37,6 +38,11 @@ use RuntimeException;
  */
 class InlineEdit extends Action
 {
+    /**
+     * @var SliderResource
+     */
+    protected $sliderResource;
+
     /**
      * JSON Factory
      *
@@ -56,13 +62,16 @@ class InlineEdit extends Action
      *
      * @param JsonFactory $jsonFactory
      * @param SliderFactory $sliderFactory
+     * @param SliderResource $sliderResource
      * @param Context $context
      */
     public function __construct(
         JsonFactory $jsonFactory,
         SliderFactory $sliderFactory,
+        SliderResource $sliderResource,
         Context $context
     ) {
+        $this->sliderResource = $sliderResource;
         $this->jsonFactory = $jsonFactory;
         $this->sliderFactory = $sliderFactory;
 
@@ -87,11 +96,12 @@ class InlineEdit extends Action
         }
         foreach (array_keys($postItems) as $sliderId) {
             /** @var Slider $slider */
-            $slider = $this->sliderFactory->create()->load($sliderId);
+            $slider = $this->sliderFactory->create();
+            $this->sliderResource->load($slider, $sliderId);
             try {
                 $sliderData = $postItems[$sliderId];
                 $slider->addData($sliderData);
-                $slider->save();
+                $this->sliderResource->save($slider);
             } catch (RuntimeException $e) {
                 $messages[] = $this->getErrorWithSliderId($slider, $e->getMessage());
                 $error = true;

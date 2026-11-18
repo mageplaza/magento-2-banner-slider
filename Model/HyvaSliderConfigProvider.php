@@ -30,9 +30,15 @@ use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Model\Config\Source\Effect;
 use Mageplaza\BannerSlider\Helper\Data;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory as BannerCollectionFactory;
 
 class HyvaSliderConfigProvider
 {
+    /**
+     * @var BannerCollectionFactory
+     */
+    protected $bannerCollectionFactory;
+
     /**
      * @var BannerFactory
      */
@@ -69,6 +75,7 @@ class HyvaSliderConfigProvider
      * @param SliderFactory $sliderFactory
      * @param StoreManagerInterface $storeManager
      * @param ObjectManagerInterface $objectManager
+     * @param BannerCollectionFactory $bannerCollectionFactory
      * @param Data $mpHelper
      */
     public function __construct(
@@ -78,9 +85,11 @@ class HyvaSliderConfigProvider
         SliderFactory          $sliderFactory,
         StoreManagerInterface  $storeManager,
         ObjectManagerInterface $objectManager,
+        BannerCollectionFactory $bannerCollectionFactory,
         Data                   $mpHelper
     )
     {
+        $this->bannerCollectionFactory = $bannerCollectionFactory;
         $this->date = $date;
         $this->httpContext = $httpContext;
         $this->bannerFactory = $bannerFactory;
@@ -252,7 +261,7 @@ class HyvaSliderConfigProvider
      */
     public function getBannerCollection($id = null)
     {
-        $collection = $this->bannerFactory->create()->getCollection();
+        $collection = $this->bannerCollectionFactory->create();
 
         $collection->join(
             ['banner_slider' => $collection->getTable('mageplaza_bannerslider_banner_slider')],

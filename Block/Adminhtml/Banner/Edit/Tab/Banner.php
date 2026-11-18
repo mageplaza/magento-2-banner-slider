@@ -304,7 +304,7 @@ class Banner extends Generic implements TabInterface
             ->addFieldDependence($newTab->getName(), $typeBanner->getName(), '0')
             ->addFieldDependence($content->getName(), $typeBanner->getName(), '1');
 
-        if (!$banner->getId()) {
+        if (isset($demoTemplate, $insertButton)) {
             $dependencies->addFieldMap($demoTemplate->getHtmlId(), $demoTemplate->getName())
                 ->addFieldMap($insertButton->getHtmlId(), $insertButton->getName())
                 ->addFieldDependence($demoTemplate->getName(), $typeBanner->getName(), '1')

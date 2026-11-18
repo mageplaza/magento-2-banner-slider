@@ -30,6 +30,7 @@ use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Mageplaza\BannerSlider\Model\BannerFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner as BannerResource;
 
 /**
  * Class Edit
@@ -52,16 +53,18 @@ class Edit extends Banner
      * @param PageFactory $resultPageFactory
      * @param BannerFactory $bannerFactory
      * @param Registry $registry
+     * @param BannerResource $bannerResource
      * @param Context $context
      */
     public function __construct(
         PageFactory $resultPageFactory,
         BannerFactory $bannerFactory,
         Registry $registry,
+        BannerResource $bannerResource,
         Context $context
     ) {
         $this->resultPageFactory = $resultPageFactory;
-        parent::__construct($bannerFactory, $registry, $context);
+        parent::__construct($bannerFactory, $registry, $bannerResource, $context);
     }
 
     /**
@@ -74,7 +77,7 @@ class Edit extends Banner
         $banner = $this->initBanner();
 
         if ($id) {
-            $banner->load($id);
+            $this->bannerResource->load($banner, $id);
             if (!$banner->getId()) {
                 $this->messageManager->addError(__('This Banner no longer exists.'));
                 $resultRedirect = $this->resultRedirectFactory->create();

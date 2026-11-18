@@ -29,6 +29,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider as SliderResource;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 
 /**
@@ -52,17 +53,19 @@ class Edit extends Slider
      * @param PageFactory $resultPageFactory
      * @param SliderFactory $sliderFactory
      * @param Registry $registry
+     * @param SliderResource $sliderResource
      * @param Context $context
      */
     public function __construct(
         PageFactory $resultPageFactory,
         SliderFactory $sliderFactory,
         Registry $registry,
+        SliderResource $sliderResource,
         Context $context
     ) {
         $this->resultPageFactory = $resultPageFactory;
 
-        parent::__construct($sliderFactory, $registry, $context);
+        parent::__construct($sliderFactory, $registry, $sliderResource, $context);
     }
 
     /**
@@ -75,7 +78,7 @@ class Edit extends Slider
         $slider = $this->initSlider();
 
         if ($id) {
-            $slider->load($id);
+            $this->sliderResource->load($slider, $id);
             if (!$slider->getId()) {
                 $this->messageManager->addError(__('This Slider no longer exists.'));
                 $resultRedirect = $this->resultRedirectFactory->create();

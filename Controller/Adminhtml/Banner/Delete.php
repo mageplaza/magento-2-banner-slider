@@ -40,9 +40,9 @@ class Delete extends Banner
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         try {
-            $this->bannerFactory->create()
-                ->load($this->getRequest()->getParam('banner_id'))
-                ->delete();
+            $banner = $this->bannerFactory->create();
+            $this->bannerResource->load($banner, $this->getRequest()->getParam('banner_id'));
+            $this->bannerResource->delete($banner);
             $this->messageManager->addSuccess(__('The Banner has been deleted.'));
         } catch (Exception $e) {
             // display error message
