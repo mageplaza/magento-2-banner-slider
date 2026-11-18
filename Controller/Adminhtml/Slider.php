@@ -25,6 +25,7 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider as SliderResource;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 
 /**
@@ -33,6 +34,11 @@ use Mageplaza\BannerSlider\Model\SliderFactory;
  */
 abstract class Slider extends Action
 {
+    /**
+     * @var SliderResource
+     */
+    protected $sliderResource;
+
     /**
      * Slider Factory
      *
@@ -52,13 +58,16 @@ abstract class Slider extends Action
      *
      * @param SliderFactory $sliderFactory
      * @param Registry $coreRegistry
+     * @param SliderResource $sliderResource
      * @param Context $context
      */
     public function __construct(
         SliderFactory $sliderFactory,
         Registry $coreRegistry,
+        SliderResource $sliderResource,
         Context $context
     ) {
+        $this->sliderResource = $sliderResource;
         $this->sliderFactory = $sliderFactory;
         $this->coreRegistry = $coreRegistry;
 
@@ -77,7 +86,7 @@ abstract class Slider extends Action
         /** @var \Mageplaza\BannerSlider\Model\Slider $slider */
         $slider = $this->sliderFactory->create();
         if ($sliderId) {
-            $slider->load($sliderId);
+            $this->sliderResource->load($slider, $sliderId);
             if (!$slider->getId()) {
                 throw new LocalizedException(__('The wrong slider is specified.'));
             }

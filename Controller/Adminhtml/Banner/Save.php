@@ -32,6 +32,7 @@ use Mageplaza\BannerSlider\Controller\Adminhtml\Banner;
 use Mageplaza\BannerSlider\Helper\Image;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 use Mageplaza\BannerSlider\Model\Config\Source\Type;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner as BannerResource;
 use RuntimeException;
 
 /**
@@ -61,6 +62,7 @@ class Save extends Banner
      * @param BannerFactory $bannerFactory
      * @param Registry $registry
      * @param Js $jsHelper
+     * @param BannerResource $bannerResource
      * @param Context $context
      */
     public function __construct(
@@ -68,12 +70,13 @@ class Save extends Banner
         BannerFactory $bannerFactory,
         Registry $registry,
         Js $jsHelper,
+        BannerResource $bannerResource,
         Context $context
     ) {
         $this->imageHelper = $imageHelper;
         $this->jsHelper = $jsHelper;
 
-        parent::__construct($bannerFactory, $registry, $context);
+        parent::__construct($bannerFactory, $registry, $bannerResource, $context);
     }
 
     /**
@@ -109,7 +112,7 @@ class Save extends Banner
                 ]
             );
             try {
-                $banner->save();
+                $this->bannerResource->save($banner);
                 $this->messageManager->addSuccess(__('The Banner has been saved.'));
                 $this->_session->setMageplazaBannerSliderBannerData(false);
                 if ($this->getRequest()->getParam('back')) {

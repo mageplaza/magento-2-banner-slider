@@ -32,6 +32,7 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\Stdlib\DateTime\Filter\Date;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider as SliderResource;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use RuntimeException;
 
@@ -66,6 +67,7 @@ class Save extends Slider
      * @param Js $jsHelper
      * @param SliderFactory $sliderFactory
      * @param Registry $registry
+     * @param SliderResource $sliderResource
      * @param Context $context
      * @param Date $dateFilter
      * @param DataPersistorInterface $dataPersistor
@@ -74,6 +76,7 @@ class Save extends Slider
         Js $jsHelper,
         SliderFactory $sliderFactory,
         Registry $registry,
+        SliderResource $sliderResource,
         Context $context,
         Date $dateFilter,
         DataPersistorInterface $dataPersistor
@@ -82,7 +85,7 @@ class Save extends Slider
         $this->_dateFilter = $dateFilter;
         $this->dataPersistor = $dataPersistor;
 
-        parent::__construct($sliderFactory, $registry, $context);
+        parent::__construct($sliderFactory, $registry, $sliderResource, $context);
     }
 
     /**
@@ -130,7 +133,7 @@ class Save extends Slider
             );
 
             try {
-                $slider->save();
+                $this->sliderResource->save($slider);
                 $this->messageManager->addSuccess(__('The Slider has been saved.'));
                 $this->_session->setMageplazaBannerSliderSliderData(false);
                 if ($this->getRequest()->getParam('back')) {

@@ -27,6 +27,7 @@ use Magento\Framework\View\Result\Layout;
 use Magento\Framework\View\Result\LayoutFactory;
 use Mageplaza\BannerSlider\Block\Adminhtml\Slider\Edit\Tab\Banner;
 use Mageplaza\BannerSlider\Controller\Adminhtml\Slider;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider as SliderResource;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 
 /**
@@ -48,17 +49,19 @@ class Banners extends Slider
      * @param LayoutFactory $resultLayoutFactory
      * @param SliderFactory $bannerFactory
      * @param Registry $registry
+     * @param SliderResource $sliderResource
      * @param Context $context
      */
     public function __construct(
         LayoutFactory $resultLayoutFactory,
         SliderFactory $bannerFactory,
         Registry $registry,
+        SliderResource $sliderResource,
         Context $context
     ) {
         $this->resultLayoutFactory = $resultLayoutFactory;
 
-        parent::__construct($bannerFactory, $registry, $context);
+        parent::__construct($bannerFactory, $registry, $sliderResource, $context);
     }
 
     /**

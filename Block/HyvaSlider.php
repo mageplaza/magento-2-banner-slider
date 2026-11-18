@@ -65,7 +65,7 @@ class HyvaSlider extends Template
     {
         parent::_construct();
 
-        $this->setTemplate('Mageplaza_BannerSlider::hyvacompat/bannerslider.phtml');
+        $this->_template = 'Mageplaza_BannerSlider::hyvacompat/bannerslider.phtml';
     }
 
     /**

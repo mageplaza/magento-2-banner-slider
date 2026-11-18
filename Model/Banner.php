@@ -64,6 +64,11 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as slide
 class Banner extends AbstractModel implements IdentityInterface
 {
     /**
+     * @var ResourceBanner
+     */
+    protected $bannerResource;
+
+    /**
      * Cache tag
      *
      * @var string
@@ -110,6 +115,7 @@ class Banner extends AbstractModel implements IdentityInterface
      * @param Context $context
      * @param Registry $registry
      * @param configImage $configImage
+     * @param ResourceBanner $bannerResource
      * @param AbstractResource|null $resource
      * @param AbstractDb|null $resourceCollection
      * @param array $data
@@ -119,10 +125,12 @@ class Banner extends AbstractModel implements IdentityInterface
         Context $context,
         Registry $registry,
         configImage $configImage,
+        ResourceBanner $bannerResource,
         ?AbstractResource $resource = null,
         ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
+        $this->bannerResource = $bannerResource;
         $this->sliderCollectionFactory = $sliderCollectionFactory;
         $this->imageModel              = $configImage;
 
@@ -168,7 +176,7 @@ class Banner extends AbstractModel implements IdentityInterface
             /** @var Collection $collection */
             $collection = $this->sliderCollectionFactory->create();
             $collection->getSelect()->join(
-                ['banner_slider' => $this->getResource()->getTable('mageplaza_bannerslider_banner_slider')],
+                ['banner_slider' => $this->bannerResource->getTable('mageplaza_bannerslider_banner_slider')],
                 'main_table.slider_id=banner_slider.slider_id AND banner_slider.banner_id=' . $this->getId(),
                 ['position']
             );
@@ -195,7 +203,7 @@ class Banner extends AbstractModel implements IdentityInterface
     public function getSliderIds()
     {
         if (!$this->hasData('slider_ids')) {
-            $ids = $this->getResource()->getSliderIds($this);
+            $ids = $this->bannerResource->getSliderIds($this);
 
             $this->setData('slider_ids', $ids);
         }

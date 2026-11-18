@@ -26,6 +26,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\Registry;
 use Mageplaza\BannerSlider\Model\BannerFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner as BannerResource;
 
 /**
  * Class Banner
@@ -33,6 +34,11 @@ use Mageplaza\BannerSlider\Model\BannerFactory;
  */
 abstract class Banner extends Action
 {
+    /**
+     * @var BannerResource
+     */
+    protected $bannerResource;
+
     /**
      * Banner Factory
      *
@@ -58,13 +64,16 @@ abstract class Banner extends Action
      *
      * @param BannerFactory $bannerFactory
      * @param Registry $coreRegistry
+     * @param BannerResource $bannerResource
      * @param Context $context
      */
     public function __construct(
         BannerFactory $bannerFactory,
         Registry $coreRegistry,
+        BannerResource $bannerResource,
         Context $context
     ) {
+        $this->bannerResource = $bannerResource;
         $this->bannerFactory = $bannerFactory;
         $this->coreRegistry = $coreRegistry;
 
@@ -82,7 +91,7 @@ abstract class Banner extends Action
         /** @var \Mageplaza\BannerSlider\Model\Banner $banner */
         $banner = $this->bannerFactory->create();
         if ($bannerId) {
-            $banner->load($bannerId);
+            $this->bannerResource->load($banner, $bannerId);
         }
         $this->coreRegistry->register('mpbannerslider_banner', $banner);
 

@@ -30,6 +30,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider as SliderResource;
 use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
 use Mageplaza\BannerSlider\Model\Slider;
 
@@ -39,6 +40,11 @@ use Mageplaza\BannerSlider\Model\Slider;
  */
 class MassDelete extends Action
 {
+    /**
+     * @var SliderResource
+     */
+    protected $sliderResource;
+
     /**
      * Mass Action Filter
      *
@@ -58,13 +64,16 @@ class MassDelete extends Action
      *
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
+     * @param SliderResource $sliderResource
      * @param Context $context
      */
     public function __construct(
         Filter $filter,
         CollectionFactory $collectionFactory,
+        SliderResource $sliderResource,
         Context $context
     ) {
+        $this->sliderResource = $sliderResource;
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
 
@@ -83,7 +92,7 @@ class MassDelete extends Action
         $delete = 0;
         foreach ($collection as $item) {
             /** @var Slider $item */
-            $item->delete();
+            $this->sliderResource->delete($item);
             $delete++;
         }
         $this->messageManager->addSuccess(__('A total of %1 record(s) have been deleted.', $delete));

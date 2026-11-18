@@ -35,6 +35,8 @@ use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\BannerSlider\Model\BannerFactory;
 use Mageplaza\BannerSlider\Model\Config\Source\Effect;
 use Mageplaza\BannerSlider\Model\ResourceModel\Banner\Collection;
+use Mageplaza\BannerSlider\Model\ResourceModel\Banner\CollectionFactory as BannerCollectionFactory;
+use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory as SliderCollectionFactory;
 use Mageplaza\BannerSlider\Model\Slider;
 use Mageplaza\BannerSlider\Model\SliderFactory;
 use Mageplaza\Core\Helper\AbstractData;
@@ -46,6 +48,16 @@ use Mageplaza\Core\Helper\AbstractData;
 class Data extends AbstractData
 {
     const CONFIG_MODULE_PATH = 'mpbannerslider';
+
+    /**
+     * @var SliderCollectionFactory
+     */
+    protected $sliderCollectionFactory;
+
+    /**
+     * @var BannerCollectionFactory
+     */
+    protected $bannerCollectionFactory;
 
     /**
      * @var BannerFactory
@@ -81,6 +93,8 @@ class Data extends AbstractData
      * @param SliderFactory $sliderFactory
      * @param StoreManagerInterface $storeManager
      * @param ObjectManagerInterface $objectManager
+     * @param BannerCollectionFactory $bannerCollectionFactory
+     * @param SliderCollectionFactory $sliderCollectionFactory
      * @param Manager $moduleManager
      */
     public function __construct(
@@ -91,8 +105,12 @@ class Data extends AbstractData
         SliderFactory $sliderFactory,
         StoreManagerInterface $storeManager,
         ObjectManagerInterface $objectManager,
+        BannerCollectionFactory $bannerCollectionFactory,
+        SliderCollectionFactory $sliderCollectionFactory,
         Manager $moduleManager
     ) {
+        $this->sliderCollectionFactory = $sliderCollectionFactory;
+        $this->bannerCollectionFactory = $bannerCollectionFactory;
         $this->date = $date;
         $this->httpContext = $httpContext;
         $this->bannerFactory = $bannerFactory;
@@ -203,7 +221,7 @@ class Data extends AbstractData
      */
     public function getBannerCollection($id = null)
     {
-        $collection = $this->bannerFactory->create()->getCollection();
+        $collection = $this->bannerCollectionFactory->create();
 
         $collection->join(
             ['banner_slider' => $collection->getTable('mageplaza_bannerslider_banner_slider')],
@@ -223,8 +241,7 @@ class Data extends AbstractData
     public function getActiveSliders()
     {
         /** @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection $collection */
-        $collection = $this->sliderFactory->create()
-            ->getCollection()
+        $collection = $this->sliderCollectionFactory->create()
             ->addFieldToFilter('customer_group_ids', [
                 'finset' => $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_GROUP)
             ])
