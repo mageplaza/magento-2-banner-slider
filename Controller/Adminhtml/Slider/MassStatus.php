@@ -38,6 +38,8 @@ use Mageplaza\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
  */
 class MassStatus extends Action
 {
+    const ADMIN_RESOURCE = 'Mageplaza_BannerSlider::slider';
+
     /**
      * Mass Action Filter
      *
